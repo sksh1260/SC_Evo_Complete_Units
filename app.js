@@ -10432,10 +10432,15 @@ function formatGameRateText(value) {
   return match ? match[1] + match[2] + fmtGameRate(match[3]) + "/s" + (match[2] ? ")" : "") : value;
 }
 function formatGameSpeedDescription(html) {
-  if (!html || gameSpeedMultiplier === 1) return html || "";
-  return String(html)
-    .replace(/(<span[^>]*>)(\d+(?:\.\d+)?)초(<\/span>)/g, function(_, start, value, end) { return start + fmtGameTime(value) + "초" + end; })
-    .replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) { return start + fmtGameRate(value) + (end || ""); });
+  if (!html) return "";
+  // 모달 설명의 시간은 속도와 무관하게 첫째 자리까지만 표시한다.
+  var formatted = String(html).replace(/(<span[^>]*>)(\d+(?:\.\d+)?)초(<\/span>)/g, function(_, start, value, end) {
+    return start + fmtGameTime(value, 1) + "초" + end;
+  });
+  if (gameSpeedMultiplier === 1) return formatted;
+  return formatted.replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) {
+    return start + fmtGameRate(value) + (end || "");
+  });
 }
 function refreshForGameSpeed() {
   renderTable();
@@ -11411,9 +11416,10 @@ function renderSpeedModal(u) {
   } else if (u.race === "sc2_zerg") {
     var sc2MobilityLines = getSc2ZergMobilityLines(u);
     if (sc2MobilityLines.length) {
-      baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>" + sc2MobilityLines.map(function(line) {
-        return "(" + line.label + " " + fmtNum(line.value, 2) + ")";
-      }).join(" · ") + "</span>";
+      var sc2MobilityStrs = sc2MobilityLines.map(function(line) {
+        return "(" + line.label + " " + fmtNum(scaleMoveSpeed(line.value), 2) + ")";
+      });
+      baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>" + sc2MobilityStrs.join(" · ") + "</span>";
     }
   } else if (isTerranLiftableStructure(u)) {
     baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>(이륙)</span>";
@@ -11647,7 +11653,7 @@ function formatCostValue(cItem) {
   if (isTime) {
     var num = Number(val);
     if (!isNaN(num)) {
-      return fmtGameTime(num);
+      return fmtBuildTime(num);
     }
   }
   return val;
@@ -15174,6 +15180,185 @@ function openModal(u) {
     if (trRow) trRow.style.display = "none";
   }
 
+
+// 건물별 생산/건설/소환/변이/변태 능력 매핑 (전역)
+var BUILDING_PRODUCE_ABILITIES = {
+  "command_center": [
+    { targetId: "scv", name: "SCV 생산" },
+    { targetId: "comsat_station", name: "컴샛 스테이션 건설" },
+    { targetId: "nuclear_silo", name: "뉴클리어 사일로 건설" }
+  ],
+  "sc2_command_center": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "sc2_orbital_command": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "sc2_planetary_fortress": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "barracks": [
+    { targetId: "marine", name: "마린 훈련" },
+    { targetId: "firebat", name: "파이어뱃 훈련" },
+    { targetId: "medic", name: "메딕 훈련" },
+    { targetId: "ghost", name: "고스트 훈련" }
+  ],
+  "sc2_barracks": [
+    { targetId: "sc2_marine", name: "해병 훈련" },
+    { targetId: "sc2_marauder", name: "불곰 훈련" },
+    { targetId: "sc2_reaper", name: "사신 훈련" },
+    { targetId: "sc2_ghost", name: "유령 훈련" }
+  ],
+  "factory": [
+    { targetId: "vulture", name: "벌쳐 생산" },
+    { targetId: "siege_tank", name: "시즈 탱크 생산" },
+    { targetId: "goliath", name: "골리앗 생산" },
+    { targetId: "machine_shop", name: "머신 샵 건설" }
+  ],
+  "sc2_factory": [
+    { targetId: "sc2_hellion", name: "화염차 생산" },
+    { targetId: "sc2_hellbat", name: "화염 기갑병 생산" },
+    { targetId: "sc2_widow_mine", name: "땅거미 지뢰 생산" },
+    { targetId: "sc2_cyclone", name: "사이클론 생산" },
+    { targetId: "sc2_siege_tank", name: "공성 전차 생산" },
+    { targetId: "sc2_thor", name: "토르 생산" }
+  ],
+  "starport": [
+    { targetId: "wraith", name: "레이스 생산" },
+    { targetId: "dropship", name: "드랍십 생산" },
+    { targetId: "valkyrie", name: "발키리 생산" },
+    { targetId: "science_vessel", name: "사이언스 베슬 생산" },
+    { targetId: "battlecruiser", name: "배틀크루저 생산" },
+    { targetId: "control_tower", name: "컨트롤 타워 건설" }
+  ],
+  "sc2_starport": [
+    { targetId: "sc2_viking", name: "바이킹 생산" },
+    { targetId: "sc2_medivac", name: "의료선 생산" },
+    { targetId: "sc2_banshee", name: "밴시 생산" },
+    { targetId: "sc2_raven", name: "밤까마귀 생산" },
+    { targetId: "sc2_liberator", name: "해방선 생산" },
+    { targetId: "sc2_battlecruiser", name: "전투순양함 생산" },
+    { targetId: "sc2_tech_lab", name: "기술실 건설" },
+    { targetId: "sc2_reactor", name: "반응로 건설" }
+  ],
+  "nexus": [
+    { targetId: "probe", name: "프로브 생산" }
+  ],
+  "sc2_gateway": [
+    { targetId: "sc2_zealot", name: "광전사 소환" },
+    { targetId: "sc2_sentry", name: "파수기 소환" },
+    { targetId: "sc2_stalker", name: "추적자 소환" },
+    { targetId: "sc2_adept", name: "사도 소환" },
+    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
+    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
+  ],
+  "sc2_warpgate": [
+    { targetId: "sc2_zealot", name: "광전사 소환" },
+    { targetId: "sc2_sentry", name: "파수기 소환" },
+    { targetId: "sc2_stalker", name: "추적자 소환" },
+    { targetId: "sc2_adept", name: "사도 소환" },
+    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
+    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
+  ],
+  "gateway": [
+    { targetId: "zealot", name: "질럿 소환" },
+    { targetId: "dragoon", name: "드라군 소환" },
+    { targetId: "high_templar", name: "하이 템플러 소환" },
+    { targetId: "dark_templar", name: "다크 템플러 소환" }
+  ],
+  "robotics_facility": [
+    { targetId: "observer", name: "옵저버 생산" },
+    { targetId: "shuttle", name: "셔틀 생산" },
+    { targetId: "reaver", name: "리버 생산" }
+  ],
+  "stargate": [
+    { targetId: "scout", name: "스카웃 소환" },
+    { targetId: "corsair", name: "커세어 소환" },
+    { targetId: "carrier", name: "캐리어 소환" },
+    { targetId: "arbiter", name: "아비터 소환" }
+  ],
+  "larva": [
+    { targetId: "drone", name: "드론으로 변태" },
+    { targetId: "overlord", name: "오버로드로 변태" },
+    { targetId: "zergling", name: "저글링으로 변태" },
+    { targetId: "hydralisk", name: "히드라리스크로 변태" },
+    { targetId: "mutalisk", name: "뮤탈리스크로 변태" },
+    { targetId: "scourge", name: "스커지로 변태" },
+    { targetId: "queen", name: "퀸으로 변태" },
+    { targetId: "ultralisk", name: "울트라리스크로 변태" },
+    { targetId: "defiler", name: "디파일러로 변태" }
+  ],
+  "sc2_larva": [
+    { targetId: "sc2_drone", name: "일벌레로 변태" },
+    { targetId: "sc2_overlord", name: "대군주로 변태" },
+    { targetId: "sc2_zergling", name: "저글링으로 변태" },
+    { targetId: "sc2_roach", name: "바퀴로 변태" },
+    { targetId: "sc2_hydralisk", name: "히드라리스크로 변태" },
+    { targetId: "sc2_mutalisk", name: "뮤탈리스크로 변태" },
+    { targetId: "sc2_corruptor", name: "타락귀로 변태" },
+    { targetId: "sc2_infestor", name: "감염충으로 변태" },
+    { targetId: "sc2_swarmhost", name: "군단 숙주로 변태" },
+    { targetId: "sc2_viper", name: "살모사로 변태" },
+    { targetId: "sc2_ultralisk", name: "울트라리스크로 변태" }
+  ],
+  "hydralisk": [
+    { targetId: "lurker", name: "럴커로 변태" }
+  ],
+  "mutalisk": [
+    { targetId: "guardian", name: "가디언으로 변태" },
+    { targetId: "devourer", name: "디바우러로 변태" }
+  ],
+  "hatchery": [
+    { targetId: "lair", name: "레어로 변이" }
+  ],
+  "lair": [
+    { targetId: "hive", name: "하이브로 변이" }
+  ],
+  "creep_colony": [
+    { targetId: "sunken_colony", name: "성큰 콜로니로 변이" },
+    { targetId: "spore_colony", name: "스포어 콜로니로 변이" }
+  ],
+  "spire": [
+    { targetId: "greater_spire", name: "그레이터 스파이어로 변이" }
+  ],
+  "infested_cc": [
+    { targetId: "infested_terran", name: "인페스티드 테란 생산" }
+  ],
+  "high_templar": [
+    { targetId: "archon", name: "아칸 합체" }
+  ],
+  "dark_templar": [
+    { targetId: "dark_archon", name: "다크 아칸 합체" }
+  ],
+  "carrier": [
+    { targetId: "interceptor", name: "인터셉터 생산" }
+  ],
+  "science_facility": [
+    { targetId: "covert_ops", name: "코버트 옵스 건설" },
+    { targetId: "physics_lab", name: "피직스 랩 건설" }
+  ],
+  "siege_tank": [
+    { targetId: "siege_tank_siege", name: "시즈 모드" }
+  ],
+  "siege_tank_siege": [
+    { targetId: "siege_tank", name: "탱크 모드" }
+  ]
+};
+BUILDING_PRODUCE_ABILITIES.sc2_stargate = [
+  { targetId: "sc2_phoenix", name: "불사조 소환" },
+  { targetId: "sc2_oracle", name: "예언자 소환" },
+  { targetId: "sc2_void_ray", name: "공허 포격기 소환" },
+  { targetId: "sc2_tempest", name: "폭풍함 소환" },
+  { targetId: "sc2_carrier", name: "우주모함 소환" }
+];
+BUILDING_PRODUCE_ABILITIES.sc2_robotics_facility = [
+  { targetId: "sc2_observer", name: "관측선 소환" },
+  { targetId: "sc2_warp_prism", name: "차원 분광기 소환" },
+  { targetId: "sc2_immortal", name: "불멸자 소환" },
+  { targetId: "sc2_colossus", name: "거신 소환" },
+  { targetId: "sc2_disruptor", name: "분열기 소환" }
+];
+
 function getSplashRange3Steps(u) {
   if (u.id === "firebat") {
     return [
@@ -15354,14 +15539,15 @@ function fmtAttackSplashArea(u, wp) {
         var prismaticExtraBd = (u.id === "sc2_void_ray" && isUpgActive("sc2_void_ray_prismatic_alignment")) ? 6 : 0;
         var tempestStructureExtraBd = (u.id === "sc2_tempest" && isUpgActive("sc2_tempest_destabilizer")) ? 40 : 0;
         var totalDmg = (wp.dmg || 0) + (lvl * upgPerLvl) + reaverExtraDmg;
-        var isZerglingAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal"));
+        var isZerglingAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
+        var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
         var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
         var stimMult = (u.id === "marine") ? 1.75 : ((u.id === "firebat") ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
 
-        var activeCd = scaleTime(isZerglingAdrenal ? (wp.cd / 1.4) : (isStimActive ? (wp.cd / stimMult) : wp.cd));
+        var activeCd = scaleTime(isZerglingAdrenal ? (wp.cd / 1.4) : (isAdeptResonating ? (wp.cd / 1.45) : (isStimActive ? (wp.cd / stimMult) : wp.cd)));
         var calcDps = (activeCd && activeCd > 0) ? (totalDmg * (wp.hits || 1)) / activeCd : (wp.dps || 0);
 
-        var glowCls2 = (lvl > 0 || isZerglingAdrenal || isStimActive || reaverExtraDmg > 0) ? "upg-val-" + rc2 : "glow-txt-" + u.race.replace("bw_", "").replace("sc2_", "");
+        var glowCls2 = (lvl > 0 || isZerglingAdrenal || isAdeptResonating || isStimActive || reaverExtraDmg > 0) ? "upg-val-" + rc2 : "glow-txt-" + u.race.replace("bw_", "").replace("sc2_", "");
 
         var targetTxt = (u.id === "sc2_thor" && wi === 1) ? "공중 (천벌포)" : wp.type;
         var rangeStr = fmtNum(wp.range, 2);
@@ -15490,191 +15676,6 @@ function fmtAttackSplashArea(u, wp) {
   if (ut) ut.style.display = "none";
   if (uc) uc.style.display = "none";
 
-var BUILDING_PRODUCE_ABILITIES = {
-  "command_center": [
-    { targetId: "scv", name: "SCV 생산" }
-  ],
-  "sc2_command_center": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "sc2_orbital_command": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "sc2_planetary_fortress": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "barracks": [
-    { targetId: "marine", name: "마린 훈련" },
-    { targetId: "firebat", name: "파이어뱃 훈련" },
-    { targetId: "medic", name: "메딕 훈련" },
-    { targetId: "ghost", name: "고스트 훈련" }
-  ],
-  "sc2_barracks": [
-    { targetId: "sc2_marine", name: "해병 훈련" },
-    { targetId: "sc2_marauder", name: "불곰 훈련" },
-    { targetId: "sc2_reaper", name: "사신 훈련" },
-    { targetId: "sc2_ghost", name: "유령 훈련" }
-  ],
-  "factory": [
-    { targetId: "vulture", name: "벌쳐 생산" },
-    { targetId: "siege_tank", name: "시즈 탱크 생산" },
-    { targetId: "goliath", name: "골리앗 생산" }
-  ],
-  "sc2_factory": [
-    { targetId: "sc2_hellion", name: "화염차 생산" },
-    { targetId: "sc2_hellbat", name: "화염 기갑병 생산" },
-    { targetId: "sc2_widow_mine", name: "땅거미 지뢰 생산" },
-    { targetId: "sc2_cyclone", name: "사이클론 생산" },
-    { targetId: "sc2_siege_tank", name: "공성 전차 생산" },
-    { targetId: "sc2_thor", name: "토르 생산" }
-  ],
-  "starport": [
-    { targetId: "wraith", name: "레이스 생산" },
-    { targetId: "dropship", name: "드랍십 생산" },
-    { targetId: "valkyrie", name: "발키리 생산" },
-    { targetId: "science_vessel", name: "사이언스 베슬 생산" },
-    { targetId: "battlecruiser", name: "배틀크루저 생산" }
-  ],
-  "sc2_starport": [
-    { targetId: "sc2_viking", name: "바이킹 생산" },
-    { targetId: "sc2_medivac", name: "의료선 생산" },
-    { targetId: "sc2_banshee", name: "밴시 생산" },
-    { targetId: "sc2_raven", name: "밤까마귀 생산" },
-    { targetId: "sc2_liberator", name: "해방선 생산" },
-    { targetId: "sc2_battlecruiser", name: "전투순양함 생산" },
-    { targetId: "sc2_tech_lab", name: "기술실 건설" },
-    { targetId: "sc2_reactor", name: "반응로 건설" }
-  ],
-  "nexus": [
-    { targetId: "probe", name: "프로브 생산" }
-  ],
-  "sc2_gateway": [
-    { targetId: "sc2_zealot", name: "광전사 소환" },
-    { targetId: "sc2_sentry", name: "파수기 소환" },
-    { targetId: "sc2_stalker", name: "추적자 소환" },
-    { targetId: "sc2_adept", name: "사도 소환" },
-    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
-    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
-  ],
-  "sc2_warpgate": [
-    { targetId: "sc2_zealot", name: "광전사 소환" },
-    { targetId: "sc2_sentry", name: "파수기 소환" },
-    { targetId: "sc2_stalker", name: "추적자 소환" },
-    { targetId: "sc2_adept", name: "사도 소환" },
-    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
-    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
-  ],
-  "gateway": [
-    { targetId: "zealot", name: "질럿 소환" },
-    { targetId: "dragoon", name: "드라군 소환" },
-    { targetId: "high_templar", name: "하이 템플러 소환" },
-    { targetId: "dark_templar", name: "다크 템플러 소환" }
-  ],
-  "robotics_facility": [
-    { targetId: "observer", name: "옵저버 생산" },
-    { targetId: "shuttle", name: "셔틀 생산" },
-    { targetId: "reaver", name: "리버 생산" }
-  ],
-  "stargate": [
-    { targetId: "scout", name: "스카웃 소환" },
-    { targetId: "corsair", name: "커세어 소환" },
-    { targetId: "carrier", name: "캐리어 소환" },
-    { targetId: "arbiter", name: "아비터 소환" }
-  ],
-  "larva": [
-    { targetId: "drone", name: "드론으로 변태" },
-    { targetId: "overlord", name: "오버로드로 변태" },
-    { targetId: "zergling", name: "저글링으로 변태" },
-    { targetId: "hydralisk", name: "히드라리스크로 변태" },
-    { targetId: "mutalisk", name: "뮤탈리스크로 변태" },
-    { targetId: "scourge", name: "스커지로 변태" },
-    { targetId: "queen", name: "퀸으로 변태" },
-    { targetId: "ultralisk", name: "울트라리스크로 변태" },
-    { targetId: "defiler", name: "디파일러로 변태" }
-  ],
-  "sc2_larva": [
-    { targetId: "sc2_drone", name: "일벌레로 변태" },
-    { targetId: "sc2_overlord", name: "대군주로 변태" },
-    { targetId: "sc2_zergling", name: "저글링으로 변태" },
-    { targetId: "sc2_roach", name: "바퀴로 변태" },
-    { targetId: "sc2_hydralisk", name: "히드라리스크로 변태" },
-    { targetId: "sc2_mutalisk", name: "뮤탈리스크로 변태" },
-    { targetId: "sc2_corruptor", name: "타락귀로 변태" },
-    { targetId: "sc2_infestor", name: "감염충으로 변태" },
-    { targetId: "sc2_swarmhost", name: "군단 숙주로 변태" },
-    { targetId: "sc2_viper", name: "살모사로 변태" },
-    { targetId: "sc2_ultralisk", name: "울트라리스크로 변태" }
-  ],
-  "hydralisk": [
-    { targetId: "lurker", name: "럴커로 변태" }
-  ],
-  "mutalisk": [
-    { targetId: "guardian", name: "가디언으로 변태" },
-    { targetId: "devourer", name: "디바우러로 변태" }
-  ],
-  "hatchery": [
-    { targetId: "lair", name: "레어로 변이" }
-  ],
-  "lair": [
-    { targetId: "hive", name: "하이브로 변이" }
-  ],
-  "creep_colony": [
-    { targetId: "sunken_colony", name: "성큰 콜로니로 변이" },
-    { targetId: "spore_colony", name: "스포어 콜로니로 변이" }
-  ],
-  "spire": [
-    { targetId: "greater_spire", name: "그레이터 스파이어로 변이" }
-  ],
-  "infested_cc": [
-    { targetId: "infested_terran", name: "인페스티드 테란 생산" }
-  ],
-  "high_templar": [
-    { targetId: "archon", name: "아칸 합체" }
-  ],
-  "dark_templar": [
-    { targetId: "dark_archon", name: "다크 아칸 합체" }
-  ],
-  "carrier": [
-    { targetId: "interceptor", name: "인터셉터 생산" }
-  ],
-  "command_center": [
-    { targetId: "comsat_station", name: "컴샛 스테이션 건설" },
-    { targetId: "nuclear_silo", name: "뉴클리어 사일로 건설" }
-  ],
-  "factory": [
-    { targetId: "machine_shop", name: "머신 샵 건설" }
-  ],
-  "starport": [
-    { targetId: "control_tower", name: "컨트롤 타워 건설" }
-  ],
-  "science_facility": [
-    { targetId: "covert_ops", name: "코버트 옵스 건설" },
-    { targetId: "physics_lab", name: "피직스 랩 건설" }
-  ],
-  "siege_tank": [
-    { targetId: "siege_tank_siege", name: "시즈 모드" }
-  ],
-  "siege_tank_siege": [
-    { targetId: "siege_tank", name: "탱크 모드" }
-  ]
-};
-
-BUILDING_PRODUCE_ABILITIES.sc2_stargate = [
-  { targetId: "sc2_phoenix", name: "불사조 소환" },
-  { targetId: "sc2_oracle", name: "예언자 소환" },
-  { targetId: "sc2_void_ray", name: "공허 포격기 소환" },
-  { targetId: "sc2_tempest", name: "폭풍함 소환" },
-  { targetId: "sc2_carrier", name: "우주모함 소환" }
-];
-
-BUILDING_PRODUCE_ABILITIES.sc2_robotics_facility = [
-  { targetId: "sc2_observer", name: "관측선 소환" },
-  { targetId: "sc2_warp_prism", name: "차원 분광기 소환" },
-  { targetId: "sc2_immortal", name: "불멸자 소환" },
-  { targetId: "sc2_colossus", name: "거신 소환" },
-  { targetId: "sc2_disruptor", name: "분열기 소환" }
-];
-
 function getBwAbilityMetaHtml(u, abilityName) {
   if (!u || !u.race) return "";
 
@@ -15794,7 +15795,7 @@ function getBwAbilityMetaHtml(u, abilityName) {
   var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
   var durationText = meta.duration;
   var durationValue = parseFloat(String(meta.duration || "").replace("초", ""));
-  if (isFinite(durationValue)) durationText = fmtGameTime(durationValue);
+  if (isFinite(durationValue)) durationText = fmtGameTime(durationValue, 1);
   var cooldownText = meta.cooldown;
   var cooldownValue = parseFloat(String(meta.cooldown || ""));
   if (isFinite(cooldownValue)) cooldownText = fmtGameTime(cooldownValue);
@@ -16369,7 +16370,7 @@ function getEffectiveAbilities(u) {
         uuh += "  <div class='modal-item-icon-slot'>" + imgTag + "</div>";
         uuh += "  <div class='modal-item-content'>";
         uuh += "    <div class='modal-item-title'>" + uupg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
-        if (uupg.cost) uuh += "    <div class='modal-item-cost' style='margin-left:0;margin-top:2px;'>비용: " + uupg.cost + (uupg.buildTime ? " | " + uupg.buildTime : "") + "</div>";
+        if (uupg.cost) uuh += "    <div class='modal-item-cost' style='margin-left:0;margin-top:2px;'>비용: " + uupg.cost + (uupg.buildTime ? " | " + fmtBuildTime(uupg.buildTime) : "") + "</div>";
         if (uupg.desc) uuh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(uupg.desc) + "</div>";
         uuh += "  </div>";
         if (costBadgeHtml) uuh += costBadgeHtml;
