@@ -317,8 +317,8 @@ header.compare-mode .cb-center { visibility: hidden; }
 ───────────────────────────────────────────────────────────── */
 .compare-view {
   position: relative;
-  width: min(54rem, calc(100% - 11rem));
-  margin: 1.1rem auto 2rem;
+  width: calc(100% - 2.8rem);
+  margin: 0.6rem 1.4rem 2rem;
   flex: 0 0 auto;
 }
 .compare-heading { margin: 0 0 1rem; text-align: center; }
@@ -328,18 +328,18 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-board {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 17rem) minmax(0, 17rem);
+  grid-template-columns: repeat(2, 45.49rem);
   justify-content: center;
-  column-gap: 4rem;
+  column-gap: 1rem;
   row-gap: 0;
   grid-auto-rows: min-content;
   align-content: start;
-  padding: 1.1rem;
-  border: 1px solid var(--panel-border);
-  border-radius: 8px;
-  background: rgba(255,255,255,0.018);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
-.compare-unit-card { min-width: 0; }
+.compare-unit-card { width: 22rem; min-width: 0; justify-self: center; }
 .compare-unit-right { text-align: right; }
 .compare-picker-label { display: block; margin: 0 0 0.35rem; color: var(--text-dim); font-size: 0.7rem; font-weight: 700; }
 .compare-select {
@@ -365,9 +365,9 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-unit-race.compare-race-zerg { color: var(--zerg-color); }
 .compare-unit-race.compare-race-protoss { color: var(--protoss-color); }
 .compare-search-hint { position: absolute; z-index: 1; left: 50%; top: 2.2rem; transform: translate(-50%, -50%); color: var(--text-dim); font: 0.72rem/1 'KostarB', sans-serif; pointer-events: none; }
-.compare-versus { position: absolute; z-index: 1; left: 50%; top: 7.5rem; transform: translate(-50%, -50%); color: var(--text-bright); font: 1.38rem/1 'KostarB', sans-serif; text-shadow: 0 0 10px var(--glow-color); }
+.compare-versus { position: absolute; z-index: 1; left: 50%; top: 6.35rem; transform: translate(-50%, -50%); color: var(--text-bright); font: 1.38rem/1 'KostarB', sans-serif; text-shadow: 0 0 10px var(--glow-color); }
 .compare-stats { grid-column: 1 / -1; display: grid; border-top: 1px solid var(--panel-border); }
-.compare-stat-row { display: grid; grid-template-columns: 1fr 10rem 1fr; min-height: 2.75rem; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.055); }
+.compare-stat-row { display: grid; grid-template-columns: 1fr 16rem 1fr; min-height: 2.75rem; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.055); }
 .compare-stat-row:last-child { border-bottom: 0; }
 .compare-stat-value { color: var(--text-bright); font-size: 1.08rem; font-weight: 800; }
 .compare-stat-value.left { text-align: right; padding-right: 1.1rem; }
@@ -381,7 +381,18 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-value.gas { color: #7ae46a; }
 .compare-value.time { color: #fff59d; }
 .compare-value.hp { color: #7ae46a; }
+.compare-value.hp.compare-hp-upgraded { display: inline-block; animation: glowPulseHp 2s infinite ease-in-out; }
 .compare-value.shield { color: #a0c4ff; }
+.compare-value.energy { color: #c792ea; }
+.compare-value.energy.compare-energy-upgraded { display: inline-block; animation: glowPulseEnergy 2s infinite ease-in-out; }
+@keyframes glowPulseEnergy {
+  0%, 100% { text-shadow: 0 0 4px rgba(199,146,234,0.35); }
+  50% { text-shadow: 0 0 9px rgba(199,146,234,0.9), 0 0 16px rgba(199,146,234,0.45); }
+}
+@keyframes glowPulseHp {
+  0%, 100% { text-shadow: 0 0 4px rgba(122,228,106,0.35); }
+  50% { text-shadow: 0 0 9px rgba(122,228,106,0.9), 0 0 16px rgba(122,228,106,0.45); }
+}
 .compare-value.compare-upgraded.atk-terran { color: var(--terran-color); display: inline-block; animation: glowPulseTerran 2s infinite ease-in-out; }
 .compare-value.compare-upgraded.atk-zerg { color: var(--zerg-color); display: inline-block; animation: glowPulseZerg 2s infinite ease-in-out; }
 .compare-value.compare-upgraded.atk-protoss { color: var(--protoss-color); display: inline-block; animation: glowPulseProtoss 2s infinite ease-in-out; }
@@ -390,25 +401,53 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-stat-label-text { position: relative; display: inline-block; }
 .compare-view[hidden] { display: none; }
 .main-layout.compare-active .left-filter-sidebar { display: none; }
+html:has(body.compare-view-active) { height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; }
+body.compare-view-active { height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: visible; }
 .compare-filter-sidebar {
   position: absolute;
-  left: 0.45rem;
-  top: 5.6rem;
+  left: -4.9rem;
+  top: 0.6rem;
   width: 5.6rem;
   z-index: 20;
 }
 .compare-filter-sidebar .side-filter-item { margin-top: 0.55rem; }
+.compare-filter-sidebar .sidebar-upg-divider { margin: 0.65rem 0 0.35rem; }
+.compare-filter-sidebar .game-speed-toggle { width: 100%; margin-top: 0.2rem; }
+.compare-modal-panels { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, 45.49rem); gap: 1rem; width: 100%; margin-top: 0.65rem; align-items: start; }
+.compare-modal-panel.modal-content { width: 100%; max-width: none; min-width: 0; height: max-content; align-self: start; transform: none !important; overflow: hidden; border-width: 1px; box-shadow: none; }
+/* 원본 모달의 연구 영역에는 마지막 카드 뒤 간격(1.5rem)이 있다. 비교 패널에서는
+   이것이 유닛마다 다른 빈 하단 여백으로 남으므로, 패널 바깥 여백만 남기고 제거한다. */
+.compare-modal-panel .upgrades-section { margin-bottom: 0 !important; }
 .compare-weapon-list { display: flex; width: 100%; flex-direction: column; gap: 0.12rem; }
 .compare-stat-value.left .compare-weapon-list { align-items: flex-end; }
 .compare-stat-value.right .compare-weapon-list { align-items: flex-start; }
+.compare-attack-with-dps { display: flex; width: 100%; flex-direction: column; }
+.compare-stat-value.left .compare-attack-with-dps { margin-left: auto; }
+.compare-stat-value.right .compare-attack-with-dps { margin-right: auto; }
+.compare-attack-pair { display: grid; grid-template-columns: 5.1rem minmax(0, 1fr); align-items: center; min-height: 1.85rem; }
+.compare-attack-pair + .compare-attack-pair { margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.compare-attack-content { min-width: 0; }
+.compare-attack-dps { display: flex; align-items: center; gap: 0.38rem; color: var(--text-dim); font-size: 1.08rem; font-weight: 800; }
+.compare-attack-dps-label { color: var(--text-dim); font-size: 0.76em; letter-spacing: 0.05em; }
+.compare-stat-value.left .compare-attack-dps { justify-content: flex-start; text-align: left; }
+.compare-stat-value.left .compare-attack-content { text-align: right; }
+.compare-stat-value.left .compare-attack-content .compare-weapon-list { align-items: flex-end; }
+.compare-stat-value.right .compare-attack-pair { grid-template-columns: minmax(0, 1fr) 5.1rem; }
+.compare-stat-value.right .compare-attack-dps { flex-direction: row-reverse; justify-content: flex-end; text-align: right; }
+.compare-stat-value.right .compare-attack-content { text-align: left; }
+.compare-attack-dps .compare-weapon-list { width: auto; gap: 0.12rem; }
+.compare-stat-value.left .compare-attack-dps .compare-weapon-list { align-items: flex-start; }
+.compare-stat-value.right .compare-attack-dps .compare-weapon-list { align-items: flex-end; }
+.compare-attack-with-dps .compare-weapon-group + .compare-weapon-group { margin: 0; padding: 0; border: 0; }
+.compare-attributes-value { color: var(--text-dim); font-size: 0.84rem; font-weight: 700; }
 .compare-weapon-group { position: relative; display: flex; flex-direction: column; gap: 0.12rem; }
 .compare-weapon-group + .compare-weapon-group { margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.1); }
 .compare-weapon-line { white-space: nowrap; }
 /* 다중 피해 줄도 각 진영의 바깥쪽 기준선을 유지한다. */
 .compare-weapon-bonus-line { padding: 0; }
 .compare-weapon-attack > .compare-weapon-group > .atk-badge { position: absolute; top: 50%; transform: translateY(-50%); }
-.compare-stat-value.left .compare-weapon-attack > .compare-weapon-group > .atk-badge { right: -2.75rem; }
-.compare-stat-value.right .compare-weapon-attack > .compare-weapon-group > .atk-badge { left: -2.75rem; }
+.compare-stat-value.left .compare-weapon-attack > .compare-weapon-group > .atk-badge { right: -4rem; }
+.compare-stat-value.right .compare-weapon-attack > .compare-weapon-group > .atk-badge { left: -4rem; }
 .compare-weapon-bonus-label { color: var(--text-dim); font-size: 0.8em; margin: 0 0.32rem; }
 .compare-weapon-base-label { color: var(--text-dim); font-size: 0.8em; margin: 0 0.32rem; }
 .compare-weapon-type { color: var(--text-dim); font-size: 0.76em; margin-right: 0.3rem; }
@@ -914,6 +953,7 @@ td, .sol-value, .wiki-atk-val-cell { line-height: 1.4;
 }
 
 .modal-body { padding: 1.3rem; }
+.modal-body .upgrades-section > :last-child { margin-bottom: 0 !important; }
 
 /* 초상화 + 설명 */
 .modal-top-section {

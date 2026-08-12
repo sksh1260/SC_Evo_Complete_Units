@@ -12073,6 +12073,7 @@ function toggleUpg(id) {
   toggleUpgRAF = requestAnimationFrame(function() {
     toggleUpgRAF = null;
     renderTable();
+    if (currentAppView === "compare") renderCompareView();
     var modal = document.getElementById("detail-modal");
     if (currentModalUnit && modal && modal.classList.contains("active")) {
       openModal(currentModalUnit);
@@ -13268,63 +13269,48 @@ var currentAppView = "database";
 var compareUnitIds = { left: "sc2_marine", right: "sc2_zergling" };
 var compareOptionIds = {};
 var compareUpgradeState = { active: {}, atk: {}, armor: {}, shield: {}, full: false };
+var isRenderingComparePanels = false;
 
 function updateCompareUpgradeUI() {
   var fullBtn = document.getElementById("btn-compare-fullupg");
   var atkSelect = document.getElementById("sel-compare-atk-upg");
   var armorSelect = document.getElementById("sel-compare-armor-upg");
-  if (fullBtn) fullBtn.classList.toggle("active", compareUpgradeState.full);
-  if (atkSelect) atkSelect.value = compareUpgradeState.full ? "3" : (atkSelect.value || "0");
-  if (armorSelect) armorSelect.value = compareUpgradeState.full ? "3" : (armorSelect.value || "0");
+  var speedBtn = document.getElementById("btn-compare-game-speed");
+  if (fullBtn) fullBtn.classList.toggle("active", isFullUpgradeActive);
+  if (atkSelect) atkSelect.value = document.getElementById("sel-sidebar-atk-upg").value;
+  if (armorSelect) armorSelect.value = document.getElementById("sel-sidebar-armor-upg").value;
+  if (speedBtn) {
+    speedBtn.setAttribute("aria-pressed", gameSpeedMultiplier === 1.4 ? "true" : "false");
+    var options = speedBtn.querySelectorAll(".game-speed-option");
+    for (var i = 0; i < options.length; i++) options[i].classList.toggle("active", (i === 0) === (gameSpeedMultiplier === 1));
+  }
 }
 
 function toggleCompareFullUpgrade() {
-  compareUpgradeState.full = !compareUpgradeState.full;
-  if (compareUpgradeState.full) {
-    compareUpgradeState.active = {};
-    getAllUpgradeKeys().forEach(function(key) { compareUpgradeState.active[key] = true; });
-    compareUpgradeState.atk = {};
-    compareUpgradeState.armor = {};
-    compareUpgradeState.shield = {};
-    UNIT_DATA.forEach(function(u) {
-      compareUpgradeState.atk[u.id] = hasAtkUpgDropdown(u) ? 3 : 0;
-      compareUpgradeState.armor[u.id] = hasArmorUpgDropdown(u) ? 3 : 0;
-      compareUpgradeState.shield[u.id] = u.race && u.race.indexOf("protoss") >= 0 && u.shields > 0 ? 3 : 0;
-    });
-  } else {
-    compareUpgradeState.active = {};
-    compareUpgradeState.atk = {};
-    compareUpgradeState.armor = {};
-    compareUpgradeState.shield = {};
-  }
+  toggleFullUpgrade();
   updateCompareUpgradeUI();
-  if (!compareUpgradeState.full) {
-    var atkSelect = document.getElementById("sel-compare-atk-upg");
-    var armorSelect = document.getElementById("sel-compare-armor-upg");
-    if (atkSelect) atkSelect.value = "0";
-    if (armorSelect) armorSelect.value = "0";
-  }
   renderCompareView();
 }
 
 function setCompareAtkUpg(value) {
-  var level = parseInt(value, 10) || 0;
-  compareUpgradeState.full = false;
-  compareUpgradeState.atk = {};
-  UNIT_DATA.forEach(function(u) { compareUpgradeState.atk[u.id] = hasAtkUpgDropdown(u) ? level : 0; });
+  var dbSelect = document.getElementById("sel-sidebar-atk-upg");
+  if (dbSelect) dbSelect.value = value;
+  setGlobalAtkUpg(value);
   updateCompareUpgradeUI();
   renderCompareView();
 }
 
 function setCompareArmorUpg(value) {
-  var level = parseInt(value, 10) || 0;
-  compareUpgradeState.full = false;
-  compareUpgradeState.armor = {};
-  compareUpgradeState.shield = {};
-  UNIT_DATA.forEach(function(u) {
-    compareUpgradeState.armor[u.id] = hasArmorUpgDropdown(u) ? level : 0;
-    compareUpgradeState.shield[u.id] = u.race && u.race.indexOf("protoss") >= 0 && u.shields > 0 ? level : 0;
-  });
+  var dbSelect = document.getElementById("sel-sidebar-armor-upg");
+  if (dbSelect) dbSelect.value = value;
+  setGlobalArmorUpg(value);
+  updateCompareUpgradeUI();
+  renderCompareView();
+}
+
+function toggleCompareGameSpeed() {
+  var speedBtn = document.getElementById("btn-game-speed");
+  if (speedBtn) speedBtn.click();
   updateCompareUpgradeUI();
   renderCompareView();
 }
@@ -13353,11 +13339,15 @@ function compareUsesDbModeCostRules(u) {
   return !!(u && (u.id === "siege_tank_siege" || (u.name && u.name.indexOf("시즈 모드") >= 0)));
 }
 
+function compareUsesPairUnitRules(u) {
+  return !!(u && (u.id === "zergling" || u.id === "sc2_zergling" || u.id === "scourge"));
+}
+
 function compareCostTotal(u) {
   if (compareUsesDbModeCostRules(u)) return null;
   var total = ((u.cost && u.cost.minerals) || 0) + ((u.cost && u.cost.gas) || 0) +
     ((u.addCost && u.addCost.minerals) || 0) + ((u.addCost && u.addCost.gas) || 0);
-  return total > 0 ? total : null;
+  return total > 0 ? total / (compareUsesPairUnitRules(u) ? 2 : 1) : null;
 }
 
 function compareCostText(u) {
@@ -13367,9 +13357,10 @@ function compareCostText(u) {
   var addM = (u.addCost && u.addCost.minerals) || 0;
   var addG = (u.addCost && u.addCost.gas) || 0;
   if (!m && !g && !addM && !addG) return "-";
+  var unitCount = compareUsesPairUnitRules(u) ? 2 : 1;
   var parts = [];
-  if (m + addM) parts.push("<span class='compare-value mineral'>" + (m + addM) + "</span>");
-  if (g + addG) parts.push("<span class='compare-value gas'>" + (g + addG) + "</span>");
+  if (m + addM) parts.push("<span class='compare-value'>" + ((m + addM) / unitCount) + "</span>");
+  if (g + addG) parts.push("<span class='compare-value'>" + ((g + addG) / unitCount) + "</span>");
   return parts.join(" / ");
 }
 
@@ -13450,19 +13441,53 @@ function compareDpsText(u, side) {
       (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal")) ||
       (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives")) ||
       ((u.id === "marine" || u.id === "firebat" || u.id === "sc2_marine" || u.id === "sc2_marauder") && isUpgActive(u.id + "_stimpack"));
-    var value = compareRaceValue(fmtNum(compareDpsForWeapon(u, w), 2), u, changed);
-    var baseLabel = "<span class='compare-weapon-base-label'>기본</span>";
-    lines.push("<div class='compare-weapon-line'>" + (side === "left" ? baseLabel + value : value + baseLabel) + "</div>");
+    var stim = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
+    var value = compareRaceValue((stim ? stimIndicatorHtml() : "") + fmtNum(compareDpsForWeapon(u, w), 2), u, changed);
+    lines.push("<div class='compare-weapon-line'>" + value + "</div>");
     (w.bonusDmg || []).forEach(function(bonus) {
       var specialExtra = compareBonusUpgradeExtra(u, bonus);
       var bonusDps = compareDpsForWeapon(u, { dmg: (bonus.base || 0) + specialExtra, dmgUpg: bonus.upg, hits: bonus.hits || w.hits, cd: w.cd });
-      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + bonus.key + "</span>";
       var bonusValue = compareRaceValue(fmtNum(bonusDps, 2), u, changed || specialExtra > 0);
-      lines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + (side === "left" ? bonusLabel + bonusValue : bonusValue + bonusLabel) + "</div>");
+      lines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + bonusValue + "</div>");
     });
     groups.push("<div class='compare-weapon-group'>" + lines.join("") + "</div>");
   });
   return groups.length ? "<div class='compare-weapon-list'>" + groups.join("") + "</div>" : "-";
+}
+
+function compareAttackWithDps(u, side) {
+  var weapons = ((u && u.weapons) || []).filter(function(w) { return w && w.dmg; });
+  var upgradeLevel = getAtkUpg(u.id);
+  var dpsLabelIndex = Math.floor(weapons.length / 2);
+  if (!weapons.length) return "-";
+  var stim = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
+  var attackChanged = upgradeLevel > 0 || (u.id === "reaver" && isUpgActive("reaver_damage"));
+  var dpsChanged = attackChanged || (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal")) || (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives")) || stim;
+  return "<div class='compare-attack-with-dps " + side + "'>" + weapons.map(function(w, weaponIndex) {
+    var attackLines = [];
+    var damage = (w.dmg || 0) + upgradeLevel * (w.dmgUpg !== undefined ? w.dmgUpg : 1);
+    var attackValue = compareRaceValue(fmtNum(damage, 2), u, attackChanged) + (w.hits > 1 ? " × " + w.hits : "");
+    var baseLabel = "<span class='compare-weapon-base-label'>기본</span>";
+    attackLines.push("<div class='compare-weapon-line'>" + (side === "left" ? baseLabel + attackValue : attackValue + baseLabel) + "</div>");
+    var dpsLines = ["<div class='compare-weapon-line'>" + compareRaceValue((stim ? stimIndicatorHtml() : "") + fmtNum(compareDpsForWeapon(u, w), 2), u, dpsChanged) + "</div>"];
+    (w.bonusDmg || []).forEach(function(bonus) {
+      var specialExtra = compareBonusUpgradeExtra(u, bonus);
+      var bonusDamage = (bonus.base || 0) + upgradeLevel * (bonus.upg !== undefined ? bonus.upg : 1) + specialExtra;
+      var bonusValue = compareRaceValue(fmtNum(bonusDamage, 2), u, attackChanged || specialExtra > 0) + ((bonus.hits || w.hits) > 1 ? " × " + (bonus.hits || w.hits) : "");
+      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + bonus.key + "</span>";
+      attackLines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + (side === "left" ? bonusLabel + bonusValue : bonusValue + bonusLabel) + "</div>");
+      var bonusDps = compareDpsForWeapon(u, { dmg: (bonus.base || 0) + specialExtra, dmgUpg: bonus.upg, hits: bonus.hits || w.hits, cd: w.cd });
+      dpsLines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + compareRaceValue(fmtNum(bonusDps, 2), u, dpsChanged || specialExtra > 0) + "</div>");
+    });
+    var dpsLabel = weaponIndex === dpsLabelIndex ? "<span class='compare-attack-dps-label'>DPS</span>" : "";
+    var dpsHtml = "<div class='compare-attack-dps'>" + dpsLabel + "<div class='compare-weapon-list'>" + dpsLines.join("") + "</div></div>";
+    var attackHtml = "<div class='compare-attack-content compare-weapon-attack'><div class='compare-weapon-group'>" + attackLines.join("") + compareTargetBadge(w.type) + "</div></div>";
+    return "<div class='compare-attack-pair'>" + (side === "left" ? dpsHtml + attackHtml : attackHtml + dpsHtml) + "</div>";
+  }).join("") + "</div>";
+}
+
+function compareAttributesText(u) {
+  return u && u.attributes ? "<span class='compare-attributes-value'>" + u.attributes + "</span>" : "-";
 }
 
 function compareHasDps(u) {
@@ -13553,8 +13578,7 @@ function compareHealthText(u) {
   if (!u || !u.hp) return "-";
   var currentHp = (u.hp || 0) + ((u.id === "sc2_marine" && isUpgActive("sc2_marine_shield")) ? 10 : 0) + ((u.id === "sc2_baneling" && isUpgActive("sc2_baneling_speed")) ? 5 : 0);
   var changed = currentHp !== (u.hp || 0);
-  var raceClass = u.race.indexOf("terran") >= 0 ? "atk-terran" : (u.race.indexOf("zerg") >= 0 ? "atk-zerg" : "atk-protoss");
-  var hpText = compareValue(currentHp, "hp" + (changed ? " compare-upgraded " + raceClass : ""));
+  var hpText = compareValue(currentHp, "hp" + (changed ? " compare-hp-upgraded" : ""));
   return u.race && u.race.indexOf("protoss") >= 0 && u.shields > 0 ? compareValue(u.shields, "shield") + " / " + hpText : hpText;
 }
 
@@ -13575,8 +13599,7 @@ function compareEnergyText(u) {
   var energyMeta = ENERGY_UPGRADE_MAP[u.id];
   var changed = !!(energyMeta && isUpgActive(energyMeta.key));
   var baseEnergy = (u.energy || 50) + (changed ? 25 : 0);
-  var raceClass = u.race.indexOf("terran") >= 0 ? "atk-terran" : (u.race.indexOf("zerg") >= 0 ? "atk-zerg" : "atk-protoss");
-  return compareValue(baseEnergy + " / " + maxEnergy, changed ? ("compare-upgraded " + raceClass) : "");
+  return compareValue(baseEnergy + " / " + maxEnergy, "energy" + (changed ? " compare-energy-upgraded" : ""));
 }
 
 function renderCompareUnitSummary(el, u) {
@@ -13609,17 +13632,17 @@ function renderCompareStats() {
   };
   var rows = [
     { label: "비용", left: compareCostText(left), right: compareCostText(right), nLeft: compareCostTotal(left), nRight: compareCostTotal(right), lower: true },
-    { label: "인구", left: !compareUsesDbModeCostRules(left) && left.cost && left.cost.supply ? compareValue(left.cost.supply, "armor") : "-", right: !compareUsesDbModeCostRules(right) && right.cost && right.cost.supply ? compareValue(right.cost.supply, "armor") : "-", nLeft: !compareUsesDbModeCostRules(left) && (left.cost && left.cost.supply) || null, nRight: !compareUsesDbModeCostRules(right) && (right.cost && right.cost.supply) || null, lower: true },
-    { label: "생산 시간", left: !compareUsesDbModeCostRules(left) && left.buildTime ? compareValue(fmtNum(buildTime(left), 1), "time") : "-", right: !compareUsesDbModeCostRules(right) && right.buildTime ? compareValue(fmtNum(buildTime(right), 1), "time") : "-", nLeft: !compareUsesDbModeCostRules(left) && left.buildTime ? buildTime(left) : null, nRight: !compareUsesDbModeCostRules(right) && right.buildTime ? buildTime(right) : null, lower: true },
+    { label: "인구", left: !compareUsesDbModeCostRules(left) && left.cost && left.cost.supply ? compareValue(left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1), "armor") : "-", right: !compareUsesDbModeCostRules(right) && right.cost && right.cost.supply ? compareValue(right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1), "armor") : "-", nLeft: !compareUsesDbModeCostRules(left) && (left.cost && left.cost.supply) ? left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && (right.cost && right.cost.supply) ? right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
+    { label: "생산 시간", left: !compareUsesDbModeCostRules(left) && left.buildTime ? compareValue(fmtNum(buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1), 1), "") : "-", right: !compareUsesDbModeCostRules(right) && right.buildTime ? compareValue(fmtNum(buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1), 1), "") : "-", nLeft: !compareUsesDbModeCostRules(left) && left.buildTime ? buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && right.buildTime ? buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
     { label: "체력", left: compareHealthText(left), right: compareHealthText(right), nLeft: left.hp ? sortVal(left, "hp") : null, nRight: right.hp ? sortVal(right, "hp") : null },
     { label: "에너지", left: compareEnergyText(left), right: compareEnergyText(right), nLeft: left.maxEnergy ? sortVal(left, "energy") : null, nRight: right.maxEnergy ? sortVal(right, "energy") : null },
     { label: "방어력", left: compareArmorText(left), right: compareArmorText(right), nLeft: left.armor !== undefined ? sortVal(left, "armor") : null, nRight: right.armor !== undefined ? sortVal(right, "armor") : null },
     { label: "시야", left: left.sight ? compareStatValue(left, "sight", fmtNum(sortVal(left, "sight"), 2)) : "-", right: right.sight ? compareStatValue(right, "sight", fmtNum(sortVal(right, "sight"), 2)) : "-", nLeft: left.sight ? sortVal(left, "sight") : null, nRight: right.sight ? sortVal(right, "sight") : null },
     { label: "이동 속도", left: left.speed ? compareStatValue(left, "speed", fmtNum(scaleRate(sortVal(left, "speed")), 2)) : "-", right: right.speed ? compareStatValue(right, "speed", fmtNum(scaleRate(sortVal(right, "speed")), 2)) : "-", nLeft: left.speed ? scaleRate(sortVal(left, "speed")) : null, nRight: right.speed ? scaleRate(sortVal(right, "speed")) : null },
-    { label: "공격력", left: compareWeaponText(left, "left"), right: compareWeaponText(right, "right"), nLeft: left.weapons && left.weapons[0] && left.weapons[0].dmg ? sortVal(left, "damage") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].dmg ? sortVal(right, "damage") : null },
+    { label: "공격력", left: compareAttackWithDps(left, "left"), right: compareAttackWithDps(right, "right"), nLeft: left.weapons && left.weapons[0] && left.weapons[0].dmg ? sortVal(left, "damage") * (left.weapons[0].hits || 1) : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].dmg ? sortVal(right, "damage") * (right.weapons[0].hits || 1) : null },
     { label: "사거리", left: left.weapons && left.weapons[0] && left.weapons[0].range ? compareStatValue(left, "range", fmtNum(sortVal(left, "range"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].range ? compareStatValue(right, "range", fmtNum(sortVal(right, "range"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].range ? sortVal(left, "range") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].range ? sortVal(right, "range") : null },
     { label: "공격 주기", left: left.weapons && left.weapons[0] && left.weapons[0].cd ? compareStatValue(left, "cooldown", fmtNum(sortVal(left, "cooldown"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].cd ? compareStatValue(right, "cooldown", fmtNum(sortVal(right, "cooldown"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].cd ? sortVal(left, "cooldown") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].cd ? sortVal(right, "cooldown") : null, lower: true },
-    { label: "DPS", left: compareDpsText(left, "left"), right: compareDpsText(right, "right"), nLeft: compareHasDps(left) ? sortVal(left, "dps") : null, nRight: compareHasDps(right) ? sortVal(right, "dps") : null }
+    { label: "특성", left: compareAttributesText(left), right: compareAttributesText(right), nLeft: null, nRight: null }
   ];
   out.innerHTML = rows.map(function(row) {
     var leftBetter = row.nLeft !== null && row.nRight !== null && (row.lower ? row.nLeft < row.nRight : row.nLeft > row.nRight);
@@ -13641,7 +13664,48 @@ function renderCompareView() {
   var right = getCompareUnit(compareUnitIds.right);
   renderCompareUnitSummary(document.getElementById("compare-left-unit"), left);
   renderCompareUnitSummary(document.getElementById("compare-right-unit"), right);
-  renderCompareStats();
+  renderCompareModalPanels(left, right);
+  updateCompareUpgradeUI();
+}
+
+function renderCompareModalPanels(left, right) {
+  var host = document.getElementById("compare-modal-panels");
+  var modal = document.getElementById("detail-modal");
+  var source = modal && modal.querySelector(".modal-content");
+  if (!host || !modal || !source) return;
+  var makePanel = function(unit) {
+    openModal(unit);
+    var panel = source.cloneNode(true);
+    panel.classList.add("compare-modal-panel");
+    var close = panel.querySelector(".close-btn");
+    if (close) close.remove();
+    // 비교용 복제본에는 비어 있는 능력/업그레이드 영역이 높이를 차지하지 않게 한다.
+    panel.querySelectorAll(".upgrades-section").forEach(function(section) {
+      if (!section.querySelector(".modal-item-card")) {
+        var title = section.previousElementSibling;
+        section.remove();
+        if (title && title.matches("h3")) title.remove();
+      }
+    });
+    panel.querySelectorAll("#wiki-research-container").forEach(function(section) {
+      if (!section.textContent.trim() && !section.children.length) {
+        var title = section.previousElementSibling;
+        section.remove();
+        if (title && title.matches("h3")) title.remove();
+      }
+    });
+    panel.querySelectorAll("[id]").forEach(function(node) { node.removeAttribute("id"); });
+    return panel.outerHTML;
+  };
+  // 비교 화면에서는 openModal이 실제 오버레이를 열지 않도록 막는다. 다만
+  // 여기서는 원본 모달의 내용을 새 유닛으로 렌더링한 뒤 복제해야 하므로,
+  // 두 패널을 만드는 전체 구간에서만 렌더링을 허용한다.
+  isRenderingComparePanels = true;
+  var leftPanel = makePanel(left);
+  var rightPanel = makePanel(right);
+  isRenderingComparePanels = false;
+  host.innerHTML = leftPanel + rightPanel;
+  modal.classList.remove("active");
 }
 
 function initCompareView() {
@@ -13682,6 +13746,7 @@ function setAppView(view) {
   if (compare) compare.hidden = currentAppView !== "compare";
   if (compareSidebar && compare && compareSidebar.parentNode !== compare) compare.appendChild(compareSidebar);
   if (layout) layout.classList.toggle("compare-active", currentAppView === "compare");
+  document.body.classList.toggle("compare-view-active", currentAppView === "compare");
   if (header) header.classList.toggle("compare-mode", currentAppView === "compare");
   if (compareSidebar) compareSidebar.hidden = currentAppView !== "compare";
   var menu = document.querySelectorAll(".top-menu-btn[data-view]");
@@ -14048,6 +14113,7 @@ for (var sc2ProtossStructureIndex = 0; sc2ProtossStructureIndex < sc2ProtossStru
 }
 
 function openModalById(sid) {
+  if (currentAppView === "compare") return;
   var target = UNIT_DATA.find(function(x) { return x.id === sid; });
   if (target) {
     openModal(target);
@@ -14889,6 +14955,7 @@ function openModalById(sid) {
   }
 
 function openModal(u) {
+  if (currentAppView === "compare" && !isRenderingComparePanels) return;
   currentModalUnit = u;
   var modal = document.getElementById("detail-modal");
   if (!modal) return;

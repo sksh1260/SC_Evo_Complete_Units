@@ -230,7 +230,6 @@
     </div>
 
     <aside id="compare-filter-sidebar" class="compare-filter-sidebar" hidden aria-label="비교 업그레이드">
-      <div class="sidebar-upg-divider"></div>
       <div class="ability-toggle-side-box side-filter-item" onclick="toggleCompareFullUpgrade()" title="비교 대상 전체 풀 업그레이드 적용/해제">
         <span class="ability-side-lbl">풀업</span>
         <button type="button" class="btn-stim-toggle btn-ability-toggle-lg" id="btn-compare-fullupg"><span class="toggle-knob"></span></button>
@@ -247,25 +246,24 @@
           <option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
         </select>
       </div>
+      <div class="sidebar-upg-divider"></div>
+      <button type="button" class="game-speed-toggle" id="btn-compare-game-speed" onclick="toggleCompareGameSpeed()" title="게임 속도">
+        <span class="game-speed-option">1.0x</span>
+        <span class="game-speed-option active">1.4x</span>
+      </button>
+      <div class="sidebar-upg-divider"></div>
+      <span class="mode-version sidebar-version">v1.20.3</span>
     </aside>
 
     <section id="compare-view" class="compare-view" aria-label="유닛 비교" hidden>
-      <div class="compare-heading">
-        <span>UNIT COMPARISON</span>
-        <h1>유닛 비교</h1>
-      </div>
       <div class="compare-board">
         <article class="compare-unit-card compare-unit-left">
           <input id="compare-left-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
-          <div id="compare-left-unit" class="compare-unit-summary"></div>
         </article>
-        <div class="compare-versus" aria-hidden="true">VS</div>
-        <div class="compare-search-hint" aria-hidden="true">검색</div>
         <article class="compare-unit-card compare-unit-right">
           <input id="compare-right-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
-          <div id="compare-right-unit" class="compare-unit-summary"></div>
         </article>
-        <div id="compare-stats" class="compare-stats"></div>
+        <div id="compare-modal-panels" class="compare-modal-panels"></div>
       </div>
       <datalist id="compare-unit-options"></datalist>
     </section>
