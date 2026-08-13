@@ -89,6 +89,7 @@
         <nav class="top-menu" aria-label="주요 메뉴">
           <button type="button" class="top-menu-btn active" data-view="database" aria-current="page">유닛 DB</button>
           <button type="button" class="top-menu-btn" data-view="compare">유닛 비교</button>
+          <button type="button" class="top-menu-btn" data-view="patch">패치 내역</button>
         </nav>
       </div>
     </div>
@@ -258,15 +259,33 @@
     <section id="compare-view" class="compare-view" aria-label="유닛 비교" hidden>
       <div class="compare-board">
         <article class="compare-unit-card compare-unit-left">
-          <input id="compare-left-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
+          <div class="compare-select-wrap">
+            <input id="compare-left-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
         </article>
         <article class="compare-unit-card compare-unit-right">
-          <input id="compare-right-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
+          <div class="compare-select-wrap">
+            <input id="compare-right-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
         </article>
         <div id="compare-modal-panels" class="compare-modal-panels"></div>
       </div>
       <datalist id="compare-unit-options"></datalist>
     </section>
+
+    <!-- 패치 내역 뷰 -->
+    <section id="patch-view" class="patch-view" aria-label="패치 내역" hidden>
+      <div id="patch-content" class="patch-content"></div>
+    </section>
+
   </main>
 
   <!-- 상세 정보 모달 -->
@@ -326,7 +345,7 @@
                     <td class="sol-value" id="wiki-armor-v2">-</td>
                   </tr>
                   <tr id="wiki-sight-speed-row">
-                    <td class="sol-label">시야 (탐지)</td>
+                    <td class="sol-label" id="wiki-sight-label">시야 (탐지)</td>
                     <td class="sol-value" id="wiki-sight">-</td>
                     <td class="sol-label" id="wiki-speed-label">이동 속도</td>
                     <td class="sol-value" id="wiki-speed">-</td>

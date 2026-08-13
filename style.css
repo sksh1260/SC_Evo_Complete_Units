@@ -108,7 +108,10 @@ body.theme-protoss {
 
 /* html font-size는 index.html의 QHD 스케일 스크립트에서 동적으로 설정됩니다 */
 /* html { font-size: 17.325px; } */
-html, body { height: 100vh; overflow: hidden; }
+html {
+  overflow-y: scroll;
+}
+html, body { min-height: 100vh; }
 
 
 body {
@@ -310,7 +313,12 @@ header {
   transition: all 0.25s;
 }
 .search-input:focus { border-color: var(--point-color); box-shadow: 0 0 6px var(--glow-color); }
-header.compare-mode .cb-center { visibility: hidden; }
+header.compare-mode .cb-center,
+header.patch-mode .cb-center { visibility: hidden; }
+
+body.patch-view-active .left-filter-sidebar,
+.main-layout.patch-active .left-filter-sidebar { display: none !important; }
+body.patch-view-active .main-layout { display: block; padding: 0; }
 
 /* ─────────────────────────────────────────────────────────────
    유닛 비교
@@ -342,10 +350,14 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-unit-card { width: 22rem; min-width: 0; justify-self: center; }
 .compare-unit-right { text-align: right; }
 .compare-picker-label { display: block; margin: 0 0 0.35rem; color: var(--text-dim); font-size: 0.7rem; font-weight: 700; }
+.compare-select-wrap {
+  position: relative;
+  width: 100%;
+}
 .compare-select {
   width: 100%;
   height: 2.2rem;
-  padding: 0 0.65rem;
+  padding: 0 2.4rem 0 0.85rem;
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 4px;
   background: rgba(0,0,0,0.2);
@@ -400,9 +412,8 @@ header.compare-mode .cb-center { visibility: hidden; }
 .compare-stat-label { position: relative; color: var(--text-dim); font-size: 0.96rem; font-weight: 800; text-align: center; }
 .compare-stat-label-text { position: relative; display: inline-block; }
 .compare-view[hidden] { display: none; }
-.main-layout.compare-active .left-filter-sidebar { display: none; }
-html:has(body.compare-view-active) { height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: auto; }
-body.compare-view-active { height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: visible; }
+.main-layout.compare-active .left-filter-sidebar,
+.main-layout.patch-active .left-filter-sidebar { display: none; }
 .compare-filter-sidebar {
   position: absolute;
   left: -4.9rem;
@@ -3409,3 +3420,301 @@ tr.row-ability-sub td {
   display: inline-block;
   animation: glowPulseHp 2s infinite ease-in-out;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   패치 내역 (Patch History) 뷰 스타일
+   ───────────────────────────────────────────────────────────── */
+.patch-view {
+  width: 100%;
+  max-width: 122rem;
+  margin: 0 auto;
+  padding: 0.6rem 0.8rem 2rem;
+  box-sizing: border-box;
+}
+
+.patch-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ph-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+
+.patch-block {
+  background: rgba(18, 24, 38, 0.7);
+  border: 1px solid var(--panel-border);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.patch-block[open] {
+  border-color: rgba(90, 150, 230, 0.4);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* 브라우저 기본 마커 숨기기 & 우측 화살표 상태 아이콘 추가 */
+.patch-block-summary::-webkit-details-marker {
+  display: none;
+}
+
+.patch-block-summary {
+  list-style: none;
+  position: relative;
+  padding: 0.55rem 2.5rem 0.55rem 1rem;
+  background: rgba(25, 35, 55, 0.8);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-bright);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.patch-block-summary:hover {
+  background: rgba(35, 50, 78, 0.9);
+}
+
+/* 우측 접힘/펼침 화살표 아이콘 */
+.patch-block-summary::after {
+  content: "❯";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* 펼쳐진 상태(open) 화살표 회전 (아래 방향) */
+.patch-block[open] .patch-block-summary::after {
+  transform: translateY(-50%) rotate(90deg);
+  color: #a0c4ff;
+}
+
+.ph-header-main {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.ph-main-ver {
+  color: #64b5f6;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.ph-main-date {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+/* 서브 패치 버전 뱃지 칩 모음 */
+.ph-sub-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-left: 0.8rem;
+}
+
+.ph-sub-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.78rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ph-sub-chip:hover {
+  background: rgba(100, 181, 246, 0.12);
+  border-color: rgba(100, 181, 246, 0.3);
+}
+
+.ph-chip-ver {
+  color: #90caf9;
+  font-weight: 700;
+}
+
+.ph-chip-date {
+  color: #8899a6;
+  font-weight: 400;
+  font-size: 0.74rem;
+}
+
+.patch-block-body {
+  padding: 0.7rem 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.patch-cols {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+@media (max-width: 64rem) {
+  .patch-cols {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+}
+
+.ph-col {
+  background: rgba(10, 14, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+}
+
+/* 종족별 특화 배경색 및 테두리 */
+.ph-col-common {
+  background: rgba(10, 14, 24, 0.6);
+}
+.ph-col-terran {
+  background: rgba(10, 30, 20, 0.55);
+  border: 1px solid rgba(61, 242, 141, 0.18);
+}
+.ph-col-protoss {
+  background: rgba(10, 22, 40, 0.55);
+  border: 1px solid rgba(77, 166, 255, 0.18);
+}
+.ph-col-zerg {
+  background: rgba(35, 20, 10, 0.55);
+  border: 1px solid rgba(232, 139, 36, 0.18);
+}
+
+.ph-col-label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid;
+  letter-spacing: 0.5px;
+}
+
+/* 종족명 DB 대표 색상 적용 */
+.ph-col-common .ph-col-label  { color: #a0aab8; border-color: rgba(160, 170, 184, 0.35); }
+.ph-col-terran .ph-col-label  { color: var(--terran-color); border-color: color-mix(in srgb, var(--terran-color) 40%, transparent); }
+.ph-col-protoss .ph-col-label { color: var(--protoss-color); border-color: color-mix(in srgb, var(--protoss-color) 40%, transparent); }
+.ph-col-zerg .ph-col-label    { color: var(--zerg-color); border-color: color-mix(in srgb, var(--zerg-color) 40%, transparent); }
+
+.ph-col-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ph-unit-header {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-bright);
+  margin-top: 0.45rem;
+  padding-top: 0.3rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.ph-unit-header:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.ph-line {
+  font-size: 0.83rem;
+  line-height: 1.38;
+  color: rgba(230, 235, 245, 0.9);
+  word-break: keep-all;
+}
+
+/* ◦ 하위 항목 들여쓰기 */
+.ph-line.ph-sub-item {
+  padding-left: 1.25rem;
+}
+
+.ph-arrow {
+  color: #ffb74d;
+  font-weight: bold;
+  margin: 0 0.15rem;
+}
+
+.ph-old-plain {
+  color: #ef9a9a;
+  opacity: 0.9;
+}
+
+.ph-old {
+  color: #ef9a9a;
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+.ph-new {
+  color: #81c784;
+  font-weight: 700;
+}
+
+/* 중간 소버전 배지 (눈에 잘 띄게 빨간색 적용) */
+.patch-ver-badge {
+  display: inline-block;
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.5);
+  color: #ff5252;
+  font-size: 0.72rem;
+  padding: 0.05rem 0.38rem;
+  border-radius: 3px;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+
+/* 패치 내역 더 보기 버튼 */
+.ph-load-more-wrap {
+  text-align: center;
+  margin-top: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.ph-btn-load-more {
+  padding: 0.65rem 2.2rem;
+  background: rgba(25, 38, 60, 0.85);
+  border: 1px solid rgba(100, 181, 246, 0.4);
+  color: #90caf9;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ph-btn-load-more:hover {
+  background: rgba(40, 65, 105, 0.95);
+  border-color: #64b5f6;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(100, 181, 246, 0.35);
+  transform: translateY(-1px);
+}
+
+.ph-btn-load-more:active {
+  transform: translateY(0);
+}
+
+
