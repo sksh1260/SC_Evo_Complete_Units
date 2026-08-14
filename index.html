@@ -230,32 +230,6 @@
       </table>
     </div>
 
-    <aside id="compare-filter-sidebar" class="compare-filter-sidebar" hidden aria-label="비교 업그레이드">
-      <div class="ability-toggle-side-box side-filter-item" onclick="toggleCompareFullUpgrade()" title="비교 대상 전체 풀 업그레이드 적용/해제">
-        <span class="ability-side-lbl">풀업</span>
-        <button type="button" class="btn-stim-toggle btn-ability-toggle-lg" id="btn-compare-fullupg"><span class="toggle-knob"></span></button>
-      </div>
-      <div class="side-upg-select-box side-filter-item" title="비교 대상 공격력 업그레이드">
-        <span class="ability-side-lbl">공격력</span>
-        <select class="sel-sidebar-upg" id="sel-compare-atk-upg" onclick="event.stopPropagation();" onchange="setCompareAtkUpg(this.value)">
-          <option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
-        </select>
-      </div>
-      <div class="side-upg-select-box side-filter-item" title="비교 대상 방어력 업그레이드">
-        <span class="ability-side-lbl">방어력</span>
-        <select class="sel-sidebar-upg" id="sel-compare-armor-upg" onclick="event.stopPropagation();" onchange="setCompareArmorUpg(this.value)">
-          <option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
-        </select>
-      </div>
-      <div class="sidebar-upg-divider"></div>
-      <button type="button" class="game-speed-toggle" id="btn-compare-game-speed" onclick="toggleCompareGameSpeed()" title="게임 속도">
-        <span class="game-speed-option">1.0x</span>
-        <span class="game-speed-option active">1.4x</span>
-      </button>
-      <div class="sidebar-upg-divider"></div>
-      <span class="mode-version sidebar-version">v1.20.3</span>
-    </aside>
-
     <section id="compare-view" class="compare-view" aria-label="유닛 비교" hidden>
       <div class="compare-board">
         <article class="compare-unit-card compare-unit-left">
@@ -267,6 +241,26 @@
             </svg>
           </div>
         </article>
+        <div class="compare-top-controls" id="compare-top-controls">
+          <div class="compare-ctrl-item compare-ctrl-atk" title="비교 대상 공격력 업그레이드">
+            <span class="compare-ctrl-lbl">공격력</span>
+            <select class="sel-sidebar-upg compare-ctrl-sel" id="sel-compare-atk-upg" onclick="event.stopPropagation();" onchange="setCompareAtkUpg(this.value)">
+              <option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
+            </select>
+          </div>
+          <div class="compare-ctrl-divider"></div>
+          <div class="compare-ctrl-item compare-ctrl-fullupg" onclick="toggleCompareFullUpgrade()" title="비교 대상 전체 풀 업그레이드 적용/해제">
+            <span class="compare-ctrl-lbl">풀업</span>
+            <button type="button" class="btn-stim-toggle btn-ability-toggle-lg" id="btn-compare-fullupg"><span class="toggle-knob"></span></button>
+          </div>
+          <div class="compare-ctrl-divider"></div>
+          <div class="compare-ctrl-item compare-ctrl-armor" title="비교 대상 방어력 업그레이드">
+            <span class="compare-ctrl-lbl">방어력</span>
+            <select class="sel-sidebar-upg compare-ctrl-sel" id="sel-compare-armor-upg" onclick="event.stopPropagation();" onchange="setCompareArmorUpg(this.value)">
+              <option value="0">0</option><option value="1">+1</option><option value="2">+2</option><option value="3">+3</option>
+            </select>
+          </div>
+        </div>
         <article class="compare-unit-card compare-unit-right">
           <div class="compare-select-wrap">
             <input id="compare-right-select" class="compare-select" list="compare-unit-options" autocomplete="off" placeholder="유닛 검색">
