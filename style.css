@@ -3541,8 +3541,8 @@ tr.row-ability-sub td {
 
 .ph-header-main {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.45rem;
   flex: 0 0 auto;
 }
 
@@ -3557,6 +3557,40 @@ tr.row-ability-sub td {
   color: var(--text-dim);
   font-size: 0.82rem;
   font-weight: 400;
+}
+
+/* 메인 버전 출처 배지 (아이콘 버튼) */
+.ph-source-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(100, 181, 246, 0.12);
+  border: 1px solid rgba(100, 181, 246, 0.35);
+  color: #90caf9;
+  padding: 0.16rem 0.28rem;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-left: 0.25rem;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.ph-source-badge:hover {
+  background: rgba(100, 181, 246, 0.28);
+  border-color: rgba(100, 181, 246, 0.7);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.ph-ext-icon {
+  width: 0.76rem;
+  height: 0.76rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  opacity: 0.9;
 }
 
 /* 서브 패치 버전 뱃지 칩 모음 */
@@ -3577,7 +3611,41 @@ tr.row-ability-sub td {
   border-radius: 4px;
   padding: 0.12rem 0.45rem;
   font-size: 0.78rem;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ph-sub-chip.is-link {
+  cursor: pointer;
+}
+
+.ph-sub-chip.is-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.ph-sub-chip.is-link .ph-ext-icon {
+  width: 0.68rem;
+  height: 0.68rem;
+  margin-left: -0.05rem;
+  stroke: currentColor;
+  opacity: 0.85;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* 부버전 칩별 외부링크 아이콘 색상 - 각 칩의 고유 글자색과 100% 일치 */
+.ph-sub-chip.ver-sub-1 .ph-ext-icon { stroke: #ff4d4f; }
+.ph-sub-chip.ver-sub-2 .ph-ext-icon { stroke: #ffd600; }
+.ph-sub-chip.ver-sub-3 .ph-ext-icon { stroke: #ff7a00; }
+.ph-sub-chip.ver-sub-4 .ph-ext-icon { stroke: #e2ff3b; }
+.ph-sub-chip.ver-sub-5 .ph-ext-icon { stroke: #ff1744; }
+.ph-sub-chip.ver-sub-6 .ph-ext-icon { stroke: #ffaa6b; }
+.ph-sub-chip.ver-sub-4d .ph-ext-icon { stroke: #ff2a85; }
+.ph-sub-chip.ver-sub-range .ph-ext-icon { stroke: #ffb300; }
+
+.ph-sub-chip.is-link:hover .ph-ext-icon {
+  opacity: 1;
+  transform: translate(1px, -1px);
 }
 
 .ph-sub-chip:hover {

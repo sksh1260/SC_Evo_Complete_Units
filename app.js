@@ -16768,6 +16768,63 @@ function renderPatchColumn(sections, contentKey, tagKey) {
   return html;
 }
 
+var PATCH_SOURCES = {
+  "0.24": "https://ailoso.github.io/Koprulu-Blog-KR/2024/04/12/post-evo-0_24/",
+  "0.25": "https://ailoso.github.io/Koprulu-Blog-KR/2024/04/19/post-evo-0_25/",
+  "0.26": "https://ailoso.github.io/Koprulu-Blog-KR/2024/04/30/post-evo-0_26/",
+  "1.0": "https://ailoso.github.io/Koprulu-Blog-KR/2024/05/13/post-evo-release/",
+  "1.3": "https://ailoso.github.io/Koprulu-Blog-KR/2024/05/24/post-evo-1_3/",
+  "1.4": "https://ailoso.github.io/Koprulu-Blog-KR/2024/06/01/post-evo-1_4/",
+  "1.5": "https://ailoso.github.io/Koprulu-Blog-KR/2024/06/16/post-evo-1_5/",
+  "1.6": "https://ailoso.github.io/Koprulu-Blog-KR/2024/07/17/post-evo-1_6/",
+  "1.7": "https://ailoso.github.io/Koprulu-Blog-KR/2024/08/05/post-evo-1_7/",
+  "1.8": "https://ailoso.github.io/Koprulu-Blog-KR/2024/08/29/post-evo-1_8/",
+  "1.9": "https://ailoso.github.io/Koprulu-Blog-KR/2024/10/05/post-evo-1_9/",
+  "1.10": "https://ailoso.github.io/Koprulu-Blog-KR/2024/11/05/post-evo-1_10/",
+  "1.11": "https://ailoso.github.io/Koprulu-Blog-KR/2024/11/23/post-evo-1_11/",
+  "1.12": "https://ailoso.github.io/Koprulu-Blog-KR/2025/01/31/post-evo-1_12_KR/",
+  "1.13": "https://ailoso.github.io/Koprulu-Blog-KR/2025/02/22/post-evo-1_13_KR/",
+  "1.14": "https://ailoso.github.io/Koprulu-Blog-KR/2025/03/24/post-evo-1_14_KR/",
+  "1.15": "https://ailoso.github.io/Koprulu-Blog-KR/2025/04/13/post-evo-1_15_KR/",
+  "1.15.1": "https://ailoso.github.io/Koprulu-Blog-KR/2025/04/20/post-evo-1_15_1_KR/",
+  "1.16": "https://scevo.org/posts/evo-update-1_16.html",
+  "1.16.1": "https://scevo.org/posts/evo-update-1_16_1.html",
+  "1.16.2": "https://scevo.org/posts/evo-update-1_16_2.html",
+  "1.16.3": "https://scevo.org/posts/evo-update-1_16_3.html",
+  "1.16.4": "https://scevo.org/posts/evo-update-1_16_4.html",
+  "1.16.5": "https://scevo.org/posts/evo-update-1_16_5.html",
+  "1.16.6": "https://scevo.org/posts/evo-update-1_16_5.html",
+  "1.17": "https://scevo.org/posts/evo-update-1_17.html",
+  "1.18": "https://scevo.org/posts/evo-update-1_18.html",
+  "1.18.1": "https://scevo.org/posts/evo-update-1_18_1.html",
+  "1.18.2": "https://scevo.org/posts/evo-update-1_18_2.html",
+  "1.18.3": "https://scevo.org/posts/evo-update-1_18_3.html",
+  "1.19": "https://scevo.org/posts/evo-update-1_19.html",
+  "1.19.1": "https://scevo.org/posts/evo-update-1_19_1.html",
+  "1.19.1.1": "https://scevo.org/posts/evo-update-1_19_1_1.html",
+  "1.20": "https://scevo.org/posts/evo-update-1_20.html",
+  "1.20.1": "https://scevo.org/posts/evo-update-1_20_1.html",
+  "1.20.2": "https://scevo.org/posts/evo-update-1_20_2.html",
+  "1.20.3": "https://scevo.org/posts/evo-update-1_20_3.html"
+};
+
+function getPatchSourceUrl(verStr, fallbackParentVer) {
+  if (!verStr) return null;
+  var clean = String(verStr).replace(/^v/i, "").trim();
+  if (PATCH_SOURCES[clean]) return PATCH_SOURCES[clean];
+
+  var tildeMatch = clean.match(/^([0-9.]+)/);
+  if (tildeMatch && PATCH_SOURCES[tildeMatch[1]]) return PATCH_SOURCES[tildeMatch[1]];
+
+  if (fallbackParentVer) {
+    var pClean = String(fallbackParentVer).replace(/^v/i, "").trim();
+    if (PATCH_SOURCES[pClean]) return PATCH_SOURCES[pClean];
+  }
+  return null;
+}
+
+var EXT_LINK_SVG = "<svg class='ph-ext-icon' viewBox='0 0 24 24' aria-hidden='true'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'></path><polyline points='15 3 21 3 21 9'></polyline><line x1='10' y1='14' x2='21' y2='3'></line></svg>";
+
 function parseVerAndDate(str) {
   if (!str) return { ver: "", date: "" };
   var m = str.match(/^([^(]+)(?:\(([^)]+)\))?/);
@@ -16788,6 +16845,7 @@ function renderPatchBlocks(blocks, offsetIndex) {
     
     var mainInfo = parseVerAndDate(blk.version);
     var mainVerStr = mainInfo.ver.startsWith("v") ? mainInfo.ver : "v" + mainInfo.ver;
+    var mainSourceUrl = getPatchSourceUrl(mainInfo.ver);
 
     var subChipsHtml = "";
     if (blk.subVersions && blk.subVersions.length > 0) {
@@ -16796,6 +16854,16 @@ function renderPatchBlocks(blocks, offsetIndex) {
         var subVerStr = subInfo.ver.startsWith("v") ? subInfo.ver : "v" + subInfo.ver;
         var cls = getPatchSubVerClass(subInfo.ver);
         var dateHtml = subInfo.date ? "<span class='ph-chip-date'>" + escHtml(subInfo.date) + "</span>" : "";
+        var subSourceUrl = getPatchSourceUrl(subInfo.ver, mainInfo.ver);
+
+        if (subSourceUrl) {
+          return "<a href='" + escHtml(subSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-sub-chip " + cls + " is-link' title='" + escHtml(subVerStr) + " 패치노트 원문 보기' onclick='event.stopPropagation();'>" +
+                 "<span class='ph-chip-ver'>" + escHtml(subVerStr) + "</span>" +
+                 dateHtml +
+                 EXT_LINK_SVG +
+                 "</a>";
+        }
+
         return "<span class='ph-sub-chip " + cls + "'>" +
                "<span class='ph-chip-ver'>" + escHtml(subVerStr) + "</span>" +
                dateHtml +
@@ -16825,6 +16893,13 @@ function renderPatchBlocks(blocks, offsetIndex) {
 
     var colCls = "ph-cols-" + (activeColCount || 1);
 
+    var mainSourceBadge = "";
+    if (mainSourceUrl) {
+      mainSourceBadge = "<a href='" + escHtml(mainSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-source-badge' title='" + escHtml(mainVerStr) + " 패치노트 원문 보기' onclick='event.stopPropagation();'>" +
+                        EXT_LINK_SVG +
+                        "</a>";
+    }
+
     html += "<details class='patch-block " + colCls + "' " + (globalIdx === 0 ? "open" : "") + " id='" + id + "'>";
     html += "<summary class='patch-block-summary'>";
     html += "<div class='ph-header-main'>";
@@ -16832,6 +16907,7 @@ function renderPatchBlocks(blocks, offsetIndex) {
     if (mainInfo.date) {
       html += "<span class='ph-main-date'>(" + escHtml(mainInfo.date) + ")</span>";
     }
+    html += mainSourceBadge;
     html += "</div>";
     html += subChipsHtml;
     html += "</summary>";
