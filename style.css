@@ -310,11 +310,24 @@ header {
   border-radius: 4px;
   font-size: 0.9rem;
   outline: none;
-  transition: all 0.25s;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .search-input:focus { border-color: var(--point-color); box-shadow: 0 0 6px var(--glow-color); }
 header.compare-mode .cb-center,
-header.patch-mode .cb-center { visibility: hidden; }
+header.patch-mode .cb-center,
+body.compare-view-active .cb-center,
+body.patch-view-active .cb-center {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+header.compare-mode .search-input,
+header.patch-mode .search-input,
+body.compare-view-active .search-input,
+body.patch-view-active .search-input {
+  transition: none !important;
+}
 
 body.patch-view-active .left-filter-sidebar,
 .main-layout.patch-active .left-filter-sidebar { display: none !important; }
@@ -392,22 +405,60 @@ body.patch-view-active .main-layout { display: block; padding: 0; }
 .compare-value.mineral { color: #8fc8ff; }
 .compare-value.gas { color: #7ae46a; }
 .compare-value.time { color: #fff59d; }
-.compare-value.hp { color: #7ae46a; }
-.compare-value.hp.compare-hp-upgraded { display: inline-block; animation: glowPulseHp 2s infinite ease-in-out; }
-.compare-value.shield { color: #a0c4ff; }
-.compare-value.energy { color: #c792ea; }
-.compare-value.energy.compare-energy-upgraded { display: inline-block; animation: glowPulseEnergy 2s infinite ease-in-out; }
-@keyframes glowPulseEnergy {
-  0%, 100% { text-shadow: 0 0 4px rgba(199,146,234,0.35); }
-  50% { text-shadow: 0 0 9px rgba(199,146,234,0.9), 0 0 16px rgba(199,146,234,0.45); }
+.compare-value.hp.compare-hp-upgraded {
+  display: inline-block;
+  color: #7ae46a !important;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowHp 2s infinite ease-in-out;
 }
-@keyframes glowPulseHp {
-  0%, 100% { text-shadow: 0 0 4px rgba(122,228,106,0.35); }
-  50% { text-shadow: 0 0 9px rgba(122,228,106,0.9), 0 0 16px rgba(122,228,106,0.45); }
+.compare-value.energy .compare-energy-upgraded,
+.compare-value.energy.compare-energy-upgraded {
+  display: inline-block;
+  color: #c792ea !important;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowEnergy 2s infinite ease-in-out;
 }
-.compare-value.compare-upgraded.atk-terran { color: var(--terran-color); display: inline-block; animation: glowPulseTerran 2s infinite ease-in-out; }
-.compare-value.compare-upgraded.atk-zerg { color: var(--zerg-color); display: inline-block; animation: glowPulseZerg 2s infinite ease-in-out; }
-.compare-value.compare-upgraded.atk-protoss { color: var(--protoss-color); display: inline-block; animation: glowPulseProtoss 2s infinite ease-in-out; }
+@keyframes gpuDropGlowEnergy {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(199, 146, 234, 0.4)); }
+  50% { filter: drop-shadow(0 0 4px rgba(199, 146, 234, 0.95)) drop-shadow(0 0 8px rgba(199, 146, 234, 0.45)); }
+}
+@keyframes gpuDropGlowHp {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(122, 228, 106, 0.4)); }
+  50% { filter: drop-shadow(0 0 4px rgba(122, 228, 106, 0.95)) drop-shadow(0 0 8px rgba(122, 228, 106, 0.45)); }
+}
+.compare-value.compare-upgraded.atk-terran {
+  color: var(--terran-color) !important;
+  display: inline-block;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowTerran 2s infinite ease-in-out;
+}
+.compare-value.compare-upgraded.atk-zerg {
+  color: var(--zerg-color) !important;
+  display: inline-block;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowZerg 2s infinite ease-in-out;
+}
+.compare-value.compare-upgraded.atk-protoss {
+  color: var(--protoss-color) !important;
+  display: inline-block;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowProtoss 2s infinite ease-in-out;
+}
 .compare-value.armor { color: #d9e1e8; }
 .compare-stat-label { position: relative; color: var(--text-dim); font-size: 0.96rem; font-weight: 800; text-align: center; }
 .compare-stat-label-text { position: relative; display: inline-block; }
@@ -2534,37 +2585,31 @@ th.sort-desc::after { content: ' ▽'; opacity: 1; color: var(--point-color); fo
   vertical-align: middle !important;
 }
 
-/* 종족별 업그레이드 수치 글로우 파동 모션 애니메이션 (DPS 색상 적용) */
-@keyframes glowPulseTerran {
+/* GPU 하드웨어 가속 수치 밀착 네온 펄스 애니메이션 (리페인트 0% & 글자 100% 쨍한 선명도) */
+@keyframes gpuDropGlowTerran {
   0%, 100% {
-    text-shadow: 0 0 3px rgba(61, 242, 141, 0.4), 0 0 7px rgba(61, 242, 141, 0.2);
-    opacity: 0.92;
+    filter: drop-shadow(0 0 1px rgba(61, 242, 141, 0.4));
   }
   50% {
-    text-shadow: 0 0 9px rgba(61, 242, 141, 0.9), 0 0 15px rgba(61, 242, 141, 0.55);
-    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(61, 242, 141, 0.95)) drop-shadow(0 0 8px rgba(61, 242, 141, 0.45));
   }
 }
 
-@keyframes glowPulseZerg {
+@keyframes gpuDropGlowZerg {
   0%, 100% {
-    text-shadow: 0 0 3px rgba(232, 139, 36, 0.4), 0 0 7px rgba(232, 139, 36, 0.2);
-    opacity: 0.92;
+    filter: drop-shadow(0 0 1px rgba(232, 139, 36, 0.4));
   }
   50% {
-    text-shadow: 0 0 9px rgba(232, 139, 36, 0.9), 0 0 15px rgba(232, 139, 36, 0.55);
-    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(232, 139, 36, 0.95)) drop-shadow(0 0 8px rgba(232, 139, 36, 0.45));
   }
 }
 
-@keyframes glowPulseProtoss {
+@keyframes gpuDropGlowProtoss {
   0%, 100% {
-    text-shadow: 0 0 3px rgba(77, 166, 255, 0.4), 0 0 7px rgba(77, 166, 255, 0.2);
-    opacity: 0.92;
+    filter: drop-shadow(0 0 1px rgba(77, 166, 255, 0.4));
   }
   50% {
-    text-shadow: 0 0 9px rgba(77, 166, 255, 0.9), 0 0 15px rgba(77, 166, 255, 0.55);
-    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(77, 166, 255, 0.95)) drop-shadow(0 0 8px rgba(77, 166, 255, 0.45));
   }
 }
 
@@ -2572,7 +2617,11 @@ th.sort-desc::after { content: ' ▽'; opacity: 1; color: var(--point-color); fo
   color: var(--terran-color) !important;
   font-weight: 700 !important;
   display: inline-block;
-  animation: glowPulseTerran 2s infinite ease-in-out;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowTerran 2s infinite ease-in-out;
 }
 
 /* 스팀팩 모던 슬라이딩 스위치 토글 (ON/OFF 글자 없음, 노브 좌우 이동) */
@@ -2668,14 +2717,22 @@ th.sort-desc::after { content: ' ▽'; opacity: 1; color: var(--point-color); fo
   color: var(--zerg-color) !important;
   font-weight: 700 !important;
   display: inline-block;
-  animation: glowPulseZerg 2s infinite ease-in-out;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowZerg 2s infinite ease-in-out;
 }
 
 .upg-val-protoss {
   color: var(--protoss-color) !important;
   font-weight: 700 !important;
   display: inline-block;
-  animation: glowPulseProtoss 2s infinite ease-in-out;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowProtoss 2s infinite ease-in-out;
 }
 
 /* 종족별 업그레이드 활성화 배지 버튼 파동 모션 */
@@ -3185,28 +3242,21 @@ th.sort-desc::after { content: ' ▽'; opacity: 1; color: var(--point-color); fo
 /* 에너지 업그레이드 보라색 네온 글로우 */
 .glow-txt-energy {
   color: #c792ea !important;
-  text-shadow: 0 0 8px rgba(199, 146, 234, 0.85), 0 0 14px rgba(199, 146, 234, 0.45) !important;
   font-weight: 700 !important;
+  display: inline-block;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowEnergy 2s infinite ease-in-out;
 }
 
-/* 에너지 업그레이드 배지 버튼 (마린 U-238과 100% 동일한 펄스 스펙, 보라색 컬러) */
+/* 에너지 업그레이드 배지 버튼 (다른 업그레이드 버튼들과 동일하게 반짝임 없는 깔끔한 고정 스타일) */
 .btn-upg-badge.active-energy {
   background: rgba(199, 146, 234, 0.2) !important;
   color: #c792ea !important;
   border: 1px solid #c792ea !important;
-  animation: badgePulseEnergy 2s infinite ease-in-out;
-}
-
-@keyframes badgePulseEnergy {
-  0% {
-    box-shadow: 0 0 4px rgba(199, 146, 234, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 12px rgba(199, 146, 234, 0.85);
-  }
-  100% {
-    box-shadow: 0 0 4px rgba(199, 146, 234, 0.4);
-  }
+  box-shadow: 0 0 8px rgba(199, 146, 234, 0.45) !important;
 }
 
 
@@ -3402,23 +3452,15 @@ tr.row-ability-sub td {
 }
 
 
-@keyframes glowPulseHp {
-  0% {
-    text-shadow: 0 0 2px rgba(122, 228, 106, 0.4), 0 0 6px rgba(122, 228, 106, 0.2);
-  }
-  50% {
-    text-shadow: 0 0 8px rgba(122, 228, 106, 0.9), 0 0 14px rgba(122, 228, 106, 0.6);
-  }
-  100% {
-    text-shadow: 0 0 2px rgba(122, 228, 106, 0.4), 0 0 6px rgba(122, 228, 106, 0.2);
-  }
-}
-
 .upg-val-hp {
   color: #7ae46a !important;
   font-weight: 700 !important;
   display: inline-block;
-  animation: glowPulseHp 2s infinite ease-in-out;
+  opacity: 1 !important;
+  will-change: filter;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  animation: gpuDropGlowHp 2s infinite ease-in-out;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -3446,14 +3488,19 @@ tr.row-ability-sub td {
 }
 
 .patch-block {
+  width: 100%;
+  max-width: 52rem;
+  margin: 0 auto;
   background: rgba(18, 24, 38, 0.7);
   border: 1px solid var(--panel-border);
   border-radius: 5px;
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+  transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, box-shadow 0.25s ease;
 }
 
 .patch-block[open] {
+  max-width: 100%;
   border-color: rgba(90, 150, 230, 0.4);
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.25);
 }
