@@ -3475,6 +3475,8 @@ tr.row-ability-sub td {
   border-radius: 5px;
   overflow: hidden;
   box-sizing: border-box;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 45px;
   transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, box-shadow 0.25s ease;
 }
 

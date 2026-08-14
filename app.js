@@ -16493,10 +16493,19 @@ function initApp() {
     }
   } catch(e){}
 
-  // 4. 실시간 검색
+  // 4. 실시간 검색 (디바운스 최적화)
   try {
     var si = document.getElementById("search-input");
-    if (si) si.addEventListener("input", function(){ searchQuery = si.value.trim(); renderTable(); });
+    var searchTimer = null;
+    if (si) {
+      si.addEventListener("input", function(){
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function(){
+          searchQuery = si.value.trim();
+          renderTable();
+        }, 40);
+      });
+    }
   } catch(e){}
 
   // 5. 정렬 헤더
@@ -16976,6 +16985,13 @@ function initPatchView() {
   var container = document.getElementById("patch-content");
   if (!container) return;
 
+  // 이미 파싱된 패치 데이터가 있으면 즉시 렌더링 (0ms 캐싱)
+  if (_patchBlocks && _patchBlocks.length > 0) {
+    _patchVisibleCount = Math.max(20, _patchVisibleCount || 20);
+    renderPatchView(false);
+    return;
+  }
+
   container.innerHTML = "<div class='ph-loading'>패치 내역을 불러오는 중...</div>";
 
   function renderCsv(text) {
@@ -16989,6 +17005,12 @@ function initPatchView() {
     }
   }
 
+  // 내장 데이터가 있으면 fetch 대기 없이 즉시 파싱 & 렌더링
+  if (typeof EMBEDDED_PATCH_CSV !== "undefined" && EMBEDDED_PATCH_CSV) {
+    renderCsv(EMBEDDED_PATCH_CSV);
+    return;
+  }
+
   fetch("Patch.csv")
     .then(function(res) {
       if (!res.ok) throw new Error("HTTP " + res.status);
@@ -16998,11 +17020,6 @@ function initPatchView() {
       renderCsv(text);
     })
     .catch(function(err) {
-      console.warn("Patch.csv fetch failed, falling back to embedded data:", err);
-      if (typeof EMBEDDED_PATCH_CSV !== "undefined" && EMBEDDED_PATCH_CSV) {
-        renderCsv(EMBEDDED_PATCH_CSV);
-      } else {
-        container.innerHTML = "<div class='ph-loading'>패치 내역을 불러올 수 없습니다. (" + err.message + ")</div>";
-      }
+      container.innerHTML = "<div class='ph-loading'>패치 내역을 불러올 수 없습니다. (" + err.message + ")</div>";
     });
 }
