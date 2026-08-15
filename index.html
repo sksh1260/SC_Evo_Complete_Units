@@ -277,6 +277,36 @@
 
     <!-- 패치 내역 뷰 -->
     <section id="patch-view" class="patch-view" aria-label="패치 내역" hidden>
+      <div class="patch-edit-toolbar">
+        <div class="patch-edit-intro">
+          <strong>패치 내역</strong>
+          <span>공식 업데이트와 변경 내역을 확인합니다.</span>
+        </div>
+        <div class="patch-edit-admin">
+          <span id="patch-admin-status" class="patch-edit-note">읽기 전용</span>
+          <button id="patch-admin-login" type="button" class="patch-edit-btn" onclick="startPatchAdminLogin()">관리자 로그인</button>
+          <button id="patch-admin-editor" type="button" class="patch-edit-btn" onclick="togglePatchEditor()" hidden>패치 관리</button>
+        </div>
+      </div>
+      <section id="patch-editor" class="patch-editor" hidden aria-label="패치 내역 편집기">
+        <div class="patch-editor-head">
+          <div>
+            <strong>관리자용 패치 관리</strong>
+            <span>변경 후 저장하면 GitHub 저장소의 Patch.csv가 갱신됩니다.</span>
+          </div>
+          <button type="button" class="patch-editor-template" onclick="addPatchBlockTemplate()">+ 새 패치 블록</button>
+        </div>
+        <p class="patch-editor-help">한 줄은 한 변경 항목입니다. 쉼표로 나뉜 열은 순서대로 <b>공통 · 테란 · 프로토스 · 저그</b>를 뜻합니다. 기존 블록을 수정하거나 새 블록 템플릿을 추가한 뒤 저장하세요.</p>
+        <textarea id="patch-editor-text" spellcheck="false" aria-label="Patch CSV 내용"></textarea>
+        <div class="patch-editor-actions">
+          <button type="button" class="patch-editor-primary" onclick="savePatchEditorToGithub()">GitHub에 저장</button>
+          <button type="button" onclick="previewPatchEditor()">미리보기</button>
+          <button type="button" onclick="exportPatchEditor()">CSV 내보내기</button>
+          <label class="patch-editor-file" for="patch-editor-import">CSV 가져오기</label>
+          <input id="patch-editor-import" type="file" accept=".csv,text/csv" onchange="importPatchEditor(this)">
+          <button type="button" onclick="togglePatchEditor(false)">닫기</button>
+        </div>
+      </section>
       <div id="patch-content" class="patch-content"></div>
     </section>
 

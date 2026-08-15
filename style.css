@@ -3986,4 +3986,149 @@ tr.row-ability-sub td {
   transform: translateY(0);
 }
 
+/* 패치 내역 직접 편집 */
+.patch-edit-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  max-width: 2500px;
+  margin: 0 auto 0.9rem;
+}
 
+.patch-edit-intro,
+.patch-edit-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.patch-edit-intro strong {
+  color: #dcecff;
+  font-size: 1.05rem;
+}
+
+.patch-edit-intro span {
+  color: #71829c;
+  font-size: 0.8rem;
+}
+
+.patch-edit-btn,
+.patch-editor-actions button,
+.patch-editor-file {
+  appearance: none;
+  border: 1px solid rgba(100, 181, 246, 0.38);
+  border-radius: 5px;
+  padding: 0.45rem 0.8rem;
+  background: rgba(25, 38, 60, 0.88);
+  color: #cfe8ff;
+  font: 700 0.86rem/1 inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.patch-edit-btn:hover,
+.patch-editor-actions button:hover,
+.patch-editor-file:hover {
+  border-color: #64b5f6;
+  background: rgba(42, 68, 108, 0.96);
+  color: #fff;
+}
+
+.patch-edit-note {
+  color: #71829c;
+  font-size: 0.78rem;
+}
+
+.patch-edit-note.is-admin { color: #61f2a6; }
+
+.patch-editor {
+  max-width: 2500px;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+  background: #0e1420;
+  border: 1px solid rgba(100, 181, 246, 0.3);
+  border-radius: 7px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.patch-editor[hidden] { display: none; }
+
+.patch-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  color: #dcecff;
+}
+
+.patch-editor-head strong { font-size: 1rem; }
+.patch-editor-head span { display: block; margin-top: 0.25rem; color: #8092ac; font-size: 0.8rem; }
+
+.patch-editor-template {
+  appearance: none;
+  padding: 0.55rem 0.75rem;
+  background: rgba(0, 255, 157, 0.08);
+  border: 1px solid rgba(0, 255, 157, 0.45);
+  border-radius: 5px;
+  color: #8fffd0;
+  font: 700 0.83rem/1 inherit;
+  cursor: pointer;
+}
+
+.patch-editor-template:hover { background: rgba(0, 255, 157, 0.16); }
+
+.patch-editor-help {
+  margin: 0 0 0.75rem;
+  padding: 0.65rem 0.75rem;
+  color: #91a3ba;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  background: rgba(38, 56, 84, 0.36);
+  border-left: 2px solid #64b5f6;
+}
+
+.patch-editor-help b { color: #cfe8ff; }
+
+#patch-editor-text {
+  display: block;
+  width: 100%;
+  min-height: 32rem;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 0.85rem;
+  background: #090e17;
+  border: 1px solid #2a3850;
+  border-radius: 4px;
+  color: #e5edf8;
+  font: 0.78rem/1.5 Consolas, "Courier New", monospace;
+  tab-size: 2;
+}
+
+#patch-editor-text:focus {
+  outline: none;
+  border-color: #64b5f6;
+  box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.16);
+}
+
+.patch-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.patch-editor-actions .patch-editor-primary {
+  border-color: rgba(0, 255, 157, 0.65);
+  color: #8fffd0;
+}
+
+.patch-editor-actions .patch-editor-reset {
+  border-color: rgba(255, 113, 113, 0.42);
+  color: #ffaaaa;
+}
+
+.patch-editor-file { display: inline-flex; align-items: center; }
+#patch-editor-import { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }

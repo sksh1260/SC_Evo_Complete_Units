@@ -1,0 +1,12 @@
+name = "sc-evo-patch-admin"
+main = "src/index.js"
+compatibility_date = "2026-08-15"
+
+# 아래 값은 본인 환경에 맞게 바꿉니다.
+[vars]
+FRONTEND_ORIGIN = "https://sksh1260.github.io"
+FRONTEND_URL = "https://sksh1260.github.io/SC_Evo_Complete_Units/"
+GITHUB_REPO = "sksh1260/SC_Evo_Complete_Units"
+PATCH_FILE = "Patch.csv"
+ADMIN_GITHUB_LOGINS = "sksh1260"
+GITHUB_CLIENT_ID = "Ov23li6MYZHXPCag5Ix0"
