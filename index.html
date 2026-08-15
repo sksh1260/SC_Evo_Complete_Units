@@ -278,26 +278,27 @@
     <!-- 패치 내역 뷰 -->
     <section id="patch-view" class="patch-view" aria-label="패치 내역" hidden>
       <div class="patch-edit-toolbar">
-        <div class="patch-edit-intro">
-          <strong>패치 내역</strong>
-          <span>공식 업데이트와 변경 내역을 확인합니다.</span>
-        </div>
         <div class="patch-edit-admin">
-          <span id="patch-admin-status" class="patch-edit-note">읽기 전용</span>
-          <button id="patch-admin-login" type="button" class="patch-edit-btn" onclick="startPatchAdminLogin()">관리자 로그인</button>
-          <button id="patch-admin-editor" type="button" class="patch-edit-btn" onclick="togglePatchEditor()" hidden>패치 관리</button>
+          <span id="patch-admin-status" class="patch-edit-note" aria-live="polite"></span>
+          <button id="patch-admin-login" type="button" class="patch-edit-btn patch-admin-icon-btn" onclick="startPatchAdminLogin()" aria-label="관리자 로그인">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-3.56 8.51A8 8 0 0 0 4 17.67V21h16v-3.33a8 8 0 0 0-4.44-7.16A5 5 0 0 0 12 2Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 8c3.13 0 5.72 2.28 5.98 5.33V19H6.02v-1.67C6.28 14.28 8.87 12 12 12Z"/></svg>
+          </button>
+          <button id="patch-admin-editor" type="button" class="patch-edit-btn patch-admin-icon-btn" onclick="togglePatchEditor()" hidden aria-label="패치 관리">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16.86 3.49 3.65 3.65-11.1 11.1L5.7 19.3l1.06-3.71 11.1-11.1Zm0 2.83-8.95 8.95-.35 1.23 1.23-.35 8.95-8.95-1.88-1.88ZM4 21h16v-2H4v2Z"/></svg>
+          </button>
         </div>
       </div>
       <section id="patch-editor" class="patch-editor" hidden aria-label="패치 내역 편집기">
         <div class="patch-editor-head">
           <div>
             <strong>관리자용 패치 관리</strong>
-            <span>변경 후 저장하면 GitHub 저장소의 Patch.csv가 갱신됩니다.</span>
+            <span>버전 블록 안의 항목을 바로 고친 뒤 저장하세요.</span>
           </div>
           <button type="button" class="patch-editor-template" onclick="addPatchBlockTemplate()">+ 새 패치 블록</button>
         </div>
-        <p class="patch-editor-help">한 줄은 한 변경 항목입니다. 쉼표로 나뉜 열은 순서대로 <b>공통 · 테란 · 프로토스 · 저그</b>를 뜻합니다. 기존 블록을 수정하거나 새 블록 템플릿을 추가한 뒤 저장하세요.</p>
-        <textarea id="patch-editor-text" spellcheck="false" aria-label="Patch CSV 내용"></textarea>
+        <p class="patch-editor-help">각 줄의 <b>공통 · 테란 · 프로토스 · 저그</b> 칸을 직접 수정할 수 있습니다. <b>＋ 줄 추가</b>로 원하는 위치 바로 아래에 항목을 넣을 수 있습니다.</p>
+        <div id="patch-visual-editor" class="patch-visual-editor" aria-label="패치 내역 블록 편집기"></div>
+        <textarea id="patch-editor-text" class="patch-editor-raw" spellcheck="false" aria-label="Patch CSV 내용" tabindex="-1"></textarea>
         <div class="patch-editor-actions">
           <button type="button" class="patch-editor-primary" onclick="savePatchEditorToGithub()">GitHub에 저장</button>
           <button type="button" onclick="previewPatchEditor()">미리보기</button>

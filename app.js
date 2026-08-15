@@ -17880,7 +17880,46 @@ function startPatchAdminLogin() {
   window.location.href = PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/auth/login";
 }
 
+function normalizePatchAdminToolbar() {
+  var patchView = document.getElementById("patch-view");
+  var toolbar = patchView && patchView.querySelector(".patch-edit-toolbar");
+  if (!patchView || !toolbar) return;
+
+  // OAuth 복귀 시 이전 HTML/CSS가 캐시되어도 관리자 제어 영역은 항상 아이콘만 남긴다.
+  patchView.style.position = "relative";
+  toolbar.style.position = "absolute";
+  toolbar.style.top = "0.35rem";
+  toolbar.style.right = "0.7rem";
+  toolbar.style.zIndex = "2";
+  toolbar.style.margin = "0";
+  toolbar.style.display = "flex";
+  toolbar.style.alignItems = "center";
+  toolbar.style.gap = "0.3rem";
+  Array.prototype.slice.call(toolbar.querySelectorAll(".patch-edit-intro")).forEach(function(el) { el.remove(); });
+
+  var status = document.getElementById("patch-admin-status");
+  if (status) status.hidden = true;
+
+  var icons = {
+    "patch-admin-login": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-3.56 8.51A8 8 0 0 0 4 17.67V21h16v-3.33a8 8 0 0 0-4.44-7.16A5 5 0 0 0 12 2Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 8c3.13 0 5.72 2.28 5.98 5.33V19H6.02v-1.67C6.28 14.28 8.87 12 12 12Z"/></svg>',
+    "patch-admin-editor": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16.86 3.49 3.65 3.65-11.1 11.1L5.7 19.3l1.06-3.71 11.1-11.1Zm0 2.83-8.95 8.95-.35 1.23 1.23-.35 8.95-8.95-1.88-1.88ZM4 21h16v-2H4v2Z"/></svg>'
+  };
+  Object.keys(icons).forEach(function(id) {
+    var button = document.getElementById(id);
+    if (!button) return;
+    button.innerHTML = icons[id];
+    button.style.cssText = "display:inline-grid;place-items:center;width:1.55rem;height:1.55rem;min-width:1.55rem;padding:0;border:0;border-radius:3px;background:transparent;color:#60718b;opacity:.42;cursor:pointer;";
+    var svg = button.querySelector("svg");
+    if (svg) {
+      svg.style.width = "0.92rem";
+      svg.style.height = "0.92rem";
+      svg.style.fill = "currentColor";
+    }
+  });
+}
+
 function initPatchAdmin() {
+  normalizePatchAdminToolbar();
   var params = new URLSearchParams(window.location.search);
   var token = params.get("admin_token");
   if (token) {

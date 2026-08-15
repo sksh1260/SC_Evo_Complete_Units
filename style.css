@@ -3451,6 +3451,7 @@ tr.row-ability-sub td {
   margin: 0 auto;
   padding: 0.6rem 0.8rem 2rem;
   box-sizing: border-box;
+  position: relative;
 }
 
 .patch-content {
@@ -3988,19 +3989,17 @@ tr.row-ability-sub td {
 
 /* 패치 내역 직접 편집 */
 .patch-edit-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  max-width: 2500px;
-  margin: 0 auto 0.9rem;
+  position: absolute;
+  top: 0.35rem;
+  right: 0.7rem;
+  z-index: 2;
 }
 
 .patch-edit-intro,
 .patch-edit-admin {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.3rem;
 }
 
 .patch-edit-intro strong {
@@ -4036,11 +4035,42 @@ tr.row-ability-sub td {
 }
 
 .patch-edit-note {
-  color: #71829c;
-  font-size: 0.78rem;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .patch-edit-note.is-admin { color: #61f2a6; }
+
+.patch-admin-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  min-width: 1.55rem;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: #60718b;
+  opacity: 0.42;
+}
+
+.patch-admin-icon-btn svg {
+  width: 0.92rem;
+  height: 0.92rem;
+  fill: currentColor;
+}
+
+.patch-admin-icon-btn:hover,
+.patch-admin-icon-btn:focus-visible {
+  background: rgba(57, 83, 121, 0.5);
+  color: #cfe8ff;
+  opacity: 1;
+}
 
 .patch-editor {
   max-width: 2500px;
@@ -4104,6 +4134,117 @@ tr.row-ability-sub td {
   color: #e5edf8;
   font: 0.78rem/1.5 Consolas, "Courier New", monospace;
   tab-size: 2;
+}
+
+.patch-editor-raw { display: none !important; }
+
+.patch-visual-editor {
+  display: grid;
+  gap: 0.75rem;
+  max-height: min(68vh, 68rem);
+  overflow: auto;
+  padding-right: 0.3rem;
+}
+
+.patch-visual-block {
+  border: 1px solid #2b4260;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(8, 13, 23, 0.48);
+}
+
+.patch-visual-block > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.8rem;
+  cursor: pointer;
+  color: #dcecff;
+  background: rgba(25, 38, 60, 0.58);
+}
+
+.patch-version-input {
+  min-width: 17rem;
+  flex: 1;
+  padding: 0.25rem 0.4rem;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: #eaf4ff;
+  font: 700 0.94rem/1.3 inherit;
+}
+
+.patch-version-input:focus,
+.patch-line-text:focus,
+.patch-line-tag:focus {
+  outline: none;
+  border-color: #64b5f6;
+  box-shadow: 0 1px 0 #64b5f6;
+}
+
+.patch-visual-lines { padding: 0.55rem; }
+.patch-visual-cols,
+.patch-visual-line {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 0.45rem;
+}
+
+.patch-visual-cols {
+  padding: 0 0.45rem 0.35rem;
+  color: #8295ae;
+  font-size: 0.74rem;
+}
+
+.patch-visual-line {
+  align-items: start;
+  padding: 0.36rem 0.42rem;
+  border-top: 1px solid rgba(78, 98, 126, 0.25);
+}
+
+.patch-line-cell { min-width: 0; }
+.patch-line-text {
+  display: block;
+  width: 100%;
+  min-height: 2.05rem;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 0.36rem 0.43rem;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: rgba(18, 26, 40, 0.78);
+  color: #dde8f6;
+  font: 0.78rem/1.4 inherit;
+}
+
+.patch-line-tag {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.22rem;
+  padding: 0.18rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #f2a7b6;
+  font: 0.69rem/1.25 inherit;
+}
+
+.patch-line-action {
+  align-self: center;
+  padding: 0.32rem 0.45rem;
+  border: 1px solid #3e5674;
+  border-radius: 3px;
+  background: transparent;
+  color: #8fb8e8;
+  font: 700 0.72rem/1 inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.patch-line-action:hover { border-color: #77b9ff; color: #e7f4ff; }
+
+@media (max-width: 900px) {
+  .patch-visual-cols, .patch-visual-line { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
 }
 
 #patch-editor-text:focus {
