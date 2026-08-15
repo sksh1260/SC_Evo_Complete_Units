@@ -17762,42 +17762,154 @@ function initPatchView() {
   renderCsv(PATCH_DEFAULT_CSV);
 }
 
+var _patchEditorRows = [];
+var PATCH_EDITOR_GROUPS = [
+  { key: "common", label: "공통", start: 0, end: 5 },
+  { key: "terran", label: "테란", start: 6, end: 11 },
+  { key: "protoss", label: "프로토스", start: 12, end: 17 },
+  { key: "zerg", label: "저그", start: 18, end: 24 }
+];
+
+function patchCsvEscape(value) {
+  value = String(value == null ? "" : value);
+  return /[",\r\n]/.test(value) ? '"' + value.replace(/"/g, '""') + '"' : value;
+}
+
+function getPatchEditorCsv() {
+  return _patchEditorRows.map(function(row) {
+    return row.map(patchCsvEscape).join(",");
+  }).join("\r\n");
+}
+
+function syncPatchEditorCsv() {
+  var textarea = document.getElementById("patch-editor-text");
+  if (textarea) textarea.value = getPatchEditorCsv();
+}
+
+function patchEditorGroupData(row, group) {
+  var text = [], tags = [];
+  for (var col = group.start; col <= group.end; col++) {
+    var value = String(row[col] || "").trim();
+    if (!value) continue;
+    if (/^\d+\.\d+(\.\d+)?(?:\s*\/\s*\d+\.\d+(\.\d+)?)*$/.test(value)) tags.push(value);
+    else text.push(value);
+  }
+  return { text: text.join(" "), tag: tags.join(" / ") };
+}
+
+function setPatchEditorGroup(rowIndex, groupKey, text, tag) {
+  var group = PATCH_EDITOR_GROUPS.filter(function(item) { return item.key === groupKey; })[0];
+  var row = _patchEditorRows[rowIndex];
+  if (!row || !group) return;
+  for (var col = group.start; col <= group.end; col++) row[col] = "";
+  row[group.start] = text;
+  if (tag) row[group.start + 1] = tag;
+  syncPatchEditorCsv();
+}
+
+function isPatchVersionRow(row) {
+  var col0 = String((row && row[0]) || "").trim();
+  return /^\d+\.\d+/.test(col0) && !row[6] && !row[12] && !row[18];
+}
+
+function renderPatchVisualEditor() {
+  var container = document.getElementById("patch-visual-editor");
+  if (!container) return;
+  var html = "";
+  var blocks = [];
+  for (var i = 0; i < _patchEditorRows.length; i++) {
+    if (isPatchVersionRow(_patchEditorRows[i])) blocks.push({ start: i, end: _patchEditorRows.length });
+  }
+  for (var b = 0; b < blocks.length; b++) {
+    if (b + 1 < blocks.length) blocks[b].end = blocks[b + 1].start;
+    var block = blocks[b];
+    html += "<details class='patch-visual-block' open><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(_patchEditorRows[block.start][0] || "") + "' aria-label='버전 제목'></summary>";
+    html += "<div class='patch-visual-lines'><div class='patch-visual-cols'><span>공통</span><span>테란</span><span>프로토스</span><span>저그</span><span></span></div>";
+    for (var r = block.start + 1; r < block.end; r++) {
+      var hasContent = PATCH_EDITOR_GROUPS.some(function(group) { return patchEditorGroupData(_patchEditorRows[r], group).text || patchEditorGroupData(_patchEditorRows[r], group).tag; });
+      if (!hasContent) continue;
+      html += "<div class='patch-visual-line' data-row='" + r + "'>";
+      PATCH_EDITOR_GROUPS.forEach(function(group) {
+        var value = patchEditorGroupData(_patchEditorRows[r], group);
+        html += "<div class='patch-line-cell'><textarea class='patch-line-text' data-group='" + group.key + "' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(value.text) + "</textarea><input class='patch-line-tag' data-tag-group='" + group.key + "' placeholder='하위 버전 (선택)' value='" + escHtml(value.tag) + "' aria-label='" + group.label + " 하위 버전'></div>";
+      });
+      html += "<button type='button' class='patch-line-action' data-add-after='" + r + "'>＋ 줄</button></div>";
+    }
+    html += "<button type='button' class='patch-line-action' data-add-after='" + (block.end - 1) + "'>＋ 이 블록에 줄 추가</button></div></details>";
+  }
+  container.innerHTML = html || "<p class='patch-editor-help'>표시할 패치 블록이 없습니다.</p>";
+
+  container.querySelectorAll(".patch-version-input").forEach(function(input) {
+    input.addEventListener("input", function() {
+      _patchEditorRows[Number(input.dataset.versionRow)][0] = input.value;
+      syncPatchEditorCsv();
+    });
+    input.addEventListener("click", function(event) { event.stopPropagation(); });
+  });
+  container.querySelectorAll(".patch-visual-line").forEach(function(line) {
+    var rowIndex = Number(line.dataset.row);
+    line.querySelectorAll(".patch-line-text, .patch-line-tag").forEach(function(input) {
+      input.addEventListener("input", function() {
+        var groupKey = input.dataset.group || input.dataset.tagGroup;
+        var text = line.querySelector(".patch-line-text[data-group='" + groupKey + "']").value;
+        var tag = line.querySelector(".patch-line-tag[data-tag-group='" + groupKey + "']").value;
+        setPatchEditorGroup(rowIndex, groupKey, text, tag);
+      });
+    });
+  });
+  container.querySelectorAll("[data-add-after]").forEach(function(button) {
+    button.addEventListener("click", function() { addPatchEditorLine(Number(button.dataset.addAfter)); });
+  });
+}
+
+function setPatchEditorRows(csvText) {
+  _patchEditorRows = parsePatchCsv(String(csvText || "").replace(/^\uFEFF/, "")).map(function(row) {
+    var copy = row.slice(0, 25);
+    while (copy.length < 25) copy.push("");
+    return copy;
+  });
+  syncPatchEditorCsv();
+  renderPatchVisualEditor();
+}
+
+function addPatchEditorLine(afterRow) {
+  var row = Array(25).fill("");
+  _patchEditorRows.splice(afterRow + 1, 0, row);
+  syncPatchEditorCsv();
+  renderPatchVisualEditor();
+  var next = document.querySelector(".patch-visual-line[data-row='" + (afterRow + 1) + "'] .patch-line-text");
+  if (next) next.focus();
+}
+
 function togglePatchEditor(forceOpen) {
   var editor = document.getElementById("patch-editor");
-  var textarea = document.getElementById("patch-editor-text");
-  if (!editor || !textarea) return;
+  if (!editor) return;
   if (!isPatchAdmin()) {
     alert("패치 관리는 관리자 로그인 후에만 사용할 수 있습니다.");
     return;
   }
   var shouldOpen = typeof forceOpen === "boolean" ? forceOpen : editor.hidden;
   editor.hidden = !shouldOpen;
-  if (shouldOpen) {
-    loadPatchEditorContent(textarea);
-  }
+  if (shouldOpen) loadPatchEditorContent();
 }
 
-function loadPatchEditorContent(textarea) {
-  if (!PATCH_ADMIN_API_URL) { textarea.value = getActivePatchCsv(); textarea.focus(); return; }
-  textarea.value = "불러오는 중…";
+function loadPatchEditorContent() {
+  if (!PATCH_ADMIN_API_URL) { setPatchEditorRows(getActivePatchCsv()); return; }
   fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/patch", {
     headers: { Authorization: "Bearer " + getPatchAdminToken() }
   }).then(function(res) {
     if (!res.ok) throw new Error("관리자 권한을 확인할 수 없습니다.");
     return res.json();
   }).then(function(data) {
-    textarea.value = data.csv || PATCH_DEFAULT_CSV;
-    textarea.focus();
+    setPatchEditorRows(data.csv || PATCH_DEFAULT_CSV);
   }).catch(function(err) {
-    textarea.value = getActivePatchCsv();
+    setPatchEditorRows(getActivePatchCsv());
     alert(err.message);
   });
 }
 
 function previewPatchEditor() {
-  var textarea = document.getElementById("patch-editor-text");
-  if (!textarea) return;
-  var csvText = textarea.value.replace(/^\uFEFF/, "");
+  var csvText = getPatchEditorCsv();
   try {
     var candidate = buildPatchBlocks(parsePatchCsv(csvText));
     if (!candidate.length) throw new Error("버전 헤더를 찾을 수 없습니다.");
@@ -17812,9 +17924,8 @@ function previewPatchEditor() {
 }
 
 function savePatchEditorToGithub() {
-  var textarea = document.getElementById("patch-editor-text");
-  if (!textarea || !isPatchAdmin()) return;
-  var csvText = textarea.value.replace(/^\uFEFF/, "");
+  if (!isPatchAdmin()) return;
+  var csvText = getPatchEditorCsv();
   try {
     if (!buildPatchBlocks(parsePatchCsv(csvText)).length) throw new Error("버전 헤더를 찾을 수 없습니다.");
   } catch (e) { alert("CSV 형식을 확인해 주세요: " + e.message); return; }
@@ -17833,8 +17944,7 @@ function savePatchEditorToGithub() {
 }
 
 function exportPatchEditor() {
-  var textarea = document.getElementById("patch-editor-text");
-  var csvText = textarea ? textarea.value : getActivePatchCsv();
+  var csvText = _patchEditorRows.length ? getPatchEditorCsv() : getActivePatchCsv();
   var blob = new Blob(["\uFEFF" + csvText], { type: "text/csv;charset=utf-8" });
   var url = URL.createObjectURL(blob);
   var link = document.createElement("a");
@@ -17851,25 +17961,20 @@ function importPatchEditor(input) {
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function() {
-    var textarea = document.getElementById("patch-editor-text");
-    if (textarea) textarea.value = String(reader.result || "").replace(/^\uFEFF/, "");
+    setPatchEditorRows(String(reader.result || ""));
     input.value = "";
   };
   reader.readAsText(file, "utf-8");
 }
 
 function addPatchBlockTemplate() {
-  var textarea = document.getElementById("patch-editor-text");
-  if (!textarea) return;
-  var template = [
-    "새 버전 (YY.MM.DD),,,,,,,,,,,,,,,,,,,,,,",
-    "전체 변경 사항,,,,,,,,,,,,,,,,,,,,,,,,",
-    " • 변경 내용을 입력하세요,,,,,,,,,,,,,,,,,,,,,,,,",
-    ",,,,,,테란 유닛/구조물,,,,,,프로토스 유닛/구조물,,,,,,저그 유닛/구조물,,,,",
-    ",,,,,, • 변경 내용을 입력하세요,,,,,, • 변경 내용을 입력하세요,,,,,, • 변경 내용을 입력하세요,,,,"
-  ].join("\r\n") + "\r\n\r\n";
-  textarea.value = template + textarea.value;
-  textarea.focus();
+  var block = [Array(25).fill(""), Array(25).fill("")];
+  block[0][0] = "새 버전 (YY.MM.DD)";
+  _patchEditorRows = block.concat(_patchEditorRows);
+  syncPatchEditorCsv();
+  renderPatchVisualEditor();
+  var versionInput = document.querySelector(".patch-version-input");
+  if (versionInput) versionInput.focus();
 }
 
 function startPatchAdminLogin() {
