@@ -17823,7 +17823,7 @@ function renderPatchVisualEditor() {
   for (var b = 0; b < blocks.length; b++) {
     if (b + 1 < blocks.length) blocks[b].end = blocks[b + 1].start;
     var block = blocks[b];
-    html += "<details class='patch-visual-block' open><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(_patchEditorRows[block.start][0] || "") + "' aria-label='버전 제목'></summary>";
+    html += "<details class='patch-visual-block'><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(_patchEditorRows[block.start][0] || "") + "' aria-label='버전 제목'></summary>";
     html += "<div class='patch-visual-lines'><div class='patch-visual-cols'><span>공통</span><span>테란</span><span>프로토스</span><span>저그</span><span></span></div>";
     for (var r = block.start + 1; r < block.end; r++) {
       var hasContent = PATCH_EDITOR_GROUPS.some(function(group) { return patchEditorGroupData(_patchEditorRows[r], group).text || patchEditorGroupData(_patchEditorRows[r], group).tag; });
@@ -17935,8 +17935,10 @@ function savePatchEditorToGithub() {
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + getPatchAdminToken() },
     body: JSON.stringify({ csv: csvText, message: "Update patch history" })
   }).then(function(res) {
-    if (!res.ok) throw new Error("저장 권한이 없거나 GitHub 저장에 실패했습니다.");
-    return res.json();
+    return res.json().catch(function() { return {}; }).then(function(data) {
+      if (!res.ok) throw new Error(data.error || "GitHub 저장에 실패했습니다.");
+      return data;
+    });
   }).then(function() {
     _patchAdminPreviewCsv = csvText;
     alert("GitHub에 저장했습니다. GitHub Pages 배포 후 공개 사이트에 반영됩니다.");
