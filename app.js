@@ -17827,30 +17827,58 @@ function isPatchVersionRow(row) {
   return /^\d+\.\d+/.test(col0) && !row[6] && !row[12] && !row[18];
 }
 
-function renderPatchVisualEditor() {
-  var container = document.getElementById("patch-visual-editor");
-  if (!container) return;
-  var html = "";
+function getPatchEditorBlocks() {
   var blocks = [];
   for (var i = 0; i < _patchEditorRows.length; i++) {
     if (isPatchVersionRow(_patchEditorRows[i])) blocks.push({ start: i, end: _patchEditorRows.length });
   }
+  for (var j = 0; j < blocks.length - 1; j++) blocks[j].end = blocks[j + 1].start;
+  return blocks;
+}
+
+function clearPatchEditorGroup(rowIndex, groupKey) {
+  setPatchEditorGroup(rowIndex, groupKey, "", "");
+  renderPatchVisualEditor();
+}
+
+function movePatchEditorGroup(rowIndex, targetRowIndex, groupKey) {
+  var group = PATCH_EDITOR_GROUPS.filter(function(item) { return item.key === groupKey; })[0];
+  if (!group || !_patchEditorRows[rowIndex] || !_patchEditorRows[targetRowIndex]) return;
+  for (var col = group.start; col <= group.end; col++) {
+    var temp = _patchEditorRows[rowIndex][col];
+    _patchEditorRows[rowIndex][col] = _patchEditorRows[targetRowIndex][col];
+    _patchEditorRows[targetRowIndex][col] = temp;
+  }
+  syncPatchEditorCsv();
+  renderPatchVisualEditor();
+}
+
+function renderPatchVisualEditor() {
+  var container = document.getElementById("patch-visual-editor");
+  if (!container) return;
+  var html = "";
+  var blocks = getPatchEditorBlocks();
   for (var b = 0; b < blocks.length; b++) {
-    if (b + 1 < blocks.length) blocks[b].end = blocks[b + 1].start;
     var block = blocks[b];
     html += "<details class='patch-visual-block'><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(_patchEditorRows[block.start][0] || "") + "' aria-label='버전 제목'></summary>";
-    html += "<div class='patch-visual-lines'><div class='patch-visual-cols'><span>공통</span><span>테란</span><span>프로토스</span><span>저그</span><span></span></div>";
-    for (var r = block.start + 1; r < block.end; r++) {
-      var hasContent = PATCH_EDITOR_GROUPS.some(function(group) { return patchEditorGroupData(_patchEditorRows[r], group).text || patchEditorGroupData(_patchEditorRows[r], group).tag; });
-      if (!hasContent) continue;
-      html += "<div class='patch-visual-line' data-row='" + r + "'>";
-      PATCH_EDITOR_GROUPS.forEach(function(group) {
+    html += "<div class='patch-race-editors'>";
+    PATCH_EDITOR_GROUPS.forEach(function(group) {
+      var rows = [];
+      for (var r = block.start + 1; r < block.end; r++) {
         var value = patchEditorGroupData(_patchEditorRows[r], group);
-        html += "<div class='patch-line-cell'><textarea class='patch-line-text' data-group='" + group.key + "' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(value.text) + "</textarea><input class='patch-line-tag' data-tag-group='" + group.key + "' placeholder='하위 버전 (선택)' value='" + escHtml(value.tag) + "' aria-label='" + group.label + " 하위 버전'></div>";
+        if (value.text || value.tag || _patchEditorRows[r][group.start] === " ") rows.push({ index: r, value: value });
+      }
+      html += "<section class='patch-race-editor patch-race-" + group.key + "'><header><strong>" + group.label + "</strong><button type='button' class='patch-line-action' data-add-to-block='" + block.start + "' data-add-group='" + group.key + "'>＋ 항목</button></header><div class='patch-race-items'>";
+      if (!rows.length) html += "<p class='patch-race-empty'>항목 없음</p>";
+      rows.forEach(function(item, rowPosition) {
+        html += "<article class='patch-editor-item' data-row='" + item.index + "' data-editor-group='" + group.key + "'><textarea class='patch-line-text' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(item.value.text) + "</textarea><input class='patch-line-tag' placeholder='하위 버전 (선택)' value='" + escHtml(item.value.tag) + "' aria-label='" + group.label + " 하위 버전'><div class='patch-item-actions'>";
+        if (rowPosition > 0) html += "<button type='button' class='patch-line-action' data-move='up' data-target-row='" + rows[rowPosition - 1].index + "'>↑</button>";
+        if (rowPosition < rows.length - 1) html += "<button type='button' class='patch-line-action' data-move='down' data-target-row='" + rows[rowPosition + 1].index + "'>↓</button>";
+        html += "<button type='button' class='patch-line-action' data-add-after='" + item.index + "'>＋</button><button type='button' class='patch-line-action patch-line-delete' data-delete='1'>×</button></div></article>";
       });
-      html += "<button type='button' class='patch-line-action' data-add-after='" + r + "'>＋ 줄</button></div>";
-    }
-    html += "<button type='button' class='patch-line-action' data-add-after='" + (block.end - 1) + "'>＋ 이 블록에 줄 추가</button></div></details>";
+      html += "</div></section>";
+    });
+    html += "</div></details>";
   }
   container.innerHTML = html || "<p class='patch-editor-help'>표시할 패치 블록이 없습니다.</p>";
 
@@ -17861,19 +17889,32 @@ function renderPatchVisualEditor() {
     });
     input.addEventListener("click", function(event) { event.stopPropagation(); });
   });
-  container.querySelectorAll(".patch-visual-line").forEach(function(line) {
-    var rowIndex = Number(line.dataset.row);
-    line.querySelectorAll(".patch-line-text, .patch-line-tag").forEach(function(input) {
+  container.querySelectorAll(".patch-editor-item").forEach(function(item) {
+    var rowIndex = Number(item.dataset.row);
+    var groupKey = item.dataset.editorGroup;
+    item.querySelectorAll(".patch-line-text, .patch-line-tag").forEach(function(input) {
       input.addEventListener("input", function() {
-        var groupKey = input.dataset.group || input.dataset.tagGroup;
-        var text = line.querySelector(".patch-line-text[data-group='" + groupKey + "']").value;
-        var tag = line.querySelector(".patch-line-tag[data-tag-group='" + groupKey + "']").value;
+        var text = item.querySelector(".patch-line-text").value;
+        var tag = item.querySelector(".patch-line-tag").value;
         setPatchEditorGroup(rowIndex, groupKey, text, tag);
       });
     });
+    item.querySelectorAll("[data-add-after]").forEach(function(button) {
+      button.addEventListener("click", function() { addPatchEditorLine(Number(button.dataset.addAfter), groupKey); });
+    });
+    item.querySelectorAll("[data-delete]").forEach(function(button) {
+      button.addEventListener("click", function() { clearPatchEditorGroup(rowIndex, groupKey); });
+    });
+    item.querySelectorAll("[data-move]").forEach(function(button) {
+      button.addEventListener("click", function() { movePatchEditorGroup(rowIndex, Number(button.dataset.targetRow), groupKey); });
+    });
   });
-  container.querySelectorAll("[data-add-after]").forEach(function(button) {
-    button.addEventListener("click", function() { addPatchEditorLine(Number(button.dataset.addAfter)); });
+  container.querySelectorAll("[data-add-to-block]").forEach(function(button) {
+    button.addEventListener("click", function() {
+      var blocksNow = getPatchEditorBlocks();
+      var current = blocksNow.filter(function(block) { return block.start === Number(button.dataset.addToBlock); })[0];
+      addPatchEditorLine(current ? current.end - 1 : Number(button.dataset.addToBlock), button.dataset.addGroup);
+    });
   });
 }
 
@@ -17887,12 +17928,14 @@ function setPatchEditorRows(csvText) {
   renderPatchVisualEditor();
 }
 
-function addPatchEditorLine(afterRow) {
+function addPatchEditorLine(afterRow, groupKey) {
   var row = Array(25).fill("");
+  var group = PATCH_EDITOR_GROUPS.filter(function(item) { return item.key === groupKey; })[0];
+  if (group) row[group.start] = " "; // 새 항목은 선택한 종족 열에서만 보이도록 임시 표시
   _patchEditorRows.splice(afterRow + 1, 0, row);
   syncPatchEditorCsv();
   renderPatchVisualEditor();
-  var next = document.querySelector(".patch-visual-line[data-row='" + (afterRow + 1) + "'] .patch-line-text");
+  var next = document.querySelector(".patch-editor-item[data-row='" + (afterRow + 1) + "'][data-editor-group='" + groupKey + "'] .patch-line-text");
   if (next) next.focus();
 }
 

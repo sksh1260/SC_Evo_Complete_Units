@@ -4243,6 +4243,49 @@ tr.row-ability-sub td {
 
 .patch-line-action:hover { border-color: #77b9ff; color: #e7f4ff; }
 
+.patch-race-editors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  padding: 0.6rem;
+}
+
+.patch-race-editor {
+  min-width: 0;
+  border: 1px solid rgba(72, 96, 130, 0.58);
+  border-radius: 5px;
+  background: rgba(13, 19, 30, 0.65);
+}
+
+.patch-race-editor > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid rgba(72, 96, 130, 0.44);
+  color: #cfe0f8;
+  font-size: 0.82rem;
+}
+
+.patch-race-items { padding: 0.4rem; display: grid; gap: 0.4rem; }
+
+.patch-editor-item {
+  padding: 0.4rem;
+  border: 1px solid rgba(60, 78, 104, 0.52);
+  border-radius: 4px;
+  background: rgba(3, 8, 15, 0.36);
+}
+
+.patch-editor-item .patch-line-text { min-height: 3.3rem; }
+.patch-item-actions { display: flex; justify-content: flex-end; gap: 0.22rem; margin-top: 0.35rem; }
+.patch-line-delete { color: #ef9393; }
+.patch-race-empty { margin: 0; padding: 0.55rem 0.2rem; color: #64758d; font-size: 0.74rem; text-align: center; }
+
+@media (max-width: 1100px) {
+  .patch-race-editors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 900px) {
   .patch-visual-cols, .patch-visual-line { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
 }
