@@ -17806,7 +17806,7 @@ function patchEditorGroupData(row, group) {
   for (var col = group.start; col <= group.end; col++) {
     var value = String(row[col] || "").trim();
     if (!value) continue;
-    if (/^\d+\.\d+(\.\d+)?(?:\s*\/\s*\d+\.\d+(\.\d+)?)*$/.test(value)) tags.push(value);
+    if (/^\d+(?:\.\d+)+(?:\s*\/\s*\d+(?:\.\d+)+)*$/.test(value)) tags.push(value);
     else text.push(value);
   }
   return { text: text.join(" "), tag: tags.join(" / ") };
@@ -17881,6 +17881,17 @@ function renderPatchVisualEditor() {
     html += "</div></details>";
   }
   container.innerHTML = html || "<p class='patch-editor-help'>표시할 패치 블록이 없습니다.</p>";
+
+  // details 블록 안의 편집 조작은 접기/펼치기 이벤트와 분리한다.
+  container.querySelectorAll("button, input, textarea").forEach(function(control) {
+    control.addEventListener("pointerdown", function(event) { event.stopPropagation(); });
+    control.addEventListener("click", function(event) { event.stopPropagation(); });
+  });
+  container.querySelectorAll(".patch-line-text").forEach(function(input) {
+    input.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" && !event.isComposing) event.preventDefault();
+    });
+  });
 
   container.querySelectorAll(".patch-version-input").forEach(function(input) {
     input.addEventListener("input", function() {
