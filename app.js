@@ -17701,6 +17701,8 @@ var PATCH_ADMIN_TOKEN_KEY = "sc-evo-admin-session";
 var _patchAdminPreviewCsv = null;
 var _patchExternalAttempted = false;
 var _patchAdminVerified = false;
+var _patchEditorKeepAliveId = null;
+var PATCH_EDITOR_KEEPALIVE_MS = 15 * 60 * 1000;
 
 function getActivePatchCsv() {
   return _patchAdminPreviewCsv || PATCH_DEFAULT_CSV;
@@ -17716,6 +17718,38 @@ function setPatchAdminToken(token) {
 
 function isPatchAdmin() {
   return !!getPatchAdminToken() && _patchAdminVerified;
+}
+
+function refreshPatchAdminSession() {
+  if (!PATCH_ADMIN_API_URL || !getPatchAdminToken()) {
+    return Promise.reject(new Error("관리자 로그인 세션이 없습니다."));
+  }
+  return fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/admin", {
+    headers: { Authorization: "Bearer " + getPatchAdminToken() }
+  }).then(function(res) {
+    if (!res.ok) throw new Error("관리자 로그인 세션이 만료되었습니다. 다시 로그인해 주세요.");
+    return res.json();
+  }).then(function(data) {
+    if (data.token) setPatchAdminToken(data.token);
+    _patchAdminVerified = true;
+    return data;
+  });
+}
+
+function stopPatchEditorSessionKeepAlive() {
+  if (_patchEditorKeepAliveId) clearInterval(_patchEditorKeepAliveId);
+  _patchEditorKeepAliveId = null;
+}
+
+function startPatchEditorSessionKeepAlive() {
+  stopPatchEditorSessionKeepAlive();
+  // 편집을 시작하자마자 한 번 갱신하고, 열린 동안에는 15분마다 연장한다.
+  refreshPatchAdminSession().catch(function() {});
+  _patchEditorKeepAliveId = setInterval(function() {
+    var editor = document.getElementById("patch-editor");
+    if (!editor || editor.hidden) return stopPatchEditorSessionKeepAlive();
+    refreshPatchAdminSession().catch(function() { stopPatchEditorSessionKeepAlive(); });
+  }, PATCH_EDITOR_KEEPALIVE_MS);
 }
 
 var _patchBlocks = [];
@@ -18041,7 +18075,12 @@ function togglePatchEditor(forceOpen) {
   }
   var shouldOpen = typeof forceOpen === "boolean" ? forceOpen : editor.hidden;
   editor.hidden = !shouldOpen;
-  if (shouldOpen) loadPatchEditorContent();
+  if (shouldOpen) {
+    startPatchEditorSessionKeepAlive();
+    loadPatchEditorContent();
+  } else {
+    stopPatchEditorSessionKeepAlive();
+  }
 }
 
 function loadPatchEditorContent() {
@@ -18081,10 +18120,13 @@ function savePatchEditorToGithub() {
     if (!buildPatchBlocks(parsePatchCsv(csvText)).length) throw new Error("버전 헤더를 찾을 수 없습니다.");
   } catch (e) { alert("CSV 형식을 확인해 주세요: " + e.message); return; }
   if (!PATCH_ADMIN_API_URL) { alert("관리자 API 주소가 설정되지 않았습니다. Worker 배포 후 PATCH_ADMIN_API_URL 값을 입력해 주세요."); return; }
-  fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/patch", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + getPatchAdminToken() },
-    body: JSON.stringify({ csv: csvText, message: "Update patch history" })
+  // 저장 직전에 세션을 한 번 더 연장해, 장시간 편집 후에도 만료로 실패하지 않게 한다.
+  refreshPatchAdminSession().then(function() {
+    return fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/patch", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + getPatchAdminToken() },
+      body: JSON.stringify({ csv: csvText, message: "Update patch history" })
+    });
   }).then(function(res) {
     return res.json().catch(function() { return {}; }).then(function(data) {
       if (!res.ok) throw new Error(data.error || "GitHub 저장에 실패했습니다.");
@@ -18193,18 +18235,14 @@ function initPatchAdmin() {
   var tokenValue = getPatchAdminToken();
   if (!tokenValue || !PATCH_ADMIN_API_URL) return;
   status.textContent = "관리자 권한 확인 중…";
-  fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/admin", {
-    headers: { Authorization: "Bearer " + tokenValue }
-  }).then(function(res) {
-    if (!res.ok) throw new Error("Unauthorized");
-    return res.json();
-  }).then(function(data) {
-    _patchAdminVerified = true;
+  refreshPatchAdminSession().then(function(data) {
     status.textContent = data.login + " · 관리자";
     status.classList.add("is-admin");
     loginBtn.hidden = true;
     editorBtn.hidden = false;
   }).catch(function() {
+    _patchAdminVerified = false;
+    stopPatchEditorSessionKeepAlive();
     try { localStorage.removeItem(PATCH_ADMIN_TOKEN_KEY); } catch (e) {}
     status.textContent = "읽기 전용";
     loginBtn.hidden = false;

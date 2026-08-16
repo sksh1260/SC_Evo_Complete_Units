@@ -1,5 +1,8 @@
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+// 편집 중에는 프런트엔드가 주기적으로 갱신하는 슬라이딩 세션이다.
+// 장시간 편집을 보호하면서도, 브라우저를 닫아 둔 세션은 만료된다.
+const ADMIN_SESSION_TTL_SECONDS = 8 * 60 * 60;
 
 function base64UrlEncode(value) {
   const text = typeof value === "string" ? value : JSON.stringify(value);
@@ -80,6 +83,10 @@ async function requireAdmin(request, env) {
   return session && isConfiguredAdmin(session.login, env) ? session : null;
 }
 
+function createAdminSession(login, env) {
+  return sign({ login, exp: Math.floor(Date.now() / 1000) + ADMIN_SESSION_TTL_SECONDS }, env.SESSION_SECRET);
+}
+
 function gitHubContentsUrl(env) {
   const [owner, repo] = String(env.GITHUB_REPO || "").split("/");
   if (!owner || !repo) throw new Error("GITHUB_REPO 설정이 올바르지 않습니다.");
@@ -139,7 +146,7 @@ async function handleOAuthCallback(url, env) {
   const user = await getGithubUser(tokenData.access_token);
   if (!isConfiguredAdmin(user.login, env)) return new Response("관리자 권한이 없는 GitHub 계정입니다.", { status: 403 });
 
-  const session = await sign({ login: user.login, exp: Math.floor(Date.now() / 1000) + 60 * 60 }, env.SESSION_SECRET);
+  const session = await createAdminSession(user.login, env);
   const frontend = new URL(env.FRONTEND_URL || env.FRONTEND_ORIGIN);
   frontend.searchParams.set("admin_token", session);
   frontend.hash = "patch";
@@ -166,7 +173,10 @@ export default {
 
       if (url.pathname === "/api/admin" && request.method === "GET") {
         const admin = await requireAdmin(request, env);
-        return admin ? json({ login: admin.login }, 200, headers) : json({ error: "Unauthorized" }, 401, headers);
+        // 정상적인 관리자 확인마다 만료 시간을 새로 부여한다.
+        return admin
+          ? json({ login: admin.login, token: await createAdminSession(admin.login, env) }, 200, headers)
+          : json({ error: "Unauthorized" }, 401, headers);
       }
       if (url.pathname === "/api/patch" && request.method === "GET") {
         if (!await requireAdmin(request, env)) return json({ error: "Unauthorized" }, 401, headers);
