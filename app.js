@@ -17778,6 +17778,7 @@ function initPatchView() {
 }
 
 var _patchEditorRows = [];
+var _patchEditorOpenVersions = {};
 var PATCH_EDITOR_GROUPS = [
   { key: "common", label: "공통", start: 0, end: 5 },
   { key: "terran", label: "테란", start: 6, end: 11 },
@@ -17856,11 +17857,18 @@ function movePatchEditorGroup(rowIndex, targetRowIndex, groupKey) {
 function renderPatchVisualEditor() {
   var container = document.getElementById("patch-visual-editor");
   if (!container) return;
+  // 항목 조작으로 다시 렌더링하더라도 현재 펼친 버전 블록을 유지한다.
+  _patchEditorOpenVersions = {};
+  container.querySelectorAll(".patch-visual-block[open] .patch-version-input").forEach(function(input) {
+    _patchEditorOpenVersions[input.value] = true;
+  });
   var html = "";
   var blocks = getPatchEditorBlocks();
   for (var b = 0; b < blocks.length; b++) {
     var block = blocks[b];
-    html += "<details class='patch-visual-block'><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(_patchEditorRows[block.start][0] || "") + "' aria-label='버전 제목'></summary>";
+    var versionTitle = _patchEditorRows[block.start][0] || "";
+    var openAttr = _patchEditorOpenVersions[versionTitle] ? " open" : "";
+    html += "<details class='patch-visual-block'" + openAttr + "><summary><span>버전</span><input class='patch-version-input' data-version-row='" + block.start + "' value='" + escHtml(versionTitle) + "' aria-label='버전 제목'></summary>";
     html += "<div class='patch-race-editors'>";
     PATCH_EDITOR_GROUPS.forEach(function(group) {
       var rows = [];
@@ -17930,6 +17938,7 @@ function renderPatchVisualEditor() {
 }
 
 function setPatchEditorRows(csvText) {
+  _patchEditorOpenVersions = {};
   _patchEditorRows = parsePatchCsv(normalizePatchCsvDates(String(csvText || "").replace(/^\uFEFF/, ""))).map(function(row) {
     var copy = row.slice(0, 25);
     while (copy.length < 25) copy.push("");
