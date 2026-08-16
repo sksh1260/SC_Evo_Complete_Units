@@ -3757,6 +3757,11 @@ tr.row-ability-sub td {
   padding-top: 0;
   border-top: none;
 }
+.ph-unit-header.ph-unit-header-no-divider {
+  margin-top: 0.45rem;
+  padding-top: 0;
+  border-top: none;
+}
 
 /* 유닛·구조물 경계는 자동 표시하며, 수동 구분선은 추가적인 분리용이다. */
 .ph-manual-divider {
@@ -4290,31 +4295,40 @@ tr.row-ability-sub td {
 .patch-editor-item .patch-line-text { min-height: 3.3rem; }
 .patch-editor-unit-header {
   margin-top: 0.45rem;
-  padding-top: 0.62rem;
-  border-top-style: dashed;
-  border-top-color: rgba(143, 184, 232, 0.48);
+  padding-top: 0.4rem;
+  border-top: 0;
 }
 .patch-editor-auto-divider {
-  margin: -0.08rem 0 0.38rem;
-  color: #8fa9c6;
-  font-size: 0.68rem;
-  line-height: 1;
+  position: relative;
+  height: 0;
+  margin: -0.4rem 0 0.78rem;
+  border-top: 1px dashed rgba(143, 184, 232, 0.48);
 }
+.patch-auto-divider-delete {
+  position: absolute;
+  top: -0.68rem;
+  right: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  border: 1px solid #3e5674;
+  border-radius: 3px;
+  background: #111927;
+  color: #ef9393;
+  font: 700 0.75rem/1 inherit;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.patch-auto-divider-delete:hover { border-color: #ef9393; opacity: 1; }
 .patch-item-actions { display: flex; justify-content: flex-end; gap: 0.22rem; margin-top: 0.35rem; }
 .patch-item-actions .patch-line-action {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.45rem;
+  height: 1.45rem;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-}
-/* 새 항목 추가는 이동·삭제보다 보조적인 동작이라 한 단계 작게 둔다. */
-.patch-item-actions .patch-line-action[data-add-after] {
-  width: 1.45rem;
-  height: 1.45rem;
-  align-self: center;
 }
 .patch-line-delete { color: #ef9393; }
 .patch-editor-divider {
