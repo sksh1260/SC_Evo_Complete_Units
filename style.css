@@ -3747,15 +3747,20 @@ tr.row-ability-sub td {
   font-weight: 700;
   font-size: 0.88rem;
   color: var(--text-bright);
-  margin-top: 0.45rem;
-  padding-top: 0.3rem;
-  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  margin-top: 0.5rem;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .ph-unit-header:first-child {
   margin-top: 0;
-  padding-top: 0;
-  border-top: none;
+}
+
+/* 구분선은 자동으로 만들지 않고 편집 화면에서 추가한 경우에만 출력한다. */
+.ph-manual-divider {
+  height: 0;
+  margin: 0.55rem 0 0.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
 .ph-line {
@@ -4268,6 +4273,9 @@ tr.row-ability-sub td {
   font-size: 0.82rem;
 }
 
+.patch-race-header-actions { display: inline-flex; align-items: center; gap: 0.24rem; }
+.patch-divider-action { color: #a8bbd3; }
+
 .patch-race-items { padding: 0.4rem; display: grid; gap: 0.4rem; }
 
 .patch-editor-item {
@@ -4279,7 +4287,34 @@ tr.row-ability-sub td {
 
 .patch-editor-item .patch-line-text { min-height: 3.3rem; }
 .patch-item-actions { display: flex; justify-content: flex-end; gap: 0.22rem; margin-top: 0.35rem; }
+.patch-item-actions .patch-line-action {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* 새 항목 추가는 이동·삭제보다 보조적인 동작이라 한 단계 작게 둔다. */
+.patch-item-actions .patch-line-action[data-add-after] {
+  width: 1.45rem;
+  height: 1.45rem;
+  align-self: center;
+}
 .patch-line-delete { color: #ef9393; }
+.patch-editor-divider {
+  padding: 0.55rem 0.4rem 0.35rem;
+  border-style: dashed;
+  background: rgba(10, 16, 25, 0.6);
+}
+.patch-editor-divider-label {
+  padding-bottom: 0.45rem;
+  border-top: 1px dashed rgba(164, 184, 211, 0.5);
+  color: #9bacbf;
+  font-size: 0.74rem;
+  text-align: center;
+}
 .patch-race-empty { margin: 0; padding: 0.55rem 0.2rem; color: #64758d; font-size: 0.74rem; text-align: center; }
 
 @media (max-width: 1100px) {

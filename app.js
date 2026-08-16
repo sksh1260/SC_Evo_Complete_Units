@@ -16736,11 +16736,20 @@ function renderPatchTag(tag) {
   }).join(" ");
 }
 
+// CSV 안에서 수동 구분선을 식별하는 내부 표식이다. 편집 화면의
+// "구분선" 버튼으로만 생성되며, 실제 패치 내역에는 선만 출력된다.
+var PATCH_DIVIDER_MARKER = "[[PATCH_DIVIDER]]";
+
+function isPatchDivider(text) {
+  return String(text || "").trim() === PATCH_DIVIDER_MARKER;
+}
+
 function isUnitHeader(text) {
   // 유닛/건물명 행: 불릿(•)이나 공백으로 시작하지 않고 비어있지 않으며 따옴표 없음
   if (!text) return false;
   var t = text.trim();
   if (t === "") return false;
+  if (isPatchDivider(t)) return false;
   if (t.startsWith("•") || t.startsWith(" •") || t.startsWith("   ◦") || t.startsWith("  ◦")) return false;
   if (/^[\s•◦]/.test(t)) return false;
   return true;
@@ -16814,7 +16823,12 @@ function orderPatchSections(sections, contentKey) {
   for (var i = 0; i < sections.length; i++) {
     var text = normalizePatchDisplayText(sections[i][contentKey] || "");
     if (!text) continue;
-    if (isUnitHeader(text)) {
+    if (isPatchDivider(text)) {
+      var normalizedDividerSection = Object.assign({}, sections[i]);
+      normalizedDividerSection[contentKey] = text;
+      if (currentGroup) currentGroup.sections.push(normalizedDividerSection);
+      else leading.push(normalizedDividerSection);
+    } else if (isUnitHeader(text)) {
       var normalizedSection = Object.assign({}, sections[i]);
       normalizedSection[contentKey] = text;
       currentGroup = { header: text, order: getPatchDbOrder(text, contentKey), index: i, sections: [normalizedSection] };
@@ -16866,7 +16880,9 @@ function renderPatchArrowChangeText(text) {
 }
 
 function renderPatchColumn(sections, contentKey, tagKey) {
-  sections = orderPatchSections(sections, contentKey);
+  // 편집 화면에서 정한 위·아래 순서를 그대로 사용한다.
+  // DB 순서로 다시 정렬하면 "보호막 재생" 같은 공통 항목이 사용자가
+  // 옮긴 위치와 다르게 출력되는 문제가 생긴다.
   var html = "";
   for (var i = 0; i < sections.length; i++) {
     var sec = sections[i];
@@ -16874,7 +16890,9 @@ function renderPatchColumn(sections, contentKey, tagKey) {
     var tag = sec[tagKey] || "";
     if (!text && !tag) continue;
 
-    if (isUnitHeader(text)) {
+    if (isPatchDivider(text)) {
+      html += "<div class='ph-manual-divider' aria-hidden='true'></div>";
+    } else if (isUnitHeader(text)) {
       // 유닛·구조물 제목 행에도 하위 버전이 입력될 수 있다.
       // 내용 행과 동일하게 제목 오른쪽에 버전 배지를 출력한다.
       html += "<div class='ph-unit-header'>" + escHtml(text) + (tag ? " " + renderPatchTag(tag) : "") + "</div>";
@@ -17832,6 +17850,9 @@ function syncPatchEditorCsv() {
 }
 
 function patchEditorGroupData(row, group) {
+  if (String(row[group.start] || "").trim() === PATCH_DIVIDER_MARKER) {
+    return { text: "", tag: "", divider: true };
+  }
   var text = [], tags = [];
   for (var col = group.start; col <= group.end; col++) {
     var value = String(row[col] || "").trim();
@@ -17839,7 +17860,7 @@ function patchEditorGroupData(row, group) {
     if (/^\d+(?:\.\d+)+(?:\s*\/\s*\d+(?:\.\d+)+)*$/.test(value)) tags.push(value);
     else text.push(value);
   }
-  return { text: text.join(" "), tag: tags.join(" / ") };
+  return { text: text.join(" "), tag: tags.join(" / "), divider: false };
 }
 
 function setPatchEditorGroup(rowIndex, groupKey, text, tag) {
@@ -17903,12 +17924,18 @@ function renderPatchVisualEditor() {
       var rows = [];
       for (var r = block.start + 1; r < block.end; r++) {
         var value = patchEditorGroupData(_patchEditorRows[r], group);
-        if (value.text || value.tag || _patchEditorRows[r][group.start] === " ") rows.push({ index: r, value: value });
+        if (value.text || value.tag || value.divider || _patchEditorRows[r][group.start] === " ") rows.push({ index: r, value: value });
       }
-      html += "<section class='patch-race-editor patch-race-" + group.key + "'><header><strong>" + group.label + "</strong><button type='button' class='patch-line-action' data-add-to-block='" + block.start + "' data-add-group='" + group.key + "'>＋ 항목</button></header><div class='patch-race-items'>";
+      html += "<section class='patch-race-editor patch-race-" + group.key + "'><header><strong>" + group.label + "</strong><span class='patch-race-header-actions'><button type='button' class='patch-line-action' data-add-to-block='" + block.start + "' data-add-group='" + group.key + "'>＋ 항목</button><button type='button' class='patch-line-action patch-divider-action' data-add-divider-to-block='" + block.start + "' data-add-divider-group='" + group.key + "'>─ 구분선</button></span></header><div class='patch-race-items'>";
       if (!rows.length) html += "<p class='patch-race-empty'>항목 없음</p>";
       rows.forEach(function(item, rowPosition) {
-        html += "<article class='patch-editor-item' data-row='" + item.index + "' data-editor-group='" + group.key + "'><textarea class='patch-line-text' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(item.value.text) + "</textarea><input class='patch-line-tag' placeholder='하위 버전 (선택)' value='" + escHtml(item.value.tag) + "' aria-label='" + group.label + " 하위 버전'><div class='patch-item-actions'>";
+        html += "<article class='patch-editor-item" + (item.value.divider ? " patch-editor-divider" : "") + "' data-row='" + item.index + "' data-editor-group='" + group.key + "'>";
+        if (item.value.divider) {
+          html += "<div class='patch-editor-divider-label'>구분선</div>";
+        } else {
+          html += "<textarea class='patch-line-text' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(item.value.text) + "</textarea><input class='patch-line-tag' placeholder='하위 버전 (선택)' value='" + escHtml(item.value.tag) + "' aria-label='" + group.label + " 하위 버전'>";
+        }
+        html += "<div class='patch-item-actions'>";
         if (rowPosition > 0) html += "<button type='button' class='patch-line-action' data-move='up' data-target-row='" + rows[rowPosition - 1].index + "'>↑</button>";
         if (rowPosition < rows.length - 1) html += "<button type='button' class='patch-line-action' data-move='down' data-target-row='" + rows[rowPosition + 1].index + "'>↓</button>";
         html += "<button type='button' class='patch-line-action' data-add-after='" + item.index + "'>＋</button><button type='button' class='patch-line-action patch-line-delete' data-delete='1'>×</button></div></article>";
@@ -17964,6 +17991,13 @@ function renderPatchVisualEditor() {
       addPatchEditorLine(current ? current.end - 1 : Number(button.dataset.addToBlock), button.dataset.addGroup);
     });
   });
+  container.querySelectorAll("[data-add-divider-to-block]").forEach(function(button) {
+    button.addEventListener("click", function() {
+      var blocksNow = getPatchEditorBlocks();
+      var current = blocksNow.filter(function(block) { return block.start === Number(button.dataset.addDividerToBlock); })[0];
+      addPatchEditorDivider(current ? current.end - 1 : Number(button.dataset.addDividerToBlock), button.dataset.addDividerGroup);
+    });
+  });
 }
 
 function setPatchEditorRows(csvText) {
@@ -17986,6 +18020,16 @@ function addPatchEditorLine(afterRow, groupKey) {
   renderPatchVisualEditor();
   var next = document.querySelector(".patch-editor-item[data-row='" + (afterRow + 1) + "'][data-editor-group='" + groupKey + "'] .patch-line-text");
   if (next) next.focus();
+}
+
+function addPatchEditorDivider(afterRow, groupKey) {
+  var row = Array(25).fill("");
+  var group = PATCH_EDITOR_GROUPS.filter(function(item) { return item.key === groupKey; })[0];
+  if (!group) return;
+  row[group.start] = PATCH_DIVIDER_MARKER;
+  _patchEditorRows.splice(afterRow + 1, 0, row);
+  syncPatchEditorCsv();
+  renderPatchVisualEditor();
 }
 
 function togglePatchEditor(forceOpen) {
