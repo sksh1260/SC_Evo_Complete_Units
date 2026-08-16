@@ -16875,7 +16875,9 @@ function renderPatchColumn(sections, contentKey, tagKey) {
     if (!text && !tag) continue;
 
     if (isUnitHeader(text)) {
-      html += "<div class='ph-unit-header'>" + escHtml(text) + "</div>";
+      // 유닛·구조물 제목 행에도 하위 버전이 입력될 수 있다.
+      // 내용 행과 동일하게 제목 오른쪽에 버전 배지를 출력한다.
+      html += "<div class='ph-unit-header'>" + escHtml(text) + (tag ? " " + renderPatchTag(tag) : "") + "</div>";
     } else if (text) {
       var isSubItem = /^\s*◦/.test(text) || text.indexOf("◦") >= 0;
       var lineCls = isSubItem ? "ph-line ph-sub-item" : "ph-line";
