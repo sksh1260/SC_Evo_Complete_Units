@@ -3747,16 +3747,18 @@ tr.row-ability-sub td {
   font-weight: 700;
   font-size: 0.88rem;
   color: var(--text-bright);
-  margin-top: 0.5rem;
-  padding-top: 0;
-  border-top: 0;
+  margin-top: 0.45rem;
+  padding-top: 0.3rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
 .ph-unit-header:first-child {
   margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
-/* 구분선은 자동으로 만들지 않고 편집 화면에서 추가한 경우에만 출력한다. */
+/* 유닛·구조물 경계는 자동 표시하며, 수동 구분선은 추가적인 분리용이다. */
 .ph-manual-divider {
   height: 0;
   margin: 0.55rem 0 0.5rem;
