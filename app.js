@@ -16776,7 +16776,9 @@ var PATCH_UNIT_NAME_ALIASES = {
 
 function normalizePatchDisplayText(text) {
   if (!text) return text;
-  return String(text).replace(/그레이터 스파이어|로봇공학 지원소|로봇공학 시설|로보틱스 지원소|로보틱스 시설|다크 아콘|고위 기사|파일론|스컬지|벌처|해처리|스파이어|관문|무기고|아콘|러커|레어|하이브/g, function(name) {
+  // "레어"는 "플레어"처럼 다른 단어의 일부에도 들어갈 수 있으므로,
+  // 한글 글자에 붙어 있는 경우에는 유닛명 별칭으로 바꾸지 않는다.
+  return String(text).replace(/그레이터 스파이어|로봇공학 지원소|로봇공학 시설|로보틱스 지원소|로보틱스 시설|다크 아콘|고위 기사|파일론|스컬지|벌처|해처리|스파이어|관문|무기고|아콘|러커|하이브|(?<![가-힣])레어(?![가-힣])/g, function(name) {
     return PATCH_UNIT_NAME_ALIASES[name] || name;
   });
 }
