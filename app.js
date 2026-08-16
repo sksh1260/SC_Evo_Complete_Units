@@ -10433,9 +10433,10 @@ function formatGameRateText(value) {
 }
 function formatGameSpeedDescription(html) {
   if (!html) return "";
-  // 모달 설명의 시간은 속도와 무관하게 첫째 자리까지만 표시한다.
-  var formatted = String(html).replace(/(<span[^>]*>)(\d+(?:\.\d+)?)초(<\/span>)/g, function(_, start, value, end) {
-    return start + fmtGameTime(value, 1) + "초" + end;
+  // 설명 안의 시간은 span 유무와 관계없이 게임 속도에 맞춘다.
+  // 이전에는 색상 span으로 감싼 시간만 처리해 일반 텍스트("10초 후")가 고정되어 있었다.
+  var formatted = String(html).replace(/(\d+(?:\.\d+)?)초/g, function(_, value) {
+    return fmtGameTime(value, 1) + "초";
   });
   if (gameSpeedMultiplier === 1) return formatted;
   return formatted.replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) {
@@ -10854,7 +10855,7 @@ function fmtHP(u) {
   } else if (u.race === "sc2_protoss" && u.shields > 0) {
     baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>(비전투 " + fmtGameTime(10) + "초 후)</div><div style='font-size:0.75rem;color:#a0c4ff;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
   } else if (u.id === "sc2_reaper") {
-    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>(비전투 10초 후)</div><div style='font-size:0.75rem;color:#7ae46a;margin-top:-1px;'>(+2/s)</div>";
+    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>(비전투 " + fmtGameTime(10) + "초 후)</div><div style='font-size:0.75rem;color:#7ae46a;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
   }
 
   if (u.id === "sc2_marine") {
