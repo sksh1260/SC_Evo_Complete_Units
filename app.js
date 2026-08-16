@@ -17963,10 +17963,12 @@ function renderPatchVisualEditor() {
       html += "<section class='patch-race-editor patch-race-" + group.key + "'><header><strong>" + group.label + "</strong><span class='patch-race-header-actions'><button type='button' class='patch-line-action' data-add-to-block='" + block.start + "' data-add-group='" + group.key + "'>＋ 항목</button><button type='button' class='patch-line-action patch-divider-action' data-add-divider-to-block='" + block.start + "' data-add-divider-group='" + group.key + "'>─ 구분선</button></span></header><div class='patch-race-items'>";
       if (!rows.length) html += "<p class='patch-race-empty'>항목 없음</p>";
       rows.forEach(function(item, rowPosition) {
-        html += "<article class='patch-editor-item" + (item.value.divider ? " patch-editor-divider" : "") + "' data-row='" + item.index + "' data-editor-group='" + group.key + "'>";
+        var isAutoUnitDivider = rowPosition > 0 && !item.value.divider && isUnitHeader(item.value.text);
+        html += "<article class='patch-editor-item" + (item.value.divider ? " patch-editor-divider" : "") + (isAutoUnitDivider ? " patch-editor-unit-header" : "") + "' data-row='" + item.index + "' data-editor-group='" + group.key + "'>";
         if (item.value.divider) {
           html += "<div class='patch-editor-divider-label'>구분선</div>";
         } else {
+          if (isAutoUnitDivider) html += "<div class='patch-editor-auto-divider'>유닛·구조물 구분선</div>";
           html += "<textarea class='patch-line-text' placeholder='변경 내용' aria-label='" + group.label + " 변경 내용'>" + escHtml(item.value.text) + "</textarea><input class='patch-line-tag' placeholder='하위 버전 (선택)' value='" + escHtml(item.value.tag) + "' aria-label='" + group.label + " 하위 버전'>";
         }
         html += "<div class='patch-item-actions'>";

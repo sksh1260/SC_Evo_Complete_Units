@@ -4288,6 +4288,18 @@ tr.row-ability-sub td {
 }
 
 .patch-editor-item .patch-line-text { min-height: 3.3rem; }
+.patch-editor-unit-header {
+  margin-top: 0.45rem;
+  padding-top: 0.62rem;
+  border-top-style: dashed;
+  border-top-color: rgba(143, 184, 232, 0.48);
+}
+.patch-editor-auto-divider {
+  margin: -0.08rem 0 0.38rem;
+  color: #8fa9c6;
+  font-size: 0.68rem;
+  line-height: 1;
+}
 .patch-item-actions { display: flex; justify-content: flex-end; gap: 0.22rem; margin-top: 0.35rem; }
 .patch-item-actions .patch-line-action {
   width: 1.75rem;
