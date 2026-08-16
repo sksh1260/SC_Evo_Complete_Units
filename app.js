@@ -10657,6 +10657,20 @@ function getFiltered() {
       }
       if (va < vb) return -currentSort.dir;
       if (va > vb) return currentSort.dir;
+      // 총 체력이 같은 경우에는 보호막을 포함한 수치보다 순수 체력 유닛을 먼저 표시한다.
+      // 예: 2000 체력 > 1000 보호막 / 1000 체력
+      if (currentSort.col === "hp") {
+        var aHasShields = (a.shields || 0) > 0;
+        var bHasShields = (b.shields || 0) > 0;
+        if (aHasShields !== bHasShields) return aHasShields ? 1 : -1;
+      }
+      // 방어력도 동률이면 보호막 방어력이 함께 표기되는 유닛보다
+      // 순수 방어력 유닛을 먼저 표시한다.
+      if (currentSort.col === "armor") {
+        var aHasShieldArmor = (a.shields || 0) > 0;
+        var bHasShieldArmor = (b.shields || 0) > 0;
+        if (aHasShieldArmor !== bHasShieldArmor) return aHasShieldArmor ? 1 : -1;
+      }
       return 0;
     });
   } else {
@@ -11730,6 +11744,7 @@ function renderUnitApplicableUpgrades(u) {
     html += "    <div class='modal-item-title'>" + upg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
     var upgDesc = ref.desc || upg.desc;
     if (upgDesc) html += "    <div class='modal-item-desc'>" + upgDesc + "</div>";
+    html += getModalCardRequirementHtml(u, upg);
     html += "  </div>";
     if (costBadgeHtml) html += costBadgeHtml;
     html += "</div>";
@@ -13239,7 +13254,11 @@ function renderRow(u) {
       var dpsSubHtml = "";
       if (ab.name.indexOf("목표") >= 0) {
         var isMagFieldDps = (typeof isUpgActive === "function" && isUpgActive("sc2_mag_field_accelerators"));
-        var dpsValStr = isMagFieldDps ? "30.00" : "20.00";
+        // 목표물 고정은 사이클론 일반 공격과 동일한 공격 주기를 사용한다.
+        // 따라서 게임 속도에 따라 주기를 변환해 DPS도 함께 변환한다.
+        var lockOnDamage = isMagFieldDps ? 30 : 20;
+        var lockOnCooldown = (u.weapons && u.weapons[0] && u.weapons[0].cd) ? scaleTime(u.weapons[0].cd) : scaleTime(1);
+        var dpsValStr = fmtNum(lockOnDamage / lockOnCooldown, 2);
         var dpsClsName = isMagFieldDps ? "upg-val-terran" : "glow-txt-terran";
         dpsSubHtml = "<span class='" + dpsClsName + "'>" + dpsValStr + "</span>";
       }
@@ -13272,6 +13291,8 @@ function renderTable() {
 var currentAppView = "database";
 var compareUnitIds = { left: "sc2_marine", right: "sc2_zergling" };
 var compareOptionIds = {};
+// 이전 비교표 렌더러가 남아 있어도 현재 모달 비교 흐름에는 영향을 주지 않도록
+// 상태 객체는 호환용으로만 유지한다.
 var compareUpgradeState = { active: {}, atk: {}, armor: {}, shield: {}, full: false };
 var isRenderingComparePanels = false;
 
@@ -13308,21 +13329,6 @@ function setCompareArmorUpg(value) {
   var dbSelect = document.getElementById("sel-sidebar-armor-upg");
   if (dbSelect) dbSelect.value = value;
   setGlobalArmorUpg(value);
-  updateCompareUpgradeUI();
-  renderCompareView();
-}
-
-function toggleCompareGameSpeed() {
-  var speedBtn = document.getElementById("btn-game-speed");
-  if (speedBtn) speedBtn.click();
-  updateCompareUpgradeUI();
-  renderCompareView();
-}
-
-function toggleCompareUpgrade(key) {
-  if (!key) return;
-  compareUpgradeState.full = false;
-  compareUpgradeState.active[key] = !compareUpgradeState.active[key];
   updateCompareUpgradeUI();
   renderCompareView();
 }
@@ -14974,6 +14980,42 @@ function openModalById(sid) {
     }
   }
 
+var MODAL_CARD_REQUIREMENTS = {
+  zergling: { "아드레날린 분비선 진화": "하이브" },
+  spawning_pool: { "아드레날린 분비선 진화": "하이브" },
+  hydralisk: { "럴커 진화": "레어" },
+  hydralisk_den: { "럴커 진화": "레어" },
+  sc2_overlord: { "감시군주로 변태": "번식지", "점막 생성": "번식지", "배주머니 변이": "번식지" },
+  sc2_spawning_pool: { "아드레날린 분비선 진화": "군락" },
+  sc2_zergling: { "아드레날린 분비선 진화": "군락" },
+  sc2_baneling_nest: { "원심 고리 진화": "번식지" },
+  sc2_baneling: { "원심 고리 진화": "번식지" },
+  sc2_roach_warren: { "신경 재구성 진화": "번식지", "땅굴 발톱 진화": "번식지" },
+  sc2_roach: { "신경 재구성 진화": "번식지", "땅굴 발톱 진화": "번식지" },
+  sc2_hydralisk_den: { "나노 근육 팽창 진화": "군락" },
+  sc2_hydralisk: { "나노 근육 팽창 진화": "군락" },
+  sc2_lurker_den: { "적응형 발톱 진화": "군락", "진동 가시뼈 진화": "군락" },
+  sc2_lurker: { "적응형 발톱 진화": "군락", "진동 가시뼈 진화": "군락" },
+  sc2_corruptor: { "무리 군주로 변태": "거대 둥지탑" },
+  "*": { "지능형 제어 장치 연구": "무기고", "천공 발톱 연구": "무기고" }
+};
+
+function getModalCardRequirementHtml(unit, item) {
+  var requirements = (item && item.requirements) ||
+    (unit && MODAL_CARD_REQUIREMENTS[unit.id] && MODAL_CARD_REQUIREMENTS[unit.id][item.name]) ||
+    (MODAL_CARD_REQUIREMENTS["*"] && MODAL_CARD_REQUIREMENTS["*"][item.name]);
+  if (!requirements) return "";
+  var labels = Array.isArray(requirements) ? requirements : [requirements];
+  return labels.map(function(label) {
+    var target = UNIT_DATA.find(function(candidate) { return candidate.name === label; });
+    var icon = target ? resolveIcon(IMG[target.id] || target.icon || "", target.race) : "";
+    var open = target ? " onclick=\"openModalById('" + target.id + "')\" title='" + label + " 모달 열기'" : "";
+    return "<div class='upg-req-chip'" + open + "><span class='upg-req-text'>요구 조건: </span>" +
+      (icon ? "<img src='" + icon + "' class='upg-req-icon' alt=''/>" : "") +
+      "<span class='upg-req-text'>" + label + "</span></div>";
+  }).join("");
+}
+
 function openModal(u) {
   if (currentAppView === "compare" && !isRenderingComparePanels) return;
   currentModalUnit = u;
@@ -16146,6 +16188,7 @@ function getEffectiveAbilities(u) {
         abh += "  <div class='modal-item-content'>";
         abh += "    <div class='modal-item-title-row'><div class='modal-item-title'>" + abItem.name + (abItem.cost ? " <span class='modal-item-cost'>[" + abItem.cost + "]</span>" : "") + "</div>" + getBwAbilityMetaHtml(u, abItem.name) + "</div>";
         if (abItem.desc) abh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(abItem.desc) + "</div>";
+        abh += getModalCardRequirementHtml(u, abItem);
         abh += "  </div>";
         if (costBadgeHtml) abh += costBadgeHtml;
         abh += "</div>";
@@ -16388,6 +16431,7 @@ function getEffectiveAbilities(u) {
         uuh += "    <div class='modal-item-title'>" + uupg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
         if (uupg.cost) uuh += "    <div class='modal-item-cost' style='margin-left:0;margin-top:2px;'>비용: " + uupg.cost + (uupg.buildTime ? " | " + fmtBuildTime(uupg.buildTime) : "") + "</div>";
         if (uupg.desc) uuh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(uupg.desc) + "</div>";
+        uuh += getModalCardRequirementHtml(u, uupg);
         uuh += "  </div>";
         if (costBadgeHtml) uuh += costBadgeHtml;
         uuh += "</div>";
@@ -16800,69 +16844,6 @@ function normalizePatchDisplayText(text) {
   return String(text).replace(/로봇공학 지원소|로봇공학 시설|로보틱스 지원소|로보틱스 시설|다크 아콘|고위 기사|파일론|스컬지|벌처|해처리|관문|무기고|아콘|러커/g, function(name) {
     return PATCH_UNIT_NAME_ALIASES[name] || name;
   });
-}
-
-function getPatchDbOrder(header, contentKey) {
-  var race = PATCH_COLUMN_RACE[contentKey];
-  if (!race || !header) return Number.MAX_SAFE_INTEGER;
-  var normalizedHeader = PATCH_UNIT_NAME_ALIASES[header] || header;
-  // 종족 공통 변경은 특정 유닛보다 항상 먼저 표시한다.
-  if (/공통$/.test(normalizedHeader)) return -1;
-
-  var unitIndex = -1;
-  for (var i = 0; i < UNIT_DATA.length; i++) {
-    var unit = UNIT_DATA[i];
-    if (unit.race !== race) continue;
-    if (unit.name === normalizedHeader || unit.engName === normalizedHeader) {
-      unitIndex = i;
-      var isStructure = unit.type === "structure" || (unit.attributes && unit.attributes.indexOf("구조물") >= 0);
-      return (isStructure ? 0 : 1) * 100000 + unitIndex;
-    }
-  }
-  return Number.MAX_SAFE_INTEGER;
-}
-
-function orderPatchSections(sections, contentKey) {
-  // 행은 네 종족 열이 공유하지만, 화면에서는 각 열을 독립적으로 정렬할 수 있다.
-  // 헤더와 그 아래 변경 항목을 하나의 묶음으로 취급해 구조물 → DB 유닛 순서를 보장한다.
-  if (!PATCH_COLUMN_RACE[contentKey]) return sections;
-
-  var leading = [];
-  var groups = [];
-  var currentGroup = null;
-  for (var i = 0; i < sections.length; i++) {
-    var text = normalizePatchDisplayText(sections[i][contentKey] || "");
-    if (!text) continue;
-    if (isPatchDivider(text)) {
-      var normalizedDividerSection = Object.assign({}, sections[i]);
-      normalizedDividerSection[contentKey] = text;
-      if (currentGroup) currentGroup.sections.push(normalizedDividerSection);
-      else leading.push(normalizedDividerSection);
-    } else if (isUnitHeader(text)) {
-      var normalizedSection = Object.assign({}, sections[i]);
-      normalizedSection[contentKey] = text;
-      currentGroup = { header: text, order: getPatchDbOrder(text, contentKey), index: i, sections: [normalizedSection] };
-      groups.push(currentGroup);
-    } else if (currentGroup) {
-      var normalizedLineSection = Object.assign({}, sections[i]);
-      normalizedLineSection[contentKey] = text;
-      currentGroup.sections.push(normalizedLineSection);
-    } else {
-      var normalizedLeadingSection = Object.assign({}, sections[i]);
-      normalizedLeadingSection[contentKey] = text;
-      leading.push(normalizedLeadingSection);
-    }
-  }
-
-  groups.sort(function(a, b) {
-    return a.order === b.order ? a.index - b.index : a.order - b.order;
-  });
-
-  var ordered = leading.slice();
-  for (var gIdx = 0; gIdx < groups.length; gIdx++) {
-    ordered = ordered.concat(groups[gIdx].sections);
-  }
-  return ordered;
 }
 
 function renderPatchArrowChangeText(text) {
