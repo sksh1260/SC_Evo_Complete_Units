@@ -16839,6 +16839,30 @@ function orderPatchSections(sections, contentKey) {
   return ordered;
 }
 
+function renderPatchArrowChangeText(text) {
+  var rawText = String(text || "");
+  var firstArrow = rawText.indexOf("→");
+  var colonIndex = rawText.indexOf(":");
+
+  // 값 앞에 설명이 붙는 변경문은 숫자만 분리하지 않고 값 덩어리 전체를
+  // 이전/이후 색으로 처리한다. 예: "6 (경장갑 +4) x 2 → 7 (경장갑·보호막 +3) x 2"
+  if (firstArrow < 0 || colonIndex < 0 || colonIndex > firstArrow) return null;
+
+  var prefix = rawText.slice(0, colonIndex + 1);
+  var values = rawText.slice(colonIndex + 1).split(/\s*→\s*/).map(function(value) {
+    return value.trim();
+  }).filter(Boolean);
+  if (values.length < 2) return null;
+
+  var html = escHtml(prefix) + " ";
+  for (var index = 0; index < values.length; index++) {
+    var className = index === values.length - 1 ? "ph-new" : (index === 0 ? "ph-old-plain" : "ph-old");
+    html += "<span class='" + className + "'>" + escHtml(values[index]) + "</span>";
+    if (index < values.length - 1) html += "<span class='ph-arrow'> → </span>";
+  }
+  return html;
+}
+
 function renderPatchColumn(sections, contentKey, tagKey) {
   sections = orderPatchSections(sections, contentKey);
   var html = "";
@@ -16853,11 +16877,12 @@ function renderPatchColumn(sections, contentKey, tagKey) {
     } else if (text) {
       var isSubItem = /^\s*◦/.test(text) || text.indexOf("◦") >= 0;
       var lineCls = isSubItem ? "ph-line ph-sub-item" : "ph-line";
-      var lineHtml = escHtml(text);
+      var highlightedChange = renderPatchArrowChangeText(text);
+      var lineHtml = highlightedChange || escHtml(text);
       // 부호가 붙은 보너스(+0 → +25), 퍼센트, 비용처럼 복합 표기된 값까지
       // 모든 전/후 수치를 동일한 색상 규칙으로 처리한다.
       var chainPattern = /((?:[\d\.\/%?+∞-]+\s*→\s*)+)([\d\.\/%?+∞-]+)/g;
-      lineHtml = lineHtml.replace(chainPattern, function(fullMatch, leftChain, finalVal) {
+      if (!highlightedChange) lineHtml = lineHtml.replace(chainPattern, function(fullMatch, leftChain, finalVal) {
         var items = [];
         leftChain.replace(/([\d\.\/%?]+)(\s*→\s*)/g, function(_, val) {
           items.push(val);
@@ -16880,7 +16905,7 @@ function renderPatchColumn(sections, contentKey, tagKey) {
       // "경장갑 +4 → 경장갑·보호막 +3"처럼 수치 앞의 대상 표기도 함께
       // 변경되는 항목은 숫자 전용 패턴에 걸리지 않으므로, 이전/이후 구간을 별도로 강조한다.
       var labelledChangePattern = /(:\s*)([^→]*?\+\d+(?:\.\d+)?)(\s*→\s*)([^→]*?\+\d+(?:\.\d+)?)/g;
-      lineHtml = lineHtml.replace(labelledChangePattern, function(fullMatch, prefix, oldValue, arrow, newValue) {
+      if (!highlightedChange) lineHtml = lineHtml.replace(labelledChangePattern, function(fullMatch, prefix, oldValue, arrow, newValue) {
         return prefix + "<span class='ph-old-plain'>" + oldValue.trim() + "</span>" +
           "<span class='ph-arrow'>" + arrow + "</span>" +
           "<span class='ph-new'>" + newValue.trim() + "</span>";
@@ -16888,7 +16913,7 @@ function renderPatchColumn(sections, contentKey, tagKey) {
       // "20 (경장갑 +5) → 24"처럼 이전 값에 피해 유형·보너스 설명이
       // 함께 붙는 경우도 전/후 전체를 각각 이전/이후 색으로 표시한다.
       var mixedValueChangePattern = /(:\s*)([^→]+?)(\s*→\s*)([^→]+?)(?=\s*$)/g;
-      lineHtml = lineHtml.replace(mixedValueChangePattern, function(fullMatch, prefix, oldValue, arrow, newValue) {
+      if (!highlightedChange) lineHtml = lineHtml.replace(mixedValueChangePattern, function(fullMatch, prefix, oldValue, arrow, newValue) {
         return prefix + "<span class='ph-old-plain'>" + oldValue.trim() + "</span>" +
           "<span class='ph-arrow'>" + arrow + "</span>" +
           "<span class='ph-new'>" + newValue.trim() + "</span>";
