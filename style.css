@@ -734,7 +734,7 @@ td, .sol-value, .wiki-atk-val-cell { line-height: 1.4;
   height: 100%;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.2;
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -2993,9 +2993,13 @@ th.sort-desc::after { content: ' ▽'; opacity: 1; color: var(--point-color); fo
   height: 100%;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.1;
+  stroke-width: 1.35;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.main-ability-cooldown-icon svg,
+.modal-ability-cooldown-icon svg {
+  stroke-width: 1.35;
 }
 .main-ability-duration-icon {
   width: 1.3rem;
@@ -3310,7 +3314,7 @@ tr.row-ability-sub td {
 }
 .ability-effect-range-icon svg {
   width: 100%; height: 100%; fill: none;
-  stroke: currentColor; stroke-width: 1.8; stroke-linecap: round;
+  stroke: currentColor; stroke-width: 1.25; stroke-linecap: round;
 }
 .ability-effect-range-compact {
   font-size: 0.76rem;

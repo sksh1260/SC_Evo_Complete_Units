@@ -10699,7 +10699,7 @@ function timeIcon(race) {
 // 무제한 사거리 아이콘 (SVG 무한대 돋보기 스타일 디자인)
 function infiniteIcon(noColor) {
   var colorStyle = noColor ? "" : "color:var(--text-bright);";
-  return "<svg class='ico-infinite' viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' style='display:inline-block;vertical-align:middle;margin:0 2px;" + colorStyle + "'><path d='M18.178 8c5.096 0 5.096 8 0 8-2.673 0-4.355-1.928-6.178-4-1.823 2.072-3.505 4-6.178 4-5.096 0-5.096-8 0-8 2.673 0 4.355 1.928 6.178 4 1.823-2.072 3.505-4 6.178-4z'/></svg>";
+  return "<svg class='ico-infinite' viewBox='0 0 24 24' width='15' height='15' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' style='display:inline-block;vertical-align:middle;margin:0 2px;" + colorStyle + "'><path d='M18.178 8c5.096 0 5.096 8 0 8-2.673 0-4.355-1.928-6.178-4-1.823 2.072-3.505 4-6.178 4-5.096 0-5.096-8 0-8 2.673 0 4.355 1.928 6.178 4 1.823-2.072 3.505-4 6.178-4z'/></svg>";
 }
 
 // 비용 (가로 한 줄 - 메인창 2줄 표기)
@@ -11156,18 +11156,18 @@ function abilityDurationIndicatorHtml() {
 }
 
 function abilityCastRangeIndicatorHtml() {
-  return "<span class='modal-ability-stat-icon main-ability-cast-range-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.5 9.5 4-4M15 5.5h3v3'></path></svg></span>";
+  return "<span class='modal-ability-stat-icon main-ability-cast-range-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.2 9.8 5.4-5.4M15 4.4h4.6V9'></path></svg></span>";
 }
 
 function abilityCooldownIndicatorHtml() {
-  return "<span class='modal-ability-stat-icon main-ability-cooldown-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><path d='M10.52 20.37A8.5 8.5 0 1 1 16.25 19.36'></path><path d='M18.6 17.7 16.25 19.36 18.9 20.4'></path><path d='M9 7h6L12 12l3 5H9l3-5Z'></path></svg></span>";
+  return "<span class='modal-ability-stat-icon main-ability-cooldown-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><g transform='rotate(90 12 12)'><path d='M20 12a8 8 0 1 1-2.34-5.66'></path><path d='M20 4v5h-5'></path></g><path d='M9.5 8h5M9.5 16h5M10 8c0 2 1 2.7 2 4-1 1.3-2 2-2 4M14 8c0 2-1 2.7-2 4 1 1.3 2 2 2 4'></path></svg></span>";
 }
 
 function getBwAbilityRangeInlineHtml(u, abilityName) {
   if (!u || !u.race) return "";
 
   var name = String(abilityName || "").replace(/<[^>]*>/g, "").replace(/\s*\([^)]*\)/g, "").trim();
-  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
   if (u.race === "sc2_zerg") {
     var sc2Ranges = {
       "부식성 담즙": "0.5",
@@ -12998,16 +12998,16 @@ function renderRow(u) {
       // 9. 시야 열에는 능력의 효과 범위를 표기
       var abilityEffectRangeHtml = getBwAbilityRangeInlineHtml(u, ab.name);
       if (!abilityEffectRangeHtml && ab.name.indexOf("KD8") >= 0) {
-        var kd8RangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+        var kd8RangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
         abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 2'><span class='ability-effect-range-icon'>" + kd8RangeIcon + "</span>2</span>";
       } else if (ab.name === "EMP 탄환") {
-        var erIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+        var erIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
         abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 1.5'><span class='ability-effect-range-icon'>" + erIcon + "</span>1.5</span>";
       } else if (ab.name === "전술 핵 공격") {
-        var erIcon2 = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+        var erIcon2 = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
         abilityEffectRangeHtml = "<span class='ability-effect-range'><span class='ability-effect-range-icon'>" + erIcon2 + "</span>4 / 6 / 8</span>";
       } else if (ab.name.indexOf("EMP 쇼크웨이브") >= 0) {
-        var erIconEmp = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+        var erIconEmp = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
         abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 2.25'><span class='ability-effect-range-icon'>" + erIconEmp + "</span>2.25</span>";
       }
       h += "<td>" + (abilityEffectRangeHtml ? "<div class='td-ability-effect-range'>" + abilityEffectRangeHtml + "</div>" : "") + "</td>";
@@ -15850,9 +15850,9 @@ function getBwAbilityMetaHtml(u, abilityName) {
   if (name === "뉴클리어 스트라이크" && typeof isUpgActive === "function" && isUpgActive("ghost_ocular")) meta.castRange = "14";
 
   var clockIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><path d='M12 7v5l3.5 2'></path></svg>";
-  var cooldownIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M10.52 20.37A8.5 8.5 0 1 1 16.25 19.36'></path><path d='M18.6 17.7 16.25 19.36 18.9 20.4'></path><path d='M9 7h6L12 12l3 5H9l3-5Z'></path></svg>";
-  var castRangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.5 9.5 4-4M15 5.5h3v3'></path></svg>";
-  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.97 9.03 18.86 5.14M15.86 5.14H18.86V8.14'></path><path d='M9.03 9.03 5.14 5.14M8.14 5.14H5.14V8.14'></path><path d='M9.03 14.97 5.14 18.86M8.14 18.86H5.14V15.86'></path><path d='M14.97 14.97 18.86 18.86M15.86 18.86H18.86V15.86'></path></svg>";
+  var cooldownIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><g transform='rotate(90 12 12)'><path d='M20 12a8 8 0 1 1-2.34-5.66'></path><path d='M20 4v5h-5'></path></g><path d='M9.5 8h5M9.5 16h5M10 8c0 2 1 2.7 2 4-1 1.3-2 2-2 4M14 8c0 2-1 2.7-2 4 1 1.3 2 2 2 4'></path></svg>";
+  var castRangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.2 9.8 5.4-5.4M15 4.4h4.6V9'></path></svg>";
+  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
   var durationText = meta.duration;
   var durationValue = parseFloat(String(meta.duration || "").replace("초", ""));
   if (isFinite(durationValue)) durationText = fmtGameTime(durationValue, 1);
@@ -15860,7 +15860,7 @@ function getBwAbilityMetaHtml(u, abilityName) {
   var cooldownValue = parseFloat(String(meta.cooldown || ""));
   if (isFinite(cooldownValue)) cooldownText = fmtGameTime(cooldownValue);
   var html = "<div class='modal-ability-stats'>";
-  if (meta.cooldown) html += "<span class='modal-ability-stat' title='재사용 대기시간'><span class='modal-ability-stat-icon'>" + cooldownIcon + "</span>" + cooldownText + "</span>";
+  if (meta.cooldown) html += "<span class='modal-ability-stat' title='재사용 대기시간'><span class='modal-ability-stat-icon modal-ability-cooldown-icon'>" + cooldownIcon + "</span>" + cooldownText + "</span>";
   if (meta.duration) html += "<span class='modal-ability-stat' title='지속 시간'><span class='modal-ability-stat-icon'>" + clockIcon + "</span>" + durationText + "</span>";
   if (meta.castRange) html += "<span class='modal-ability-stat' title='시전 사거리'><span class='modal-ability-stat-icon'>" + castRangeIcon + "</span>" + meta.castRange + "</span>";
   if (meta.effectRanges) {
