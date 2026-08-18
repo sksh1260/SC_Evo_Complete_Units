@@ -9312,7 +9312,7 @@ var UNIT_DATA = [
       upgrade("나노 근육 팽창 진화", 100, 100, 90, "btn-upgrade-zerg-frenzy.png", "<span style='color:#fff59d'>히드라리스크</span>가 <span style='color:#fff59d'>달려들기</span> 능력을 사용할 수 있습니다.")
     ]),
     structure("sc2_infestation_pit", "감염 구덩이", "Infestation Pit", 100, 100, 50, "번식지", 850, 1, 9, "중장갑 · 생체 · 구조물", [], [upgrade("세균 장막 진화", 150, 150, 110, "btn-ability-zerg-darkswarm.png", "장막으로 지상 유닛을 가려 받는 피해를 <span style='color:#a0c4ff'>50%</span> 감소시킵니다. <span style='color:#fff59d'>15초</span> 동안 지속됩니다."), upgrade("신경 기생충 진화", 150, 150, 110, "btn-ability-zerg-neuralparasite-color.png", "<span style='color:#fff59d'>감염충</span>이 <span style='color:#fff59d'>신경 기생충</span> 능력을 사용할 수 있습니다.")]),
-    structure("sc2_lurker_den", "가시지옥 굴", "Lurker Den", 100, 150, 80, "히드라리스크 굴", 850, 1, 9, "중장갑 · 생체 · 구조물", [], [upgrade("적응형 발톱 진화", 100, 100, 80, "btn-upgrade-zerg-adaptivetalons.png", "<span style='color:#fff59d'>가시지옥</span>의 잠복 속도가 <span style='color:#a0c4ff'>3초</span>에서 <span style='color:#a0c4ff'>1.07초</span>로 감소합니다."), upgrade("진동 가시뼈 진화", 150, 150, 80, "btn-upgrade-kerrigan-seismicspines.png", "<span style='color:#fff59d'>가시지옥</span>의 사거리가 <span style='color:#a0c4ff'>2</span>만큼 증가합니다.")]),
+    structure("sc2_lurker_den", "가시지옥 굴", "Lurker Den", 100, 150, 80, "히드라리스크 굴", 850, 1, 9, "중장갑 · 생체 · 구조물", [], [upgrade("적응형 발톱 진화", 100, 100, 80, "btn-upgrade-zerg-adaptivetalons.png", "<span style='color:#fff59d'>가시지옥</span>의 잠복 속도가 <span style='color:#a0c4ff'>2.5초</span>에서 <span style='color:#a0c4ff'>1.5초</span>로 감소합니다."), upgrade("진동 가시뼈 진화", 150, 150, 80, "btn-upgrade-kerrigan-seismicspines.png", "<span style='color:#fff59d'>가시지옥</span>의 사거리가 <span style='color:#a0c4ff'>2</span>만큼 증가합니다.")]),
     structure("sc2_spire", "둥지탑", "Spire", 150, 150, 92.4, "번식지", 850, 1, 9, "중장갑 · 생체 · 구조물", [], [
       upgrade("비행체 공격 1단계", 100, 100, 160, "btn-upgrade-zerg-airattacks-level1.png"), upgrade("비행체 공격 2단계", 175, 175, 190, "btn-upgrade-zerg-airattacks-level2.png"), upgrade("비행체 공격 3단계", 250, 250, 220, "btn-upgrade-zerg-airattacks-level3.png"),
       upgrade("비행체 갑피 1단계", 100, 100, 160, "btn-upgrade-zerg-flyercarapace-level1.png"), upgrade("비행체 갑피 2단계", 175, 175, 190, "btn-upgrade-zerg-flyercarapace-level2.png"), upgrade("비행체 갑피 3단계", 250, 250, 220, "btn-upgrade-zerg-flyercarapace-level3.png")
@@ -9371,7 +9371,7 @@ var UNIT_DATA = [
     sc2_roach: "돌격 유닛입니다. 잠복해 있는 동안 체력을 빠르게 회복합니다. <span style='color:#fff59d'>궤멸충</span>으로 변태할 수 있습니다.",
     sc2_ravager: "원거리 포격 유닛입니다. <span style='color:#fff59d'>부식성 담즙</span>을 사용할 수 있습니다.",
     sc2_hydralisk: "원거리 공격 유닛입니다. <span style='color:#fff59d'>가시지옥</span>으로 변태할 수 있습니다.",
-    sc2_lurker: "지상 유닛을 공격하는 매복 유닛입니다. 가시뼈로 공격하여 일직선 상의 뫼든 적에게 피해를 줍니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>",
+    sc2_lurker: "지상 유닛을 공격하는 매복 유닛입니다. 가시뼈로 공격하여 일직선 상의 모든 적에게 피해를 줍니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>",
     sc2_mutalisk: "여러 대상을 연쇄적으로 가격하는 공중 유닛입니다.",
     sc2_corruptor: "대공 비행체입니다. 부식액 분사를 사용할 수 있습니다. <span style='color:#fff59d'>무리 군주</span>로 변태할 수 있습니다.",
     sc2_broodlord: "중돌격 비행 유닛입니다. 대상에게 <span style='color:#fff59d'>공생충</span>을 발사합니다. 공생충은 지상 유닛을 공격하는 작은 생명체입니다.",
@@ -11421,7 +11421,7 @@ function renderSpeedModal(u) {
   }
 
   if (u.id === "sc2_spine_crawler" || u.id === "sc2_spore_crawler") {
-    baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>(C 2.5)</span>";
+    baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>(C " + fmtGameRate(2.5) + ")</span>";
     baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>(뿌리 들기)</span>";
   } else if (isZergGroundUnit(u)) {
     var creepVal = fmtNum(curSpeed * 1.2, 2);
@@ -11638,7 +11638,7 @@ var UNIT_UPGRADE_REFS = {
     {sid:"sc2_hatchery", name:"잠복 진화"}
   ],
   "sc2_lurker":     [
-    {sid:"sc2_lurker_den", name:"적응형 발톱 진화", desc:"<span style='color:#fff59d'>가시지옥</span>의 잠복 속도가 <span style='color:#a0c4ff'>3초</span>에서 <span style='color:#a0c4ff'>1.07초</span>로 감소합니다."},
+    {sid:"sc2_lurker_den", name:"적응형 발톱 진화", desc:"<span style='color:#fff59d'>가시지옥</span>의 잠복 속도가 <span style='color:#a0c4ff'>2.5초</span>에서 <span style='color:#a0c4ff'>1.5초</span>로 감소합니다."},
     {sid:"sc2_lurker_den", name:"진동 가시뼈 진화", desc:"<span style='color:#fff59d'>가시지옥</span>의 사거리가 <span style='color:#a0c4ff'>2</span>만큼 증가합니다."},
     {sid:"sc2_hatchery", name:"잠복 진화"}
   ],
@@ -11744,7 +11744,7 @@ function renderUnitApplicableUpgrades(u) {
     html += "  <div class='modal-item-content'>";
     html += "    <div class='modal-item-title'>" + upg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
     var upgDesc = ref.desc || upg.desc;
-    if (upgDesc) html += "    <div class='modal-item-desc'>" + upgDesc + "</div>";
+    if (upgDesc) html += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(upgDesc) + "</div>";
     html += getModalCardRequirementHtml(u, upg);
     html += "  </div>";
     if (costBadgeHtml) html += costBadgeHtml;
@@ -15610,6 +15610,8 @@ function fmtAttackSplashArea(u, wp) {
         var glowCls2 = (lvl > 0 || isZerglingAdrenal || isAdeptResonating || isStimActive || reaverExtraDmg > 0) ? "upg-val-" + rc2 : "glow-txt-" + u.race.replace("bw_", "").replace("sc2_", "");
 
         var targetTxt = (u.id === "sc2_thor" && wi === 1) ? "공중 (천벌포)" : wp.type;
+        // 모달 공격 대상 표기만 가운데점 형식으로 통일한다. 메인 목록의 배지 표기는 유지.
+        targetTxt = String(targetTxt || "").replace(/지상\s*[\/,]\s*공중/g, "지상·공중");
         var rangeStr = fmtNum(wp.range, 2);
         if (u.id === "marine" && isUpgActive("marine_u238")) {
           rangeStr = "<span class='upg-val-terran'>6</span>";
