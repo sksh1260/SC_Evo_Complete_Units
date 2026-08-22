@@ -18764,7 +18764,13 @@ function loadVisitorStats() {
   var token = getPatchAdminToken();
   if (!PATCH_ADMIN_API_URL || !token) return Promise.resolve();
   var base = PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors";
-  return fetch(base, { headers: { Authorization: "Bearer " + token } }).then(function(res) {
+  return fetch(base, {
+    cache: "no-store",
+    headers: {
+      Authorization: "Bearer " + token,
+      "Cache-Control": "no-cache"
+    }
+  }).then(function(res) {
     if (!res.ok) throw new Error("Visitor stats unavailable");
     return res.json();
   }).then(function(stats) {

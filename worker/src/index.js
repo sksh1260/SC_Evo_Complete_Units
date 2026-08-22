@@ -116,7 +116,15 @@ function cors(request, env) {
 }
 
 function json(data, status = 200, headers = {}) {
-  return new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json; charset=utf-8", ...headers } });
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      // 통계·인증·편집 API는 이전 응답을 브라우저나 중간 캐시에서 재사용하면 안 된다.
+      "Cache-Control": "no-store, max-age=0",
+      ...headers
+    }
+  });
 }
 
 function redirect(url) { return new Response(null, { status: 302, headers: { Location: url } }); }
