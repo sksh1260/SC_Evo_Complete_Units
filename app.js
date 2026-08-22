@@ -18767,8 +18767,7 @@ function loadVisitorStats() {
   return fetch(base, {
     cache: "no-store",
     headers: {
-      Authorization: "Bearer " + token,
-      "Cache-Control": "no-cache"
+      Authorization: "Bearer " + token
     }
   }).then(function(res) {
     if (!res.ok) throw new Error("Visitor stats unavailable");
