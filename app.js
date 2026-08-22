@@ -18719,14 +18719,6 @@ var _patchAdminVerified = false;
 var _patchEditorKeepAliveId = null;
 var PATCH_EDITOR_KEEPALIVE_MS = 15 * 60 * 1000;
 var VISITOR_ID_KEY = "sc-evo-visitor-id";
-var VISITOR_DAY_KEY = "sc-evo-visitor-day";
-
-function koreaVisitorDay() {
-  var parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
-  var map = {};
-  parts.forEach(function(part) { if (part.type !== "literal") map[part.type] = part.value; });
-  return map.year + "-" + map.month + "-" + map.day;
-}
 
 function getVisitorId() {
   try {
@@ -18782,19 +18774,17 @@ function loadVisitorStats() {
 
 function recordVisitorVisit() {
   if (!PATCH_ADMIN_API_URL) return;
-  var day = koreaVisitorDay();
   var id = getVisitorId();
-  var lastDay = "";
-  try { lastDay = localStorage.getItem(VISITOR_DAY_KEY) || ""; } catch (e) {}
-  if (!id || lastDay === day) return;
+  if (!id) return;
+  /*
+   * 중복 판정은 Durable Object가 visitorId와 날짜로 처리한다.
+   * 브라우저의 과거 '오늘 전송함' 표시는 Worker 재배포·일시 오류 후 재집계를 막으므로
+   * 여기서는 매 페이지 진입 때 재시도한다. 서버에서는 여전히 하루 1회만 집계된다.
+   */
   fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ visitorId: id })
-  }).then(function(res) {
-    if (res.ok) {
-      try { localStorage.setItem(VISITOR_DAY_KEY, day); } catch (e) {}
-    }
   }).catch(function() {});
 }
 

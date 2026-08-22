@@ -1,3 +1,5 @@
+import { DurableObject } from "cloudflare:workers";
+
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 // 편집 중에는 프런트엔드가 주기적으로 갱신하는 슬라이딩 세션이다.
@@ -19,13 +21,13 @@ function koreaDateKey() {
 
 // 접속 집계는 하나의 Durable Object에서 직렬 처리한다. 따라서 동시 요청에도
 // Today/Total 카운터가 덮어써지지 않으며, 관리자만 일별 이력을 읽을 수 있다.
-export class VisitorCounter {
-  constructor(state) {
-    this.state = state;
+export class VisitorCounter extends DurableObject {
+  constructor(ctx, env) {
+    super(ctx, env);
   }
 
   async record(visitorId, day) {
-    const storage = this.state.storage;
+    const storage = this.ctx.storage;
     const visitorKey = "visitor:" + visitorId;
     const dayVisitorKey = "day-visitor:" + day + ":" + visitorId;
     const totalKey = "total";
@@ -55,13 +57,13 @@ export class VisitorCounter {
 
   async stats(day) {
     return {
-      today: Number(await this.state.storage.get("day:" + day) || 0),
-      total: Number(await this.state.storage.get("total") || 0)
+      today: Number(await this.ctx.storage.get("day:" + day) || 0),
+      total: Number(await this.ctx.storage.get("total") || 0)
     };
   }
 
   async history(limit = 90) {
-    const storage = this.state.storage;
+    const storage = this.ctx.storage;
     const days = (await storage.get("days") || []).slice(-Math.max(1, Math.min(limit, 730))).reverse();
     const records = [];
     for (const day of days) records.push({ date: day, visitors: Number(await storage.get("day:" + day) || 0) });
