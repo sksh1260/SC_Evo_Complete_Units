@@ -51,7 +51,9 @@ export class VisitorCounter extends DurableObject {
         writes.set("days", days.slice(-730));
       }
     }
-    if (writes.size) await storage.put(writes);
+    // Durable Object storage에는 Map이 아닌 일반 객체로 전달한다.
+    // Map은 일부 런타임에서 빈 값으로 처리되어 응답은 성공하지만 집계가 남지 않을 수 있다.
+    if (writes.size) await storage.put(Object.fromEntries(writes));
     return { today, total };
   }
 
