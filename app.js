@@ -18747,6 +18747,18 @@ function updateVisitorCounter(stats) {
   if (!counter || !today || !total) return;
   today.textContent = Number(stats && stats.today || 0).toLocaleString();
   total.textContent = Number(stats && stats.total || 0).toLocaleString();
+  counter.removeAttribute("title");
+  counter.hidden = false;
+}
+
+function showVisitorCounterPending() {
+  var counter = document.getElementById("visitor-counter");
+  var today = document.getElementById("visitor-today");
+  var total = document.getElementById("visitor-total");
+  if (!counter || !today || !total) return;
+  today.textContent = "–";
+  total.textContent = "–";
+  counter.title = selectedLanguage === "en" ? "Loading visitor statistics" : "접속자 기록을 불러오는 중";
   counter.hidden = false;
 }
 
@@ -18756,9 +18768,10 @@ function hideVisitorCounter() {
 }
 
 function loadVisitorStats() {
-  if (!PATCH_ADMIN_API_URL || !isPatchAdmin()) return Promise.resolve();
+  var token = getPatchAdminToken();
+  if (!PATCH_ADMIN_API_URL || !token) return Promise.resolve();
   var base = PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors";
-  return fetch(base, { headers: { Authorization: "Bearer " + getPatchAdminToken() } }).then(function(res) {
+  return fetch(base, { headers: { Authorization: "Bearer " + token } }).then(function(res) {
     if (!res.ok) throw new Error("Visitor stats unavailable");
     return res.json();
   }).then(function(stats) {
@@ -19374,7 +19387,12 @@ function initPatchAdmin() {
     loginBtn.hidden = true;
     editorBtn.hidden = false;
     if (visitorHistoryBtn) visitorHistoryBtn.hidden = false;
-    loadVisitorStats().catch(function() {});
+    // 관리자 인증이 끝나는 즉시 영역을 보여, 통계 API가 느려도 화면에서 사라지지 않게 한다.
+    showVisitorCounterPending();
+    loadVisitorStats().catch(function() {
+      var counter = document.getElementById("visitor-counter");
+      if (counter) counter.title = selectedLanguage === "en" ? "Visitor statistics are unavailable" : "접속자 기록을 불러오지 못했습니다.";
+    });
   }).catch(function() {
     _patchAdminVerified = false;
     stopPatchEditorSessionKeepAlive();
