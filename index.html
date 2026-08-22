@@ -313,6 +313,9 @@
           <button id="patch-admin-editor" type="button" class="patch-edit-btn patch-admin-icon-btn" onclick="togglePatchEditor()" hidden aria-label="패치 관리">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16.86 3.49 3.65 3.65-11.1 11.1L5.7 19.3l1.06-3.71 11.1-11.1Zm0 2.83-8.95 8.95-.35 1.23 1.23-.35 8.95-8.95-1.88-1.88ZM4 21h16v-2H4v2Z"/></svg>
           </button>
+          <button id="visitor-admin-history" type="button" class="patch-edit-btn patch-admin-icon-btn" onclick="openVisitorHistory()" hidden aria-label="접속 기록">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16v2H2V3h2v16Zm3-2H5v-5h2v5Zm4 0H9V7h2v10Zm4 0h-2v-8h2v8Zm4 0h-2V4h2v13Z"/></svg>
+          </button>
         </div>
       </div>
       <section id="patch-editor" class="patch-editor" hidden aria-label="패치 내역 편집기">
@@ -435,6 +438,18 @@
         </div><!-- end modal-two-col -->
       </div><!-- end modal-body -->
     </div><!-- end modal-content -->
+  </div>
+
+  <aside id="visitor-counter" class="visitor-counter" aria-label="접속자 수" hidden>
+    <div><span>Today</span><strong id="visitor-today">0</strong></div>
+    <div><span>Total</span><strong id="visitor-total">0</strong></div>
+  </aside>
+  <div id="visitor-history-modal" class="visitor-history-modal" hidden role="dialog" aria-modal="true" aria-labelledby="visitor-history-title">
+    <section class="visitor-history-panel">
+      <header><h2 id="visitor-history-title">접속 기록</h2><button type="button" onclick="closeVisitorHistory()" aria-label="닫기">×</button></header>
+      <p id="visitor-history-total"></p>
+      <div id="visitor-history-list"></div>
+    </section>
   </div>
 
   <script src="app.js"></script>

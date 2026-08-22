@@ -4,6 +4,71 @@ const decoder = new TextDecoder();
 // 장시간 편집을 보호하면서도, 브라우저를 닫아 둔 세션은 만료된다.
 const ADMIN_SESSION_TTL_SECONDS = 8 * 60 * 60;
 
+function koreaDateKey() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date()).reduce((result, part) => {
+    if (part.type !== "literal") result[part.type] = part.value;
+    return result;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+// 접속 집계는 하나의 Durable Object에서 직렬 처리한다. 따라서 동시 요청에도
+// Today/Total 카운터가 덮어써지지 않으며, 관리자만 일별 이력을 읽을 수 있다.
+export class VisitorCounter {
+  constructor(state) {
+    this.state = state;
+  }
+
+  async record(visitorId, day) {
+    const storage = this.state.storage;
+    const visitorKey = "visitor:" + visitorId;
+    const dayVisitorKey = "day-visitor:" + day + ":" + visitorId;
+    const totalKey = "total";
+    const dayKey = "day:" + day;
+    let total = Number(await storage.get(totalKey) || 0);
+    let today = Number(await storage.get(dayKey) || 0);
+    const writes = new Map();
+
+    if (!await storage.get(visitorKey)) {
+      total += 1;
+      writes.set(visitorKey, 1);
+      writes.set(totalKey, total);
+    }
+    if (!await storage.get(dayVisitorKey)) {
+      today += 1;
+      writes.set(dayVisitorKey, 1);
+      writes.set(dayKey, today);
+      const days = await storage.get("days") || [];
+      if (!days.includes(day)) {
+        days.push(day);
+        writes.set("days", days.slice(-730));
+      }
+    }
+    if (writes.size) await storage.put(writes);
+    return { today, total };
+  }
+
+  async stats(day) {
+    return {
+      today: Number(await this.state.storage.get("day:" + day) || 0),
+      total: Number(await this.state.storage.get("total") || 0)
+    };
+  }
+
+  async history(limit = 90) {
+    const storage = this.state.storage;
+    const days = (await storage.get("days") || []).slice(-Math.max(1, Math.min(limit, 730))).reverse();
+    const records = [];
+    for (const day of days) records.push({ date: day, visitors: Number(await storage.get("day:" + day) || 0) });
+    return { total: Number(await storage.get("total") || 0), records };
+  }
+}
+
 function base64UrlEncode(value) {
   const text = typeof value === "string" ? value : JSON.stringify(value);
   const bytes = encoder.encode(text);
@@ -43,7 +108,7 @@ function cors(request, env) {
   return origin === env.FRONTEND_ORIGIN ? {
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Headers": "Authorization, Content-Type",
-    "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
     "Vary": "Origin"
   } : {};
 }
@@ -170,6 +235,26 @@ export default {
         return redirect(authUrl.toString());
       }
       if (url.pathname === "/auth/callback") return handleOAuthCallback(url, env);
+
+      if (url.pathname === "/api/visitors" && request.method === "GET") {
+        if (!await requireAdmin(request, env)) return json({ error: "Unauthorized" }, 401, headers);
+        const stats = await env.VISITOR_COUNTER.getByName("site-visitors").stats(koreaDateKey());
+        return json(stats, 200, headers);
+      }
+      if (url.pathname === "/api/visitors" && request.method === "POST") {
+        const body = await request.json();
+        const visitorId = String(body && body.visitorId || "");
+        if (!/^[A-Za-z0-9_-]{20,96}$/.test(visitorId)) return json({ error: "Invalid visitor" }, 400, headers);
+        await env.VISITOR_COUNTER.getByName("site-visitors").record(visitorId, koreaDateKey());
+        // 일반 방문자에게는 집계 성공 여부만 반환한다. 수치는 관리자 전용이다.
+        return json({ ok: true }, 200, headers);
+      }
+      if (url.pathname === "/api/admin/visitors" && request.method === "GET") {
+        if (!await requireAdmin(request, env)) return json({ error: "Unauthorized" }, 401, headers);
+        const requestedLimit = Number(url.searchParams.get("limit") || 90);
+        const history = await env.VISITOR_COUNTER.getByName("site-visitors").history(requestedLimit);
+        return json(history, 200, headers);
+      }
 
       if (url.pathname === "/api/admin" && request.method === "GET") {
         const admin = await requireAdmin(request, env);

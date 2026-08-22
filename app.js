@@ -10923,7 +10923,7 @@ function displayCardDescription(owner, item) {
   if (ownerKey && CARD_DESCRIPTION_EN_BY_OWNER[ownerKey]) return CARD_DESCRIPTION_EN_BY_OWNER[ownerKey];
   if (CARD_DESCRIPTION_EN[key]) return CARD_DESCRIPTION_EN[key];
   if (item && item.targetId && typeof UNIT_DATA !== "undefined") {
-    var target = UNIT_DATA.find(function(x) { return x.id === item.targetId; });
+    var target = getUnitById(item.targetId);
     if (target) return displayUnitDescription(target);
   }
   return translateCardDescriptionFallback(korean);
@@ -11025,6 +11025,20 @@ Object.keys(GAME_TERM_EN).forEach(function(fullName) {
   GAME_TERM_EN[match[1]] = GAME_TERM_EN[fullName].replace(/\s+(Research|Evolution)$/i, "");
 });
 
+/* Reused by language rendering and patch previews; sorting happens once at startup. */
+var GAME_TERM_EN_ORDERED = Object.keys(GAME_TERM_EN).sort(function(a, b) { return b.length - a.length; });
+var UNIT_NAME_TRANSLATION_ORDERED = UNIT_DATA.slice().sort(function(a, b) {
+  return (b.name || "").length - (a.name || "").length;
+});
+var UNIT_BY_ID = Object.create(null);
+UNIT_DATA.forEach(function(unit) {
+  if (unit && unit.id) UNIT_BY_ID[unit.id] = unit;
+});
+
+function getUnitById(unitId) {
+  return UNIT_BY_ID[unitId] || null;
+}
+
 function t(key) {
   var language = UI_TEXT[selectedLanguage] || UI_TEXT.ko;
   return language[key] || UI_TEXT.ko[key] || key;
@@ -11054,9 +11068,8 @@ function displayMainWeaponLabel(value) {
 function displayGameTerm(value) {
   if (selectedLanguage !== "en" || !value) return value || "";
   var output = String(value);
-  var terms = Object.keys(GAME_TERM_EN).sort(function(a, b) { return b.length - a.length; });
-  for (var i = 0; i < terms.length; i++) {
-    var term = terms[i];
+  for (var i = 0; i < GAME_TERM_EN_ORDERED.length; i++) {
+    var term = GAME_TERM_EN_ORDERED[i];
     var translatedTerm = GAME_TERM_EN[term];
     /* 원문 카드의 연구·개발·진화 접미어를 영문 표기에도 보존한다. */
     if ((term.endsWith("연구") || term.endsWith("개발")) && !/Research$/i.test(translatedTerm)) {
@@ -11067,11 +11080,9 @@ function displayGameTerm(value) {
     output = output.split(term).join(translatedTerm);
   }
   /* 생산·변태 카드처럼 유닛명이 포함된 명칭도 영문 유닛명으로 바꾼다. */
-  if (typeof UNIT_DATA !== "undefined" && Array.isArray(UNIT_DATA)) {
-    UNIT_DATA.slice().sort(function(a, b) { return b.name.length - a.name.length; }).forEach(function(unit) {
-      if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
-    });
-  }
+  UNIT_NAME_TRANSLATION_ORDERED.forEach(function(unit) {
+    if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
+  });
   return output
     .replace(/지속\s*능력/g, "Passive")
     .replace(/자동\s*(?:시전|Cast)/gi, "Autocast")
@@ -12336,7 +12347,7 @@ function getBwAbilityMetaHtml(u, abilityName) {
   }[name];
   if (u.id === "sc2_warpgate") {
     var warpgateAbility = (BUILDING_PRODUCE_ABILITIES.sc2_warpgate || []).find(function(item) { return item.name === name; });
-    var warpgateUnit = warpgateAbility && UNIT_DATA.find(function(item) { return item.id === warpgateAbility.targetId; });
+    var warpgateUnit = warpgateAbility && getUnitById(warpgateAbility.targetId);
     var warpgateCooldowns = { "광전사 소환": 28, "사도 소환": 28, "파수기 소환": 32, "추적자 소환": 32, "고위 기사 소환": 45, "암흑 기사 소환": 45 };
     if (warpgateUnit) meta = { cooldown: warpgateCooldowns[name] || warpgateUnit.buildTime };
   }
@@ -12899,7 +12910,7 @@ function renderUnitApplicableUpgrades(u) {
   var html = "";
 
   refs.forEach(function(ref) {
-    var structure = UNIT_DATA.find(function(x) { return x.id === ref.sid; });
+    var structure = getUnitById(ref.sid);
     if (!structure || !structure.upgrades) return;
     var upg = structure.upgrades.find(function(up) { return up.name === ref.name; });
     if (!upg) return;
@@ -14362,7 +14373,7 @@ function compareStatValue(u, col, value) {
 function getCompareApplicableUpgrades(u) {
   var result = [];
   (UNIT_UPGRADE_REFS[u.id] || []).forEach(function(ref) {
-    var structure = UNIT_DATA.find(function(item) { return item.id === ref.sid; });
+    var structure = getUnitById(ref.sid);
     if (!structure || !structure.upgrades) return;
     var upgrade = structure.upgrades.find(function(item) { return item.name === ref.name; });
     if (upgrade) result.push(upgrade);
@@ -15001,7 +15012,7 @@ for (var sc2ProtossStructureIndex = 0; sc2ProtossStructureIndex < sc2ProtossStru
 
 function openModalById(sid) {
   if (currentAppView === "compare") return;
-  var target = UNIT_DATA.find(function(x) { return x.id === sid; });
+  var target = getUnitById(sid);
   if (target) {
     openModal(target);
   }
@@ -16486,7 +16497,7 @@ function getEffectiveAbilities(u) {
     var raceIcons = getIcons(u.race);
     for (var i = 0; i < extraList.length; i++) {
       var item = extraList[i];
-      var tu = UNIT_DATA.find(function(x) { return x.id === item.targetId; });
+      var tu = getUnitById(item.targetId);
       var origItem = origList.find(function(o) { return o.name === item.name; });
 
       var finalDesc = (origItem && origItem.desc)
@@ -16708,22 +16719,22 @@ function getEffectiveAbilities(u) {
         } else if (u.id === "sc2_overseer" && abItem.icon === "btn-ability-zerg-overlord-oversight.png") {
           var isOversight = (typeof isUpgActive === "function" && isUpgActive("sc2_overseer_oversight"));
           if (isOversight) cardExtraCls = " active active-zerg";
-          clickAttr = " onclick=\"toggleUpg('sc2_overseer_oversight'); openModal(UNIT_DATA.find(function(x){return x.id==='sc2_overseer';}));\" style='cursor:pointer;'";
+          clickAttr = " onclick=\"toggleUpg('sc2_overseer_oversight'); openModal(getUnitById('sc2_overseer'));\" style='cursor:pointer;'";
         } else if (u.id === "sc2_observer" && abItem.name === "감시 모드") {
           var isObserverSurveillance = (typeof isUpgActive === "function" && isUpgActive("sc2_observer_surveillance"));
           if (isObserverSurveillance) cardExtraCls = " active active-protoss";
-          clickAttr = " onclick=\"toggleUpg('sc2_observer_surveillance'); openModal(UNIT_DATA.find(function(x){return x.id==='sc2_observer';}));\" style='cursor:pointer;'";
+          clickAttr = " onclick=\"toggleUpg('sc2_observer_surveillance'); openModal(getUnitById('sc2_observer'));\" style='cursor:pointer;'";
         } else if (u.id === "sc2_warp_prism" && abItem.name === "위상 모드") {
           var isWarpPrismPhasing = (typeof isUpgActive === "function" && isUpgActive("sc2_warp_prism_phasing"));
           if (isWarpPrismPhasing) cardExtraCls = " active active-protoss";
-          clickAttr = " onclick=\"toggleUpg('sc2_warp_prism_phasing'); openModal(UNIT_DATA.find(function(x){return x.id==='sc2_warp_prism';}));\" style='cursor:pointer;'";
+          clickAttr = " onclick=\"toggleUpg('sc2_warp_prism_phasing'); openModal(getUnitById('sc2_warp_prism'));\" style='cursor:pointer;'";
         } else if (u.id === "sc2_warp_prism" && abItem.name.indexOf("차원로") === 0) {
           var isWarpGateEnabled = (typeof isUpgActive === "function" && isUpgActive("sc2_warp_prism_phasing"));
           cardExtraCls = isWarpGateEnabled ? " active active-protoss" : " modal-upg-disabled";
         } else if (u.id === "sc2_void_ray" && abItem.name === "분광 정렬") {
           var isPrismaticAlignment = (typeof isUpgActive === "function" && isUpgActive("sc2_void_ray_prismatic_alignment"));
           if (isPrismaticAlignment) cardExtraCls = " active active-protoss";
-          clickAttr = " onclick=\"toggleUpg('sc2_void_ray_prismatic_alignment'); openModal(UNIT_DATA.find(function(x){return x.id==='sc2_void_ray';}));\" style='cursor:pointer;'";
+          clickAttr = " onclick=\"toggleUpg('sc2_void_ray_prismatic_alignment'); openModal(getUnitById('sc2_void_ray'));\" style='cursor:pointer;'";
         } else if (u.id === "sc2_swarmhost" && abItem.name === "식충 생성") {
           var isLocustSpawnActive = (typeof isUpgActive === "function" && isUpgActive("sc2_swarmhost_locust"));
           if (isLocustSpawnActive) cardExtraCls = " active active-zerg";
@@ -16733,12 +16744,12 @@ function getEffectiveAbilities(u) {
           var isChargeActive = (typeof isUpgActive === "function" && isUpgActive("sc2_zealot_charge"));
           if (isChargeActive) cardExtraCls = " active active-protoss";
           if (!isChargeUnlocked) cardExtraCls += " modal-upg-disabled";
-          clickAttr = " onclick=\"if (isUpgActive('sc2_zealot_charge_upgrade')) { toggleUpg('sc2_zealot_charge'); openModal(UNIT_DATA.find(function(x){return x.id==='sc2_zealot';})); }\" style='cursor:" + (isChargeUnlocked ? "pointer" : "not-allowed") + ";'";
+          clickAttr = " onclick=\"if (isUpgActive('sc2_zealot_charge_upgrade')) { toggleUpg('sc2_zealot_charge'); openModal(getUnitById('sc2_zealot')); }\" style='cursor:" + (isChargeUnlocked ? "pointer" : "not-allowed") + ";'";
         } else if (abItem.name === "스팀팩" || abItem.name === "전투 자극제" || (u.id === "sc2_medivac" && abItem.name === "재연소 장치 점화") || (u.id === "sc2_hydralisk" && abItem.name === "달려들기")) {
           var stimUpgId = (u.id === "sc2_medivac") ? "sc2_medivac_afterburners" : ((u.id === "sc2_hydralisk") ? "sc2_hydralisk_frenzy" : (u.id + "_stimpack"));
           var isStim = (typeof isUpgActive === "function" && isUpgActive(stimUpgId));
           if (isStim) cardExtraCls = " active active-" + (u.id === "sc2_hydralisk" ? "zerg" : "terran");
-          clickAttr = " onclick=\"toggleUpg('" + stimUpgId + "'); openModal(UNIT_DATA.find(function(x){return x.id==='" + u.id + "';}));\" style='cursor:pointer;'";
+          clickAttr = " onclick=\"toggleUpg('" + stimUpgId + "'); openModal(getUnitById('" + u.id + "'));\" style='cursor:pointer;'";
         }
 
         abh += "<div class='modal-item-card" + (costBadgeHtml ? " has-cost-badge" : "") + cardExtraCls + "'" + clickAttr + ">";
@@ -17158,7 +17169,10 @@ function initApp() {
 }
 
 // 설명 내 강조 색상 규칙을 데이터 전반에 동일하게 적용한다.
+var descriptionColorRulesApplied = false;
 function applyDescriptionColorRules() {
+  if (descriptionColorRulesApplied) return;
+  descriptionColorRulesApplied = true;
   var terms = {};
   UNIT_DATA.forEach(function (item) {
     if (item.name) terms[item.name] = true;
@@ -17205,9 +17219,8 @@ function applyDescriptionColorRules() {
 }
 
 
-// 스크립트 로드 즉시 시도 & DOMContentLoaded 시도시도
+// 설명 데이터만 먼저 정리하고 화면 렌더링은 initApp에서 한 번 수행한다.
 applyDescriptionColorRules();
-try { renderTable(); } catch(e){}
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initApp);
@@ -17802,24 +17815,24 @@ var PATCH_TEXT_EN_REPLACEMENTS = [
   ["제거", "Removed"]
 ];
 
+var PATCH_TEXT_EN_REPLACEMENTS_ORDERED = PATCH_TEXT_EN_REPLACEMENTS.slice().sort(function(a, b) {
+  return b[0].length - a[0].length;
+});
+
 function patchTranslateFragment(text) {
   var output = String(text || "");
   var protectedTerms = [];
-  if (typeof GAME_TERM_EN !== "undefined") {
-    Object.keys(GAME_TERM_EN).sort(function(a, b) { return b.length - a.length; }).forEach(function(term) {
-      if (output.indexOf(term) < 0) return;
-      var token = "@@PATCHTERM" + protectedTerms.length + "@@";
-      output = output.split(term).join(token);
-      protectedTerms.push({ token: token, term: term });
-    });
-  }
-  if (typeof UNIT_DATA !== "undefined" && Array.isArray(UNIT_DATA)) {
-    UNIT_DATA.slice().sort(function(a, b) { return b.name.length - a.name.length; }).forEach(function(unit) {
-      if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
-    });
-  }
+  GAME_TERM_EN_ORDERED.forEach(function(term) {
+    if (output.indexOf(term) < 0) return;
+    var token = "@@PATCHTERM" + protectedTerms.length + "@@";
+    output = output.split(term).join(token);
+    protectedTerms.push({ token: token, term: term });
+  });
+  UNIT_NAME_TRANSLATION_ORDERED.forEach(function(unit) {
+    if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
+  });
   protectedTerms.forEach(function(item) { output = output.split(item.token).join(item.term); });
-  PATCH_TEXT_EN_REPLACEMENTS.slice().sort(function(a, b) { return b[0].length - a[0].length; }).forEach(function(pair) {
+  PATCH_TEXT_EN_REPLACEMENTS_ORDERED.forEach(function(pair) {
     output = output.split(pair[0]).join(pair[1]);
   });
   return displayGameTerm(output);
@@ -18705,6 +18718,101 @@ var _patchExternalAttempted = false;
 var _patchAdminVerified = false;
 var _patchEditorKeepAliveId = null;
 var PATCH_EDITOR_KEEPALIVE_MS = 15 * 60 * 1000;
+var VISITOR_ID_KEY = "sc-evo-visitor-id";
+var VISITOR_DAY_KEY = "sc-evo-visitor-day";
+
+function koreaVisitorDay() {
+  var parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  var map = {};
+  parts.forEach(function(part) { if (part.type !== "literal") map[part.type] = part.value; });
+  return map.year + "-" + map.month + "-" + map.day;
+}
+
+function getVisitorId() {
+  try {
+    var existing = localStorage.getItem(VISITOR_ID_KEY);
+    if (existing) return existing;
+    var bytes = new Uint8Array(18);
+    crypto.getRandomValues(bytes);
+    var id = Array.prototype.map.call(bytes, function(value) { return value.toString(16).padStart(2, "0"); }).join("");
+    localStorage.setItem(VISITOR_ID_KEY, id);
+    return id;
+  } catch (e) { return ""; }
+}
+
+function updateVisitorCounter(stats) {
+  var counter = document.getElementById("visitor-counter");
+  var today = document.getElementById("visitor-today");
+  var total = document.getElementById("visitor-total");
+  if (!counter || !today || !total) return;
+  today.textContent = Number(stats && stats.today || 0).toLocaleString();
+  total.textContent = Number(stats && stats.total || 0).toLocaleString();
+  counter.hidden = false;
+}
+
+function hideVisitorCounter() {
+  var counter = document.getElementById("visitor-counter");
+  if (counter) counter.hidden = true;
+}
+
+function loadVisitorStats() {
+  if (!PATCH_ADMIN_API_URL || !isPatchAdmin()) return Promise.resolve();
+  var base = PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors";
+  return fetch(base, { headers: { Authorization: "Bearer " + getPatchAdminToken() } }).then(function(res) {
+    if (!res.ok) throw new Error("Visitor stats unavailable");
+    return res.json();
+  }).then(function(stats) {
+    updateVisitorCounter(stats);
+    return stats;
+  });
+}
+
+function recordVisitorVisit() {
+  if (!PATCH_ADMIN_API_URL) return;
+  var day = koreaVisitorDay();
+  var id = getVisitorId();
+  var lastDay = "";
+  try { lastDay = localStorage.getItem(VISITOR_DAY_KEY) || ""; } catch (e) {}
+  if (!id || lastDay === day) return;
+  fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ visitorId: id })
+  }).then(function(res) {
+    if (res.ok) {
+      try { localStorage.setItem(VISITOR_DAY_KEY, day); } catch (e) {}
+    }
+  }).catch(function() {});
+}
+
+function closeVisitorHistory() {
+  var modal = document.getElementById("visitor-history-modal");
+  if (modal) modal.hidden = true;
+}
+
+function openVisitorHistory() {
+  if (!isPatchAdmin() || !PATCH_ADMIN_API_URL) return;
+  var modal = document.getElementById("visitor-history-modal");
+  var total = document.getElementById("visitor-history-total");
+  var list = document.getElementById("visitor-history-list");
+  if (!modal || !total || !list) return;
+  modal.hidden = false;
+  total.textContent = "불러오는 중…";
+  list.innerHTML = "";
+  fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/admin/visitors?limit=180", {
+    headers: { Authorization: "Bearer " + getPatchAdminToken() }
+  }).then(function(res) {
+    if (!res.ok) throw new Error("Unauthorized");
+    return res.json();
+  }).then(function(data) {
+    total.textContent = "누적 방문자 " + Number(data.total || 0).toLocaleString() + "명";
+    list.innerHTML = (data.records || []).map(function(record) {
+      return "<div class='visitor-history-row'><span>" + escHtml(record.date) + "</span><strong>" + Number(record.visitors || 0).toLocaleString() + "</strong></div>";
+    }).join("") || "<div class='visitor-history-row'><span>아직 기록이 없습니다.</span></div>";
+  }).catch(function() {
+    total.textContent = "접속 기록을 불러오지 못했습니다.";
+  });
+}
 
 function getActivePatchCsv() {
   return _patchAdminPreviewCsv || PATCH_DEFAULT_CSV;
@@ -19224,7 +19332,8 @@ function normalizePatchAdminToolbar() {
 
   var icons = {
     "patch-admin-login": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-3.56 8.51A8 8 0 0 0 4 17.67V21h16v-3.33a8 8 0 0 0-4.44-7.16A5 5 0 0 0 12 2Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 8c3.13 0 5.72 2.28 5.98 5.33V19H6.02v-1.67C6.28 14.28 8.87 12 12 12Z"/></svg>',
-    "patch-admin-editor": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16.86 3.49 3.65 3.65-11.1 11.1L5.7 19.3l1.06-3.71 11.1-11.1Zm0 2.83-8.95 8.95-.35 1.23 1.23-.35 8.95-8.95-1.88-1.88ZM4 21h16v-2H4v2Z"/></svg>'
+    "patch-admin-editor": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16.86 3.49 3.65 3.65-11.1 11.1L5.7 19.3l1.06-3.71 11.1-11.1Zm0 2.83-8.95 8.95-.35 1.23 1.23-.35 8.95-8.95-1.88-1.88ZM4 21h16v-2H4v2Z"/></svg>',
+    "visitor-admin-history": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16v2H2V3h2v16Zm3-2H5v-5h2v5Zm4 0H9V7h2v10Zm4 0h-2v-8h2v8Zm4 0h-2V4h2v13Z"/></svg>'
   };
   Object.keys(icons).forEach(function(id) {
     var button = document.getElementById(id);
@@ -19252,7 +19361,9 @@ function initPatchAdmin() {
   }
   var loginBtn = document.getElementById("patch-admin-login");
   var editorBtn = document.getElementById("patch-admin-editor");
+  var visitorHistoryBtn = document.getElementById("visitor-admin-history");
   var status = document.getElementById("patch-admin-status");
+  recordVisitorVisit();
   if (!loginBtn || !editorBtn || !status) return;
   var tokenValue = getPatchAdminToken();
   if (!tokenValue || !PATCH_ADMIN_API_URL) return;
@@ -19262,6 +19373,8 @@ function initPatchAdmin() {
     status.classList.add("is-admin");
     loginBtn.hidden = true;
     editorBtn.hidden = false;
+    if (visitorHistoryBtn) visitorHistoryBtn.hidden = false;
+    loadVisitorStats().catch(function() {});
   }).catch(function() {
     _patchAdminVerified = false;
     stopPatchEditorSessionKeepAlive();
@@ -19269,6 +19382,8 @@ function initPatchAdmin() {
     status.textContent = "읽기 전용";
     loginBtn.hidden = false;
     editorBtn.hidden = true;
+    if (visitorHistoryBtn) visitorHistoryBtn.hidden = true;
+    hideVisitorCounter();
   });
 }
 

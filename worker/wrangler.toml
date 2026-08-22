@@ -10,3 +10,11 @@ GITHUB_REPO = "sksh1260/SC_Evo_Complete_Units"
 PATCH_FILE = "Patch.csv"
 ADMIN_GITHUB_LOGINS = "sksh1260"
 GITHUB_CLIENT_ID = "Ov23li6MYZHXPCag5Ix0"
+
+[[durable_objects.bindings]]
+name = "VISITOR_COUNTER"
+class_name = "VisitorCounter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["VisitorCounter"]
