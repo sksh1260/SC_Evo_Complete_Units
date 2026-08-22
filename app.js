@@ -7752,7 +7752,7 @@ var UNIT_DATA = [
     "sight": 11,
     "detector": true,
     "speed": 2.0156,
-    "attributes": "경장갑 · 기계 · 비행",
+    "attributes": "경장갑 · 기계",
     "description": "정찰용 비행 유닛입니다. 은폐 능력이 있으며, 탐지 능력이 없는 적에게는 보이지 않습니다.<br><span style='color:#ffd94a'>탐지기</span>",
     "weapons": [],
     "upgrades": [],
@@ -10402,6 +10402,534 @@ var UNIT_DATA = [
 })();
 
 // ─────────────────────────────────────────────────────────────
+// 영문 유닛/구조물 설명
+// ─────────────────────────────────────────────────────────────
+var UNIT_DESCRIPTION_EN = {
+  sc2_scv: "Basic worker unit. Gathers resources, constructs buildings, and repairs structures and units.",
+  sc2_mule: "Temporary harvesting unit. Mines minerals faster than a standard <span style='color:#fff59d'>SCV</span> and shuts down after 90 seconds.",
+  sc2_marine: "Versatile infantry unit.",
+  sc2_marauder: "Heavy assault infantry unit.",
+  sc2_reaper: "Harassment unit. Can traverse cliffs, rapidly regenerates health while out of combat, and can use <span style='color:#fff59d'>KD8 Charge</span>.",
+  sc2_ghost: "Sniper unit. Can use <span style='color:#fff59d'>Snipe</span> and <span style='color:#fff59d'>EMP Round</span>; with an upgrade, it can use <span style='color:#fff59d'>Cloak</span>. Can launch Tactical Nuclear Missiles produced at the <span style='color:#fff59d'>Ghost Academy</span>.",
+  sc2_hellion: "Fast reconnaissance unit. Projects a line of flame that damages every enemy it touches. Can transform into a close-combat unit.",
+  sc2_hellbat: "Close-combat unit. Attacks with a small cone of flame in front of it. Can transform into a fast reconnaissance unit.",
+  sc2_widow_mine: "Robotic mine. While burrowed, fires a missile at nearby enemies, damaging the target and a small surrounding area. Reveals itself while its Sentinel Missile is on cooldown.",
+  sc2_cyclone: "Mobile vehicle. Can use <span style='color:#fff59d'>Lock On</span> to attack while moving.",
+  sc2_siege_tank: "Heavy tank. Can switch to <span style='color:#fff59d'>Siege Mode</span> for long-range supporting fire.",
+  sc2_siege_tank_siege: "Heavy tank. Can switch to <span style='color:#fff59d'>Tank Mode</span> to move and provide supporting fire.",
+  sc2_thor: "Heavy assault mechanical unit.",
+  sc2_viking: "Durable combat support aircraft armed with powerful anti-capital air missiles. Can switch to <span style='color:#fff59d'>Assault Mode</span> to attack ground units.",
+  sc2_viking_assault: "Durable combat support unit. Can switch to <span style='color:#fff59d'>Fighter Mode</span> to attack air units.",
+  sc2_banshee: "Tactical strike aircraft. Can use <span style='color:#fff59d'>Cloak</span> after upgrading.",
+  sc2_medivac: "Air transport. <span style='color:#fff59d'>Heals</span> nearby biological units and can use <span style='color:#fff59d'>Ignite Afterburners</span>.",
+  sc2_raven: "Air support unit. Can use <span style='color:#fff59d'>Auto Turret</span>, <span style='color:#fff59d'>Interference Matrix</span>, and <span style='color:#fff59d'>Anti-Armor Missile</span>.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_auto_turret: "Automated defensive turret. Disappears after <span style='color:#a0c4ff'>11 seconds</span>.",
+  sc2_liberator: "Artillery aircraft. Fires missiles that deal area damage to enemy air targets. Can switch to <span style='color:#fff59d'>Defender Mode</span> for siege support.",
+  sc2_liberator_defender: "Stationary defensive unit. Deals heavy damage to a single ground unit. Can switch to <span style='color:#fff59d'>Fighter Mode</span> for air support.",
+  sc2_battlecruiser: "Powerful warship. Can use <span style='color:#fff59d'>Yamato Cannon</span> and <span style='color:#fff59d'>Tactical Jump</span>.",
+
+  scv: "Basic worker unit. Gathers resources, constructs Terran structures, and repairs structures and units.",
+  marine: "Versatile infantry unit.",
+  firebat: "Specialized anti-infantry assault unit.",
+  medic: "Support infantry unit. Can <span style='color:#fff59d'>Heal</span> nearby biological units and, after upgrading, use <span style='color:#fff59d'>Optical Flare</span> and <span style='color:#fff59d'>Restoration</span>.",
+  ghost: "Infiltration specialist. Can guide Nuclear Missiles armed at the <span style='color:#fff59d'>Nuclear Silo</span>. After upgrading, can use <span style='color:#fff59d'>Personal Cloaking</span> and <span style='color:#fff59d'>Lockdown</span>.",
+  vulture: "Fast skirmish unit. Can use <span style='color:#fff59d'>Spider Mines</span> after upgrading.",
+  spider_mine: "<span style='color:#fff59d'>Spider Mine</span> tracks enemy units in range, then explodes for heavy damage. Burrowed Spider Mines can only be detected by enemy <span style='color:#ffd94a'>detectors</span>.",
+  siege_tank: "Heavy tank. Can switch to <span style='color:#fff59d'>Siege Mode</span> after upgrading for long-range supporting fire.",
+  siege_tank_siege: "Heavy tank capable of long-range supporting fire. Can switch to <span style='color:#fff59d'>Tank Mode</span>.",
+  goliath: "Heavy fire-support unit.",
+  wraith: "Highly mobile aircraft with precise strikes. Can use <span style='color:#fff59d'>Cloaking Field</span> after upgrading.",
+  dropship: "Air transport.",
+  valkyrie: "Advanced anti-air warship. Its attack deals area damage to air units.",
+  science_vessel: "Air support unit. Can use <span style='color:#fff59d'>Defensive Matrix</span> and, after upgrading, <span style='color:#fff59d'>EMP Shockwave</span> and <span style='color:#fff59d'>Irradiate</span>.<br><span style='color:#ffd94a'>Detector</span>",
+  battlecruiser: "Powerful warship. Can use <span style='color:#fff59d'>Yamato Gun</span> after upgrading.",
+
+  larva: "Morphs into Zerg units.",
+  drone: "Basic worker unit. Gathers minerals and Vespene Gas. Can morph into structures.",
+  overlord: "Provides supply, allowing more units to be produced.<br><span style='color:#ffd94a'>Detector</span>",
+  zergling: "Fast melee unit. <span style='color:#fff59d'>One Larva hatches into two Zerglings.</span>",
+  hydralisk: "Ranged attacker. Can morph into a <span style='color:#fff59d'>Lurker</span>.",
+  lurker: "Ambush unit that attacks ground units.<br><span style='color:#fff59d'>Must be burrowed to attack</span>",
+  mutalisk: "Air unit whose attacks bounce between multiple targets.",
+  guardian: "Flying unit with long-range ground attacks.",
+  devourer: "Powerful anti-air flying unit. Can use <span style='color:#fff59d'>Acid Spores</span>.",
+  scourge: "Suicide flying unit. <span style='color:#fff59d'>One Larva hatches into two Scourge.</span>",
+  queen: "Support flying unit. Can use <span style='color:#fff59d'>Parasite</span> and <span style='color:#fff59d'>Infest Command Center</span>; after upgrading, <span style='color:#fff59d'>Spawn Broodlings</span> and <span style='color:#fff59d'>Ensnare</span>.",
+  broodling: "Fast melee unit that fights for a short time.",
+  ultralisk: "Heavy assault unit.",
+  defiler: "Battlefield disruption specialist. Can manipulate battlefield conditions with <span style='color:#fff59d'>Dark Swarm</span> and, after upgrading, <span style='color:#fff59d'>Consume</span> and <span style='color:#fff59d'>Plague</span>.",
+  infested_terran: "Suicide unit that self-destructs near enemy units.",
+
+  probe: "Basic worker unit. Gathers resources and warps in Protoss structures.",
+  zealot: "Powerful melee warrior.",
+  dragoon: "Ranged assault quadruped.",
+  high_templar: "Wields powerful psionic abilities. Can use <span style='color:#fff59d'>Psionic Storm</span> and <span style='color:#fff59d'>Hallucination</span> after upgrading, and can merge into an <span style='color:#fff59d'>Archon</span>.",
+  archon: "Attacks with powerful psionic energy.",
+  dark_templar: "Fearsome assassin warrior. Permanently cloaked and can merge into a <span style='color:#fff59d'>Dark Archon</span>.",
+  dark_archon: "Powerful psionic spellcaster. Can use <span style='color:#fff59d'>Feedback</span>, <span style='color:#fff59d'>Maelstrom</span>, and <span style='color:#fff59d'>Mind Control</span>.",
+  observer: "Reconnaissance aircraft with cloaking. Invisible to enemies without detection.<br><span style='color:#ffd94a'>Detector</span>",
+  shuttle: "Flying transport. Can load and unload units.",
+  reaver: "Siege unit that deals area damage by launching <span style='color:#fff59d'>Scarab</span> for powerful explosive damage.",
+  scout: "Versatile air fighter.",
+  corsair: "Air-superiority warship. Can use <span style='color:#fff59d'>Disruption Web</span> after upgrading.",
+  carrier: "Capital ship that produces and launches <span style='color:#fff59d'>Interceptors</span> to attack enemies.",
+  interceptor: "Attacks the <span style='color:#fff59d'>Carrier</span>'s target automatically. A Carrier without produced Interceptors cannot attack.",
+  arbiter: "Fleet support ship that cloaks nearby allies. Can use <span style='color:#fff59d'>Stasis Field</span> and <span style='color:#fff59d'>Recall</span> after upgrading.",
+
+  sc2_larva: "Morphs into Zerg units.",
+  sc2_drone: "Basic worker unit. Gathers minerals and Vespene Gas, and can morph into structures.",
+  sc2_overlord: "Provides supply, increasing the number of units you can create.",
+  sc2_overseer: "Advanced airborne detector. Provides the same supply as an Overlord and can use <span style='color:#fff59d'>Spawn Changeling</span> and <span style='color:#fff59d'>Contaminate</span>.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_changeling: "Unit without an attack. Changes color to match the first enemy unit it encounters and transforms into a Zealot, Marine, or Zergling by enemy race. Dies after 150 seconds.",
+  sc2_overlord_transport: "An <span style='color:#fff59d'>Overlord</span> that can transport units.",
+  sc2_queen: "Base-defense unit. Can use <span style='color:#fff59d'>Spawn Larvae</span>, <span style='color:#fff59d'>Creep Tumor</span>, and <span style='color:#fff59d'>Transfusion</span>. Moves faster on creep.",
+  sc2_zergling: "Fast melee unit. Can morph into a <span style='color:#fff59d'>Baneling</span>.",
+  sc2_baneling: "Suicide unit that explodes to damage a small area.",
+  sc2_roach: "Assault unit that rapidly regenerates health while burrowed. Can morph into a <span style='color:#fff59d'>Ravager</span>.",
+  sc2_ravager: "Ranged artillery unit. Can use <span style='color:#fff59d'>Corrosive Bile</span>.",
+  sc2_hydralisk: "Ranged attack unit. Can morph into a <span style='color:#fff59d'>Lurker</span>.",
+  sc2_lurker: "Ambush unit that attacks ground units in a line with spines.<br><span style='color:#fff59d'>Must be burrowed to attack</span>",
+  sc2_mutalisk: "Air unit whose attacks bounce between multiple targets.",
+  sc2_corruptor: "Anti-air flying unit. Can use Corrosive Spray and morph into a <span style='color:#fff59d'>Brood Lord</span>.",
+  sc2_broodlord: "Heavy assault air unit. Launches <span style='color:#fff59d'>Broodlings</span> at targets; Broodlings are small creatures that attack ground units.",
+  sc2_symbiote: "Fast melee creature that fights for a short time.",
+  sc2_infestor: "Specialist in infestation. Can use <span style='color:#fff59d'>Fungal Growth</span>, <span style='color:#fff59d'>Microbial Shroud</span>, and <span style='color:#fff59d'>Neural Parasite</span>.",
+  sc2_swarmhost: "Siege unit that attacks by spawning <span style='color:#fff59d'>Locusts</span>.",
+  sc2_locust: "Creature that expires after a set time. Persistent and dangerous.",
+  sc2_viper: "Flying spellcaster that disrupts the battlefield. Can use <span style='color:#fff59d'>Parasitic Bomb</span>, <span style='color:#fff59d'>Consume</span>, <span style='color:#fff59d'>Blinding Cloud</span>, and <span style='color:#fff59d'>Abduct</span>.",
+  sc2_ultralisk: "Heavy assault unit with area attacks.",
+
+  sc2_probe: "Basic worker unit. Gathers resources and warps in Protoss structures.",
+  sc2_zealot: "Powerful melee warrior.",
+  sc2_sentry: "Energy-manipulation unit. Can use <span style='color:#fff59d'>Force Field</span>, <span style='color:#fff59d'>Guardian Shield</span>, and <span style='color:#fff59d'>Hallucination</span>.",
+  sc2_stalker: "Supportive ranged quadruped unit.",
+  sc2_adept: "Specialized ranged unit. Can use <span style='color:#fff59d'>Psionic Transfer</span>.",
+  sc2_high_templar: "Wields powerful psionic abilities. Can use <span style='color:#fff59d'>Feedback</span> and, after upgrading, <span style='color:#fff59d'>Psionic Storm</span>. Can merge into an <span style='color:#fff59d'>Archon</span>.",
+  sc2_dark_templar: "Fearsome assassin warrior with cloaking. Invisible to enemies without detection and can merge into an <span style='color:#fff59d'>Archon</span>.",
+  sc2_archon: "Attacks with powerful psionic energy.",
+  sc2_observer: "Reconnaissance aircraft with cloaking. Invisible to enemies without detection.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_warp_prism: "Flying transport that can pick up distant units and deploy to generate a power field.",
+  sc2_immortal: "Assault quadruped that can absorb damage with <span style='color:#fff59d'>Barrier</span>.",
+  sc2_colossus: "Powerful quadrupedal combat walker with area attacks. Can traverse cliffs and can be attacked by anti-air weapons.",
+  sc2_disruptor: "Robotic disruption unit. Can use <span style='color:#fff59d'>Purification Nova</span> to deal heavy area damage.",
+  sc2_purifier_nova: "Concentrated solar energy that explodes after <span style='color:#fff59d'>3 seconds</span>, dealing area damage.",
+  sc2_phoenix: "Air-superiority fighter.",
+  sc2_oracle: "Flying spellcaster. Can use <span style='color:#fff59d'>Revelation</span>, <span style='color:#fff59d'>Stasis Ward</span>, and <span style='color:#fff59d'>Pulsar Beam</span>.",
+  sc2_stasis_ward: "Trap for ground units. A Stasis Ward is cloaked and invisible to enemies until detected.",
+  sc2_void_ray: "Precision strike aircraft.",
+  sc2_tempest: "Siege warship that attacks from long range.",
+  sc2_carrier: "Capital ship that produces and launches <span style='color:#fff59d'>Interceptors</span> to attack enemies.",
+  sc2_interceptor: "Automatically attacks the <span style='color:#fff59d'>Carrier</span>'s target. A Carrier without Interceptors cannot attack.",
+  sc2_mothership: "Ultimate Protoss capital ship. Can use <span style='color:#fff59d'>Mass Recall</span>, <span style='color:#fff59d'>Time Warp</span>, and <span style='color:#fff59d'>Cloaking Field</span>.",
+
+  sc2_command_center: "Primary structure. Collects gathered resources, can lift off, and can upgrade to an <span style='color:#fff59d'>Orbital Command</span> or <span style='color:#fff59d'>Planetary Fortress</span>.",
+  sc2_orbital_command: "Primary structure. Trains <span style='color:#fff59d'>SCVs</span>, collects gathered resources, and can use <span style='color:#fff59d'>Scanner Sweep</span>, <span style='color:#fff59d'>Call Down MULE</span>, and <span style='color:#fff59d'>Extra Supplies</span>.",
+  sc2_planetary_fortress: "Defensive stronghold that collects gathered resources.",
+  sc2_refinery: "Structure built on a <span style='color:#fff59d'>Vespene Geyser</span> to harvest Vespene Gas.",
+  sc2_supply_depot: "Provides supply, allowing more units to be trained. Can be lowered underground to let units pass.",
+  sc2_barracks: "Infantry production facility.",
+  sc2_engineering_bay: "Upgrades Terran infantry and structures.",
+  sc2_bunker: "Defensive structure. Infantry can attack enemies from inside.<br><span style='color:#fff59d'>Additional effect: +1 unit range</span>",
+  sc2_missile_turret: "Anti-air defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_sensor_tower: "Detects distant enemy unit positions. All players, including enemies, can see the Sensor Tower's detection range.",
+  sc2_ghost_academy: "Upgrades <span style='color:#fff59d'>Ghosts</span> and produces their Nuclear Missiles.",
+  sc2_factory: "Vehicle production facility.",
+  sc2_starport: "Air-unit production facility.",
+  sc2_tech_lab: "Unlocks additional units and research. A Tech Lab can attach to any production structure.",
+  sc2_reactor: "Produces two units simultaneously.",
+  sc2_armory: "Upgrades the weapons and armor of units produced at the <span style='color:#fff59d'>Factory</span> and <span style='color:#fff59d'>Starport</span>.",
+  sc2_fusion_core: "Upgrades <span style='color:#fff59d'>Medivacs</span>, <span style='color:#fff59d'>Liberators</span>, and <span style='color:#fff59d'>Battlecruisers</span>.",
+
+  command_center: "Terran primary structure. Produces SCVs and can attach a Comsat Station or Nuclear Silo.",
+  comsat_station: "Attaches to a Command Center. Provides area detection with Scanner Sweep.",
+  nuclear_silo: "Attaches to a Command Center. Stores Nuclear Missiles for Ghosts to launch.",
+  refinery: "Harvests Vespene Gas.",
+  supply_depot: "Provides +8 supply.",
+  barracks: "Produces Marines, Firebats, Medics, and Ghosts.",
+  engineering_bay: "Upgrades infantry weapons and armor. Can construct Missile Turrets.",
+  academy: "Unlocks Firebats and Medics.",
+  bunker: "Holds 4 infantry units.",
+  missile_turret: "Anti-air defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
+  factory: "Produces vehicle units.",
+  machine_shop: "Factory attachment. Enables Siege Tank production.",
+  starport: "Produces air units.",
+  control_tower: "Starport attachment. Enables Dropship and Valkyrie production.",
+  armory: "Upgrades vehicle and air units.",
+  science_facility: "Researches advanced technology.",
+  covert_ops: "Science Facility attachment for Ghost research.",
+  physics_lab: "Science Facility attachment. Enables Battlecruiser production.",
+
+  hatchery: "Primary structure. Produces Zerg units and collects gathered resources. Generates creep to nourish nearby Zerg structures. Can morph into a <span style='color:#fff59d'>Lair</span>.",
+  lair: "An evolved <span style='color:#fff59d'>Hatchery</span>. The <span style='color:#fff59d'>Lair</span> unlocks additional upgrades and structures, produces all Zerg units, and collects gathered resources.",
+  hive: "A further evolved <span style='color:#fff59d'>Hatchery</span>. The <span style='color:#fff59d'>Hive</span> unlocks additional upgrades and structures, produces all Zerg units, and collects gathered resources.",
+  extractor: "Structure built on a <span style='color:#fff59d'>Vespene Geyser</span> to harvest Vespene Gas.",
+  spawning_pool: "Upgrades <span style='color:#fff59d'>Zerglings</span>.",
+  evolution_chamber: "Upgrades Zerg ground units.",
+  hydralisk_den: "Upgrades <span style='color:#fff59d'>Hydralisks</span>.",
+  creep_colony: "Creep-generating structure. Can morph into a <span style='color:#fff59d'>Sunken Colony</span> or <span style='color:#fff59d'>Spore Colony</span>. Creep nourishes nearby Zerg structures.",
+  sunken_colony: "Ground defensive structure that generates creep.",
+  spore_colony: "Anti-air defensive structure that generates creep.<br><span style='color:#ffd94a'>Detector</span>",
+  queens_nest: "Upgrades <span style='color:#fff59d'>Queens</span>.",
+  spire: "Upgrades Zerg air units. Can morph into a <span style='color:#fff59d'>Greater Spire</span>.",
+  greater_spire: "Upgrades Zerg air units.",
+  nydus_canal: "Friendly ground units can instantly travel through a <span style='color:#fff59d'>Nydus Canal</span> to another Nydus Canal owned by the player.",
+  ultralisk_cavern: "Upgrades <span style='color:#fff59d'>Ultralisks</span>.",
+  defiler_mound: "Upgrades <span style='color:#fff59d'>Defilers</span>.",
+  infested_cc: "Infested Terran structure. Can train suicidal <span style='color:#fff59d'>Infested Terrans</span> and use Lift Off.",
+
+  nexus: "Primary structure that collects gathered resources.",
+  assimilator: "Structure built on a <span style='color:#fff59d'>Vespene Geyser</span> to harvest Vespene Gas.",
+  pylon: "Provides supply, allowing more units to be warped in. Powers nearby structures.",
+  gateway: "Warps in Protoss ground units.",
+  forge: "Upgrades weapons and armor for Protoss ground units, plus shields for all Protoss units and structures.",
+  cybernetics_core: "Upgrades Protoss air-unit weapons and armor and can upgrade <span style='color:#fff59d'>Dragoons</span>.",
+  photon_cannon: "Primary defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
+  shield_battery: "Defensive structure that recharges the shields of nearby units.",
+  citadel_of_adun: "Upgrades <span style='color:#fff59d'>Zealots</span>.",
+  stargate: "Warps in Protoss air units.",
+  robotics_facility: "Warps in Protoss robotic units.",
+  templar_archives: "Upgrades Protoss psionic units.",
+  fleet_beacon: "Upgrades Protoss air units.",
+  robotics_support_bay: "Upgrades Protoss robotic units.",
+  arbiter_tribunal: "Upgrades <span style='color:#fff59d'>Arbiter</span> abilities.",
+  observatory: "Technology structure for <span style='color:#fff59d'>Observers</span>.",
+
+  sc2_hatchery: "Primary structure. Produces Zerg units and collects gathered resources. Generates creep to nourish nearby Zerg structures. Can morph into a <span style='color:#fff59d'>Lair</span>.",
+  sc2_lair: "An evolved <span style='color:#fff59d'>Hatchery</span>. The <span style='color:#fff59d'>Lair</span> unlocks additional upgrades and structures, produces all Zerg units, and collects gathered resources.",
+  sc2_hive: "A further evolved <span style='color:#fff59d'>Hatchery</span>. The <span style='color:#fff59d'>Hive</span> unlocks additional upgrades and structures, produces all Zerg units, and collects gathered resources.",
+  sc2_extractor: "Structure built on a <span style='color:#fff59d'>Vespene Geyser</span> to harvest Vespene Gas.",
+  sc2_spawning_pool: "Upgrades <span style='color:#fff59d'>Zerglings</span>.",
+  sc2_evolution_chamber: "Upgrades Zerg ground units.",
+  sc2_roach_warren: "Upgrades <span style='color:#fff59d'>Roaches</span>.",
+  sc2_baneling_nest: "Upgrades <span style='color:#fff59d'>Banelings</span>.",
+  sc2_spine_crawler: "Ground defensive structure.",
+  sc2_spore_crawler: "Anti-air defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_hydralisk_den: "Upgrades <span style='color:#fff59d'>Hydralisks</span>.",
+  sc2_infestation_pit: "Upgrades <span style='color:#fff59d'>Infestors</span>.",
+  sc2_lurker_den: "Upgrades <span style='color:#fff59d'>Lurkers</span>.",
+  sc2_spire: "Upgrades Zerg air units. Can morph into a <span style='color:#fff59d'>Greater Spire</span>.",
+  sc2_greater_spire: "Upgrades Zerg air units.",
+  sc2_nydus_network: "Friendly ground units can instantly travel through a <span style='color:#fff59d'>Nydus Network</span> to another Nydus Network or <span style='color:#fff59d'>Nydus Worm</span>.",
+  sc2_nydus_worm: "Friendly ground units can instantly travel through a <span style='color:#fff59d'>Nydus Worm</span> to another Nydus Worm or Nydus Network. Generates creep that nourishes nearby Zerg structures.",
+  sc2_ultralisk_cavern: "Upgrades <span style='color:#fff59d'>Ultralisks</span>.",
+  sc2_creep_tumor: "Generates creep underground. Creep nourishes nearby Zerg structures. Each <span style='color:#fff59d'>Creep Tumor</span> can create one additional Creep Tumor.",
+
+  sc2_nexus: "Primary structure. Collects gathered resources and can use <span style='color:#fff59d'>Chrono Boost</span>, <span style='color:#fff59d'>Strategic Recall</span>, and <span style='color:#fff59d'>Energy Recharge</span>.",
+  sc2_assimilator: "Structure built on a <span style='color:#fff59d'>Vespene Geyser</span> to harvest Vespene Gas.",
+  sc2_pylon: "Provides supply, allowing more units to be warped in. Powers nearby structures.",
+  sc2_gateway: "Warps in Protoss ground units. Can transform into a Warp Gate after <span style='color:#fff59d'>Warp Gate Research</span>.",
+  sc2_warpgate: "Structure transformed from a Gateway. After its cooldown ends, it can instantly warp units anywhere within a <span style='color:#fff59d'>Pylon</span>'s power field.",
+  sc2_forge: "Upgrades Protoss ground-unit weapons and armor, plus shields for all Protoss units and structures.",
+  sc2_cybernetics_core: "Upgrades Protoss air units and Warp Gate technology.",
+  sc2_photon_cannon: "Primary defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
+  sc2_shield_battery: "Defensive structure that recharges the shields of nearby units.",
+  sc2_twilight_council: "Upgrades <span style='color:#fff59d'>Zealots</span>, <span style='color:#fff59d'>Stalkers</span>, and <span style='color:#fff59d'>Adepts</span>.",
+  sc2_stargate: "Warps in Protoss air units.",
+  sc2_robotics_facility: "Warps in Protoss robotic units.",
+  sc2_templar_archives: "Upgrades <span style='color:#fff59d'>High Templar</span> abilities.",
+  sc2_fleet_beacon: "Upgrades <span style='color:#fff59d'>Phoenixes</span> and <span style='color:#fff59d'>Void Rays</span>.",
+  sc2_robotics_support_bay: "Upgrades <span style='color:#fff59d'>Observers</span>, <span style='color:#fff59d'>Warp Prisms</span>, and <span style='color:#fff59d'>Colossi</span>.",
+  sc2_dark_shrine: "Upgrades <span style='color:#fff59d'>Dark Templar</span>."
+};
+
+function displayUnitDescription(u) {
+  var korean = u && (u.desc || u.description) || "";
+  return selectedLanguage === "en" ? (UNIT_DESCRIPTION_EN[u.id] || korean) : korean;
+}
+
+// 능력·업그레이드 설명은 유닛 설명과 별도로 관리한다. 이름 번역만 적용하면
+// 본문의 한국어가 남기 때문에, 영문 모드에서는 이 표를 우선 사용한다.
+// 용어는 게임 내 공식 영문 명칭과 Liquipedia의 표기를 기준으로 맞췄다.
+var CARD_DESCRIPTION_EN = {
+  "스팀팩": "Injects a powerful stimulant that increases movement speed and attack speed for a short time. The unit loses <span style='color:#ff5c5c'>10 health</span>.",
+  "전투 자극제": "Injects a powerful stimulant that increases movement speed and attack speed for a short time. The unit loses <span style='color:#ff5c5c'>10 health</span>.",
+  "힐": "Restores a friendly biological unit's health.",
+  "치료": "Restores a friendly biological unit's health.",
+  "리스토레이션": "Removes harmful status effects from the target unit.",
+  "옵티컬 플레어": "Blinds the target unit, reducing its vision and disabling its detection ability.",
+  "클로크": "Cloaks this unit. Cloaked units can only be seen by detectors or detection effects.",
+  "락다운": "Disables a mechanical unit for a limited time. Disabled units cannot move, attack, or use abilities.",
+  "뉴클리어 스트라이크": "Launches a nuclear missile at the selected location. The missile lands after <span style='color:#fff59d'>20 seconds</span>, dealing up to <span style='color:#ff5c5c'>300 damage</span>, plus <span style='color:#ff5c5c'>200 additional damage</span> to structures, over a wide area.",
+  "스캐너 스윕": "Reveals the selected area and exposes cloaked or burrowed units for a short time.",
+  "EMP 쇼크웨이브": "Drains energy and shields from units in the target area.",
+  "이래디에이트": "Irradiates the target biological unit, dealing damage over time to it and nearby biological units.",
+  "디펜시브 매트릭스": "Surrounds the target unit with a protective barrier that absorbs damage.",
+  "야마토 건": "Fires a powerful blast of energy at the target.",
+  "스파이더 마인": "Deploys a Spider Mine. It burrows and detonates when an enemy approaches.",
+  "시즈 모드": "Transforms into Siege Mode. The unit gains long range but cannot move.",
+  "탱크 모드": "Transforms into Tank Mode, allowing the unit to move again.",
+  "이륙": "Lifts off, allowing this structure to fly to another location.",
+  "수리": "Repairs a friendly mechanical unit or structure.",
+  "회수": "Salvages this structure and returns a portion of its cost.",
+  "감시 미사일": "Fires a missile that reveals the target and nearby units.",
+  "대장갑 미사일": "Fires a missile that reduces the armor of the target and nearby enemy units.",
+  "방해 매트릭스": "Prevents the target enemy unit from attacking or using abilities for a short time.",
+  "재연소 장치 점화": "Greatly increases the Medivac's movement speed for a short time.",
+  "전술 차원 도약": "Teleports the Battlecruiser to the selected location.",
+  "야마토 포": "Fires a devastating blast of energy at the target.",
+  "부동 조준": "Locks onto the target and deals damage while maintaining range.",
+  "목표물 고정": "Locks onto the target and deals damage while maintaining range.",
+  "KD8 지뢰": "Deploys a charge that knocks back nearby units when it explodes.",
+  "전술 핵 공격": "Calls down a nuclear missile at the selected location. It lands after <span style='color:#fff59d'>20 seconds</span>, dealing up to <span style='color:#ff5c5c'>300 damage</span> over a wide area and <span style='color:#ff5c5c'>200 additional damage</span> to structures.",
+  "점막 종양 생성": "Creates a tumor underground that generates creep. Creep nourishes nearby Zerg structures, and each Creep Tumor can create one additional Creep Tumor.",
+  "애벌레 생성": "After <span style='color:#fff59d'>40 seconds</span>, creates three Larvae at the target Hatchery, Lair, or Hive. Normal larva production pauses while it has three or more larvae.",
+  "수혈": "Instantly restores <span style='color:#76b9ff'>75 health</span> to the target biological unit or structure, then restores <span style='color:#76b9ff'>50 health</span> over <span style='color:#fff59d'>10 seconds</span>. The Queen must be on creep.",
+  "감시": "Increases the Overseer's vision and detection range, but prevents it from moving. This ability can be cancelled.",
+  "변신수 생성": "Creates a Changeling. It cannot attack and dies after <span style='color:#fff59d'>150 seconds</span>. It changes shape to match the first enemy unit it encounters.",
+  "오염": "Prevents the target structure from producing units or researching upgrades for <span style='color:#fff59d'>30 seconds</span>.",
+  "잠복": "Burrows underground. Burrowed units cannot move or attack and cannot be detected without detection.",
+  "잠복 이동": "Allows this unit to move while burrowed.",
+  "빠른 재생력": "The Roach regenerates health very quickly while burrowed.",
+  "맹독충으로 변태": "Morphs into a suicidal unit that deals damage in a small area when it detonates.",
+  "궤멸충으로 변태": "Morphs into a long-range bombardment unit that can use Corrosive Bile.",
+  "가시지옥으로 변태": "Morphs into an ambush unit that attacks ground units in a line with its spines.",
+  "무리 군주로 변태": "Morphs into a heavy assault flying unit that launches Broodlings at targets.",
+  "부식성 담즙": "Launches a projectile at the target location, dealing <span style='color:#ff5c5c'>60 damage</span> to all units where it lands. Can destroy Protoss Force Fields.",
+  "부식액 분사": "Sprays acid at a target structure, dealing <span style='color:#ff5c5c'>5 damage per second</span> for the first 6 seconds, then <span style='color:#ff5c5c'>25 damage per second</span>.",
+  "세균 장막": "Creates a shroud that reduces damage taken by ground units inside it by <span style='color:#76b9ff'>50%</span> for <span style='color:#fff59d'>15 seconds</span>.",
+  "진균 번식": "Deals <span style='color:#ff5c5c'>25 damage</span> over <span style='color:#fff59d'>4 seconds</span> and reduces movement speed by <span style='color:#76b9ff'>75%</span>. Reveals cloaked and burrowed units.",
+  "신경 기생충": "Takes control of the target unit for <span style='color:#fff59d'>15 seconds</span>. The Infestor cannot perform other actions while controlling the target. Channelled ability; can be cast while burrowed.<br><span style='color:#fff59d'>Hero units are immune.</span>",
+  "식충 생성": "Creates two Locusts. Locusts expire after <span style='color:#fff59d'>25 seconds</span>.",
+  "비행 식충": "The Swarm Host creates flying Locusts. Flying Locusts dive to the ground before they begin attacking.",
+  "군단 종자": "The Brood Lord launches Broodlings at the target. Broodlings are small creatures that attack ground units.",
+  "흡수": "Attaches to a target structure, dealing <span style='color:#ff5c5c'>150 damage</span> in total and restoring the Viper's energy by <span style='color:#76b9ff'>2.5/s</span> for <span style='color:#fff59d'>20 seconds</span>.<br><span style='color:#fff59d'>Cannot target allied or enemy structures.</span>",
+  "납치": "Pulls the target unit to the Viper's location.",
+  "흑구름": "Creates a cloud lasting <span style='color:#fff59d'>8 seconds</span> that reduces the attack range of ground units and structures inside it to melee range.",
+  "기생 폭탄": "Creates a parasitic cloud that deals <span style='color:#ff5c5c'>120 damage</span> over <span style='color:#fff59d'>10 seconds</span> to the target and nearby enemy air units.<br><span style='color:#fff59d'>Cannot target ground units or structures.</span>",
+  "광란": "Makes this unit immune to slows, stuns, mind control, movement-impairing effects, and parasitic effects.",
+  "달려들기": "The Hydralisk lunges forward, increasing its movement speed by <span style='color:#76b9ff'>100%</span> for <span style='color:#fff59d'>1 second</span>.",
+  "조직 재생": "The Mutalisk regenerates health faster than most Zerg units.",
+  "쐐기 벌레": "The Mutalisk's attack bounces to up to three nearby enemies. Each bounce deals <span style='color:#ff5c5c'>33%</span> damage.",
+  "뿌리 들기": "Uproots this structure. It can move while uprooted but cannot attack, and moves faster on creep.",
+  "땅굴벌레 소환": "Summons a Nydus Worm at the target location. Friendly ground units can instantly travel through it to another Nydus Worm or Nydus Network. It also generates creep.",
+  "지하 비늘": "The Nydus Worm gains <span style='color:#76b9ff'>3 armor</span> while emerging from underground.",
+  "돌진": "The Zealot charges a nearby enemy. Its movement speed increases by <span style='color:#76b9ff'>50%</span>; this ability can be used once every <span style='color:#fff59d'>10 seconds</span>.",
+  "점멸": "Teleports the Stalker to the target location. Can be used once every <span style='color:#fff59d'>10 seconds</span>.",
+  "그림자 걸음": "Teleports the Dark Templar to the target location. Can be used once every <span style='color:#fff59d'>20 seconds</span>.",
+  "사이오닉 이동": "Projects a shade that can move but cannot attack or take damage. After <span style='color:#fff59d'>10 seconds</span>, the Adept teleports to the shade's location.",
+  "환류": "Drains all energy from the target and deals <span style='color:#ff5c5c'>0.5 damage</span> for each point of energy drained.",
+  "사이오닉 폭풍": "Creates a psionic storm lasting <span style='color:#fff59d'>7.84 seconds</span> that deals up to <span style='color:#ff5c5c'>110 damage</span> to all units in the target area.",
+  "아칸 합체": "Sacrifices two Templar to create an Archon.",
+  "역장": "Creates a wall lasting <span style='color:#fff59d'>15 seconds</span> that blocks ground-unit movement. The field breaks when it collides with a massive unit.",
+  "수호 방패": "Creates a radius <span style='color:#76b9ff'>4.5</span> aura that reduces ranged damage dealt to friendly units inside by <span style='color:#76b9ff'>2</span> for <span style='color:#fff59d'>23 seconds</span>.",
+  "환상": "Creates illusions. Illusions cannot use abilities or deal damage and expire after <span style='color:#fff59d'>60 seconds</span>. Enemies with detection can distinguish them.",
+  "감시 모드": "Enters Surveillance Mode. Vision and detection range increase by <span style='color:#76b9ff'>36.4%</span>, but cloaking is disabled and the Observer cannot move.",
+  "위상 모드": "Transforms the Warp Prism into Phasing Mode, allowing it to generate power like a Pylon. Vision increases by <span style='color:#76b9ff'>1</span>, but it cannot move.",
+  "차원로": "Reduces the time needed to warp in a unit within a power field to <span style='color:#fff59d'>5 seconds</span>.",
+  "방어막": "Automatically absorbs up to <span style='color:#76b9ff'>100 damage</span> for <span style='color:#fff59d'>3 seconds</span>. This effect can trigger once every <span style='color:#fff59d'>45 seconds</span>.",
+  "언덕 걸음": "The Colossus can walk up and down cliffs.",
+  "정화 폭발": "Fires an energy sphere lasting <span style='color:#fff59d'>3 seconds</span>. It explodes to deal <span style='color:#ff5c5c'>100 splash damage</span> plus <span style='color:#ff5c5c'>100 additional shield damage</span> to nearby ground units and structures. The Disruptor cannot move while the sphere is active.",
+  "중력자 광선": "Lifts the target unit into the air, disabling it for up to <span style='color:#fff59d'>10 seconds</span>. Channelled ability. Massive units are immune.",
+  "계시": "Reveals enemy units and structures in the target area for <span style='color:#fff59d'>28 seconds</span>, including cloaked and burrowed targets.",
+  "정지장 수호물": "Places a cloaked Stasis Ward lasting <span style='color:#fff59d'>126 seconds</span>. When an enemy ground unit triggers it, nearby enemies are trapped in stasis for <span style='color:#fff59d'>30 seconds</span>.",
+  "펄서 광선 활성화": "Charges the Pulsar Beam, allowing the Oracle to attack enemy ground units.",
+  "분광 정렬": "Realigns the Void Ray's beam, increasing damage against armored units by <span style='color:#76b9ff'>6</span> for <span style='color:#fff59d'>20 seconds</span>. Its movement speed is reduced while active.",
+  "대규모 소환": "Warps all of the player's units in the target area to the Mothership.",
+  "시간 왜곡": "Distorts space-time in the target area for <span style='color:#fff59d'>10 seconds</span>, reducing enemy attack speed and movement speed by <span style='color:#76b9ff'>40%</span>.",
+  "은폐장": "Creates a cloaking field around the Mothership for <span style='color:#fff59d'>28 seconds</span>. Cloaked units can only be revealed by detection.",
+  "시간 증폭": "Accelerates the target structure's production and research speed by <span style='color:#76b9ff'>50%</span> for <span style='color:#fff59d'>28 seconds</span>.",
+  "전략 소환": "Returns all of the player's units in the target area to the Nexus.",
+  "에너지 재충전": "Restores <span style='color:#76b9ff'>50 energy</span> to a unit or structure within range of the Nexus.",
+  "연결체 공명": "The Khaydarin Matrix around the Nexus grants Shield Batteries within radius <span style='color:#76b9ff'>12</span> an additional <span style='color:#76b9ff'>50 energy</span>.",
+  "정지장 덫": "Traps nearby enemies in stasis for <span style='color:#fff59d'>30 seconds</span>. Trapped units cannot be attacked or affected by abilities.",
+  "영구 은폐": "This unit is permanently cloaked.",
+  "피드백": "Drains all energy from the target and deals <span style='color:#ff5c5c'>1 damage</span> for each point of energy drained.",
+  "마인드 컨트롤": "Takes control of the target enemy unit.",
+  "마엘스트롬": "Stuns biological units in the target area, preventing them from moving, attacking, or using abilities.",
+  "다크 스웜": "Creates a swarm that protects units beneath it from ranged attacks. <span style='color:#fff59d'>Melee and piercing attacks, spells, and splash damage ignore this effect.</span>",
+  "플레이그": "Infects enemy units and structures in the target area, dealing damage over time while leaving them with at least 1 health.",
+  "컨슘": "Consumes a friendly Zerg unit to restore the Defiler's energy.",
+  "인스네어": "Covers enemy units in the target area with Ensnare, reducing their movement speed and attack speed. <span style='color:#fff59d'>Turret weapons are not affected by the attack-speed reduction.</span>",
+  "브루들링 소환": "Kills the target biological unit and spawns two Broodlings.",
+  "패러사이트": "Infests the target unit, granting permanent vision of it.",
+  "인페스트 커맨드 센터": "Infests a severely damaged enemy Command Center, transforming it into an Infested Command Center.",
+  "버로우": "Burrows underground. Burrowed units are hidden from enemies without detection.",
+  "리콜": "Teleports friendly units in the target area to the Arbiter.",
+  "스테이시스 필드": "Traps units in the target area in stasis for a limited time.",
+  "디스럽션 웹": "Creates a web that prevents units and structures inside from attacking.",
+  "스캐럽 생산": "Builds a Scarab. Reavers cannot attack without Scarabs.",
+  "인터셉터 생산": "Builds an Interceptor. Carriers cannot attack without Interceptors.",
+  "요격기 생산": "Builds Interceptors that automatically attack the Carrier's targets. A Carrier without Interceptors cannot attack.",
+  "감시군주로 변태": "Morphs into an Overseer, a flying detector with powerful support abilities.",
+  "점막 생성": "Generates creep while the Overlord remains stationary. Creep nourishes nearby Zerg structures.",
+  "배주머니 변이": "Morphs into an Overlord Transport, allowing it to carry units.",
+  "관문으로 전환": "Transforms this Warp Gate back into a Gateway.",
+  "차원 관문으로 전환": "Upgrades this Gateway into a Warp Gate, allowing units to be warped into a Pylon or Warp Prism power field.",
+  "공성 모드": "Transforms into Siege Mode. The unit gains long range but cannot move.",
+  "돌격 모드": "Transforms into Assault Mode.",
+  "전투기 모드": "Transforms into Fighter Mode.",
+  "화염차 모드": "Transforms into Hellion Mode.",
+  "화염기갑병 모드": "Transforms into Hellbat Mode.",
+  "수호기 모드": "Transforms into Defender Mode. The Liberator cannot move while defending the target area.",
+  "언버로우": "Emerges from underground.",
+  "지게로봇 투하": "Calls down a MULE to harvest minerals.",
+  "추가 보급품 투하": "Calls down supplies at the target location.",
+  "모선 소환": "Warps in a Mothership.",
+  "탐사정 소환": "Warps in a Probe.",
+  "여왕 생성": "Trains a Queen.",
+  "번식지로 변이": "Morphs into a Lair.",
+  "군락으로 변이": "Morphs into a Hive.",
+  "거대 둥지탑으로 변이": "Morphs into a Greater Spire.",
+  "건물 건설": "Displays the basic structure construction options.",
+  "고급 건물 건설": "Displays the advanced structure construction options.",
+  "기본 변이": "Displays the basic structure morph options.",
+  "고급 변이": "Displays the advanced structure morph options.",
+  "건물 소환": "Displays the basic structure warp-in options.",
+  "고급 건물 소환": "Displays the advanced structure warp-in options.",
+  "회복": "Restores the shields of a target unit or structure. Autocast targets units and defensive structures only.",
+  "매트릭스 증폭": "Shield Batteries warped in within radius <span style='color:#76b9ff'>12</span> of a Nexus begin with <span style='color:#76b9ff'>50 additional energy</span>.",
+
+  "스팀팩 연구": "Allows Marines and Firebats to use Stim Pack. Stim Pack temporarily increases their attack speed and movement speed.",
+  "전투 자극제 연구": "Allows Marines and Marauders to use Stim Pack.",
+  "전투 방패 연구": "Increases Marine health by <span style='color:#76b9ff'>10</span>.",
+  "U-238 탄환 연구": "Increases Marine attack range by <span style='color:#76b9ff'>1</span>.",
+  "이온 추진기 연구": "Increases Vulture movement speed.",
+  "카론 부스터 연구": "Increases Goliath anti-air attack range.",
+  "시즈 모드 연구": "Allows Siege Tanks to transform into Siege Mode.",
+  "스파이더 마인 연구": "Allows Vultures to deploy Spider Mines.",
+  "클로킹 필드 연구": "Allows Wraiths to use Cloak.",
+  "퍼스널 클로킹 연구": "Allows Ghosts to use Cloak.",
+  "락다운 연구": "Allows Ghosts to use Lockdown.",
+  "이래디에이트 연구": "Allows Science Vessels to use Irradiate.",
+  "옵티컬 플레어 연구": "Allows Medics to use Optical Flare and disables their detection ability.",
+  "아폴로 반응로 연구": "Increases Wraith maximum energy and starting energy.",
+  "타이탄 반응로 연구": "Increases Science Vessel maximum energy and starting energy.",
+  "뫼비우스 반응로 연구": "Increases Ghost maximum energy and starting energy.",
+  "카두세우스 반응로 연구": "Increases Medic maximum energy and starting energy.",
+  "콜로서스 반응로 연구": "Increases Battlecruiser maximum energy and starting energy.",
+  "대사 촉진 진화": "Increases Zergling movement speed by <span style='color:#76b9ff'>59.12%</span>.",
+  "아드레날린 분비선 진화": "Increases Zergling attack speed by <span style='color:#76b9ff'>40%</span>.",
+  "원심 고리 진화": "Increases Baneling movement speed by <span style='color:#76b9ff'>18.12%</span> and health by <span style='color:#76b9ff'>5</span>.",
+  "신경 재구성 진화": "Increases Roach movement speed by <span style='color:#76b9ff'>33.33%</span>.",
+  "땅굴 발톱 진화": "Allows Roaches to move while burrowed.",
+  "가시 홈 진화": "Increases Hydralisk attack range by <span style='color:#76b9ff'>1</span>.",
+  "근육 보강 진화": "Increases Hydralisk movement speed by <span style='color:#76b9ff'>31.11%</span>.",
+  "나노 근육 팽창 진화": "Allows Hydralisks to use Lunge.",
+  "적응형 발톱 진화": "Reduces Lurker burrow time from <span style='color:#fff59d'>2.5 seconds</span> to <span style='color:#fff59d'>1.5 seconds</span>.",
+  "진동 가시뼈 진화": "Increases Lurker attack range by <span style='color:#76b9ff'>2</span>.",
+  "키틴질 장갑 진화": "Increases Ultralisk armor by <span style='color:#76b9ff'>2</span>.",
+  "합성 동화 작용 진화": "Increases Ultralisk movement speed off creep by <span style='color:#76b9ff'>14.29%</span>.",
+  "기낭 갑피 진화": "Increases the movement speed of Overlords, Overseers, and Overlord Transports.",
+  "돌진 개발": "Allows Zealots to use Charge.",
+  "점멸 개발": "Allows Stalkers to teleport to a nearby target location.",
+  "그림자 걸음 개발": "Allows Dark Templar to teleport to a nearby target location.",
+  "공명 파열포 개발": "Increases Adept attack speed by <span style='color:#76b9ff'>45%</span>.",
+  "사이오닉 폭풍 개발": "Allows High Templar to create a Psionic Storm that deals heavy damage to units in the target area.",
+  "중력 가속기 개발": "Increases Observer movement speed by <span style='color:#76b9ff'>50%</span>.",
+  "중력 구동 개발": "Increases Warp Prism movement speed by <span style='color:#76b9ff'>29.63%</span>.",
+  "열 광선 사거리 개발": "Increases Colossus weapon range by <span style='color:#76b9ff'>2</span>.",
+  "음이온파 수정 개발": "Increases Phoenix attack range by <span style='color:#76b9ff'>2</span>.",
+  "유동성 추진기 개발": "Increases Void Ray movement speed by <span style='color:#76b9ff'>20.74%</span>.",
+  "구조 불안정장치 개발": "Increases the damage dealt by Tempest weapons to structures by <span style='color:#76b9ff'>40</span>.",
+  "차원 관문 개발": "Allows Gateways to transform into Warp Gates.",
+  "신소재 강철 장갑 연구": "Increases the armor of Terran structures. Also increases Bunker capacity and Command Center transport capacity.",
+  "정밀 보안 자동추적기 연구": "Increases the attack range of Missile Turrets, Auto Turrets, and Planetary Fortresses.",
+  "지능형 제어 장치 연구": "Improves Raven capabilities.",
+  "천공 발톱 연구": "Allows Widow Mines to burrow more quickly.",
+  "첨단 탄도 시스템 연구": "Increases Liberator Defender Mode attack range.",
+  "초비행 회전날개 연구": "Increases Banshee movement speed by <span style='color:#76b9ff'>36.36%</span>.",
+  "야마토 건 연구": "Allows Battlecruisers to use Yamato Cannon."
+  ,"리스토레이션 연구": "Allows Medics to use Restoration.",
+  "EMP 쇼크웨이브 연구": "Allows Science Vessels to use EMP Shockwave.",
+  "인공눈 이식 연구": "Increases Ghost vision range.",
+  "브루들링 소환 진화": "Allows Queens to use Spawn Broodlings.",
+  "플레이그 진화": "Allows Defilers to use Plague.",
+  "인스네어 진화": "Allows Queens to use Ensnare.",
+  "컨슘 진화": "Allows Defilers to use Consume.",
+  "생식 분열 진화": "Increases Queen maximum energy and starting energy.",
+  "연접변화 노드 진화": "Increases Defiler maximum energy and starting energy.",
+  "기낭 갑피 진화": "Increases Overlord movement speed.",
+  "안테나 진화": "Increases Overlord vision range.",
+  "배주머니 진화": "Allows Overlords to transport units.",
+  "럴커 진화": "Allows Hydralisks to morph into Lurkers.",
+  "다리 강화 개발": "Increases Zealot movement speed.",
+  "특이점 장전 개발": "Increases Dragoon attack range.",
+  "할루시네이션 개발": "Allows High Templar to use Hallucination.",
+  "마인드 컨트롤 개발": "Allows Dark Archons to use Mind Control.",
+  "마엘스트롬 개발": "Allows Dark Archons to use Maelstrom.",
+  "케이다린 아뮬렛 개발": "Increases High Templar maximum energy and starting energy.",
+  "케이다린 핵 개발": "Increases Arbiter maximum energy and starting energy.",
+  "아르거스 보석 개발": "Increases Corsair maximum energy and starting energy.",
+  "아르거스 탈리스먼 개발": "Increases Dark Archon maximum energy and starting energy.",
+  "중력 가속기 개발": "Increases Observer movement speed.",
+  "탐지기 배열 개발": "Increases Observer vision range.",
+  "중력 구동기 개발": "Increases Shuttle movement speed.",
+  "스캐럽 공격력 증가 개발": "Increases Scarab damage by <span style='color:#76b9ff'>25</span>.",
+  "리버 수용력 증가 개발": "Increases Reaver Scarab capacity.",
+  "에이피얼 탐지기 개발": "Increases Scout vision range.",
+  "중력 추진기 개발": "Increases Scout movement speed.",
+  "캐리어 수용력 증가 개발": "Increases Carrier Interceptor capacity.",
+  "디스럽션 웹 개발": "Allows Corsairs to use Disruption Web.",
+  "리콜 개발": "Allows Arbiters to use Recall.",
+  "스테이시스 필드 개발": "Allows Arbiters to use Stasis Field.",
+  "버로우 진화": "Allows Zerg ground units to burrow. Burrowed units are hidden underground and can only be seen by detectors or detection effects.",
+  "잠복 진화": "Allows Zerg ground units to burrow. Burrowed units are hidden underground and can only be seen by detectors or detection effects.",
+  "세균 장막 진화": "Allows Infestors to use Microbial Shroud.",
+  "신경 기생충 진화": "Allows Infestors to use Neural Parasite."
+};
+
+// 같은 한글 명칭이라도 게임별 수치가 다른 경우만 유닛별로 덮어쓴다.
+var CARD_DESCRIPTION_EN_BY_OWNER = {
+  "sc2_high_templar|환류": "Drains all energy from the target and deals <span style='color:#ff5c5c'>0.5 damage</span> for each point of energy drained.",
+  "high_templar|피드백": "Drains all energy from the target and deals <span style='color:#ff5c5c'>1 damage</span> for each point of energy drained."
+};
+
+function getCardDisplayName(item) {
+  return String(item && item.name || "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s*\((?:지속\s*능력|자동\s*시전|자동시전)\)\s*$/g, "")
+    .trim();
+}
+
+function translateCardDescriptionFallback(korean) {
+  // 레벨형 무기·방어 연구처럼 동일한 문장이 반복되는 항목은 패턴으로 처리한다.
+  // 개별 능력은 위의 CARD_DESCRIPTION_EN에 명시해 자연스러운 문장으로 유지한다.
+  var source = String(korean || "");
+  var patterns = [
+    [/보병.*공격력|보병.*무기/, "Upgrades infantry weapon damage."],
+    [/보병.*방어력|보병.*장갑/, "Upgrades infantry armor."],
+    [/차량.*공격력|차량.*무기/, "Upgrades vehicle weapon damage."],
+    [/차량.*방어력|차량.*장갑/, "Upgrades vehicle armor."],
+    [/우주선.*공격력|우주선.*무기/, "Upgrades ship weapon damage."],
+    [/우주선.*방어력|우주선.*장갑/, "Upgrades ship armor."],
+    [/근접.*공격력|근접.*공격/, "Upgrades Zerg melee attack damage."],
+    [/발사.*공격력|원거리.*공격력|미사일.*공격/, "Upgrades Zerg missile attack damage."],
+    [/비행체.*공격|공중.*공격/, "Upgrades Zerg flyer attack damage."],
+    [/지상.*무기|지상.*공격력/, "Upgrades Protoss ground weapon damage."],
+    [/지상.*장갑|지상.*방어력/, "Upgrades Protoss ground armor."],
+    [/공중.*무기|공중.*공격력/, "Upgrades Protoss air weapon damage."],
+    [/공중.*장갑|공중.*방어력/, "Upgrades Protoss air armor."],
+    [/보호막.*방어력|모든.*보호막/, "Upgrades shields for all Protoss units and structures."],
+    [/건물의 목록/, "Displays the available structure options."],
+    [/생산.*유닛.*설명과 동일|유닛 설명과 동일/, "Uses this unit's description."],
+    [/능력을 사용할 수 있습니다/, "Unlocks this ability."],
+    [/사거리가.*증가/, "Increases attack range."],
+    [/이동 속도가.*증가/, "Increases movement speed."],
+    [/공격 속도가.*증가/, "Increases attack speed."],
+    [/방어력이.*증가/, "Increases armor."],
+    [/체력이.*증가/, "Increases health."]
+  ];
+  for (var i = 0; i < patterns.length; i++) {
+    if (patterns[i][0].test(source)) return patterns[i][1];
+  }
+  return source;
+}
+
+function displayCardDescription(owner, item) {
+  var korean = item && item.desc || "";
+  if (selectedLanguage !== "en" || !korean) return korean;
+  var key = getCardDisplayName(item);
+  var ownerKey = owner && owner.id ? (owner.id + "|" + key) : "";
+  if (ownerKey && CARD_DESCRIPTION_EN_BY_OWNER[ownerKey]) return CARD_DESCRIPTION_EN_BY_OWNER[ownerKey];
+  if (CARD_DESCRIPTION_EN[key]) return CARD_DESCRIPTION_EN[key];
+  if (item && item.targetId && typeof UNIT_DATA !== "undefined") {
+    var target = UNIT_DATA.find(function(x) { return x.id === item.targetId; });
+    if (target) return displayUnitDescription(target);
+  }
+  return translateCardDescriptionFallback(korean);
+}
+
+// ─────────────────────────────────────────────────────────────
 // 상태
 // ─────────────────────────────────────────────────────────────
 var currentRace   = "all";
@@ -10410,6 +10938,386 @@ var currentSort   = {col:null, dir:1};
 var searchQuery   = "";
 var hideAbilities = false;
 var gameSpeedMultiplier = 1.4;
+var selectedLanguage = "ko";
+var UI_TEXT = {
+  ko: { unitDb:"유닛 DB", unitCompare:"유닛 비교", patchNotes:"패치 내역", all:"전체", units:"유닛", structures:"구조물", abilities:"능력", modalAbilities:"능력", fullUpgrades:"풀업", upgrades:"업그레이드", unit:"유닛", cost:"비용", supply:"인구", buildTime:"생산 시간", requirements:"요구 조건", modalRequirements:"요구 조건", requirement:"요구 조건: ", health:"체력", shields:"보호막", energy:"에너지", energyInitialMax:"에너지 (초기/최대)", armor:"방어력", shieldArmor:"보호막 방어력", sight:"시야", visionDetection:"시야 (탐지)", moveSpeed:"이동 속도", attack:"공격력", range:"사거리", attackSpeed:"공격 주기", attributes:"특성", weaponStats:"무기 스펙", applicableUpgrades:"적용 가능 업그레이드", researchUpgrades:"연구 가능 업그레이드", searchUnit:"유닛 검색", searchAll:"유닛명, 요구 건물, 특성 등으로 검색...", transportCapacity:"수송 한도", passengerCapacity:"탑승 정원", slots:"칸", cooldown:"재사용 대기시간", duration:"지속 시간", castRange:"시전 사거리", cast:"시전", effectRange:"효과 범위", target:"대상", period:"주기", splashDamageRange:"방사 피해 범위", splash:"방사", melee:"근접", trigger:"발동", minimum:"최소", basic:"기본" },
+  en: { unitDb:"Unit DB", unitCompare:"Unit Compare", patchNotes:"Patch Notes", all:"All", units:"Units", structures:"Structures", abilities:"ABIL.", modalAbilities:"Abilities", fullUpgrades:"UPG.", upgrades:"Upgrades", unit:"Unit", cost:"Cost", supply:"SUP.", buildTime:"TIME", requirements:"REQUIRE.", modalRequirements:"Requirements", requirement:"Requirement: ", health:"Health", shields:"Shields", energy:"Energy", energyInitialMax:"Energy (Start/Max)", armor:"Armor", shieldArmor:"Shield Armor", sight:"Vision", visionDetection:"Vision (Detect)", moveSpeed:"SPD", attack:"Attack", range:"Range", attackSpeed:"ATK SPD", attributes:"Attributes", weaponStats:"Weapon Stats", applicableUpgrades:"Applicable Upgrades", researchUpgrades:"Research Upgrades", searchUnit:"Search units", searchAll:"Search units, requirements, attributes...", transportCapacity:"Transport Capacity", passengerCapacity:"Passenger Capacity", slots:"slots", cooldown:"Cooldown", duration:"Duration", castRange:"Cast Range", cast:"Cast", effectRange:"Effect Radius", target:"Target", period:"Period", splashDamageRange:"Splash Radius", splash:"Splash", melee:"Melee", trigger:"Trigger", minimum:"Min.", basic:"Base" }
+};
+
+var GAME_TERM_EN = {
+  "업그레이드":"Upgrade", "자동 시전":"Autocast", "자동시전":"Autocast", "지속 능력":"Passive", "지속능력":"Passive", "시전":"Cast", "스팀팩":"Stim Pack", "전투 자극제":"Stim Pack", "힐":"Heal", "치료":"Heal", "리스토레이션":"Restoration", "옵티컬 플레어":"Optical Flare",
+  "충격탄":"Concussive Shells", "사이오닉 스톰":"Psionic Storm", "할루시네이션":"Hallucination", "피드백":"Feedback", "마인드 컨트롤":"Mind Control", "마인드컨트롤":"Mind Control", "마엘스트롬":"Maelstrom",
+  "사이오닉 스톰 개발":"Psionic Storm", "할루시네이션 개발":"Hallucination", "마인드 컨트롤 개발":"Mind Control", "마엘스트롬 개발":"Maelstrom",
+  "애시드 스포어":"Acid Spore", "패러사이트":"Parasite", "브루들링 소환":"Spawn Broodlings", "인스네어":"Ensnare", "인페스트 커맨드 센터":"Infest Command Center",
+  "다크 스웜":"Dark Swarm", "플레이그":"Plague", "컨슘":"Consume", "버로우":"Burrow", "리콜":"Recall", "스테이시스 필드":"Stasis Field",
+  "점막 종양 생성":"Creep Tumor", "스캐너 탐색":"Scanner Sweep", "레이더":"Radar", "회복":"Restore", "여왕 생성":"Train Queen",
+  "번식지로 변이":"Morph to Lair", "군락으로 변이":"Morph to Hive", "위장":"Disguise", "비행 식충":"Flying Locust", "지하 비늘":"Subterranean Scales",
+  "디스럽션 웹":"Disruption Web", "스캐럽":"Scarab", "스캐럽 생산":"Build Scarab", "인터셉터 복귀":"Interceptor Return", "인터셉터 호위":"Interceptor Escort",
+  "보호막 재충전":"Shield Recharge", "부동 조준":"Defender Mode", "넥서스 공명":"Nexus Resonance", "매트릭스 증폭":"Matrix Amplification", "추진기":"Thrusters",
+  "전술 핵 공격":"Tactical Nuclear Strike", "핵미사일 배치":"Deploy Nuclear Missile", "수리":"Repair", "회수":"Salvage", "EMP 탄환":"EMP Rounds", "KD8 지뢰":"KD8 Charge",
+  "클로크":"Cloak", "야마토 건":"Yamato Gun", "야마토 건 연구":"Yamato Cannon Research", "아칸 합체":"Archon Merge", "다크 아칸 합체":"Dark Archon Merge",
+  "가디언으로 변태":"Morph to Guardian", "디바우러로 변태":"Morph to Devourer", "럴커로 변태":"Morph to Lurker", "그레이터 스파이어로 변이":"Morph to Greater Spire",
+  "레어로 변이":"Morph to Lair", "하이브로 변이":"Morph to Hive", "성큰 콜로니로 변이":"Morph to Sunken Colony", "스포어 콜로니로 변이":"Morph to Spore Colony",
+  "럴커 진화":"Lurker Aspect", "나이더스 커널 출구 배치":"Place Nydus Canal Exit", "뉴클리어 사일로 무장":"Arm Nuclear Silo", "다리 강화 개발":"Leg Enhancements",
+  "중력 구동기 개발":"Gravitic Drive", "중력 추진기 개발":"Gravitic Boosters", "에이피얼 탐지기 개발":"Apial Sensors", "특이점 장전 개발":"Singularity Charge",
+  "탐지기 배열 개발":"Sensor Array", "케이다린 아뮬렛 개발":"Khaydarin Amulet", "케이다린 핵 개발":"Khaydarin Core", "아폴로 반응로 연구":"Apollo Reactor Research",
+  "타이탄 반응로 연구":"Titan Reactor Research", "뫼비우스 반응로 연구":"Moebius Reactor Research", "카두세우스 반응로 연구":"Caduceus Reactor Research", "콜로서스 반응로 연구":"Colossus Reactor Research",
+  "전차 모드":"Tank Mode", "화염차 모드":"Hellion Mode", "공성 전차":"Siege Tank", "공성 모드":"Siege Mode", "수호기 모드":"Defender Mode",
+  "영구 은폐":"Permanent Cloak", "클로크 필드":"Cloaking Field", "전투 회복제":"Combat Drugs", "목표물 고정":"Lock On", "감시 미사일":"Seeker Missile",
+  "대장갑 미사일":"Anti-Armor Missile", "방해 매트릭스":"Interference Matrix", "재연소 장치 점화":"Ignite Afterburners", "전술 차원 도약":"Tactical Jump",
+  "투하: 지게로봇":"Call Down: MULE", "투하: 추가 보급품":"Call Down: Extra Supplies", "지게로봇 투하":"Call Down: MULE", "추가 보급품 투하":"Call Down: Extra Supplies", "지뢰 활성화":"Activate Mine", "내리기":"Unload",
+  "돌격 모드":"Assault Mode", "전투기 모드":"Fighter Mode", "화염기갑병 모드":"Hellbat Mode", "공성 모드":"Siege Mode", "수호기 모드":"Defender Mode",
+  "신소재 강철 장갑 연구":"Neosteel Armor Research", "정밀 보안 자동추적기 연구":"Hi-Sec Auto Tracking Research", "지능형 제어 장치 연구":"Advanced Ballistics Research",
+  "개인 은폐 연구":"Personal Cloaking Research", "지옥불 조기점화기 연구":"Infernal Pre-Igniter Research", "천공 발톱 연구":"Drilling Claws Research", "첨단 탄도 시스템 연구":"Advanced Ballistics Research", "초비행 회전날개 연구":"Hyperflight Rotors Research", "고충격 탄두":"High Impact Payloads",
+  "무기 재장비 연구":"Weapon Refit Research", "폭약 탄두":"Explosive Warheads", "자기장 가속기 연구":"Mag-Field Accelerator Research", "배주머니 진화":"Ventral Sacs",
+  "생식 분열 진화":"Gamete Meiosis Evolution", "브루들링 소환 진화":"Spawn Broodlings", "플레이그 진화":"Plague", "인스네어 진화":"Ensnare", "컨슘 진화":"Consume",
+  "연접변화 노드 진화":"Pathogen Glands", "안테나 진화":"Antennae", "아르거스 보석 개발":"Argus Jewel", "아르거스 탈리스먼 개발":"Argus Talisman",
+  "스캐럽 공격력 증가 개발":"Scarab Damage Research", "리버 수용력 증가 개발":"Reaver Capacity", "캐리어 수용력 증가 개발":"Carrier Capacity",
+  "락다운":"Lockdown", "은폐":"Cloaking", "뉴클리어 스트라이크":"Nuclear Strike", "스캐너 스윕":"Scanner Sweep", "EMP 쇼크웨이브":"EMP Shockwave",
+  "이래디에이트":"Irradiate", "이레이디에이트":"Irradiate", "디펜시브 매트릭스":"Defensive Matrix", "야마토 포":"Yamato Gun", "시즈 모드":"Siege Mode", "탱크 모드":"Tank Mode",
+  "스파이더 마인":"Spider Mines", "이륙":"Lift Off", "U-238 탄환 연구":"U-238 Shells Research", "전투 방패 연구":"Combat Shield Research", "전투 자극제 연구":"Stim Packs Research",
+  "이온 추진기":"Ion Thrusters", "카론 부스터":"Charon Boosters", "시즈 모드 연구":"Siege Tech Research", "스파이더 마인 연구":"Spider Mines Research", "클로킹 필드 연구":"Cloaking Field Research",
+  "전투 방패":"Combat Shield", "신소재 장갑":"Neosteel Armor", "U-238 탄환":"U-238 Shells", "첨단 탄도":"Advanced Ballistics", "자동추적기":"Hi-Sec Auto Tracking", "지옥불":"Infernal Pre-Igniter", "자기장 가속기":"Mag-Field Accelerator",
+  "가시 홈":"Grooved Spines", "진동 가시뼈":"Seismic Spines", "열 광선 사거리":"Extended Thermal Lance", "음이온파 수정":"Anion Pulse-Crystals", "특이점 장전":"Singularity Charge", "아드레날린 분비선":"Adrenal Glands", "공명 파열포":"Resonating Glaives",
+  "기낭 갑피":"Pneumatized Carapace", "대사 촉진":"Metabolic Boost", "원심 고리":"Centrifugal Hooks", "신경 재구성":"Glial Reconstitution", "근육 보강":"Muscular Augments", "합성 동화 작용":"Anabolic Synthesis", "초비행 회전날개":"Hyperflight Rotors", "중력 가속기":"Gravitic Booster", "중력 구동":"Gravitic Drive", "유동성 추진기":"Flux Vanes",
+  "퍼스널 클로킹 연구":"Personal Cloaking Research", "아폴로 리액터":"Apollo Reactor", "타이탄 리액터":"Titan Reactor", "모에비우스 리액터":"Moebius Reactor",
+  "인공눈 이식":"Ocular Implants", "카두세우스 리액터":"Caduceus Reactor", "콜로서스 리액터":"Colossus Reactor", "야마토 포 연구":"Yamato Cannon Research",
+  "점막 생성":"Generate Creep", "감시군주로 변태":"Morph to Overseer", "배주머니 변이":"Ventral Sacs", "감시":"Oversight", "변신수 생성":"Spawn Changeling",
+  "오염":"Contaminate", "수혈":"Transfusion", "애벌레 생성":"Spawn Larvae", "잠복":"Burrow", "잠복 이동":"Burrow Move", "빠른 재생력":"Rapid Regeneration",
+  "맹독충으로 변태":"Morph to Baneling", "궤멸충으로 변태":"Morph to Ravager", "가시지옥으로 변태":"Morph to Lurker", "무리 군주로 변태":"Morph to Brood Lord", "사이오닉 이동":"Psionic Transfer",
+  "부식성 담즙":"Corrosive Bile", "부식액 분사":"Caustic Spray", "세균 장막":"Microbial Shroud", "진균 번식":"Fungal Growth", "신경 기생충":"Neural Parasite",
+  "식충 생성":"Spawn Locusts", "군단 종자":"Broodling Strike", "흡수":"Consume", "납치":"Abduct", "흑구름":"Blinding Cloud", "기생 폭탄":"Parasitic Bomb",
+  "광란":"Frenzy", "달려들기":"Lunge", "조직 재생":"Tissue Regeneration", "쐐기 벌레":"Glaive Wurm", "뿌리 들기":"Uproot", "땅굴벌레 소환":"Summon Nydus Worm",
+  "대사 촉진 진화":"Metabolic Boost", "아드레날린 분비선 진화":"Adrenal Glands", "원심 고리 진화":"Centrifugal Hooks", "신경 재구성 진화":"Glial Reconstitution",
+  "땅굴 발톱 진화":"Tunneling Claws", "가시 홈 진화":"Grooved Spines", "근육 보강 진화":"Muscular Augments", "나노 근육 팽창 진화":"Evolve Nanomuscular Swellings",
+  "적응형 발톱 진화":"Adaptive Talons", "진동 가시뼈 진화":"Seismic Spines", "키틴질 장갑 진화":"Chitinous Plating", "합성 동화 작용 진화":"Anabolic Synthesis",
+  "기낭 갑피 진화":"Pneumatized Carapace", "잠복 진화":"Burrow", "돌진":"Charge", "점멸":"Blink", "그림자 걸음":"Shadow Stride",
+  "환류":"Feedback", "사이오닉 폭풍":"Psionic Storm", "집정관 합체":"Archon Merge", "역장":"Force Field", "수호 방패":"Guardian Shield", "환상":"Hallucination",
+  "감시 모드":"Surveillance Mode", "위상 모드":"Phasing Mode", "차원로":"Warp Conduit", "방어막":"Barrier", "언덕 걸음":"Cliff Walk", "정화 폭발":"Purification Nova",
+  "중력자 광선":"Graviton Beam", "계시":"Revelation", "정지장 수호물":"Stasis Ward", "펄서 광선 활성화":"Activate Pulsar Beam", "분광 정렬":"Prismatic Alignment",
+  "대규모 소환":"Mass Recall", "시간 왜곡":"Time Warp", "은폐장":"Cloaking Field", "시간 증폭":"Chrono Boost", "전략 소환":"Strategic Recall", "에너지 재충전":"Energy Recharge",
+  "차원 관문 개발":"Warp Gate Research", "중력 가속기 개발":"Gravitic Booster", "중력 구동 개발":"Gravitic Drive", "열 광선 사거리 개발":"Extended Thermal Lance",
+  "음이온파 수정 개발":"Anion Pulse-Crystals", "유동성 추진기 개발":"Flux Vanes", "구조 불안정장치 개발":"Explosive Shrapnel",
+  "공명 파열포 개발":"Resonating Glaives", "관문으로 전환":"Transform to Gateway", "차원 관문으로 전환":"Transform to Warp Gate",
+  "모선 소환":"Mothership Summon", "탐사정 소환":"Probe Summon", "연결체 공명":"Nexus Resonance", "정지장 덫":"Stasis Trap",
+  "프로토스 지상 무기 1단계":"Protoss Ground Weapons Level 1", "프로토스 지상 무기 2단계":"Protoss Ground Weapons Level 2", "프로토스 지상 무기 3단계":"Protoss Ground Weapons Level 3",
+  "프로토스 지상 장갑 1단계":"Protoss Ground Armor Level 1", "프로토스 지상 장갑 2단계":"Protoss Ground Armor Level 2", "프로토스 지상 장갑 3단계":"Protoss Ground Armor Level 3",
+  "프로토스 공중 무기 1단계":"Protoss Air Weapons Level 1", "프로토스 공중 무기 2단계":"Protoss Air Weapons Level 2", "프로토스 공중 무기 3단계":"Protoss Air Weapons Level 3",
+  "프로토스 공중 장갑 1단계":"Protoss Air Armor Level 1", "프로토스 공중 장갑 2단계":"Protoss Air Armor Level 2", "프로토스 공중 장갑 3단계":"Protoss Air Armor Level 3",
+  "프로토스 보호막 1단계":"Protoss Shields Level 1", "프로토스 보호막 2단계":"Protoss Shields Level 2", "프로토스 보호막 3단계":"Protoss Shields Level 3",
+  "저그 근접 공격 1단계":"Zerg Melee Attacks Level 1", "저그 근접 공격 2단계":"Zerg Melee Attacks Level 2", "저그 근접 공격 3단계":"Zerg Melee Attacks Level 3",
+  "저그 발사 공격 1단계":"Zerg Missile Attacks Level 1", "저그 발사 공격 2단계":"Zerg Missile Attacks Level 2", "저그 발사 공격 3단계":"Zerg Missile Attacks Level 3",
+  "비행체 공격 1단계":"Flyer Attacks Level 1", "비행체 공격 2단계":"Flyer Attacks Level 2", "비행체 공격 3단계":"Flyer Attacks Level 3",
+  "보병 공격력":"Infantry Weapons", "보병 무기":"Infantry Weapons", "보병 방어력":"Infantry Armor", "보병 장갑":"Infantry Armor",
+  "차량 공격력":"Vehicle Weapons", "차량 무기":"Vehicle Weapons", "차량 방어력":"Vehicle Armor", "차량 및 우주선 장갑":"Vehicle and Ship Plating",
+  "우주선 공격력":"Ship Weapons", "우주선 무기":"Ship Weapons", "우주선 방어력":"Ship Plating",
+  "근접 공격력":"Melee Attacks", "발사 공격력":"Missile Attacks", "원거리 공격력":"Missile Attacks", "지상 공격력":"Ground Weapons", "지상 무기":"Ground Weapons", "지상 방어력":"Ground Armor", "지상 장갑":"Ground Armor", "지상 갑피":"Ground Carapace",
+  "공중 공격력":"Air Weapons", "공중 무기":"Air Weapons", "공중 방어력":"Air Armor", "공중 장갑":"Air Armor", "공중 갑피":"Air Carapace",
+  "비행체 공격력":"Flyer Attacks", "비행체 갑피":"Flyer Carapace", "갑피 진화":"Carapace Evolution", "플라스마 실드":"Plasma Shields", "보호막 업그레이드":"Shields",
+  "기본 변이":"Basic Mutation", "고급 변이":"Advanced Mutation", "건물 건설":"Construct Structure", "고급 건물 건설":"Construct Advanced Structure", "건물 소환":"Warp In Structure", "고급 건물 소환":"Warp In Advanced Structure", "기술실":"Tech Lab", "반응로":"Reactor", "건설로봇":"SCV", "대상 반경":"Target Radius", "반경":"Radius", "경장갑":"Light", "중장갑":"Armored", "보호막":"Shields", "생체":"Biological", "기계":"Mechanical", "로봇":"Robotic", "거대":"Massive", "사이오닉":"Psionic", "영웅":"Heroic", "구조물":"Structure", "부양":"Hovering", "소환됨":"Summoned", "요구 조건":"Requirement"
+};
+
+// 메인 목록의 업그레이드 버튼은 화면 폭을 위해 연구·개발·진화 접미어를 뺀 이름을 쓴다.
+// 원문 전체 명칭의 번역을 기반으로 짧은 이름 별칭도 자동 생성해 한국어 조각이 남지 않게 한다.
+Object.keys(GAME_TERM_EN).forEach(function(fullName) {
+  var match = fullName.match(/^(.*?)\s+(연구|개발|진화)$/);
+  if (!match || GAME_TERM_EN[match[1]]) return;
+  GAME_TERM_EN[match[1]] = GAME_TERM_EN[fullName].replace(/\s+(Research|Evolution)$/i, "");
+});
+
+function t(key) {
+  var language = UI_TEXT[selectedLanguage] || UI_TEXT.ko;
+  return language[key] || UI_TEXT.ko[key] || key;
+}
+
+function displayUnitName(u) {
+  return selectedLanguage === "en" && u && u.engName ? u.engName : (u && u.name ? u.name : "");
+}
+
+function formatUnitNameHtml(name) {
+  if (!name) return "";
+  return String(name).replace(/\s*(\([^)]+\))/g, " <span class='unit-mode-suffix' style='color:var(--text-dim);font-size:0.83em;font-weight:400;'>$1</span>");
+}
+
+function displayAttackTarget(value) {
+  var target = String(value || "").replace(/지상\s*[\/,]\s*공중/g, "지상·공중");
+  if (selectedLanguage !== "en") return target;
+  return target.replace(/지상·공중/g, "Ground · Air").replace(/지상/g, "Ground").replace(/공중/g, "Air");
+}
+
+function displayMainWeaponLabel(value) {
+  if (selectedLanguage !== "en") return value || "";
+  var labels = { "기본": "Base", "경장갑": "Light", "중장갑": "Armored", "보호막": "Shields" };
+  return labels[value] || displayGameTerm(value);
+}
+
+function displayGameTerm(value) {
+  if (selectedLanguage !== "en" || !value) return value || "";
+  var output = String(value);
+  var terms = Object.keys(GAME_TERM_EN).sort(function(a, b) { return b.length - a.length; });
+  for (var i = 0; i < terms.length; i++) {
+    var term = terms[i];
+    var translatedTerm = GAME_TERM_EN[term];
+    /* 원문 카드의 연구·개발·진화 접미어를 영문 표기에도 보존한다. */
+    if ((term.endsWith("연구") || term.endsWith("개발")) && !/Research$/i.test(translatedTerm)) {
+      translatedTerm += " Research";
+    } else if (term.endsWith("진화") && !/(Evolution|Aspect)$/i.test(translatedTerm)) {
+      translatedTerm += " Evolution";
+    }
+    output = output.split(term).join(translatedTerm);
+  }
+  /* 생산·변태 카드처럼 유닛명이 포함된 명칭도 영문 유닛명으로 바꾼다. */
+  if (typeof UNIT_DATA !== "undefined" && Array.isArray(UNIT_DATA)) {
+    UNIT_DATA.slice().sort(function(a, b) { return b.name.length - a.name.length; }).forEach(function(unit) {
+      if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
+    });
+  }
+  return output
+    .replace(/지속\s*능력/g, "Passive")
+    .replace(/자동\s*(?:시전|Cast)/gi, "Autocast")
+    .replace(/ 훈련/g, " Training")
+    .replace(/ 생산/g, " Production")
+    .replace(/ 소환/g, " Warp In")
+    .replace(/ 건설/g, " Construction")
+    .replace(/([A-Za-z][A-Za-z0-9 '\-]*)(?:으로|로) 변태/g, "Morph to $1")
+    .replace(/으로 변태/g, " Morph")
+    .replace(/로 변태/g, " Morph")
+    .replace(/로 변이/g, " Morph")
+    .replace(/ 진화/g, " Evolution")
+    .replace(/ 개발/g, " Research")
+    .replace(/ 연구/g, " Research")
+    .replace(/\s*업그레이드/g, " Upgrade")
+    .replace(/업그레이드/g, "Upgrade")
+    .replace(/레벨/g, "Level")
+    .replace(/단계/g, "Level");
+}
+
+function displayMainUpgBadgeName(name) {
+  var term = displayGameTerm(name);
+  if (!term) return "";
+  
+  var UPG_ABBR = {
+    // English abbreviations (<= 10 chars)
+    "Extended Thermal Lance": "Thermal L.",
+    "Glial Reconstitution": "Glial Rec.",
+    "Mag-Field Accelerator": "Mag Accel.",
+    "Mag-Field Accelerators": "Mag Accel.",
+    "Hi-Sec Auto Tracking": "Hi-Sec",
+    "Infernal Pre-Igniter": "Infernal",
+    "Anion Pulse-Crystals": "Anion Crys",
+    "Pneumatized Carapace": "Carapace",
+    "Advanced Ballistics": "Adv. Ball.",
+    "Resonating Glaives": "Res Glaive",
+    "Anabolic Synthesis": "Anabolic",
+    "Hyperflight Rotors": "Hyper Rot.",
+    "Explosive Shrapnel": "Shrapnel",
+    "Singularity Charge": "Sing. Chg.",
+    "Centrifugal Hooks": "Centrif.",
+    "Chitinous Plating": "Chitinous",
+    "Muscular Augments": "Musc. Aug.",
+    "Caduceus Reactor": "Caduceus",
+    "Colossus Reactor": "Colossus",
+    "Khaydarin Amulet": "Khay. Amu.",
+    "Khaydarin Core": "Khay. Core",
+    "Gravitic Booster": "Grav Boost",
+    "Gravitic Boosters": "Grav Boost",
+    "Gravitic Drive": "Grav Drive",
+    "Scarab Damage Research": "Scarab Dmg",
+    "Scarab Damage": "Scarab Dmg",
+    "Personal Cloaking Research": "Cloaking",
+    "Personal Cloaking": "Cloaking",
+    "Yamato Cannon Research": "Yamato",
+    "Yamato Cannon": "Yamato",
+    "Ocular Implants": "Ocular",
+    "Charon Boosters": "Charon Bst",
+    "Metabolic Boost": "Metab. Bst",
+    "Moebius Reactor": "Moebius R.",
+    "Pathogen Glands": "Pathogen",
+    "Neosteel Armor": "Neosteel",
+    "Adrenal Glands": "Adrenal",
+    "Grooved Spines": "Grv. Spine",
+    "Seismic Spines": "Seismic Sp",
+    "Apollo Reactor": "Apollo R.",
+    "Argus Talisman": "Argus Tal.",
+    "Gamete Meiosis": "Gamete",
+    "Combat Shield": "Combat Sh.",
+    "Apial Sensors": "Apial Sens",
+    "Ion Thrusters": "Ion Thrst.",
+    "Titan Reactor": "Titan R.",
+    "U-238 Shells": "U-238",
+    "Sensor Array": "Sens Array",
+    "Argus Jewel": "Argus Jwl",
+    "Concussive Shells": "Conc Shell",
+    "Shadow Stride": "Shadow",
+    "Adaptive Talons": "Adaptive",
+    "Tunneling Claws": "Tunneling",
+    "Drilling Claws": "Drilling",
+    "Enhanced Shockwaves": "Shockwave",
+    "Smart Servos": "Servos",
+    "Corvid Reactor": "Corvid R.",
+    "Adrenal Glands Evolution": "Adrenal",
+    "Metabolic Boost Evolution": "Metab. Bst",
+    "Centrifugal Hooks Evolution": "Centrif.",
+    "Glial Reconstitution Evolution": "Glial Rec.",
+    "Anabolic Synthesis Evolution": "Anabolic",
+    "Grooved Spines Evolution": "Grv. Spine",
+    "Muscular Augments Evolution": "Musc. Aug.",
+    "Chitinous Plating Evolution": "Chitinous",
+    "Pneumatized Carapace Evolution": "Carapace",
+
+    // Korean abbreviations (<= 10 chars)
+    "스캐럽 공격력 증가": "스캐럽 공격력",
+    "정밀 보안 자동추적기 연구": "자동추적기",
+    "지옥불 조기점화기 연구": "지옥불",
+    "신소재 강철 장갑 연구": "신소재 장갑",
+    "첨단 탄도 시스템 연구": "첨단 탄도",
+    "아드레날린 분비선": "아드레날린",
+    "아드레날린 분비선 진화": "아드레날린",
+    "캐리어 수용력 증가 개발": "캐리어 수용력",
+    "스캐럽 공격력 증가 개발": "스캐럽 공격력",
+    "리버 수용력 증가 개발": "리버 수용력",
+    "카두세우스 반응로 연구": "카두세우스",
+    "지능형 제어 장치 연구": "지능형 제어",
+    "아르거스 탈리스먼 개발": "아르거스",
+    "초비행 회전날개 연구": "초비행 날개",
+    "U-238 탄환 연구": "U-238 탄환",
+    "뫼비우스 반응로 연구": "뫼비우스",
+    "콜로서스 반응로 연구": "콜로서스",
+    "합성 동화 작용 진화": "합성 동화",
+    "케이다린 아뮬렛 개발": "케이다린",
+    "에이피얼 탐지기 개발": "에이피얼 탐지",
+    "스테이시스 필드 개발": "스테이시스",
+    "구조 불안정장치 개발": "구조 불안정",
+    "열 광선 사거리 개발": "열 광선 사거리",
+    "나노 근육 팽창 진화": "나노 근육"
+  };
+
+  if (selectedLanguage === "en") {
+    if (UPG_ABBR[term]) return UPG_ABBR[term];
+  } else {
+    if (UPG_ABBR[name]) return UPG_ABBR[name];
+    if (UPG_ABBR[term]) return UPG_ABBR[term];
+  }
+
+  if (term.length > 10) {
+    var words = term.split(" ");
+    if (words.length > 1) {
+      var candidate = words.slice(0, -1).join(" ") + " " + words[words.length - 1].substring(0, 3) + ".";
+      if (candidate.length <= 10) return candidate;
+    }
+    return term.substring(0, 9) + "…";
+  }
+
+  return term;
+}
+
+function displayRequirementName(value) {
+  if (selectedLanguage !== "en" || !value) return value || "";
+  var raw = String(value);
+  for (var i = 0; i < UNIT_DATA.length; i++) {
+    if (UNIT_DATA[i].name === raw && UNIT_DATA[i].engName) return UNIT_DATA[i].engName;
+  }
+  return displayGameTerm(raw);
+}
+
+function displayModalRelationLabel(value) {
+  if (selectedLanguage !== "en") return value || "";
+  var labels = {
+    "생산 건물:": "Produced at:",
+    "소환 건물:": "Warped in at:",
+    "변이 유닛:": "Morphs from:",
+    "변이 건물:": "Morphs from:",
+    "생성 유닛:": "Created by:",
+    "건설 유닛:": "Constructed by:",
+    "소환 유닛:": "Warped in by:",
+    "사용 유닛:": "Used by:",
+    "부착 건물:": "Attached to:",
+    "생산 유닛:": "Produced by:"
+  };
+  return labels[value] || displayGameTerm(value);
+}
+
+function getInitialLanguage() {
+  try {
+    var saved = localStorage.getItem("sc-evo-language");
+    if (saved === "ko" || saved === "en") return saved;
+  } catch (e) {}
+  var languages = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ""];
+  for (var i = 0; i < languages.length; i++) {
+    if (String(languages[i] || "").toLowerCase().indexOf("ko") === 0) return "ko";
+  }
+  return "en";
+}
+
+function setSiteLanguage(language) {
+  selectedLanguage = language === "en" ? "en" : "ko";
+  document.documentElement.lang = selectedLanguage;
+  document.documentElement.setAttribute("data-language", selectedLanguage);
+  try { localStorage.setItem("sc-evo-language", selectedLanguage); } catch (e) {}
+
+  var button = document.getElementById("btn-language");
+  if (button) {
+    var label = selectedLanguage === "ko" ? "언어 선택" : "Language selection";
+    button.setAttribute("aria-label", label);
+    button.title = label;
+  }
+  var languageCode = document.getElementById("language-code");
+  if (languageCode) languageCode.textContent = selectedLanguage.toUpperCase();
+  var translated = document.querySelectorAll("[data-i18n]");
+  for (var ti = 0; ti < translated.length; ti++) translated[ti].textContent = t(translated[ti].getAttribute("data-i18n"));
+  var placeholders = document.querySelectorAll("[data-i18n-placeholder]");
+  for (var pi = 0; pi < placeholders.length; pi++) placeholders[pi].placeholder = t(placeholders[pi].getAttribute("data-i18n-placeholder"));
+  var options = document.querySelectorAll(".language-option[data-language]");
+  for (var i = 0; i < options.length; i++) {
+    var active = options[i].getAttribute("data-language") === selectedLanguage;
+    options[i].classList.toggle("active", active);
+    options[i].setAttribute("aria-pressed", active ? "true" : "false");
+  }
+  if (document.readyState !== "loading") {
+    if (typeof renderTable === "function") renderTable();
+    if (typeof initCompareView === "function" && currentAppView === "compare") initCompareView();
+    else if (typeof renderCompareView === "function" && currentAppView === "compare") renderCompareView();
+    if (currentAppView === "patch" && typeof renderPatchView === "function" && _patchBlocks && _patchBlocks.length) renderPatchView(false);
+    var modal = document.getElementById("detail-modal");
+    if (currentAppView === "database" && currentModalUnit && modal && modal.classList.contains("active") && typeof openModal === "function") openModal(currentModalUnit);
+  }
+  document.documentElement.classList.remove("language-ready-pending");
+}
+
+function initLanguageSelector() {
+  var selector = document.getElementById("language-selector");
+  var button = document.getElementById("btn-language");
+  var menu = document.getElementById("language-menu");
+  if (!selector || !button || !menu) return;
+
+  setSiteLanguage(getInitialLanguage());
+  if (button._hasLanguageEvent) return;
+  button._hasLanguageEvent = true;
+
+  function closeMenu() {
+    menu.hidden = true;
+    button.setAttribute("aria-expanded", "false");
+  }
+  button.addEventListener("click", function (event) {
+    event.stopPropagation();
+    var open = menu.hidden;
+    menu.hidden = !open;
+    button.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  var options = menu.querySelectorAll(".language-option[data-language]");
+  for (var i = 0; i < options.length; i++) {
+    options[i].addEventListener("click", function () {
+      setSiteLanguage(this.getAttribute("data-language"));
+      closeMenu();
+    });
+  }
+  document.addEventListener("click", function (event) {
+    if (!selector.contains(event.target)) closeMenu();
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeMenu();
+  });
+}
 
 function scaleTime(value) { return Number(value) / gameSpeedMultiplier; }
 function scaleRate(value) { return Number(value) * gameSpeedMultiplier; }
@@ -10433,20 +11341,30 @@ function formatGameRateText(value) {
 }
 function formatGameSpeedDescription(html) {
   if (!html) return "";
-  // 설명 안의 시간은 span 유무와 관계없이 게임 속도에 맞춘다.
-  // 이전에는 색상 span으로 감싼 시간만 처리해 일반 텍스트("10초 후")가 고정되어 있었다.
-  var formatted = String(html).replace(/(\d+(?:\.\d+)?)초/g, function(_, value) {
-    return fmtGameTime(value, 1) + "초";
+  // 설명 안의 시간·초당 수치는 span 유무와 관계없이 게임 속도에 맞춘다.
+  // 한국어와 영문 카드가 동일한 계산 규칙을 사용하도록 처리한다.
+  var formatted = String(html).replace(/(\d+(?:\.\d+)?)(초|seconds?|s)(?=[^A-Za-z]|$)/g, function(_, value, suffix) {
+    return fmtGameTime(value, 1) + suffix;
   });
   if (gameSpeedMultiplier === 1) return formatted;
-  return formatted.replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) {
+  formatted = formatted.replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) {
     return start + fmtGameRate(value) + (end || "");
+  });
+  formatted = formatted.replace(/([+\-]?)(\d+(?:\.\d+)?)\s*((?:damage|energy)\s*)?per second/g, function(_, sign, value, unit) {
+    return sign + fmtGameRate(value) + " " + (unit || "") + "per second";
+  });
+  return formatted.replace(/([+\-]?)(\d+(?:\.\d+)?)\/s/g, function(_, sign, value) {
+    return sign + fmtGameRate(value) + "/s";
   });
 }
 function refreshForGameSpeed() {
   renderTable();
   if (currentAppView === "compare") renderCompareView();
-  if (currentModalUnit) openModal(currentModalUnit);
+  // 비교 패널 생성 과정에서 남은 임시 모달 상태로 DB 모달이 열리지 않게 한다.
+  var modal = document.getElementById("detail-modal");
+  if (currentAppView === "database" && currentModalUnit && modal && modal.classList.contains("active")) {
+    openModal(currentModalUnit);
+  }
 }
 
 function toggleAbilityRows() {
@@ -10825,7 +11743,7 @@ function makeReqHTML(u) {
     if (reqs === "없음" || reqs === "") return "";
     reqs = [reqs];
   }
-  var items = reqs.map(function(r){ return "<span class='badge-req'>"+r+"</span>"; });
+  var items = reqs.map(function(r){ return "<span class='badge-req'>"+displayRequirementName(r)+"</span>"; });
   return "<div class='req-lines'>"+items.join("")+"</div>";
 }
 
@@ -10853,14 +11771,19 @@ function fmtHP(u) {
   } else if (u.race === "bw_protoss" && u.shields > 0) {
     baseHp += "<div style='font-size:0.75rem;color:#a0c4ff;margin-top:2px;'>(+" + fmtGameRate(0.71) + "/s)</div>";
   } else if (u.race === "sc2_protoss" && u.shields > 0) {
-    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>(비전투 " + fmtGameTime(10) + "초 후)</div><div style='font-size:0.75rem;color:#a0c4ff;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
+    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>" + (selectedLanguage === "en" ? "(OOC +" + fmtGameTime(10) + "s)" : "(비전투 " + fmtGameTime(10) + "초 후)") + "</div><div style='font-size:0.75rem;color:#a0c4ff;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
   } else if (u.id === "sc2_reaper") {
-    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>(비전투 " + fmtGameTime(10) + "초 후)</div><div style='font-size:0.75rem;color:#7ae46a;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
+    baseHp += "<div style='font-size:0.68rem;color:var(--text-dim);margin-top:2px;'>" + (selectedLanguage === "en" ? "(OOC +" + fmtGameTime(10) + "s)" : "(비전투 " + fmtGameTime(10) + "초 후)") + "</div><div style='font-size:0.75rem;color:#7ae46a;margin-top:-1px;'>(+" + fmtGameRate(2) + "/s)</div>";
+  }
+  if (u.type === "structure" && u.race === "bw_terran") {
+    baseHp += "<div style='font-size:0.75rem;color:#ff9b7a;margin-top:2px;'>" + burnIndicatorHtml() + "(-" + fmtGameRate(1.32) + "/s)</div>";
+  } else if ((u.type === "structure" || u.id === "sc2_auto_turret") && u.race === "sc2_terran") {
+    baseHp += "<div style='font-size:0.75rem;color:#ff9b7a;margin-top:2px;'>" + burnIndicatorHtml() + "(-" + fmtGameRate(3) + "/s)</div>";
   }
 
   if (u.id === "sc2_marine") {
     var activeCls = shieldActive ? " active active-" + rc : "";
-    var btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_marine_shield' onclick=\"event.stopPropagation(); toggleUpg('sc2_marine_shield');\" onmouseenter=\"showUpgTooltip(event, 'sc2_marine_shield');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">전투 방패</button></div>";
+    var btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_marine_shield' onclick=\"event.stopPropagation(); toggleUpg('sc2_marine_shield');\" onmouseenter=\"showUpgTooltip(event, 'sc2_marine_shield');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("전투 방패") + "</button></div>";
     return "<div class='td-cell-box'><div class='td-cell-val'>" + baseHp + "</div>" + btnHtml + "</div>";
   }
 
@@ -10891,7 +11814,7 @@ function fmtEnergy(u) {
 
   if (energyMeta) {
     var meta = getUpgradeMetadata(energyMeta.structureId, energyMeta.searchPrefix);
-    var badgeName = (meta && meta.name) ? meta.name : energyMeta.searchPrefix;
+    var badgeName = displayMainUpgBadgeName((meta && meta.name) ? meta.name : energyMeta.searchPrefix);
     var activeCls = isUpg ? " active active-energy" : "";
     html += "<div class='upg-btn-wrap'>" +
             "<button type='button' class='btn-upg-badge btn-upg-energy" + activeCls + "' data-upg-id='" + energyMeta.key + "' " +
@@ -10969,7 +11892,7 @@ function fmtArmor(u) {
     for (var stasisLvl = 0; stasisLvl <= 3; stasisLvl++) {
       stasisOptions += "<option value='" + stasisLvl + "'" + (stasisShieldLvl === stasisLvl ? " selected" : "") + ">" + (stasisLvl === 0 ? "0" : "+" + stasisLvl) + "</option>";
     }
-    return "<div class='td-cell-box'><div class='td-cell-val'>" + stasisShieldHtml + slashHtml + fmtNum(u.armor, 2) + "</div><div class='upg-btn-wrap'><select class='sel-armor-upg sel-shield-armor-upg' title='보호막 방어력 업그레이드' onclick='event.stopPropagation();' onchange=\"setShieldArmorUpg('" + u.id + "', this.value);\">" + stasisOptions + "</select></div></div>";
+    return "<div class='td-cell-box'><div class='td-cell-val'>" + stasisShieldHtml + slashHtml + fmtNum(u.armor, 2) + "</div><div class='upg-btn-wrap'><select class='sel-armor-upg sel-shield-armor-upg' title='" + (selectedLanguage === "en" ? "Shield Armor Upgrade" : "보호막 방어력 업그레이드") + "' onclick='event.stopPropagation();' onchange=\"setShieldArmorUpg('" + u.id + "', this.value);\">" + stasisOptions + "</select></div></div>";
   }
 
   if (u.type === "structure") {
@@ -10980,7 +11903,7 @@ function fmtArmor(u) {
     }
     if (u.race === "sc2_terran" && u.id !== "sc2_auto_turret") {
       var neoActiveCls = isNeosteelActive ? " active active-terran" : "";
-      var neoBtn = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + neoActiveCls + "' data-upg-id='sc2_neosteel_frame' onclick=\"event.stopPropagation(); toggleUpg('sc2_neosteel_frame');\" onmouseenter=\"showUpgTooltip(event, 'sc2_neosteel_frame');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">신소재 장갑</button></div>";
+      var neoBtn = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + neoActiveCls + "' data-upg-id='sc2_neosteel_frame' onclick=\"event.stopPropagation(); toggleUpg('sc2_neosteel_frame');\" onmouseenter=\"showUpgTooltip(event, 'sc2_neosteel_frame');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("신소재 장갑") + "</button></div>";
       return "<div class='td-cell-box'><div class='td-cell-val'>" + armStr + "</div>" + neoBtn + "</div>";
     }
     return armStr;
@@ -11032,7 +11955,7 @@ function fmtArmor(u) {
     var meta = getUpgradeMetadata(chitinousStructureId, "키틴질 장갑");
     var activeCls = isChitinous ? " active active-zerg" : "";
 
-    btnHtml = "<div class='upg-btn-wrap' style='display:flex !important; flex-direction:row !important; align-items:center !important; justify-content:center !important; gap:4px !important; margin-top:auto !important;'>" +
+    btnHtml = "<div class='upg-btn-wrap' style='display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; gap:3px !important; margin-top:3px !important;'>" +
               "<select class='sel-armor-upg' onclick='event.stopPropagation();' onchange=\"setArmorUpg('" + u.id + "', this.value);\">" +
               "<option value='0'" + opt0 + ">0</option>" +
               "<option value='1'" + opt1 + ">+1</option>" +
@@ -11044,7 +11967,7 @@ function fmtArmor(u) {
               "onmouseenter=\"showUpgTooltip(event, '" + chitinousKey + "');\" " +
               "onmousemove=\"moveUpgTooltip(event);\" " +
               "onmouseleave=\"hideUpgTooltip();\">" +
-              meta.name +
+              displayMainUpgBadgeName(meta.name) +
               "</button>" +
               "</div>";
   } else if (isProtoss && hasUpg) {
@@ -11059,13 +11982,13 @@ function fmtArmor(u) {
     var opt3 = (lvl === 3) ? " selected" : "";
 
     btnHtml = "<div class='upg-btn-wrap' style='display:flex !important; flex-direction:row !important; align-items:center !important; justify-content:center !important; gap:4px !important; margin-top:auto !important;'>" +
-              "<select class='sel-armor-upg sel-shield-armor-upg' title='보호막 방어력 업그레이드' onclick='event.stopPropagation();' onchange=\"setShieldArmorUpg('" + u.id + "', this.value);\">" +
+              "<select class='sel-armor-upg sel-shield-armor-upg' title='" + (selectedLanguage === "en" ? "Shield Armor Upgrade" : "보호막 방어력 업그레이드") + "' onclick='event.stopPropagation();' onchange=\"setShieldArmorUpg('" + u.id + "', this.value);\">" +
               "<option value='0'" + sopt0 + ">0</option>" +
               "<option value='1'" + sopt1 + ">+1</option>" +
               "<option value='2'" + sopt2 + ">+2</option>" +
               "<option value='3'" + sopt3 + ">+3</option>" +
               "</select>" +
-              "<select class='sel-armor-upg' title='방어력 업그레이드' onclick='event.stopPropagation();' onchange=\"setArmorUpg('" + u.id + "', this.value);\">" +
+              "<select class='sel-armor-upg' title='" + (selectedLanguage === "en" ? "Armor Upgrade" : "방어력 업그레이드") + "' onclick='event.stopPropagation();' onchange=\"setArmorUpg('" + u.id + "', this.value);\">" +
               "<option value='0'" + opt0 + ">0</option>" +
               "<option value='1'" + opt1 + ">+1</option>" +
               "<option value='2'" + opt2 + ">+2</option>" +
@@ -11151,6 +12074,10 @@ function stimIndicatorHtml() {
   return "<span class='stim-indicator' title='스팀팩 적용 중' aria-label='스팀팩 적용 중'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M13 2 4 14h7l-1 8 10-13h-7z'></path></svg></span>";
 }
 
+function burnIndicatorHtml() {
+  return "<span class='burn-indicator' title='전소 피해' aria-label='전소 피해'><svg viewBox='0 0 24 24' aria-hidden='true'><path d='M12 2.3c-2.8 2.2-3.8 4.8-2.9 7.1.7 1.7-.2 3.1-1.7 3.1-1.4 0-2.1-1.1-2.4-2.4-2.1 2.5-2.5 5.5-1.1 8.4.9 1.9 2.4 3.5 4.3 4.6-1.4-1.6-1.8-3.3-1.3-4.7.4-1.1 1.1-1.9 2.1-2.6.1 1.7.8 3.1 2 3.8.8.5 1.8-.1 1.7-1-.2-1.3-.3-2.5.6-3.9.8-1.2 1.6-1.9 2.5-3.3.6 2.2.8 3.9 2.3 5.1 1.5 1.2 1.7 3.6.5 5.8 2.1-1.2 3.6-3.1 4.2-5.3.9-3.4-.6-6.5-3.5-8.7-2.2-1.7-2.7-4.4-2.8-6.9Z'></path><path d='M10.5 12.6c-1.1 1.2-1.5 2.5-1.1 3.7.3.9.9 1.6 1.8 2-.3-1.2 0-2.2.8-3.1.7-.8.9-1.7.7-2.8-.6.6-1.4.8-2.2.2Z'></path></svg></span>";
+}
+
 function abilityDurationIndicatorHtml() {
   return "<span class='modal-ability-stat-icon main-ability-duration-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='8.5'></circle><path d='M12 7v5l3.5 2'></path></svg></span>";
 }
@@ -11163,60 +12090,329 @@ function abilityCooldownIndicatorHtml() {
   return "<span class='modal-ability-stat-icon main-ability-cooldown-icon' aria-hidden='true'><svg viewBox='0 0 24 24'><g transform='rotate(90 12 12)'><path d='M20 12a8 8 0 1 1-2.34-5.66'></path><path d='M20 4v5h-5'></path></g><path d='M9.5 8h5M9.5 16h5M10 8c0 2 1 2.7 2 4-1 1.3-2 2-2 4M14 8c0 2-1 2.7-2 4 1 1.3 2 2 2 4'></path></svg></span>";
 }
 
-function getBwAbilityRangeInlineHtml(u, abilityName) {
+// 건물별 생산/건설/소환/변이/변태 능력 매핑 (전역)
+var BUILDING_PRODUCE_ABILITIES = {
+  "command_center": [
+    { targetId: "scv", name: "SCV 생산" },
+    { targetId: "comsat_station", name: "컴샛 스테이션 건설" },
+    { targetId: "nuclear_silo", name: "뉴클리어 사일로 건설" }
+  ],
+  "sc2_command_center": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "sc2_orbital_command": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "sc2_planetary_fortress": [
+    { targetId: "sc2_scv", name: "건설로봇 생산" }
+  ],
+  "barracks": [
+    { targetId: "marine", name: "마린 훈련" },
+    { targetId: "firebat", name: "파이어뱃 훈련" },
+    { targetId: "medic", name: "메딕 훈련" },
+    { targetId: "ghost", name: "고스트 훈련" }
+  ],
+  "sc2_barracks": [
+    { targetId: "sc2_marine", name: "해병 훈련" },
+    { targetId: "sc2_marauder", name: "불곰 훈련" },
+    { targetId: "sc2_reaper", name: "사신 훈련" },
+    { targetId: "sc2_ghost", name: "유령 훈련" }
+  ],
+  "factory": [
+    { targetId: "vulture", name: "벌쳐 생산" },
+    { targetId: "siege_tank", name: "시즈 탱크 생산" },
+    { targetId: "goliath", name: "골리앗 생산" },
+    { targetId: "machine_shop", name: "머신 샵 건설" }
+  ],
+  "sc2_factory": [
+    { targetId: "sc2_hellion", name: "화염차 생산" },
+    { targetId: "sc2_hellbat", name: "화염 기갑병 생산" },
+    { targetId: "sc2_widow_mine", name: "땅거미 지뢰 생산" },
+    { targetId: "sc2_cyclone", name: "사이클론 생산" },
+    { targetId: "sc2_siege_tank", name: "공성 전차 생산" },
+    { targetId: "sc2_thor", name: "토르 생산" }
+  ],
+  "starport": [
+    { targetId: "wraith", name: "레이스 생산" },
+    { targetId: "dropship", name: "드랍십 생산" },
+    { targetId: "valkyrie", name: "발키리 생산" },
+    { targetId: "science_vessel", name: "사이언스 베슬 생산" },
+    { targetId: "battlecruiser", name: "배틀크루저 생산" },
+    { targetId: "control_tower", name: "컨트롤 타워 건설" }
+  ],
+  "sc2_starport": [
+    { targetId: "sc2_viking", name: "바이킹 생산" },
+    { targetId: "sc2_medivac", name: "의료선 생산" },
+    { targetId: "sc2_banshee", name: "밴시 생산" },
+    { targetId: "sc2_raven", name: "밤까마귀 생산" },
+    { targetId: "sc2_liberator", name: "해방선 생산" },
+    { targetId: "sc2_battlecruiser", name: "전투순양함 생산" },
+    { targetId: "sc2_tech_lab", name: "기술실 건설" },
+    { targetId: "sc2_reactor", name: "반응로 건설" }
+  ],
+  "nexus": [
+    { targetId: "probe", name: "프로브 생산" }
+  ],
+  "sc2_gateway": [
+    { targetId: "sc2_zealot", name: "광전사 소환" },
+    { targetId: "sc2_sentry", name: "파수기 소환" },
+    { targetId: "sc2_stalker", name: "추적자 소환" },
+    { targetId: "sc2_adept", name: "사도 소환" },
+    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
+    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
+  ],
+  "sc2_warpgate": [
+    { targetId: "sc2_zealot", name: "광전사 소환" },
+    { targetId: "sc2_sentry", name: "파수기 소환" },
+    { targetId: "sc2_stalker", name: "추적자 소환" },
+    { targetId: "sc2_adept", name: "사도 소환" },
+    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
+    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
+  ],
+  "gateway": [
+    { targetId: "zealot", name: "질럿 소환" },
+    { targetId: "dragoon", name: "드라군 소환" },
+    { targetId: "high_templar", name: "하이 템플러 소환" },
+    { targetId: "dark_templar", name: "다크 템플러 소환" }
+  ],
+  "robotics_facility": [
+    { targetId: "observer", name: "옵저버 생산" },
+    { targetId: "shuttle", name: "셔틀 생산" },
+    { targetId: "reaver", name: "리버 생산" }
+  ],
+  "stargate": [
+    { targetId: "scout", name: "스카웃 소환" },
+    { targetId: "corsair", name: "커세어 소환" },
+    { targetId: "carrier", name: "캐리어 소환" },
+    { targetId: "arbiter", name: "아비터 소환" }
+  ],
+  "larva": [
+    { targetId: "drone", name: "드론으로 변태" },
+    { targetId: "overlord", name: "오버로드로 변태" },
+    { targetId: "zergling", name: "저글링으로 변태" },
+    { targetId: "hydralisk", name: "히드라리스크로 변태" },
+    { targetId: "mutalisk", name: "뮤탈리스크로 변태" },
+    { targetId: "scourge", name: "스커지로 변태" },
+    { targetId: "queen", name: "퀸으로 변태" },
+    { targetId: "ultralisk", name: "울트라리스크로 변태" },
+    { targetId: "defiler", name: "디파일러로 변태" }
+  ],
+  "sc2_larva": [
+    { targetId: "sc2_drone", name: "일벌레로 변태" },
+    { targetId: "sc2_overlord", name: "대군주로 변태" },
+    { targetId: "sc2_zergling", name: "저글링으로 변태" },
+    { targetId: "sc2_roach", name: "바퀴로 변태" },
+    { targetId: "sc2_hydralisk", name: "히드라리스크로 변태" },
+    { targetId: "sc2_mutalisk", name: "뮤탈리스크로 변태" },
+    { targetId: "sc2_corruptor", name: "타락귀로 변태" },
+    { targetId: "sc2_infestor", name: "감염충으로 변태" },
+    { targetId: "sc2_swarmhost", name: "군단 숙주로 변태" },
+    { targetId: "sc2_viper", name: "살모사로 변태" },
+    { targetId: "sc2_ultralisk", name: "울트라리스크로 변태" }
+  ],
+  "hydralisk": [
+    { targetId: "lurker", name: "럴커로 변태" }
+  ],
+  "mutalisk": [
+    { targetId: "guardian", name: "가디언으로 변태" },
+    { targetId: "devourer", name: "디바우러로 변태" }
+  ],
+  "hatchery": [
+    { targetId: "lair", name: "레어로 변이" }
+  ],
+  "lair": [
+    { targetId: "hive", name: "하이브로 변이" }
+  ],
+  "creep_colony": [
+    { targetId: "sunken_colony", name: "성큰 콜로니로 변이" },
+    { targetId: "spore_colony", name: "스포어 콜로니로 변이" }
+  ],
+  "spire": [
+    { targetId: "greater_spire", name: "그레이터 스파이어로 변이" }
+  ],
+  "infested_cc": [
+    { targetId: "infested_terran", name: "인페스티드 테란 생산" }
+  ],
+  "high_templar": [
+    { targetId: "archon", name: "아칸 합체" }
+  ],
+  "dark_templar": [
+    { targetId: "dark_archon", name: "다크 아칸 합체" }
+  ],
+  "carrier": [
+    { targetId: "interceptor", name: "인터셉터 생산" }
+  ],
+  "science_facility": [
+    { targetId: "covert_ops", name: "코버트 옵스 건설" },
+    { targetId: "physics_lab", name: "피직스 랩 건설" }
+  ],
+  "siege_tank": [
+    { targetId: "siege_tank_siege", name: "시즈 모드" }
+  ],
+  "siege_tank_siege": [
+    { targetId: "siege_tank", name: "탱크 모드" }
+  ]
+};
+BUILDING_PRODUCE_ABILITIES.sc2_stargate = [
+  { targetId: "sc2_phoenix", name: "불사조 소환" },
+  { targetId: "sc2_oracle", name: "예언자 소환" },
+  { targetId: "sc2_void_ray", name: "공허 포격기 소환" },
+  { targetId: "sc2_tempest", name: "폭풍함 소환" },
+  { targetId: "sc2_carrier", name: "우주모함 소환" }
+];
+BUILDING_PRODUCE_ABILITIES.sc2_robotics_facility = [
+  { targetId: "sc2_observer", name: "관측선 소환" },
+  { targetId: "sc2_warp_prism", name: "차원 분광기 소환" },
+  { targetId: "sc2_immortal", name: "불멸자 소환" },
+  { targetId: "sc2_colossus", name: "거신 소환" },
+  { targetId: "sc2_disruptor", name: "분열기 소환" }
+];
+
+function getBwAbilityMetaHtml(u, abilityName) {
   if (!u || !u.race) return "";
 
   var name = String(abilityName || "").replace(/<[^>]*>/g, "").replace(/\s*\([^)]*\)/g, "").trim();
-  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-  if (u.race === "sc2_zerg") {
-    var sc2Ranges = {
-      "부식성 담즙": "0.5",
-      "세균 장막": "3.5",
-      "진균 번식": "2.25",
-      "흑구름": "2",
-      "기생 폭탄": "3"
-    };
-    if (!sc2Ranges[name]) return "";
-    return "<span class='ability-effect-range' title='효과 범위: " + sc2Ranges[name] + "'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>" + sc2Ranges[name] + "</span>";
+  var meta = {
+    "힐": { castRange: "2" },
+    "리스토레이션": { castRange: "6", cooldown: "1.3" },
+    "옵티컬 플레어": { duration: infiniteIcon(true), castRange: "9", cooldown: "1.3" },
+    "스팀팩": { duration: "18.5초", cooldown: "1" },
+    "전투 자극제": { duration: "15초", cooldown: "1" },
+    "충격탄": { duration: "1.5초" },
+    "목표물 고정": {
+      duration: "20초",
+      castRange: "15 (시전 7)",
+      cooldown: "6"
+    },
+    "목표 고정": {
+      duration: "20초",
+      castRange: "15 (시전 7)",
+      cooldown: "6"
+    },
+    "KD8 지뢰": { castRange: "5", cooldown: "20", effectRange: "2" },
+    "부동 조준": { castRange: "10", effectRange: "1.5" },
+    "EMP 탄환": { castRange: "10", effectRange: "1.5" },
+    "전술 핵 공격": {
+      castRange: "12",
+      effectRanges: [
+        { label: "100%", value: "4" },
+        { label: "50%", value: "6" },
+        { label: "25%", value: "8" }
+      ]
+    },
+    "락다운": { duration: "33초", castRange: "9" },
+    "디펜시브 매트릭스": { duration: "40초", castRange: "9" },
+    "EMP 쇼크웨이브": { castRange: "10", effectRange: "2.25" },
+    "야마토 건": { castRange: "10" },
+    "이래디에이트": { duration: "35초", castRange: "9", effectRange: "대상 반경 + 1.125", cooldown: "4.4" },
+    "스캐너 스윕": { duration: "12.2775초", castRange: infiniteIcon(true) },
+    "패러사이트": { duration: infiniteIcon(true), castRange: "9" },
+    "브루들링 소환": { castRange: "9" },
+    "애시드 스포어": { duration: "38초", effectRange: "2.25" },
+    "인스네어": { duration: "20초", castRange: "9", effectRange: "2.25" },
+    "인페스트 커맨드 센터": { castRange: "0.5" },
+    "인페스티드 커맨드 센터": { castRange: "0.5" },
+    "다크 스웜": { duration: "28초", castRange: "9", effectRange: "2.8125" },
+    "컨슘": { castRange: "0.5" },
+    "플레이그": { duration: "37.5초", castRange: "9", effectRange: "2.25" },
+    "사이오닉 스톰": { duration: "3.9371초", castRange: "9", effectRange: "1.6875", cooldown: "2.6" },
+    "할루시네이션": { duration: "78.75초", castRange: "7" },
+    "피드백": { castRange: (u.race === "bw_protoss") ? "10.5" : "10" },
+    "마인드 컨트롤": { castRange: "9", cooldown: "1.3" },
+    "마엘스트롬": { duration: "11초", castRange: "9", effectRange: "1.6875", cooldown: "0.1" },
+    "디스럽션 웹": { duration: "15초", castRange: "9", effectRange: "1.725", cooldown: "1.3" },
+    "리콜": { castRange: infiniteIcon(true), effectRange: "2.25" },
+    "스테이시스 필드": { duration: "33초", castRange: "9", effectRange: "1.6875" },
+    "클로크 필드": { effectRange: "5" },
+    "보호막 재충전": { castRange: "6" },
+    "뉴클리어 스트라이크": {
+      castRange: "12",
+      effectRanges: [
+        { label: "100%", value: "4" },
+        { label: "50%", value: "6" },
+        { label: "25%", value: "8" }
+      ]
+    }
+  }[name];
+  if (u.id === "sc2_warpgate") {
+    var warpgateAbility = (BUILDING_PRODUCE_ABILITIES.sc2_warpgate || []).find(function(item) { return item.name === name; });
+    var warpgateUnit = warpgateAbility && UNIT_DATA.find(function(item) { return item.id === warpgateAbility.targetId; });
+    var warpgateCooldowns = { "광전사 소환": 28, "사도 소환": 28, "파수기 소환": 32, "추적자 소환": 32, "고위 기사 소환": 45, "암흑 기사 소환": 45 };
+    if (warpgateUnit) meta = { cooldown: warpgateCooldowns[name] || warpgateUnit.buildTime };
   }
-  if (u.race === "sc2_protoss" && u.id === "sc2_sentry" && name === "수호 방패") {
-    return "<span class='ability-effect-range' title='효과 범위: 4.5'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>4.5</span>";
-  }
-  if (u.race === "sc2_protoss" && u.id === "sc2_high_templar" && name === "사이오닉 폭풍") {
-    return "<span class='ability-effect-range' title='효과 범위: 2'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>2</span>";
-  }
-  if (u.race === "sc2_protoss" && u.id === "sc2_oracle" && name === "계시") {
-    return "<span class='ability-effect-range' title='효과 범위: 6'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>6</span>";
-  }
-  if (u.race === "sc2_protoss" && u.id === "sc2_stasis_ward" && name === "정지장 덫") {
-    return "<span class='ability-effect-range' title='효과 범위: 5'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>5</span>";
-  }
-  if (u.race === "sc2_protoss" && u.id === "sc2_mothership") {
-    var mothershipRanges = { "대규모 소환": "6.5", "시간 왜곡": "3.75", "은폐장": "6.25" };
-    if (mothershipRanges[name]) return "<span class='ability-effect-range' title='효과 범위: " + mothershipRanges[name] + "'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>" + mothershipRanges[name] + "</span>";
-  }
-  if (u.race.indexOf("bw_") !== 0) return "";
+  if (u.id === "sc2_medivac" && (name === "힐" || name === "치료")) meta = { castRange: "4" };
+  if (u.id === "sc2_medivac" && name === "재연소 장치 점화") meta = { duration: "8초", cooldown: "20" };
+  if (u.id === "sc2_raven" && name === "자동 포탑 건설") meta = { duration: "11초" };
+  if (u.id === "sc2_raven" && name === "대장갑 미사일") meta = { duration: "30초" };
+  if (u.id === "sc2_raven" && name === "방해 매트릭스") meta = { duration: "15초" };
+  if (u.id === "sc2_overseer" && name === "변신수 생성") meta = { duration: "150초" };
+  if (u.id === "sc2_overseer" && name === "오염") meta = { duration: "30초" };
+  if (u.id === "sc2_queen" && name === "애벌레 생성") meta = { duration: "40초" };
+  if (u.id === "sc2_queen" && name === "수혈") meta = { duration: "10초" };
+  if (u.id === "sc2_hydralisk" && name === "달려들기") meta = { duration: "1초", cooldown: "14" };
+  if (u.id === "sc2_zealot" && name === "돌진") meta = { duration: "3.5초", castRange: "4", cooldown: "10" };
+  if (u.id === "sc2_stalker" && name === "점멸") meta = { castRange: "8", cooldown: "10" };
+  if (u.id === "sc2_dark_templar" && name === "그림자 걸음") meta = { castRange: "8", cooldown: "20" };
+  if (u.id === "sc2_sentry" && name === "역장") meta = { duration: "15초", castRange: "9" };
+  if (u.id === "sc2_sentry" && name === "수호 방패") meta = { duration: "18초", cooldown: "18", effectRange: "4.5" };
+  if (u.id === "sc2_sentry" && name === "환상") meta = { duration: "60초" };
+  if (u.id === "sc2_high_templar" && name === "사이오닉 폭풍") meta = { duration: "7.84초", castRange: "8", cooldown: "2", effectRange: "2" };
+  if (u.id === "sc2_phoenix" && name === "중력자 광선") meta = { duration: "10초", castRange: "4" };
+  if (u.id === "sc2_stasis_ward" && name === "정지장 덫") meta = { duration: "30초", effectRange: "5" };
+  if (u.id === "sc2_oracle" && name === "정지장 수호물") meta = { duration: "126초", castRange: "5", cooldown: "5" };
+  if (u.id === "sc2_oracle" && name === "계시") meta = { duration: "28초", castRange: "12", effectRange: "6" };
+  if (u.id === "sc2_oracle" && name === "펄서 광선 활성화") meta = { cooldown: "4" };
+  if (u.id === "sc2_void_ray" && name === "분광 정렬") meta = { duration: "20초", cooldown: "60" };
+  if (u.id === "sc2_nexus" && name === "시간 증폭") meta = { duration: "28초", castRange: infiniteIcon(true) };
+  if (u.id === "sc2_nexus" && name === "전략 소환") meta = { castRange: infiniteIcon(true), cooldown: "182" };
+  if (u.id === "sc2_nexus" && name === "에너지 재충전") meta = { castRange: "12", cooldown: "63" };
+  if (u.id === "sc2_mothership" && name === "대규모 소환") meta = { castRange: infiniteIcon(true), cooldown: "125", effectRange: "6.5" };
+  if (u.id === "sc2_mothership" && name === "시간 왜곡") meta = { duration: "10초", castRange: "9", cooldown: "84", effectRange: "3.75" };
+  if (u.id === "sc2_mothership" && name === "은폐장") meta = { duration: "28초", cooldown: "70", effectRange: "6.25" };
+  if (u.id === "sc2_immortal" && name.indexOf("방어막") === 0) meta = { duration: "3초", cooldown: "45" };
+  if (u.id === "sc2_adept" && name === "사이오닉 이동") meta = { cooldown: "16" };
+  if (u.id === "sc2_swarmhost" && name === "식충 생성") meta = { duration: "25초", cooldown: "60" };
+  if (u.id === "sc2_ravager" && name === "부식성 담즙") meta = { castRange: "9", cooldown: "10", effectRange: "0.5" };
+  if (u.id === "sc2_infestor" && name === "세균 장막") meta = { duration: "15초", castRange: "9", effectRange: "3.5" };
+  if (u.id === "sc2_infestor" && name === "진균 번식") meta = { duration: "4초", castRange: "10", effectRange: "2.25" };
+  if (u.id === "sc2_infestor" && name === "신경 기생충") meta = { duration: "15초", castRange: "8" };
+  if (u.id === "sc2_viper" && name === "흡수") meta = { duration: "20초", castRange: "7", cooldown: "1" };
+  if (u.id === "sc2_viper" && name === "납치") meta = { castRange: "9" };
+  if (u.id === "sc2_viper" && name === "흑구름") meta = { duration: "8초", castRange: "10", effectRange: "2" };
+  if (u.id === "sc2_viper" && name === "기생 폭탄") meta = { duration: "12초", castRange: "8", effectRange: "3" };
+  if (u.id === "sc2_battlecruiser" && name === "야마토 포") meta = { castRange: "10", cooldown: "100" };
+  if (u.id === "sc2_battlecruiser" && name === "전술 차원 도약") meta = { castRange: infiniteIcon(true), cooldown: "100" };
+  if (u.id === "sc2_sensor_tower" && name === "레이더") meta = { castRange: "22" };
+  if (u.id === "sc2_shield_battery" && (name.indexOf("회복") === 0 || name.indexOf("보호막") >= 0)) meta = { castRange: "6" };
+  if (u.id === "sc2_orbital_command" && name === "스캐너 탐색") meta = { duration: "12.2775초", castRange: infiniteIcon(true) };
+  if (u.id === "sc2_orbital_command" && name.indexOf("지게로봇") >= 0) meta = { duration: "90초" };
+  if (u.id === "sc2_orbital_command" && name.indexOf("추가 보급품") >= 0) meta = { duration: infiniteIcon(true) };
+  if (!meta) return "";
+  if (name === "뉴클리어 스트라이크" && typeof isUpgActive === "function" && isUpgActive("ghost_ocular")) meta.castRange = "14";
 
-  var ranges = {
-    "이래디에이트": "대상 반경 + 1.125",
-    "애시드 스포어": "2.25",
-    "인스네어": "2.25",
-    "다크 스웜": "2.8125",
-    "플레이그": "2.25",
-    "사이오닉 스톰": "1.6875",
-    "마엘스트롬": "1.6875",
-    "디스럽션 웹": "1.725",
-    "리콜": "2.25",
-    "스테이시스 필드": "1.6875",
-    "클로크 필드": "5"
-  };
-  if (name === "뉴클리어 스트라이크") {
-    return "<span class='ability-effect-range ability-effect-range-multi' title='효과 범위: 100% 4 · 50% 6 · 25% 8'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>4 / 6 / 8</span>";
+  var clockIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><path d='M12 7v5l3.5 2'></path></svg>";
+  var cooldownIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><g transform='rotate(90 12 12)'><path d='M20 12a8 8 0 1 1-2.34-5.66'></path><path d='M20 4v5h-5'></path></g><path d='M9.5 8h5M9.5 16h5M10 8c0 2 1 2.7 2 4-1 1.3-2 2-2 4M14 8c0 2-1 2.7-2 4 1 1.3 2 2 2 4'></path></svg>";
+  var castRangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.2 9.8 5.4-5.4M15 4.4h4.6V9'></path></svg>";
+  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
+  var durationText = meta.duration;
+  var durationValue = parseFloat(String(meta.duration || "").replace("초", ""));
+  if (isFinite(durationValue)) durationText = fmtGameTime(durationValue, 1);
+  var cooldownText = meta.cooldown;
+  var cooldownValue = parseFloat(String(meta.cooldown || ""));
+  if (isFinite(cooldownValue)) cooldownText = fmtGameTime(cooldownValue, 1);
+  var stats = [];
+  if (meta.cooldown) stats.push("<span class='modal-ability-stat' title='" + t("cooldown") + "'><span class='modal-ability-stat-icon modal-ability-cooldown-icon'>" + cooldownIcon + "</span>" + cooldownText + "</span>");
+  if (meta.duration) stats.push("<span class='modal-ability-stat' title='" + t("duration") + "'><span class='modal-ability-stat-icon'>" + clockIcon + "</span>" + durationText + "</span>");
+  if (meta.castRange) stats.push("<span class='modal-ability-stat' title='" + t("castRange") + "'><span class='modal-ability-stat-icon'>" + castRangeIcon + "</span>" + displayGameTerm(meta.castRange) + "</span>");
+  if (meta.effectRanges) {
+    var ranges = meta.effectRanges.map(function(range) { return "<span class='modal-ability-range-step'><b>" + range.label + "</b> " + range.value + "</span>"; }).join("<span class='modal-ability-range-sep'>·</span>");
+    stats.push("<span class='modal-ability-stat modal-ability-stat-ranges' title='" + t("effectRange") + "'><span class='modal-ability-stat-icon'>" + rangeIcon + "</span>" + ranges + "</span>");
+  } else if (meta.effectRange) {
+    stats.push("<span class='modal-ability-stat' title='" + t("effectRange") + "'><span class='modal-ability-stat-icon'>" + rangeIcon + "</span>" + displayGameTerm(meta.effectRange) + "</span>");
   }
-  if (!ranges[name]) return "";
-  var displayRange = (name === "이래디에이트") ? "반경+1.125" : ranges[name];
-  var longRangeClass = (name === "이래디에이트") ? " ability-effect-range-compact" : "";
-  return "<span class='ability-effect-range" + longRangeClass + "' title='효과 범위: " + ranges[name] + "'><span class='ability-effect-range-icon'>" + rangeIcon + "</span>" + displayRange + "</span>";
+  if (!stats.length) return "";
+  var sep = "<span class='modal-ability-stat-sep'>│</span>";
+  return "<div class='modal-ability-stats'>" + stats.join(sep) + "</div>";
 }
 
 function renderSpeed(u) {
@@ -11295,7 +12491,7 @@ function renderSpeed(u) {
 
   if (u.id === "sc2_spine_crawler" || u.id === "sc2_spore_crawler") {
     baseStr += "<div class='upg-zerg' style='font-size:0.75rem;margin-top:2px;'>(C " + fmtGameRate(2.5) + ")</div>";
-    baseStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(뿌리 들기)</div>";
+    baseStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + displayGameTerm("뿌리 들기") + ")" + "</div>";
   } else if (isZergGroundUnit(u)) {
     var creepVal = fmtNum((isUpg ? curSpeed : scaleMoveSpeed(u.speed)) * 1.2, 2);
     baseStr += "<div class='upg-zerg' style='font-size:0.75rem;margin-top:2px;'>(C " + creepVal + ")</div>";
@@ -11305,7 +12501,7 @@ function renderSpeed(u) {
       baseStr += "<div class='upg-zerg' style='font-size:0.75rem;margin-top:2px;'>" + "(" + sc2MobilityLines[smi].label + " " + fmtNum(scaleMoveSpeed(sc2MobilityLines[smi].value), 2) + ")</div>";
     }
   } else if (isTerranLiftableStructure(u)) {
-    baseStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(이륙)</div>";
+    baseStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + displayGameTerm("이륙") + ")" + "</div>";
   }
 
   var upgBtnInfo = null;
@@ -11339,7 +12535,7 @@ function renderSpeed(u) {
                "onmouseenter=\"showUpgTooltip(event, '" + upgBtnInfo.key + "');\" " +
                "onmousemove=\"moveUpgTooltip(event);\" " +
                "onmouseleave=\"hideUpgTooltip();\">" +
-               meta.name +
+               displayMainUpgBadgeName(meta.name) +
                "</button>" +
                "</div>";
   }
@@ -11422,7 +12618,7 @@ function renderSpeedModal(u) {
 
   if (u.id === "sc2_spine_crawler" || u.id === "sc2_spore_crawler") {
     baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>(C " + fmtGameRate(2.5) + ")</span>";
-    baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>(뿌리 들기)</span>";
+    baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>" + "(" + displayGameTerm("뿌리 들기") + ")" + "</span>";
   } else if (isZergGroundUnit(u)) {
     var creepVal = fmtNum(curSpeed * 1.2, 2);
     baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>(C " + creepVal + ")</span>";
@@ -11435,7 +12631,7 @@ function renderSpeedModal(u) {
       baseStr += " <span class='upg-zerg' style='font-size:0.8rem;margin-left:4px;'>" + sc2MobilityStrs.join(" · ") + "</span>";
     }
   } else if (isTerranLiftableStructure(u)) {
-    baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>(이륙)</span>";
+    baseStr += " <span style='font-size:0.8rem;color:var(--text-dim);margin-left:4px;'>" + "(" + displayGameTerm("이륙") + ")" + "</span>";
   }
   return baseStr;
 }
@@ -11470,7 +12666,7 @@ function fmtCd(u, w) {
                "onmouseenter=\"showUpgTooltip(event, '" + adrenalKey + "');\" " +
                "onmousemove=\"moveUpgTooltip(event);\" " +
                "onmouseleave=\"hideUpgTooltip();\">" +
-               meta.name +
+               displayMainUpgBadgeName(meta.name) +
                "</button>" +
                "</div>";
   }
@@ -11483,7 +12679,7 @@ function fmtCd(u, w) {
                "onclick=\"event.stopPropagation(); toggleUpg('sc2_adept_resonating_glaives');\" " +
                "onmouseenter=\"showUpgTooltip(event, 'sc2_adept_resonating_glaives');\" " +
                "onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" +
-               adeptMeta.name + "</button></div>";
+               displayMainUpgBadgeName(adeptMeta.name) + "</button></div>";
   }
 
   return baseStr;
@@ -11527,6 +12723,7 @@ function getUpgradeMetadata(structureId, upgNamePrefix) {
           var cleanName = upg.name.replace(/\s*(연구|개발|진화)\s*$/g, "").trim();
           return {
             name: cleanName,
+            translationName: upg.name,
             desc: upg.desc,
             icon: upg.icon
           };
@@ -11742,9 +12939,9 @@ function renderUnitApplicableUpgrades(u) {
     html += "<div class='" + cardClass + "'" + cardExtra + ">";
     html += "  <div class='modal-item-icon-slot'>" + imgTag + "</div>";
     html += "  <div class='modal-item-content'>";
-    html += "    <div class='modal-item-title'>" + upg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
+    html += "    <div class='modal-item-title'>" + displayGameTerm(upg.name) + (isActive ? " <span class='upg-active-badge'>" + (selectedLanguage === "en" ? "Active" : "적용 중") + "</span>" : "") + "</div>";
     var upgDesc = ref.desc || upg.desc;
-    if (upgDesc) html += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(upgDesc) + "</div>";
+    if (upgDesc) html += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(u, ref.desc ? ref : upg)) + "</div>";
     html += getModalCardRequirementHtml(u, upg);
     html += "  </div>";
     if (costBadgeHtml) html += costBadgeHtml;
@@ -11752,6 +12949,7 @@ function renderUnitApplicableUpgrades(u) {
   });
 
   if (html) {
+    title.textContent = t("applicableUpgrades");
     title.style.display = "";
     container.style.display = "";
     container.innerHTML = html;
@@ -11872,8 +13070,8 @@ function showUpgTooltip(e, upgKey) {
   tt.innerHTML = "<div class='upg-tt-card'>" +
                  "  <div class='upg-tt-icon-slot'>" + imgTag + "</div>" +
                  "  <div class='upg-tt-content'>" +
-                 "    <div class='upg-tt-title'>" + meta.name + "</div>" +
-                 "    <div class='upg-tt-desc'>" + meta.desc + "</div>" +
+                 "    <div class='upg-tt-title'>" + displayGameTerm(meta.name) + "</div>" +
+                 "    <div class='upg-tt-desc'>" + formatGameSpeedDescription(displayCardDescription(null, { name: meta.translationName || meta.name, desc: meta.desc })) + "</div>" +
                  "  </div>" +
                  "</div>";
   tt.classList.add("active");
@@ -12212,52 +13410,52 @@ function fmtUnitRange(u, w) {
   }
   
   if (u.id === "spider_mine") {
-    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(근접)</div>";
-    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(발동 3)</div>";
+    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + t("melee") + ")" + "</div>";
+    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + t("trigger") + " 3)" + "</div>";
   } else if (u.id === "siege_tank_siege" || u.id === "sc2_siege_tank_siege") {
-    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(최소 2)</div>";
+    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + t("minimum") + " 2)" + "</div>";
   } else if (w.range <= 1 && u.id !== "firebat") {
-    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>(근접)</div>";
+    valStr += "<div style='font-size:0.75rem;color:var(--text-dim);margin-top:2px;'>" + "(" + t("melee") + ")" + "</div>";
   }
   
   var btnHtml = "";
   if (isMarine) {
     var activeCls = u238Active ? " active active-" + rc : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='marine_u238' onclick=\"event.stopPropagation(); toggleUpg('marine_u238');\" onmouseenter=\"showUpgTooltip(event, 'marine_u238');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">U-238 탄환</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='marine_u238' onclick=\"event.stopPropagation(); toggleUpg('marine_u238');\" onmouseenter=\"showUpgTooltip(event, 'marine_u238');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("U-238 탄환") + "</button></div>";
   } else if (isGoliathAir) {
     var meta = getUpgradeMetadata("machine_shop", "카론 부스터");
     var activeCls = charonActive ? " active active-" + rc : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='goliath_charon' onclick=\"event.stopPropagation(); toggleUpg('goliath_charon');\" onmouseenter=\"showUpgTooltip(event, 'goliath_charon');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='goliath_charon' onclick=\"event.stopPropagation(); toggleUpg('goliath_charon');\" onmouseenter=\"showUpgTooltip(event, 'goliath_charon');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "hydralisk") {
     var meta = getUpgradeMetadata("hydralisk_den", "가시 홈");
     var activeCls = isHydraRange ? " active active-zerg" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='hydralisk_range' onclick=\"event.stopPropagation(); toggleUpg('hydralisk_range');\" onmouseenter=\"showUpgTooltip(event, 'hydralisk_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='hydralisk_range' onclick=\"event.stopPropagation(); toggleUpg('hydralisk_range');\" onmouseenter=\"showUpgTooltip(event, 'hydralisk_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "sc2_hydralisk") {
     var meta = getUpgradeMetadata("sc2_hydralisk_den", "가시 홈");
     var activeCls = isSc2HydraRange ? " active active-zerg" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_hydralisk_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_hydralisk_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_hydralisk_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_hydralisk_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_hydralisk_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_hydralisk_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "sc2_lurker") {
     var meta = getUpgradeMetadata("sc2_lurker_den", "진동 가시뼈");
     var activeCls = isSc2LurkerRange ? " active active-zerg" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_lurker_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_lurker_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_lurker_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_lurker_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_lurker_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_lurker_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "sc2_colossus") {
     var meta = getUpgradeMetadata("sc2_robotics_support_bay", "열 광선 사거리");
     var activeCls = isSc2ColossusRange ? " active active-protoss" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_colossus_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_colossus_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_colossus_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_colossus_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_colossus_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_colossus_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "sc2_phoenix") {
     var meta = getUpgradeMetadata("sc2_fleet_beacon", "음이온파 수정");
     var activeCls = isSc2PhoenixRange ? " active active-protoss" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_phoenix_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_phoenix_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_phoenix_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_phoenix_range' onclick=\"event.stopPropagation(); toggleUpg('sc2_phoenix_range');\" onmouseenter=\"showUpgTooltip(event, 'sc2_phoenix_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "dragoon") {
     var meta = getUpgradeMetadata("cybernetics_core", "특이점 장전");
     var activeCls = isDragoonRange ? " active active-protoss" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='dragoon_range' onclick=\"event.stopPropagation(); toggleUpg('dragoon_range');\" onmouseenter=\"showUpgTooltip(event, 'dragoon_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='dragoon_range' onclick=\"event.stopPropagation(); toggleUpg('dragoon_range');\" onmouseenter=\"showUpgTooltip(event, 'dragoon_range');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   } else if (u.id === "sc2_liberator_defender") {
     var activeCls = isLiberatorBallistics ? " active active-terran" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_liberator_advanced_ballistics' onclick=\"event.stopPropagation(); toggleUpg('sc2_liberator_advanced_ballistics');\" onmouseenter=\"showUpgTooltip(event, 'sc2_liberator_advanced_ballistics');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">첨단 탄도</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_liberator_advanced_ballistics' onclick=\"event.stopPropagation(); toggleUpg('sc2_liberator_advanced_ballistics');\" onmouseenter=\"showUpgTooltip(event, 'sc2_liberator_advanced_ballistics');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("첨단 탄도") + "</button></div>";
   } else if (u.id === "sc2_missile_turret" || u.id === "sc2_auto_turret" || u.id === "sc2_planetary_fortress") {
     var activeCls = isHiSecAutotracking ? " active active-terran" : "";
-    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_hisec_autotracking' onclick=\"event.stopPropagation(); toggleUpg('sc2_hisec_autotracking');\" onmouseenter=\"showUpgTooltip(event, 'sc2_hisec_autotracking');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">자동추적기</button></div>";
+    btnHtml = "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_hisec_autotracking' onclick=\"event.stopPropagation(); toggleUpg('sc2_hisec_autotracking');\" onmouseenter=\"showUpgTooltip(event, 'sc2_hisec_autotracking');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("자동추적기") + "</button></div>";
   }
   
   return btnHtml ? ("<div class='td-cell-box'><div class='td-cell-val'>" + valStr + "</div>" + btnHtml + "</div>") : valStr;
@@ -12277,19 +13475,32 @@ function hasAtkUpgDropdown(u) {
   return true;
 }
 
+function attackTargetBadge(type) {
+  var target = String(type || "");
+  var isGround = target.indexOf("지상") >= 0;
+  var isAir = target.indexOf("공중") >= 0;
+  if (isGround && isAir) {
+    return "<span class='atk-badge atk-both'><span class='atk-g-part'>" + (selectedLanguage === "en" ? "G" : "지") + "</span><span class='atk-a-part'>" + (selectedLanguage === "en" ? "A" : "공") + "</span></span>";
+  }
+  if (isGround) return "<span class='atk-badge atk-ground'>" + (selectedLanguage === "en" ? "GND" : "지상") + "</span>";
+  if (isAir) return "<span class='atk-badge atk-air'>" + (selectedLanguage === "en" ? "AIR" : "공중") + "</span>";
+  return "";
+}
+
+function attackTypeBadge(type) {
+  var labels = selectedLanguage === "en"
+    ? { concussive: "CONC.", explosive: "EXP.", penetrating: "PEN." }
+    : { concussive: "진동형", explosive: "폭발형", penetrating: "관통형" };
+  var classes = { concussive: "atk-concussive", explosive: "atk-explosive", penetrating: "atk-penetrating" };
+  return "<span class='atk-badge " + classes[type] + "'>" + labels[type] + "</span>";
+}
+
 function renderSingleWeaponHtml(u, wi) {
   var w = u.weapons[wi];
   var rc = raceClr(u.race);
   var isG = w.type.indexOf("지상") >= 0;
   var isA = w.type.indexOf("공중") >= 0;
-  var badgeHtml = "";
-  if (isG && isA) {
-    badgeHtml = "<span class='atk-badge atk-both'><span class='atk-g-part'>지</span><span class='atk-a-part'>공</span></span>";
-  } else if (isG) {
-    badgeHtml = "<span class='atk-badge atk-ground'>지상</span>";
-  } else if (isA) {
-    badgeHtml = "<span class='atk-badge atk-air'>공중</span>";
-  }
+  var badgeHtml = attackTargetBadge(w.type);
 
   var isConcussive = (u.id === "firebat" || u.id === "ghost" || u.id === "vulture");
   var isExplosive = (
@@ -12304,18 +13515,18 @@ function renderSingleWeaponHtml(u, wi) {
 
   var subBadgeHtml = "";
   if (isConcussive) {
-    subBadgeHtml += "<span class='atk-badge atk-concussive'>진동형</span>";
+    subBadgeHtml += attackTypeBadge("concussive");
   }
   if (isExplosive) {
-    subBadgeHtml += "<span class='atk-badge atk-explosive'>폭발형</span>";
+    subBadgeHtml += attackTypeBadge("explosive");
   }
   if (isPenetrating) {
-    subBadgeHtml += "<span class='atk-badge atk-penetrating'>관통형</span>";
+    subBadgeHtml += attackTypeBadge("penetrating");
   }
   if (u.id === "sc2_thor" && wi === 1) {
-    subBadgeHtml += "<span class='atk-weapon-name'>천벌포</span>";
+    subBadgeHtml += "<span class='atk-weapon-name'>" + (selectedLanguage === "en" ? "PUNISHER" : "천벌포") + "</span>";
   } else if (u.id === "sc2_thor" && wi === 2) {
-    subBadgeHtml += "<span class='atk-weapon-name'>재블린</span>";
+    subBadgeHtml += "<span class='atk-weapon-name'>" + (selectedLanguage === "en" ? "JAVELIN" : "재블린") + "</span>";
   }
 
   if (!w.dmg || w.dmg <= 0) {
@@ -12331,13 +13542,13 @@ function renderSingleWeaponHtml(u, wi) {
   var totalDmg = w.dmg + (lvl * upgPerLvl) + reaverExtraDmg;
 
   var hasBonus = w.bonusDmg && w.bonusDmg.length > 0;
-  var baseLabel = "<span class='wpn-lbl'>기본:</span>";
+  var baseLabel = "<span class='wpn-lbl'>" + displayMainWeaponLabel("기본") + ":</span>";
   
   var hasAtkUpg = hasAtkUpgDropdown(u);
   var dmgDisp = (lvl > 0 || reaverExtraDmg > 0) ? "<span class='upg-val-" + rc + "'>" + fmtNum(totalDmg, 2) + "</span>" : fmtNum(w.dmg, 2);
   var upgHtml = (hasAtkUpg && lvl < 3 && upgPerLvl > 0) ? " <span class='upg-" + rc + "'>(+" + upgPerLvl + ")</span>" : "";
   var hitsHtml = (w.hits && w.hits > 1) ? " <span style='color:var(--text-dim);font-size:.82em'>x" + w.hits + "</span>" : "";
-  var splashTxt = w.splash ? " <span style='color:var(--text-dim);font-size:.82em'>(방사)</span>" : "";
+  var splashTxt = w.splash ? " <span style='color:var(--text-dim);font-size:.82em'>" + (selectedLanguage === "en" ? "[AoE]" : "(방사)") + "</span>" : "";
 
   var lines = [];
   var baseVal = "<span class='wpn-val'>" + dmgDisp + upgHtml + hitsHtml + splashTxt + "</span>";
@@ -12355,11 +13566,11 @@ function renderSingleWeaponHtml(u, wi) {
       }
       var totalBdBase = bd.base + (lvl * bdUpgPerLvl) + reaverExtraBd + infernalExtraBd + ((u.id === "sc2_void_ray" && bd.key === "중장갑") ? prismaticExtraBd : 0) + ((bd.key === "구조물") ? tempestStructureExtraBd : 0);
 
-      var bdSplashTxt = bd.splash ? " <span style='color:var(--text-dim);font-size:.82em'>(방사)</span>" : "";
+      var bdSplashTxt = bd.splash ? " <span style='color:var(--text-dim);font-size:.82em'>" + (selectedLanguage === "en" ? "[AoE]" : "(방사)") + "</span>" : "";
       var bdHitsVal = (bd.hits !== undefined) ? bd.hits : w.hits;
       var bdHitsHtml = (bdHitsVal && bdHitsVal > 1) ? " <span style='color:var(--text-dim);font-size:.82em'>x" + bdHitsVal + "</span>" : "";
       var bdUpgHtml = (hasAtkUpg && lvl < 3 && bdUpgPerLvl > 0) ? " <span class='upg-" + rc + "'>(+" + bdUpgPerLvl + ")</span>" : "";
-      var bdLabel = "<span class='wpn-lbl'>" + bd.key + ":</span>";
+      var bdLabel = "<span class='wpn-lbl'>" + displayMainWeaponLabel(bd.key) + ":</span>";
       var bdDisp = (lvl > 0 || reaverExtraBd > 0 || infernalExtraBd > 0 || prismaticExtraBd > 0 || (tempestStructureExtraBd > 0 && bd.key === "구조물")) ? "<span class='upg-val-" + rc + "'>" + fmtNum(totalBdBase, 2) + "</span>" : fmtNum(bd.base, 2);
       var bdVal = "<span class='wpn-val'>" + bdDisp + bdUpgHtml + bdHitsHtml + bdSplashTxt + "</span>";
 
@@ -12377,7 +13588,7 @@ function renderSingleWeaponHtml(u, wi) {
     var isReaverDmg = isUpgActive("reaver_damage");
     var meta = getUpgradeMetadata("robotics_support_bay", "스캐럽 공격력 증가");
     var activeCls = isReaverDmg ? " active active-protoss" : "";
-    htmlStr += "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='reaver_damage' onclick=\"event.stopPropagation(); toggleUpg('reaver_damage');\" onmouseenter=\"showUpgTooltip(event, 'reaver_damage');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + meta.name + "</button></div>";
+    htmlStr += "<div class='upg-btn-wrap'><button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='reaver_damage' onclick=\"event.stopPropagation(); toggleUpg('reaver_damage');\" onmouseenter=\"showUpgTooltip(event, 'reaver_damage');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(meta.name) + "</button></div>";
   }
   var isLastWpn = (wi === (u.weapons ? u.weapons.length - 1 : 0));
   if (hasAtkUpgDropdown(u) && isLastWpn) {
@@ -12396,7 +13607,7 @@ function renderSingleWeaponHtml(u, wi) {
                  "<option value='2'" + opt2 + ">+2</option>" +
                  "<option value='3'" + opt3 + ">+3</option>" +
                  "</select>" +
-                 "<button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_infernal_preigniter' onclick=\"event.stopPropagation(); toggleUpg('sc2_infernal_preigniter');\" onmouseenter=\"showUpgTooltip(event, 'sc2_infernal_preigniter');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">지옥불</button>" +
+                 "<button type='button' class='btn-upg-badge" + activeCls + "' data-upg-id='sc2_infernal_preigniter' onclick=\"event.stopPropagation(); toggleUpg('sc2_infernal_preigniter');\" onmouseenter=\"showUpgTooltip(event, 'sc2_infernal_preigniter');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("지옥불") + "</button>" +
                  "</div>";
     } else if (u.id === "sc2_tempest") {
       var isTempestDestabilizer = isUpgActive("sc2_tempest_destabilizer");
@@ -12409,7 +13620,7 @@ function renderSingleWeaponHtml(u, wi) {
                  "<option value='2'" + opt2 + ">+2</option>" +
                  "<option value='3'" + opt3 + ">+3</option>" +
                  "</select>" +
-                 "<button type='button' class='btn-upg-badge" + tempestActiveCls + "' data-upg-id='sc2_tempest_destabilizer' onclick=\"event.stopPropagation(); toggleUpg('sc2_tempest_destabilizer');\" onmouseenter=\"showUpgTooltip(event, 'sc2_tempest_destabilizer');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + tempestMeta.name + "</button>" +
+                 "<button type='button' class='btn-upg-badge" + tempestActiveCls + "' data-upg-id='sc2_tempest_destabilizer' onclick=\"event.stopPropagation(); toggleUpg('sc2_tempest_destabilizer');\" onmouseenter=\"showUpgTooltip(event, 'sc2_tempest_destabilizer');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName(tempestMeta.name) + "</button>" +
                  "</div>";
     } else {
       htmlStr += "<div class='upg-btn-wrap'><select class='sel-atk-upg' onclick='event.stopPropagation();' onchange=\"setAtkUpg('" + u.id + "', this.value);\">" +
@@ -12503,7 +13714,7 @@ function renderSight(u) {
             "onmouseenter=\"showUpgTooltip(event, 'ghost_ocular');\" " +
             "onmousemove=\"moveUpgTooltip(event);\" " +
             "onmouseleave=\"hideUpgTooltip();\">" +
-            meta.name +
+            displayMainUpgBadgeName(meta.name) +
             "</button>" +
             "</div>";
   } else if (u.id === "overlord") {
@@ -12515,7 +13726,7 @@ function renderSight(u) {
             "onmouseenter=\"showUpgTooltip(event, 'overlord_antennae');\" " +
             "onmousemove=\"moveUpgTooltip(event);\" " +
             "onmouseleave=\"hideUpgTooltip();\">" +
-            meta.name +
+            displayMainUpgBadgeName(meta.name) +
             "</button>" +
             "</div>";
   } else if (u.id === "scout") {
@@ -12527,7 +13738,7 @@ function renderSight(u) {
             "onmouseenter=\"showUpgTooltip(event, 'scout_sight');\" " +
             "onmousemove=\"moveUpgTooltip(event);\" " +
             "onmouseleave=\"hideUpgTooltip();\">" +
-            meta.name +
+            displayMainUpgBadgeName(meta.name) +
             "</button>" +
             "</div>";
   } else if (u.id === "observer") {
@@ -12539,7 +13750,7 @@ function renderSight(u) {
             "onmouseenter=\"showUpgTooltip(event, 'observer_sight');\" " +
             "onmousemove=\"moveUpgTooltip(event);\" " +
             "onmouseleave=\"hideUpgTooltip();\">" +
-            meta.name +
+            displayMainUpgBadgeName(meta.name) +
             "</button>" +
             "</div>";
   }
@@ -12554,7 +13765,7 @@ function renderRow(u) {
   var wCount = (u.weapons && u.weapons.length) ? u.weapons.length : 1;
   var rSpan = wCount > 1 ? " rowspan='" + wCount + "'" : "";
   
-  var attrHtml = "<td" + rSpan + " style='text-align:center;font-size:0.85rem;color:var(--text-bright)'>" + (u.attributes || "") + "</td>";
+  var attrHtml = "<td" + rSpan + " class='td-attr' style='text-align:center;font-size:0.85rem;color:var(--text-bright);word-break:keep-all;'>" + displayGameTerm(u.attributes || "") + "</td>";
 
   var firstW = u.weapons && u.weapons[0];
   var w1AtkHtml = u.weapons && u.weapons.length ? renderSingleWeaponHtml(u, 0) : "";
@@ -12573,16 +13784,16 @@ function renderRow(u) {
            "<div class='td-ability-indent'>" +
              "<span class='ability-tree-line'>└─</span>" +
              "<img src='" + getImg(u.id) + "' class='td-ability-thumb' alt=''/>" +
-               "<span class='td-ability-name'>" + u.name + unitCountSuffix + "</span>" +
+               "<span class='td-ability-name'>" + formatUnitNameHtml(displayUnitName(u)) + unitCountSuffix + "</span>" +
            "</div>" +
          "</td>";
   } else {
     h += "<td" + rSpan + " class='td-unit'>" +
            "<div class='td-unit-box'>" +
-             "<div class='td-portrait-thumb'><img src='" + getImg(u.id) + "' alt='" + u.name + "'></div>" +
+             "<div class='td-portrait-thumb'><img src='" + getImg(u.id) + "' alt='" + displayUnitName(u) + "'></div>" +
              "<div class='td-name-box'>" +
-               "<div class='td-name-ko'>" + u.name + unitCountSuffix + "</div>" +
-               "<div class='td-name-en'>" + u.engName + "</div>" +
+               "<div class='td-name-ko'>" + formatUnitNameHtml(displayUnitName(u)) + unitCountSuffix + "</div>" +
+               "<div class='td-name-en'>" + (selectedLanguage === "en" ? "" : formatUnitNameHtml(u.engName)) + "</div>" +
              "</div>" +
            "</div>" +
          "</td>";
@@ -12695,13 +13906,18 @@ function renderRow(u) {
         }
       }
 
-      var bothBadge = "<span class='atk-badge atk-both'><span class='atk-g-part'>지</span><span class='atk-a-part'>공</span></span>";
-      var groundBadge = "<span class='atk-badge atk-ground'>지상</span>";
-      var airBadge = "<span class='atk-badge atk-air'>공중</span>";
+      var bothBadge = attackTargetBadge("지상/공중");
+      var groundBadge = attackTargetBadge("지상");
+      var airBadge = attackTargetBadge("공중");
 
       var effectHtml = (ab.effect && ab.effect !== "-") ? ab.effect : "";
-      if (u.id === "sc2_high_templar" && ab.name === "환류") {
-        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col' style='display:flex;align-items:center;'><span style='white-space:nowrap;padding-left:0.2rem;'>대상의 에너지 <span style='color:#ff5252;font-weight:700;'>1</span>당 <span style='color:#ff5252;font-weight:700;'>0.5</span>의 피해</span></div></div>";
+      // 능력명은 데이터 언어와 화면 언어가 서로 다를 수 있으므로, 피드백 계열은
+      // 유닛 ID와 한·영 명칭 모두로 판별한다. 그래야 영어 전환 뒤에도 공격력 행이 유지된다.
+      var abilityName = String(ab.name || "").replace(/<[^>]*>/g, "").trim();
+      var isPsiFeedback = u.id === "sc2_high_templar" && (abilityName === "환류" || abilityName === "Feedback");
+      var isDarkArchonFeedback = u.id === "dark_archon" && (abilityName === "피드백" || abilityName === "Feedback");
+      if (isPsiFeedback) {
+        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col' style='display:flex;align-items:center;'><span class='wpn-val' style='white-space:nowrap;padding-left:0.2rem;'>" + (selectedLanguage === "en" ? "<span style='color:#ff5252;font-weight:700;'>0.5</span> damage per <span style='color:#ff5252;font-weight:700;'>1</span> target energy" : "대상의 에너지 <span style='color:#ff5252;font-weight:700;'>1</span>당 <span style='color:#ff5252;font-weight:700;'>0.5</span>의 피해") + "</span></div></div>";
       } else if (u.id === "sc2_high_templar" && ab.name === "사이오닉 폭풍") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>110</span></div></div></div>";
       } else if (u.id === "sc2_sentry" && ab.name === "역장") {
@@ -12709,23 +13925,24 @@ function renderRow(u) {
       } else if (u.id === "sc2_sentry" && ab.name === "수호 방패") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div></div>";
       } else if (ab.name === "뉴클리어 스트라이크") {
-        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "<span class='atk-badge atk-explosive'>폭발형</span></div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-val'>" + effectHtml + "</span></div></div></div>";
+        if (selectedLanguage === "en") effectHtml = "Higher of <span style='color:#ff5252;font-weight:700;'>2/3</span> max HP or <span style='color:#ff5252;font-weight:700;'>500</span>";
+        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + attackTypeBadge("explosive") + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-val'>" + effectHtml + "</span></div></div></div>";
       } else if (ab.name.indexOf("이래디에이트") >= 0 || ab.name.indexOf("이레이디에이트") >= 0) {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>250</span></div></div></div>";
       } else if (ab.name.indexOf("플레이그") >= 0) {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>296.25</span></div></div></div>";
       } else if (ab.name.indexOf("사이오닉 스톰") >= 0) {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>112</span></div></div></div>";
-      } else if (ab.name.indexOf("피드백") >= 0) {
-        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col' style='display:flex;align-items:center;'><span style='white-space:nowrap;padding-left:0.2rem;'>대상의 에너지 <span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span>당 <span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span>의 피해</span></div></div>";
+      } else if (isDarkArchonFeedback) {
+        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col' style='display:flex;align-items:center;'><span class='wpn-val' style='white-space:nowrap;padding-left:0.2rem;'>" + (selectedLanguage === "en" ? "<span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span> damage per <span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span> target energy" : "대상의 에너지 <span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span>당 <span style='color:#ff5252;font-weight:700;margin:0 2px;'>1</span>의 피해") + "</span></div></div>";
       } else if (u.id === "sc2_battlecruiser" && ab.name === "야마토 포") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>240</span></div></div></div>";
       } else if (ab.name.indexOf("야마토") >= 0) {
-        effectHtml = "<div class='wpn-block'><div class='wpn-badge-col'>" + bothBadge + "<span class='atk-badge atk-explosive'>폭발형</span></div><div class='wpn-info-col'>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>기본:</span><span class='wpn-val'>195</span></div>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>경장갑:</span><span class='wpn-val'>162.5</span></div>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>중장갑:</span><span class='wpn-val'>260</span></div>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>보호막:</span><span class='wpn-val'>227.5</span></div>" +
+        effectHtml = "<div class='wpn-block'><div class='wpn-badge-col'>" + bothBadge + attackTypeBadge("explosive") + "</div><div class='wpn-info-col'>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + t("basic") + ":</span><span class='wpn-val'>195</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + displayGameTerm("경장갑") + ":</span><span class='wpn-val'>162.5</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + displayGameTerm("중장갑") + ":</span><span class='wpn-val'>260</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + displayGameTerm("보호막") + ":</span><span class='wpn-val'>227.5</span></div>" +
           "</div></div>";
       } else if (u.id === "sc2_ghost" && ab.name === "은폐") {
         effectHtml = "";
@@ -12740,7 +13957,7 @@ function renderRow(u) {
       } else if (u.id === "sc2_infestor" && ab.name === "신경 기생충") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div></div>";
       } else if (u.id === "sc2_corruptor" && ab.name === "부식액 분사") {
-        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + groundBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>5/s <span style='font-size:0.78em;color:#fff59d;'>(6초)</span> → 25/s</span></div></div></div>";
+        effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + groundBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>5/s <span style='font-size:0.78em;color:#fff59d;'>" + (selectedLanguage === "en" ? "(6s)" : "(6초)") + "</span> → 25/s</span></div></div></div>";
       } else if (u.id === "sc2_viper" && ab.name === "흡수") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + groundBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>150</span></div></div></div>";
       } else if (u.id === "sc2_viper" && (ab.name === "납치" || ab.name === "흑구름")) {
@@ -12749,15 +13966,15 @@ function renderRow(u) {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + airBadge + "</div><div class='wpn-info-col'><div class='wpn-line'><span class='wpn-lbl'></span><span class='wpn-val'>120</span></div></div></div>";
       } else if (ab.name === "부동 조준") {
         effectHtml = "<div class='wpn-block'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>기본:</span><span class='wpn-val'>130</span></div>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>사이오닉:</span><span class='wpn-val'>170</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + t("basic") + ":</span><span class='wpn-val'>130</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + displayGameTerm("사이오닉") + ":</span><span class='wpn-val'>170</span></div>" +
           "</div></div>";
       } else if (ab.name === "EMP 탄환") {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div></div>";
       } else if (ab.name === "전술 핵 공격") {
         effectHtml = "<div class='wpn-block'><div class='wpn-badge-col'>" + bothBadge + "</div><div class='wpn-info-col'>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>기본:</span><span class='wpn-val'>300</span></div>" +
-          "<div class='wpn-line'><span class='wpn-lbl'>구조물:</span><span class='wpn-val'>500</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + t("basic") + ":</span><span class='wpn-val'>300</span></div>" +
+          "<div class='wpn-line'><span class='wpn-lbl'>" + displayGameTerm("구조물") + ":</span><span class='wpn-val'>500</span></div>" +
           "</div></div>";
       } else if ((u.id === "sc2_medivac" && ab.name === "치료") || (u.id === "sc2_raven" && (ab.name === "대장갑 미사일" || ab.name === "방해 매트릭스")) || (u.id === "sc2_queen" && ab.name === "수혈")) {
         effectHtml = "<div class='wpn-block wpn-single'><div class='wpn-badge-col'>" + bothBadge + "</div></div>";
@@ -12771,7 +13988,7 @@ function renderRow(u) {
         var isMagField = (typeof isUpgActive === "function" && isUpgActive("sc2_mag_field_accelerators"));
         var dmgDisp = isMagField ? "<span class='upg-val-terran'>30</span>" : "20";
         var magBtnCls = isMagField ? " active active-terran" : "";
-        var magBtnHtml = "<div class='upg-btn-wrap' style='margin-left:0.35rem;'><button type='button' class='btn-upg-badge" + magBtnCls + "' data-upg-id='sc2_mag_field_accelerators' onclick=\"event.stopPropagation(); toggleUpg('sc2_mag_field_accelerators');\" onmouseenter=\"showUpgTooltip(event, 'sc2_mag_field_accelerators');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">자기장 가속기</button></div>";
+        var magBtnHtml = "<div class='upg-btn-wrap' style='margin-left:0.35rem;'><button type='button' class='btn-upg-badge" + magBtnCls + "' data-upg-id='sc2_mag_field_accelerators' onclick=\"event.stopPropagation(); toggleUpg('sc2_mag_field_accelerators');\" onmouseenter=\"showUpgTooltip(event, 'sc2_mag_field_accelerators');\" onmousemove=\"moveUpgTooltip(event);\" onmouseleave=\"hideUpgTooltip();\">" + displayMainUpgBadgeName("자기장 가속기") + "</button></div>";
         effectHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;'>" +
                        "<div class='wpn-block wpn-single' style='width:auto !important;max-width:none !important;'>" +
                          "<div class='wpn-badge-col'>" + bothBadge + "</div>" +
@@ -12805,175 +14022,21 @@ function renderRow(u) {
         abRowAttr = hideAbilities ? " style='display:none;'" : "";
       }
       h += "<tr class='" + rowClass + " row-ability-sub'" + abRowAttr + " data-id='" + u.id + "' data-race='" + u.race + "'>";
-      // 1. 유닛/능력 명칭 셀 (1/4 크기 소형 아이콘 + 계층 트리 인디케이터)
       h += "<td>" +
              "<div class='td-ability-indent'>" +
                "<span class='ability-tree-line'>└─</span>" +
                (abIconSrc ? "<img src='" + abIconSrc + "' class='td-ability-thumb' alt=''/>" : "") +
-               "<span class='td-ability-name'>" + ab.name + "</span>" +
+               "<span class='td-ability-name'>" + displayGameTerm(ab.name) + "</span>" +
                stimBtnHtml +
              "</div>" +
            "</td>";
       // 2. 비용 (항상 좌 정렬, 세로 중앙 정렬)
       h += "<td><div style='display:flex;justify-content:flex-start;align-items:center;height:100%;padding-left:0.2rem;'>" + abCostHtml + "</div></td>";
-      // 3. 보급
+      // 3. 보급 / 인구 (능력 상세 정보: 쿨타임 / 지속시간 / 시전사거리 / 효과범위)
+      var abilityStatHtml = getBwAbilityMetaHtml(u, ab.name);
+      h += "<td>" + (abilityStatHtml || "") + "</td>";
+      // 4. 생산시간
       h += "<td></td>";
-      // 4. 생산시간 (락다운: 33초, 스팀팩: 18.5초, 좌 정렬)
-      var buildTimeHtml = "";
-      var abilityDurationIcon = abilityDurationIndicatorHtml();
-      if (u.id === "sc2_zealot" && ab.name.indexOf("돌진") === 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>3.5</span></div>";
-      } else if (u.id === "sc2_nexus" && ab.name === "시간 증폭") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>28</span></div>";
-      } else if (u.id === "sc2_mothership" && ab.name === "시간 왜곡") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>10</span></div>";
-      } else if (u.id === "sc2_mothership" && ab.name === "은폐장") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>28</span></div>";
-      } else if (ab.name === "락다운") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>33</span>" +
-                        "</div>";
-      } else if (ab.name === "옵티컬 플레어" || ab.name.indexOf("패러사이트") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          infiniteIcon() +
-                        "</div>";
-      } else if (ab.name === "스팀팩") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>18.5</span>" +
-                        "</div>";
-      } else if (ab.name === "전투 자극제") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>15</span>" +
-                        "</div>";
-      } else if (u.id === "sc2_medivac" && ab.name === "재연소 장치 점화") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>8</span>" +
-                        "</div>";
-      } else if (u.id === "sc2_raven" && ab.name === "자동 포탑 건설") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>11</span></div>";
-      } else if (u.id === "sc2_raven" && ab.name === "대장갑 미사일") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>30</span></div>";
-      } else if (u.id === "sc2_raven" && ab.name === "방해 매트릭스") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>15</span></div>";
-      } else if (u.id === "sc2_overseer" && ab.name === "변신수 생성") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>150</span></div>";
-      } else if (u.id === "sc2_overseer" && ab.name === "오염") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>30</span></div>";
-      } else if (u.id === "sc2_queen" && ab.name === "애벌레 생성") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>40</span></div>";
-      } else if (u.id === "sc2_queen" && ab.name === "수혈") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>10</span></div>";
-      } else if (u.id === "sc2_hydralisk" && ab.name === "달려들기") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>1</span></div>";
-      } else if (u.id === "sc2_sentry" && ab.name === "역장") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>15</span></div>";
-      } else if (u.id === "sc2_sentry" && ab.name === "수호 방패") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>18</span></div>";
-      } else if (u.id === "sc2_sentry" && ab.name === "환상") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>60</span></div>";
-      } else if (u.id === "sc2_high_templar" && ab.name === "사이오닉 폭풍") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>7.84</span></div>";
-      } else if (u.id === "sc2_phoenix" && ab.name === "중력자 광선") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>10</span></div>";
-      } else if (u.id === "sc2_oracle" && ab.name === "계시") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>28</span></div>";
-      } else if (u.id === "sc2_oracle" && ab.name === "정지장 수호물") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>126</span></div>";
-      } else if (u.id === "sc2_stasis_ward" && ab.name === "정지장 덫") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>30</span></div>";
-      } else if (u.id === "sc2_void_ray" && ab.name === "분광 정렬") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>20</span></div>";
-      } else if (u.id === "sc2_immortal" && ab.name.indexOf("방어막") === 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>3</span></div>";
-      } else if (u.id === "sc2_infestor" && ab.name === "세균 장막") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>15</span></div>";
-      } else if (u.id === "sc2_infestor" && ab.name === "진균 번식") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>4</span></div>";
-      } else if (u.id === "sc2_infestor" && ab.name === "신경 기생충") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>15</span></div>";
-      } else if (u.id === "sc2_swarmhost" && ab.name === "식충 생성") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>25</span></div>";
-      } else if (u.id === "sc2_viper" && ab.name === "흡수") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>20</span></div>";
-      } else if (u.id === "sc2_viper" && ab.name === "흑구름") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>8</span></div>";
-      } else if (u.id === "sc2_viper" && ab.name === "기생 폭탄") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>12</span></div>";
-      } else if (ab.name === "스캐너 스윕" || (u.id === "sc2_orbital_command" && ab.name === "스캐너 탐색")) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" + abilityDurationIcon + "<span>12.28</span></div>";
-      } else if (ab.name.indexOf("충격탄") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>1.5</span>" +
-                        "</div>";
-      } else if (ab.name === "디펜시브 매트릭스") {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>40</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("이래디에이트") >= 0 || ab.name.indexOf("이레이디에이트") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>35</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("인페스트 커맨드 센터") >= 0 || ab.name.indexOf("인페스티드 커맨드 센터") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>3.8</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("다크 스웜") >= 0 || ab.name.indexOf("다크스웜") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>28</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("플레이그") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>37.5</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("사이오닉 스톰") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>3.9</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("할루시네이션") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>78.8</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("마엘스트롬") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>11</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("디스럽션 웹") >= 0 || ab.name.indexOf("디스럽션웹") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>15</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("애시드 스포어") >= 0 || ab.name.indexOf("애시드스포어") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>38</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("스테이시스 필드") >= 0 || ab.name.indexOf("스테이시스필드") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>33</span>" +
-                        "</div>";
-      } else if (ab.name.indexOf("목표") >= 0) {
-        buildTimeHtml = "<div class='time-inline' style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;line-height:1;'>" +
-                          abilityDurationIcon +
-                          "<span>20</span>" +
-                        "</div>";
-      }
-      buildTimeHtml = formatSubrowTimeHtml(buildTimeHtml);
-      h += "<td>" + buildTimeHtml + "</td>";
       // 5. 요구사항
       h += "<td>" + (ab.requirements ? makeReqHTML(ab) : "") + "</td>";
       // 6. 체력
@@ -12995,22 +14058,12 @@ function renderRow(u) {
       h += "<td></td>";
       // 8. 방어력
       h += "<td></td>";
-      // 9. 시야 열에는 능력의 효과 범위를 표기
-      var abilityEffectRangeHtml = getBwAbilityRangeInlineHtml(u, ab.name);
-      if (!abilityEffectRangeHtml && ab.name.indexOf("KD8") >= 0) {
-        var kd8RangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-        abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 2'><span class='ability-effect-range-icon'>" + kd8RangeIcon + "</span>2</span>";
-      } else if (ab.name === "EMP 탄환") {
-        var erIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-        abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 1.5'><span class='ability-effect-range-icon'>" + erIcon + "</span>1.5</span>";
-      } else if (ab.name === "전술 핵 공격") {
-        var erIcon2 = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-        abilityEffectRangeHtml = "<span class='ability-effect-range'><span class='ability-effect-range-icon'>" + erIcon2 + "</span>4 / 6 / 8</span>";
-      } else if (ab.name.indexOf("EMP 쇼크웨이브") >= 0) {
-        var erIconEmp = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-        abilityEffectRangeHtml = "<span class='ability-effect-range' title='효과 범위: 2.25'><span class='ability-effect-range-icon'>" + erIconEmp + "</span>2.25</span>";
+      // 9. 시야 (효과 범위는 열 4에 통합됨)
+      var sightSubHtml = "";
+      if (u.id === "sc2_adept" && (ab.name === "사이오닉 이동" || ab.name.indexOf("사이오닉 이동") >= 0)) {
+        sightSubHtml = "4";
       }
-      h += "<td>" + (abilityEffectRangeHtml ? "<div class='td-ability-effect-range'>" + abilityEffectRangeHtml + "</div>" : "") + "</td>";
+      h += "<td>" + sightSubHtml + "</td>";
       // 10. 속도 (마린/파이어뱃 스팀팩: +50%)
       var speedSubHtml = "";
       if (ab.name === "스팀팩" || ab.name === "전투 자극제") {
@@ -13030,226 +14083,18 @@ function renderRow(u) {
       } else {
         h += "<td></td>";
       }
-      // 12. 사거리 (락다운: 9, 뉴클리어 스트라이크: 12, 인공눈 이식 14, 힐: 2, 리스토레이션: 6, 옵티컬 플레어: 9 - 세로 중앙 정렬)
-      var rangeHtml = "";
-      if (ab.name === "락다운") {
-        rangeHtml = "9";
-      } else if (u.id === "sc2_nexus" && (ab.name === "시간 증폭" || ab.name === "전략 소환")) {
-        rangeHtml = infiniteIcon();
-      } else if (u.id === "sc2_nexus" && ab.name === "에너지 재충전") {
-        rangeHtml = "12";
-      } else if (u.id === "sc2_mothership" && ab.name === "대규모 소환") {
-        rangeHtml = infiniteIcon();
-      } else if (u.id === "sc2_mothership" && ab.name === "시간 왜곡") {
-        rangeHtml = "9";
-      } else if (ab.name === "뉴클리어 스트라이크") {
-        var isOcular = (typeof isUpgActive === "function" && isUpgActive("ghost_ocular"));
-        if (isOcular) {
-          rangeHtml = "<span class='upg-val-terran'>14</span>";
-        } else {
-          rangeHtml = "12";
-        }
-      } else if (u.id === "sc2_medivac" && (ab.name.indexOf("힐") >= 0 || ab.name.indexOf("치료") >= 0)) {
-        rangeHtml = "4";
-      } else if (u.id === "sc2_shield_battery" && ab.name.indexOf("회복") === 0) {
-        rangeHtml = "6";
-      } else if (u.id === "sc2_ravager" && ab.name === "부식성 담즙") {
-        rangeHtml = "9";
-      } else if (u.id === "sc2_infestor" && ab.name === "세균 장막") {
-        rangeHtml = "9";
-      } else if (u.id === "sc2_infestor" && ab.name === "진균 번식") {
-        rangeHtml = "10";
-      } else if (u.id === "sc2_infestor" && ab.name === "신경 기생충") {
-        rangeHtml = "8";
-      } else if (u.id === "sc2_sentry" && ab.name === "역장") {
-        rangeHtml = "9";
-      } else if (u.id === "sc2_high_templar" && ab.name === "환류") {
-        rangeHtml = "10";
-      } else if (u.id === "sc2_high_templar" && ab.name === "사이오닉 폭풍") {
-        rangeHtml = "8";
-      } else if (u.id === "sc2_phoenix" && ab.name === "중력자 광선") {
-        rangeHtml = "4";
-      } else if (u.id === "sc2_oracle" && ab.name === "계시") {
-        rangeHtml = "12";
-      } else if (u.id === "sc2_oracle" && ab.name === "정지장 수호물") {
-        rangeHtml = "5";
-      } else if (u.id === "sc2_stalker" && ab.name === "점멸") {
-        rangeHtml = "8";
-      } else if (u.id === "sc2_dark_templar" && ab.name === "그림자 걸음") {
-        rangeHtml = "8";
-      } else if (u.id === "sc2_zealot" && ab.name.indexOf("돌진") === 0) {
-        rangeHtml = "4";
-      } else if (u.id === "sc2_viper" && ab.name === "흡수") {
-        rangeHtml = "7";
-      } else if (u.id === "sc2_viper" && ab.name === "납치") {
-        rangeHtml = "9";
-      } else if (u.id === "sc2_viper" && ab.name === "흑구름") {
-        rangeHtml = "10";
-      } else if (u.id === "sc2_viper" && ab.name === "기생 폭탄") {
-        rangeHtml = "8";
-      } else if (u.id === "sc2_sensor_tower" && ab.name === "레이더") {
-        rangeHtml = "22";
-      } else if (ab.name.indexOf("힐") >= 0) {
-        rangeHtml = "2";
-      } else if (ab.name === "리스토레이션") {
-        rangeHtml = "6";
-      } else if (ab.name === "옵티컬 플레어") {
-        rangeHtml = "9";
-      } else if (ab.name === "디펜시브 매트릭스") {
-        rangeHtml = "9";
-      } else if (ab.name.indexOf("이래디에이트") >= 0 || ab.name.indexOf("이레이디에이트") >= 0) {
-        rangeHtml = "9";
-      } else if (ab.name.indexOf("EMP") >= 0) {
-        rangeHtml = "10";
-      } else if (u.id === "sc2_battlecruiser" && ab.name === "전술 차원 도약") {
-        rangeHtml = infiniteIcon();
-      } else if (ab.name.indexOf("야마토") >= 0) {
-        rangeHtml = "10";
-      } else if (ab.name.indexOf("패러사이트") >= 0 || ab.name.indexOf("브루들링 소환") >= 0 || ab.name.indexOf("인스네어") >= 0 || ab.name.indexOf("다크 스웜") >= 0 || ab.name.indexOf("다크스웜") >= 0 || ab.name.indexOf("플레이그") >= 0) {
-        rangeHtml = "9";
-      } else if (ab.name.indexOf("인페스트 커맨드 센터") >= 0 || ab.name.indexOf("인페스티드 커맨드 센터") >= 0 || ab.name.indexOf("컨슘") >= 0) {
-        rangeHtml = "0.5";
-      } else if (ab.name.indexOf("스캐너 스윕") >= 0 || ab.name.indexOf("스캐너스윕") >= 0 || (u.id === "sc2_orbital_command" && (ab.name === "스캐너 탐색" || ab.name.indexOf("지게로봇") >= 0 || ab.name.indexOf("추가 보급품") >= 0)) || ab.name.indexOf("리콜") >= 0) {
-        rangeHtml = infiniteIcon();
-      } else if (ab.name.indexOf("할루시네이션") >= 0) {
-        rangeHtml = "7";
-      } else if (ab.name.indexOf("피드백") >= 0) {
-        rangeHtml = "10.5";
-      } else if (ab.name.indexOf("마인드 컨트롤") >= 0 || ab.name.indexOf("마인드컨트롤") >= 0 || ab.name.indexOf("마엘스트롬") >= 0 || ab.name.indexOf("디스럽션 웹") >= 0 || ab.name.indexOf("디스럽션웹") >= 0 || ab.name.indexOf("스테이시스 필드") >= 0 || ab.name.indexOf("스테이시스필드") >= 0) {
-        rangeHtml = "9";
-      } else if (ab.name.indexOf("보호막 재충전") >= 0 || ab.name.indexOf("재충전") >= 0) {
-        rangeHtml = "6";
-      } else if (ab.name.indexOf("KD8") >= 0) {
-        rangeHtml = "5";
-      } else if (ab.name === "부동 조준") {
-        rangeHtml = "10";
-      } else if (ab.name === "EMP 탄환") {
-        rangeHtml = "10";
-      } else if (ab.name === "전술 핵 공격") {
-        rangeHtml = "12";
-      } else if (ab.name.indexOf("목표") >= 0) {
-        rangeHtml = "15 <span style='font-size:0.82em;color:var(--text-dim);'>(시전 7)</span>";
-      }
-      if (rangeHtml) {
-        h += "<td><div class='td-ability-cast-range'>" + abilityCastRangeIndicatorHtml() + rangeHtml + "</div></td>";
-      } else {
-        h += "<td></td>";
-      }
-      // 13. 공격주기 (마린/파이어뱃 스팀팩: +75%/+100% [재사용 대기시간 아이콘] 1초, 리스토레이션/옵티컬 플레어: 1.31)
+      // 12. 사거리 (시전 사거리는 열 4에 통합됨)
+      h += "<td></td>";
+      // 13. 공격주기 (스팀팩/전투 자극제 공격속도 증가율)
       var cdSubHtml = "";
-      var abilityCooldownIcon = abilityCooldownIndicatorHtml();
       if (ab.name === "스팀팩" || ab.name === "전투 자극제") {
         var pctText = (u.id === "marine") ? "+75%" : (u.id === "firebat" ? "+100%" : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? "+50%" : ""));
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>1</span>" +
-                      "<span style='color:var(--terran-color);font-weight:700;margin-left:3px;'>" + pctText + "</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_medivac" && ab.name === "재연소 장치 점화") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>20</span>" +
-                    "</div>";
-      } else if (ab.name === "리스토레이션" || ab.name === "옵티컬 플레어") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>1.3</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("이래디에이트") >= 0 || ab.name.indexOf("이레이디에이트") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>4.4</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("사이오닉 스톰") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>2.6</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("마인드 컨트롤") >= 0 || ab.name.indexOf("마인드컨트롤") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>1.3</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("마엘스트롬") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>0.1</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("디스럽션 웹") >= 0 || ab.name.indexOf("디스럽션웹") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>1.3</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_battlecruiser" && (ab.name === "야마토 포" || ab.name === "전술 차원 도약")) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>100</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("KD8") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>20</span>" +
-                    "</div>";
-      } else if (ab.name.indexOf("목표") >= 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>6</span>" +
-                    "</div>";
+        if (pctText) {
+          cdSubHtml = "<div style='display:flex;align-items:center;justify-content:center;height:100%;'>" +
+                        "<span style='color:var(--terran-color);font-weight:700;'>" + pctText + "</span>" +
+                      "</div>";
+        }
       }
-      if (u.id === "sc2_ravager" && ab.name === "부식성 담즙") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>10</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_hydralisk" && ab.name === "달려들기") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>14</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_swarmhost" && ab.name === "식충 생성") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>60</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_viper" && ab.name === "흡수") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" +
-                      abilityCooldownIcon +
-                      "<span>1</span>" +
-                    "</div>";
-      } else if (u.id === "sc2_zealot" && ab.name.indexOf("돌진") === 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>10</span></div>";
-      } else if (u.id === "sc2_stalker" && ab.name === "점멸") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>10</span></div>";
-      } else if (u.id === "sc2_dark_templar" && ab.name === "그림자 걸음") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>20</span></div>";
-      } else if (u.id === "sc2_high_templar" && ab.name === "사이오닉 폭풍") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>2</span></div>";
-      } else if (u.id === "sc2_immortal" && ab.name.indexOf("방어막") === 0) {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>45</span></div>";
-      } else if (u.id === "sc2_adept" && ab.name === "사이오닉 이동") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>16</span></div>";
-      } else if (u.id === "sc2_sentry" && ab.name === "수호 방패") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>18</span></div>";
-      } else if (u.id === "sc2_oracle" && ab.name === "계시") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>14</span></div>";
-      } else if (u.id === "sc2_oracle" && ab.name === "정지장 수호물") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>5</span></div>";
-      } else if (u.id === "sc2_oracle" && ab.name === "펄서 광선 활성화") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>4</span></div>";
-      } else if (u.id === "sc2_void_ray" && ab.name === "분광 정렬") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>60</span></div>";
-      } else if (u.id === "sc2_nexus" && ab.name === "전략 소환") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>182</span></div>";
-      } else if (u.id === "sc2_nexus" && ab.name === "에너지 재충전") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>63</span></div>";
-      } else if (u.id === "sc2_mothership" && ab.name === "대규모 소환") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>125</span></div>";
-      } else if (u.id === "sc2_mothership" && ab.name === "시간 왜곡") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>84</span></div>";
-      } else if (u.id === "sc2_mothership" && ab.name === "은폐장") {
-        cdSubHtml = "<div style='display:flex;align-items:center;justify-content:flex-start;height:100%;padding-left:0.2rem;gap:0;'>" + abilityCooldownIcon + "<span>70</span></div>";
-      }
-      cdSubHtml = formatSubrowTimeHtml(cdSubHtml);
       h += "<td>" + cdSubHtml + "</td>";
       // 14. DPS
       var dpsSubHtml = "";
@@ -13335,7 +14180,9 @@ function setCompareArmorUpg(value) {
 }
 
 function compareRaceLabel(race) {
-  var labels = { bw_terran: "BW 테란", bw_zerg: "BW 저그", bw_protoss: "BW 프로토스", sc2_terran: "SC2 테란", sc2_zerg: "SC2 저그", sc2_protoss: "SC2 프로토스" };
+  var labels = selectedLanguage === "en"
+    ? { bw_terran: "BW Terran", bw_zerg: "BW Zerg", bw_protoss: "BW Protoss", sc2_terran: "SC2 Terran", sc2_zerg: "SC2 Zerg", sc2_protoss: "SC2 Protoss" }
+    : { bw_terran: "BW 테란", bw_zerg: "BW 저그", bw_protoss: "BW 프로토스", sc2_terran: "SC2 테란", sc2_zerg: "SC2 저그", sc2_protoss: "SC2 프로토스" };
   return labels[race] || "";
 }
 
@@ -13385,11 +14232,7 @@ function compareRaceValue(value, u, changed) {
 }
 
 function compareTargetBadge(type) {
-  var isGround = (type || "").indexOf("지상") >= 0;
-  var isAir = (type || "").indexOf("공중") >= 0;
-  if (isGround && isAir) return "<span class='atk-badge atk-both'><span class='atk-g-part'>지</span><span class='atk-a-part'>공</span></span>";
-  if (isGround) return "<span class='atk-badge atk-ground'>지상</span>";
-  return "<span class='atk-badge atk-air'>공중</span>";
+  return attackTargetBadge(type);
 }
 
 function compareBonusUpgradeExtra(u, bonus) {
@@ -13423,7 +14266,7 @@ function compareWeaponText(u, side) {
       var specialExtra = compareBonusUpgradeExtra(u, bonus);
       var bonusDamage = (bonus.base || 0) + (upgradeLevel * bonusPerUpgrade) + specialExtra;
       var bonusText = compareRaceValue(fmtNum(bonusDamage, 2), u, damageChanged || specialExtra > 0) + ((bonus.hits || w.hits) > 1 ? " × " + (bonus.hits || w.hits) : "");
-      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + bonus.key + "</span>";
+      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + displayGameTerm(bonus.key) + "</span>";
       lines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + (side === "left" ? bonusLabel + bonusText : bonusText + bonusLabel) + "</div>");
     });
     groups.push("<div class='compare-weapon-group'>" + lines.join("") + compareTargetBadge(w.type) + "</div>");
@@ -13485,7 +14328,7 @@ function compareAttackWithDps(u, side) {
       var specialExtra = compareBonusUpgradeExtra(u, bonus);
       var bonusDamage = (bonus.base || 0) + upgradeLevel * (bonus.upg !== undefined ? bonus.upg : 1) + specialExtra;
       var bonusValue = compareRaceValue(fmtNum(bonusDamage, 2), u, attackChanged || specialExtra > 0) + ((bonus.hits || w.hits) > 1 ? " × " + (bonus.hits || w.hits) : "");
-      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + bonus.key + "</span>";
+      var bonusLabel = "<span class='compare-weapon-bonus-label'>" + displayGameTerm(bonus.key) + "</span>";
       attackLines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + (side === "left" ? bonusLabel + bonusValue : bonusValue + bonusLabel) + "</div>");
       var bonusDps = compareDpsForWeapon(u, { dmg: (bonus.base || 0) + specialExtra, dmgUpg: bonus.upg, hits: bonus.hits || w.hits, cd: w.cd });
       dpsLines.push("<div class='compare-weapon-line compare-weapon-bonus-line'>" + compareRaceValue(fmtNum(bonusDps, 2), u, dpsChanged || specialExtra > 0) + "</div>");
@@ -13498,7 +14341,7 @@ function compareAttackWithDps(u, side) {
 }
 
 function compareAttributesText(u) {
-  return u && u.attributes ? "<span class='compare-attributes-value'>" + u.attributes + "</span>" : "-";
+  return u && u.attributes ? "<span class='compare-attributes-value'>" + displayGameTerm(u.attributes) + "</span>" : "-";
 }
 
 function compareHasDps(u) {
@@ -13542,7 +14385,7 @@ function renderCompareUpgrades(left, right) {
     return upgrades.map(function(upgrade) {
       var active = compareUpgradeState.active[upgrade.key];
       var icon = upgrade.icon ? resolveIcon(upgrade.icon) : "";
-      var content = (icon ? "<img src='" + icon + "' alt=''/>" : "") + "<span>" + upgrade.name + "</span>";
+      var content = (icon ? "<img src='" + icon + "' alt=''/>" : "") + "<span>" + displayGameTerm(upgrade.name) + "</span>";
       var cls = "compare-upgrade-card" + (upgrade.key ? " is-toggleable" : "") + (active ? " active active-" + raceClr(unit.race) : "");
       return upgrade.key
         ? "<button type='button' class='" + cls + "' onclick=\"toggleCompareUpgrade('" + upgrade.key + "')\">" + content + "</button>"
@@ -13551,7 +14394,7 @@ function renderCompareUpgrades(left, right) {
   };
   return "<div class='compare-upgrades'>" +
     "<div class='compare-upgrade-list left'>" + makeList(left, "left") + "</div>" +
-    "<div class='compare-upgrade-label'>업그레이드</div>" +
+    "<div class='compare-upgrade-label'>" + t("upgrades") + "</div>" +
     "<div class='compare-upgrade-list right'>" + makeList(right, "right") + "</div>" +
     "</div>";
 }
@@ -13576,12 +14419,12 @@ function renderCompareAbilities(left, right) {
       var click = locked ? "" : " onclick=\"toggleCompareUpgrade('" + ability.key + "')\"";
       var abilityData = (unit.abilities || []).find(function(item) { return (item.name || "").indexOf(ability.name) === 0; });
       var icon = abilityData && abilityData.icon ? "<img src='" + resolveIcon(abilityData.icon) + "' alt=''/>" : "";
-      return "<button type='button' class='" + cls + "'" + click + ">" + icon + "<span>" + ability.name + "</span></button>";
+      return "<button type='button' class='" + cls + "'" + click + ">" + icon + "<span>" + displayGameTerm(ability.name) + "</span></button>";
     }).join("");
   };
   return "<div class='compare-upgrades compare-abilities'>" +
     "<div class='compare-upgrade-list left'>" + makeList(left) + "</div>" +
-    "<div class='compare-upgrade-label'>능력</div>" +
+    "<div class='compare-upgrade-label'>" + t("abilities") + "</div>" +
     "<div class='compare-upgrade-list right'>" + makeList(right) + "</div></div>";
 }
 
@@ -13620,7 +14463,7 @@ function renderCompareUnitSummary(el, u) {
   if (!el || !u) return;
   var icon = resolveIcon(IMG[u.id] || u.icon || "", u.race);
   el.innerHTML = "<div class='compare-portrait' style=\"background-image:url('" + icon + "')\"></div>" +
-    "<div><span class='compare-unit-name'>" + u.name + "</span><span class='compare-unit-eng'>" + (u.engName || "") + "</span><span class='compare-unit-race compare-race-" + raceClr(u.race) + "'>" + compareRaceLabel(u.race) + "</span></div>";
+    "<div><span class='compare-unit-name'>" + formatUnitNameHtml(displayUnitName(u)) + "</span><span class='compare-unit-eng'>" + (selectedLanguage === "en" ? "" : formatUnitNameHtml(u.engName || "")) + "</span><span class='compare-unit-race compare-race-" + raceClr(u.race) + "'>" + compareRaceLabel(u.race) + "</span></div>";
 }
 
 function renderCompareStats() {
@@ -13645,18 +14488,18 @@ function renderCompareStats() {
     return scaleTime((u.buildTime || 0) + chain);
   };
   var rows = [
-    { label: "비용", left: compareCostText(left), right: compareCostText(right), nLeft: compareCostTotal(left), nRight: compareCostTotal(right), lower: true },
-    { label: "인구", left: !compareUsesDbModeCostRules(left) && left.cost && left.cost.supply ? compareValue(left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1), "armor") : "-", right: !compareUsesDbModeCostRules(right) && right.cost && right.cost.supply ? compareValue(right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1), "armor") : "-", nLeft: !compareUsesDbModeCostRules(left) && (left.cost && left.cost.supply) ? left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && (right.cost && right.cost.supply) ? right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
-    { label: "생산 시간", left: !compareUsesDbModeCostRules(left) && left.buildTime ? compareValue(fmtNum(buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1), 1), "") : "-", right: !compareUsesDbModeCostRules(right) && right.buildTime ? compareValue(fmtNum(buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1), 1), "") : "-", nLeft: !compareUsesDbModeCostRules(left) && left.buildTime ? buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && right.buildTime ? buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
-    { label: "체력", left: compareHealthText(left), right: compareHealthText(right), nLeft: left.hp ? sortVal(left, "hp") : null, nRight: right.hp ? sortVal(right, "hp") : null },
-    { label: "에너지", left: compareEnergyText(left), right: compareEnergyText(right), nLeft: left.maxEnergy ? sortVal(left, "energy") : null, nRight: right.maxEnergy ? sortVal(right, "energy") : null },
-    { label: "방어력", left: compareArmorText(left), right: compareArmorText(right), nLeft: left.armor !== undefined ? sortVal(left, "armor") : null, nRight: right.armor !== undefined ? sortVal(right, "armor") : null },
-    { label: "시야", left: left.sight ? compareStatValue(left, "sight", fmtNum(sortVal(left, "sight"), 2)) : "-", right: right.sight ? compareStatValue(right, "sight", fmtNum(sortVal(right, "sight"), 2)) : "-", nLeft: left.sight ? sortVal(left, "sight") : null, nRight: right.sight ? sortVal(right, "sight") : null },
-    { label: "이동 속도", left: left.speed ? compareStatValue(left, "speed", fmtNum(scaleRate(sortVal(left, "speed")), 2)) : "-", right: right.speed ? compareStatValue(right, "speed", fmtNum(scaleRate(sortVal(right, "speed")), 2)) : "-", nLeft: left.speed ? scaleRate(sortVal(left, "speed")) : null, nRight: right.speed ? scaleRate(sortVal(right, "speed")) : null },
-    { label: "공격력", left: compareAttackWithDps(left, "left"), right: compareAttackWithDps(right, "right"), nLeft: left.weapons && left.weapons[0] && left.weapons[0].dmg ? sortVal(left, "damage") * (left.weapons[0].hits || 1) : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].dmg ? sortVal(right, "damage") * (right.weapons[0].hits || 1) : null },
-    { label: "사거리", left: left.weapons && left.weapons[0] && left.weapons[0].range ? compareStatValue(left, "range", fmtNum(sortVal(left, "range"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].range ? compareStatValue(right, "range", fmtNum(sortVal(right, "range"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].range ? sortVal(left, "range") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].range ? sortVal(right, "range") : null },
-    { label: "공격 주기", left: left.weapons && left.weapons[0] && left.weapons[0].cd ? compareStatValue(left, "cooldown", fmtNum(sortVal(left, "cooldown"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].cd ? compareStatValue(right, "cooldown", fmtNum(sortVal(right, "cooldown"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].cd ? sortVal(left, "cooldown") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].cd ? sortVal(right, "cooldown") : null, lower: true },
-    { label: "특성", left: compareAttributesText(left), right: compareAttributesText(right), nLeft: null, nRight: null }
+    { label: t("cost"), left: compareCostText(left), right: compareCostText(right), nLeft: compareCostTotal(left), nRight: compareCostTotal(right), lower: true },
+    { label: t("supply"), left: !compareUsesDbModeCostRules(left) && left.cost && left.cost.supply ? compareValue(left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1), "armor") : "-", right: !compareUsesDbModeCostRules(right) && right.cost && right.cost.supply ? compareValue(right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1), "armor") : "-", nLeft: !compareUsesDbModeCostRules(left) && (left.cost && left.cost.supply) ? left.cost.supply / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && (right.cost && right.cost.supply) ? right.cost.supply / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
+    { label: t("buildTime"), left: !compareUsesDbModeCostRules(left) && left.buildTime ? compareValue(fmtNum(buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1), 1), "") : "-", right: !compareUsesDbModeCostRules(right) && right.buildTime ? compareValue(fmtNum(buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1), 1), "") : "-", nLeft: !compareUsesDbModeCostRules(left) && left.buildTime ? buildTime(left) / (compareUsesPairUnitRules(left) ? 2 : 1) : null, nRight: !compareUsesDbModeCostRules(right) && right.buildTime ? buildTime(right) / (compareUsesPairUnitRules(right) ? 2 : 1) : null, lower: true },
+    { label: t("health"), left: compareHealthText(left), right: compareHealthText(right), nLeft: left.hp ? sortVal(left, "hp") : null, nRight: right.hp ? sortVal(right, "hp") : null },
+    { label: t("energy"), left: compareEnergyText(left), right: compareEnergyText(right), nLeft: left.maxEnergy ? sortVal(left, "energy") : null, nRight: right.maxEnergy ? sortVal(right, "energy") : null },
+    { label: t("armor"), left: compareArmorText(left), right: compareArmorText(right), nLeft: left.armor !== undefined ? sortVal(left, "armor") : null, nRight: right.armor !== undefined ? sortVal(right, "armor") : null },
+    { label: t("sight"), left: left.sight ? compareStatValue(left, "sight", fmtNum(sortVal(left, "sight"), 2)) : "-", right: right.sight ? compareStatValue(right, "sight", fmtNum(sortVal(right, "sight"), 2)) : "-", nLeft: left.sight ? sortVal(left, "sight") : null, nRight: right.sight ? sortVal(right, "sight") : null },
+    { label: t("moveSpeed"), left: left.speed ? compareStatValue(left, "speed", fmtNum(scaleRate(sortVal(left, "speed")), 2)) : "-", right: right.speed ? compareStatValue(right, "speed", fmtNum(scaleRate(sortVal(right, "speed")), 2)) : "-", nLeft: left.speed ? scaleRate(sortVal(left, "speed")) : null, nRight: right.speed ? scaleRate(sortVal(right, "speed")) : null },
+    { label: t("attack"), left: compareAttackWithDps(left, "left"), right: compareAttackWithDps(right, "right"), nLeft: left.weapons && left.weapons[0] && left.weapons[0].dmg ? sortVal(left, "damage") * (left.weapons[0].hits || 1) : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].dmg ? sortVal(right, "damage") * (right.weapons[0].hits || 1) : null },
+    { label: t("range"), left: left.weapons && left.weapons[0] && left.weapons[0].range ? compareStatValue(left, "range", fmtNum(sortVal(left, "range"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].range ? compareStatValue(right, "range", fmtNum(sortVal(right, "range"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].range ? sortVal(left, "range") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].range ? sortVal(right, "range") : null },
+    { label: t("attackSpeed"), left: left.weapons && left.weapons[0] && left.weapons[0].cd ? compareStatValue(left, "cooldown", fmtNum(sortVal(left, "cooldown"), 2)) : "-", right: right.weapons && right.weapons[0] && right.weapons[0].cd ? compareStatValue(right, "cooldown", fmtNum(sortVal(right, "cooldown"), 2)) : "-", nLeft: left.weapons && left.weapons[0] && left.weapons[0].cd ? sortVal(left, "cooldown") : null, nRight: right.weapons && right.weapons[0] && right.weapons[0].cd ? sortVal(right, "cooldown") : null, lower: true },
+    { label: t("attributes"), left: compareAttributesText(left), right: compareAttributesText(right), nLeft: null, nRight: null }
   ];
   out.innerHTML = rows.map(function(row) {
     var leftBetter = row.nLeft !== null && row.nRight !== null && (row.lower ? row.nLeft < row.nRight : row.nLeft > row.nRight);
@@ -13715,37 +14558,54 @@ function renderCompareModalPanels(left, right) {
   // 여기서는 원본 모달의 내용을 새 유닛으로 렌더링한 뒤 복제해야 하므로,
   // 두 패널을 만드는 전체 구간에서만 렌더링을 허용한다.
   isRenderingComparePanels = true;
-  var leftPanel = makePanel(left);
-  var rightPanel = makePanel(right);
-  isRenderingComparePanels = false;
-  host.innerHTML = leftPanel + rightPanel;
-  modal.classList.remove("active");
+  try {
+    var leftPanel = makePanel(left);
+    var rightPanel = makePanel(right);
+    host.innerHTML = leftPanel + rightPanel;
+  } finally {
+    isRenderingComparePanels = false;
+    modal.classList.remove("active");
+    // 비교용 복제 과정에서 openModal이 남긴 마지막 유닛 참조를 제거한다.
+    currentModalUnit = null;
+  }
 }
 
 function initCompareView() {
   var leftSelect = document.getElementById("compare-left-select");
   var rightSelect = document.getElementById("compare-right-select");
   var list = document.getElementById("compare-unit-options");
-  if (!leftSelect || !rightSelect || !list || leftSelect._compareBound) return;
+  if (!leftSelect || !rightSelect || !list) return;
+
+  // 언어가 바뀌어도 datalist는 항상 현재 언어로 재생성한다.
   compareOptionIds = {};
   list.innerHTML = UNIT_DATA.map(function(u) {
-    var label = u.name + " · " + compareRaceLabel(u.race);
+    var label = displayUnitName(u) + " · " + compareRaceLabel(u.race);
     compareOptionIds[label] = u.id;
     return "<option value='" + label + "'></option>";
   }).join("");
+
   var getLabel = function(id) {
     for (var label in compareOptionIds) if (compareOptionIds[label] === id) return label;
     return "";
   };
+  // 현재 선택된 유닛을 새 언어 기준 레이블로 복원한다.
   leftSelect.value = getLabel(compareUnitIds.left);
   rightSelect.value = getLabel(compareUnitIds.right);
-  leftSelect.addEventListener("change", function() {
-    if (compareOptionIds[leftSelect.value]) { compareUnitIds.left = compareOptionIds[leftSelect.value]; renderCompareView(); }
-  });
-  rightSelect.addEventListener("change", function() {
-    if (compareOptionIds[rightSelect.value]) { compareUnitIds.right = compareOptionIds[rightSelect.value]; renderCompareView(); }
-  });
+
+  // 이벤트 리스너는 최초 1회만 등록한다.
+  if (leftSelect._compareBound) { renderCompareView(); return; }
   leftSelect._compareBound = true;
+
+  var handleChange = function(inputEl, side) {
+    var found = compareOptionIds[inputEl.value] || null;
+    if (found && found !== compareUnitIds[side]) {
+      compareUnitIds[side] = found;
+      renderCompareView();
+    }
+  };
+  leftSelect.addEventListener("change", function() { handleChange(leftSelect, "left"); });
+  rightSelect.addEventListener("change", function() { handleChange(rightSelect, "right"); });
+
   renderCompareView();
 }
 
@@ -15010,10 +15870,11 @@ function getModalCardRequirementHtml(unit, item) {
   return labels.map(function(label) {
     var target = UNIT_DATA.find(function(candidate) { return candidate.name === label; });
     var icon = target ? resolveIcon(IMG[target.id] || target.icon || "", target.race) : "";
-    var open = target ? " onclick=\"openModalById('" + target.id + "')\" title='" + label + " 모달 열기'" : "";
-    return "<div class='upg-req-chip'" + open + "><span class='upg-req-text'>요구 조건: </span>" +
+    var displayLabel = displayRequirementName(label);
+    var open = target ? " onclick=\"openModalById('" + target.id + "')\" title='" + displayLabel + "'" : "";
+    return "<div class='upg-req-chip'" + open + "><span class='upg-req-text'>" + t("requirement") + "</span>" +
       (icon ? "<img src='" + icon + "' class='upg-req-icon' alt=''/>" : "") +
-      "<span class='upg-req-text'>" + label + "</span></div>";
+      "<span class='upg-req-text'>" + displayLabel + "</span></div>";
   }).join("");
 }
 
@@ -15023,9 +15884,9 @@ function openModal(u) {
   var modal = document.getElementById("detail-modal");
   if (!modal) return;
 
-  setTxt("modal-unit-name", u.name);
-  setTxt("modal-unit-eng",  u.engName);
-  setHTML("modal-unit-desc", u.desc || u.description || "");
+  setHTML("modal-unit-name", formatUnitNameHtml(displayUnitName(u)));
+  setHTML("modal-unit-eng", selectedLanguage === "en" ? "" : formatUnitNameHtml(u.engName));
+  setHTML("modal-unit-desc", displayUnitDescription(u));
 
   var pfEl = document.getElementById("modal-produced-from");
   if (pfEl) {
@@ -15034,14 +15895,15 @@ function openModal(u) {
       var relationItems = pfInfo.items || [pfInfo];
       var relationHtml = relationItems.map(function(item) {
         var iconPath = resolveIcon(item.icon, u.race);
+        var displayName = displayRequirementName(item.name);
         return "<span class='produced-from-item'>" +
-               "<button class='produced-from-icon-btn' role='button' tabindex='0' onclick=\"openModalById('" + item.targetId + "')\" title='" + item.name + "'>" +
-               "  <img src='" + iconPath + "' class='produced-from-icon' alt='" + item.name + "'/>" +
+               "<button class='produced-from-icon-btn' role='button' tabindex='0' onclick=\"openModalById('" + item.targetId + "')\" title='" + displayName + "'>" +
+               "  <img src='" + iconPath + "' class='produced-from-icon' alt='" + displayName + "'/>" +
                "</button>" +
                (item.count ? "<span class='produced-from-count'>×" + item.count + "</span>" : "") +
                "</span>";
       }).join("");
-      pfEl.innerHTML = "<span class='produced-from-label'>" + pfInfo.label + "</span>" + relationHtml +
+      pfEl.innerHTML = "<span class='produced-from-label'>" + displayModalRelationLabel(pfInfo.label) + "</span>" + relationHtml +
                        (pfInfo.note ? "<span class='produced-from-note'>" + pfInfo.note + "</span>" : "");
       pfEl.style.display = "flex";
     } else {
@@ -15119,21 +15981,21 @@ function openModal(u) {
   var zergRegenHtml = (u.race && u.race.indexOf("zerg") >= 0) ? " <span style='font-size:0.8rem;color:#7ae46a;margin-left:4px;'>(+" + fmtGameRate(zergRegenRate) + "/s)</span>" : "";
   if (u.id === "sc2_roach") zergRegenHtml += "<span style='font-size:0.8rem;color:#7ae46a;margin-left:4px;'>(B +" + fmtGameRate(5) + "/s)</span>";
   var protossRegenHtml = (u.race === "bw_protoss" && u.shields > 0) ? " <span style='font-size:0.8rem;color:#a0c4ff;margin-left:4px;'>(+" + fmtGameRate(0.71) + "/s)</span>" : "";
-  var sc2ProtossRegenHtml = (u.race === "sc2_protoss" && u.shields > 0) ? " <span style='font-size:0.8rem;color:#a0c4ff;margin-left:4px;'>(" + fmtGameTime(10) + "초 후 +" + fmtGameRate(2) + "/s)</span>" : "";
-  var reaperRegenHtml = (u.id === "sc2_reaper") ? " <span style='font-size:0.8rem;color:#7ae46a;margin-left:4px;'>(" + fmtGameTime(10) + "초 후 +" + fmtGameRate(2) + "/s)</span>" : "";
+  var sc2ProtossRegenHtml = (u.race === "sc2_protoss" && u.shields > 0) ? " <span style='font-size:0.8rem;color:#a0c4ff;margin-left:4px;'>" + (selectedLanguage === "en" ? "(After " + fmtGameTime(10) + "s: +" + fmtGameRate(2) + "/s)" : "(" + fmtGameTime(10) + "초 후 +" + fmtGameRate(2) + "/s)") + "</span>" : "";
+  var reaperRegenHtml = (u.id === "sc2_reaper") ? " <span style='font-size:0.8rem;color:#7ae46a;margin-left:4px;'>" + (selectedLanguage === "en" ? "(After " + fmtGameTime(10) + "s: +" + fmtGameRate(2) + "/s)" : "(" + fmtGameTime(10) + "초 후 +" + fmtGameRate(2) + "/s)") + "</span>" : "";
   var terranBuildingBurnHtml = "";
   if (u.type === "structure" && u.race === "bw_terran") {
-    terranBuildingBurnHtml = " <span style='font-size:0.78rem;color:#ff9b7a;margin-left:6px;'>(체력 33%↓: -" + fmtGameRate(1.32) + "/s)</span>";
+    terranBuildingBurnHtml = " <span style='font-size:0.78rem;color:#ff9b7a;margin-left:6px;'>" + burnIndicatorHtml() + "(HP 33%↓: -" + fmtGameRate(1.32) + "/s)</span>";
   } else if ((u.type === "structure" || u.id === "sc2_auto_turret") && u.race === "sc2_terran") {
-    terranBuildingBurnHtml = " <span style='font-size:0.78rem;color:#ff9b7a;margin-left:6px;'>(체력 33%↓: -" + fmtGameRate(3) + "/s)</span>";
+    terranBuildingBurnHtml = " <span style='font-size:0.78rem;color:#ff9b7a;margin-left:6px;'>" + burnIndicatorHtml() + "(HP 33%↓: -" + fmtGameRate(3) + "/s)</span>";
   }
   if (u.shields > 0) {
-    if(hl1) { hl1.textContent = "보호막"; hl1.style.display=""; }
+    if(hl1) { hl1.textContent = t("shields"); hl1.style.display=""; }
     if(hv1) { hv1.innerHTML = "<span style='color:#a0c4ff'>"+u.shields+"</span>" + protossRegenHtml + sc2ProtossRegenHtml; hv1.style.display=""; hv1.removeAttribute("colspan"); }
-    if(hl2) { hl2.textContent = "체력"; hl2.style.display=""; }
+    if(hl2) { hl2.textContent = t("health"); hl2.style.display=""; }
     if(hv2) { var mHpVal = (u.id === "sc2_marine" && isUpgActive("sc2_marine_shield")) ? "<span class='upg-val-hp'>55</span>" : ((u.id === "sc2_baneling" && isUpgActive("sc2_baneling_speed")) ? "<span class='upg-val-hp'>" + (u.hp + 5) + "</span>" : "<span style='color:#7ae46a'>"+u.hp+"</span>"); hv2.innerHTML = mHpVal + zergRegenHtml + reaperRegenHtml + terranBuildingBurnHtml; hv2.style.display=""; }
   } else {
-    if(hl1) { hl1.textContent = "체력"; hl1.style.display=""; }
+    if(hl1) { hl1.textContent = t("health"); hl1.style.display=""; }
     if(hv1) {
       var mHpVal = (u.id === "sc2_marine" && isUpgActive("sc2_marine_shield")) ? "<span class='upg-val-hp'>55</span>" : ((u.id === "sc2_baneling" && isUpgActive("sc2_baneling_speed")) ? "<span class='upg-val-hp'>" + (u.hp + 5) + "</span>" : "<span style='color:#7ae46a'>"+u.hp+"</span>"); hv1.innerHTML = mHpVal + zergRegenHtml + reaperRegenHtml + terranBuildingBurnHtml;
       hv1.setAttribute("colspan", "3");
@@ -15172,12 +16034,12 @@ function openModal(u) {
     } else {
       shValHtml = "0 <span class='upg-" + raceClr(u.race) + "'>(+" + (u.armorUpgrade || 1) + ")</span>";
     }
-    if(al1) { al1.textContent = "보호막 방어력"; al1.style.display=""; }
+    if(al1) { al1.textContent = selectedLanguage === "en" ? t("shieldArmor") : "보호막 방어력"; al1.style.display=""; }
     if(av1) { av1.innerHTML = shValHtml; av1.removeAttribute("colspan"); av1.style.display=""; }
-    if(al2) { al2.textContent = "방어력"; al2.style.display=""; }
+    if(al2) { al2.textContent = t("armor"); al2.style.display=""; }
     if(av2) { av2.innerHTML = fmtModalArmor(u); av2.style.display=""; }
   } else {
-    if(al1) { al1.textContent = "방어력"; al1.style.display=""; }
+    if(al1) { al1.textContent = t("armor"); al1.style.display=""; }
     if(av1) { av1.innerHTML = fmtModalArmor(u); av1.setAttribute("colspan","3"); av1.style.display=""; }
     if(al2) { al2.textContent = ""; al2.style.display="none"; }
     if(av2) { av2.textContent = ""; av2.style.display="none"; }
@@ -15198,10 +16060,10 @@ function openModal(u) {
     var curSight = isObserverSurveillance ? 15 : (isWarpPrismPhasing ? 11 : (isOverseerOversight ? (u.sight * 1.25) : (isSightUpg ? (u.sight + 2) : u.sight)));
     var sightDisp = isSightUpg ? "<span class='upg-val-" + raceClr(u.race) + "'>" + curSight + "</span>" : String(u.sight);
     if (u.detector) {
-      if (sightLabelEl) sightLabelEl.textContent = "시야 (탐지)";
+      if (sightLabelEl) sightLabelEl.textContent = selectedLanguage === "en" ? t("visionDetection") : "시야 (탐지)";
       sightEl.innerHTML = sightDisp + " <span style='color:#ffd94a;font-size:.85em'>(" + sightDisp + ")</span>";
     } else {
-      if (sightLabelEl) sightLabelEl.textContent = "시야";
+      if (sightLabelEl) sightLabelEl.textContent = t("sight");
       sightEl.innerHTML = sightDisp;
     }
   }
@@ -15218,7 +16080,7 @@ function openModal(u) {
     if (speedValEl) { speedValEl.innerHTML = ""; speedValEl.style.display = "none"; }
     if (sightValEl) sightValEl.setAttribute("colspan", "3");
   }
-  setTxt("wiki-attributes", u.attributes || "");
+  setTxt("wiki-attributes", displayGameTerm(u.attributes || ""));
 
   // 수송 한도 / 탑승 정원
   var trRow = document.getElementById("wiki-transport-row");
@@ -15226,200 +16088,27 @@ function openModal(u) {
   var trVal = document.getElementById("wiki-transport");
   if (u.id === "dropship" || u.id === "overlord" || u.id === "shuttle" || u.id === "sc2_medivac" || u.id === "sc2_overlord_transport" || u.id === "sc2_warp_prism") {
     if (trRow) trRow.style.display = "";
-    if (trLbl) trLbl.textContent = "수송 한도";
-    if (trVal) trVal.textContent = "8칸";
+    if (trLbl) trLbl.textContent = selectedLanguage === "en" ? t("transportCapacity") : "수송 한도";
+    if (trVal) trVal.textContent = selectedLanguage === "en" ? "8 " + t("slots") : "8칸";
   } else if (u.id === "bunker" || u.id === "sc2_bunker") {
     if (trRow) trRow.style.display = "";
-    if (trLbl) trLbl.textContent = "탑승 정원";
-    if (trVal) trVal.innerHTML = (u.id === "sc2_bunker" && isUpgActive("sc2_neosteel_frame")) ? "<span class='upg-val-terran'>6칸</span>" : "4칸";
+    if (trLbl) trLbl.textContent = selectedLanguage === "en" ? t("passengerCapacity") : "탑승 정원";
+    if (trVal) {
+      var bunkerCapacity = (u.id === "sc2_bunker" && isUpgActive("sc2_neosteel_frame")) ? 6 : 4;
+      trVal.innerHTML = (u.id === "sc2_bunker" && isUpgActive("sc2_neosteel_frame")) ? "<span class='upg-val-terran'>" + bunkerCapacity + (selectedLanguage === "en" ? " " + t("slots") : "칸") + "</span>" : bunkerCapacity + (selectedLanguage === "en" ? " " + t("slots") : "칸");
+    }
   } else if (u.id === "sc2_command_center" || u.id === "sc2_planetary_fortress") {
     if (trRow) trRow.style.display = "";
-    if (trLbl) trLbl.textContent = "수송 한도";
-    if (trVal) trVal.innerHTML = isUpgActive("sc2_neosteel_frame") ? "<span class='upg-val-terran'>10칸</span>" : "5칸";
+    if (trLbl) trLbl.textContent = selectedLanguage === "en" ? t("transportCapacity") : "수송 한도";
+    if (trVal) {
+      var commandCapacity = isUpgActive("sc2_neosteel_frame") ? 10 : 5;
+      trVal.innerHTML = isUpgActive("sc2_neosteel_frame") ? "<span class='upg-val-terran'>" + commandCapacity + (selectedLanguage === "en" ? " " + t("slots") : "칸") + "</span>" : commandCapacity + (selectedLanguage === "en" ? " " + t("slots") : "칸");
+    }
   } else {
     if (trRow) trRow.style.display = "none";
   }
 
-
-// 건물별 생산/건설/소환/변이/변태 능력 매핑 (전역)
-var BUILDING_PRODUCE_ABILITIES = {
-  "command_center": [
-    { targetId: "scv", name: "SCV 생산" },
-    { targetId: "comsat_station", name: "컴샛 스테이션 건설" },
-    { targetId: "nuclear_silo", name: "뉴클리어 사일로 건설" }
-  ],
-  "sc2_command_center": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "sc2_orbital_command": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "sc2_planetary_fortress": [
-    { targetId: "sc2_scv", name: "건설로봇 생산" }
-  ],
-  "barracks": [
-    { targetId: "marine", name: "마린 훈련" },
-    { targetId: "firebat", name: "파이어뱃 훈련" },
-    { targetId: "medic", name: "메딕 훈련" },
-    { targetId: "ghost", name: "고스트 훈련" }
-  ],
-  "sc2_barracks": [
-    { targetId: "sc2_marine", name: "해병 훈련" },
-    { targetId: "sc2_marauder", name: "불곰 훈련" },
-    { targetId: "sc2_reaper", name: "사신 훈련" },
-    { targetId: "sc2_ghost", name: "유령 훈련" }
-  ],
-  "factory": [
-    { targetId: "vulture", name: "벌쳐 생산" },
-    { targetId: "siege_tank", name: "시즈 탱크 생산" },
-    { targetId: "goliath", name: "골리앗 생산" },
-    { targetId: "machine_shop", name: "머신 샵 건설" }
-  ],
-  "sc2_factory": [
-    { targetId: "sc2_hellion", name: "화염차 생산" },
-    { targetId: "sc2_hellbat", name: "화염 기갑병 생산" },
-    { targetId: "sc2_widow_mine", name: "땅거미 지뢰 생산" },
-    { targetId: "sc2_cyclone", name: "사이클론 생산" },
-    { targetId: "sc2_siege_tank", name: "공성 전차 생산" },
-    { targetId: "sc2_thor", name: "토르 생산" }
-  ],
-  "starport": [
-    { targetId: "wraith", name: "레이스 생산" },
-    { targetId: "dropship", name: "드랍십 생산" },
-    { targetId: "valkyrie", name: "발키리 생산" },
-    { targetId: "science_vessel", name: "사이언스 베슬 생산" },
-    { targetId: "battlecruiser", name: "배틀크루저 생산" },
-    { targetId: "control_tower", name: "컨트롤 타워 건설" }
-  ],
-  "sc2_starport": [
-    { targetId: "sc2_viking", name: "바이킹 생산" },
-    { targetId: "sc2_medivac", name: "의료선 생산" },
-    { targetId: "sc2_banshee", name: "밴시 생산" },
-    { targetId: "sc2_raven", name: "밤까마귀 생산" },
-    { targetId: "sc2_liberator", name: "해방선 생산" },
-    { targetId: "sc2_battlecruiser", name: "전투순양함 생산" },
-    { targetId: "sc2_tech_lab", name: "기술실 건설" },
-    { targetId: "sc2_reactor", name: "반응로 건설" }
-  ],
-  "nexus": [
-    { targetId: "probe", name: "프로브 생산" }
-  ],
-  "sc2_gateway": [
-    { targetId: "sc2_zealot", name: "광전사 소환" },
-    { targetId: "sc2_sentry", name: "파수기 소환" },
-    { targetId: "sc2_stalker", name: "추적자 소환" },
-    { targetId: "sc2_adept", name: "사도 소환" },
-    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
-    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
-  ],
-  "sc2_warpgate": [
-    { targetId: "sc2_zealot", name: "광전사 소환" },
-    { targetId: "sc2_sentry", name: "파수기 소환" },
-    { targetId: "sc2_stalker", name: "추적자 소환" },
-    { targetId: "sc2_adept", name: "사도 소환" },
-    { targetId: "sc2_high_templar", name: "고위 기사 소환" },
-    { targetId: "sc2_dark_templar", name: "암흑 기사 소환" }
-  ],
-  "gateway": [
-    { targetId: "zealot", name: "질럿 소환" },
-    { targetId: "dragoon", name: "드라군 소환" },
-    { targetId: "high_templar", name: "하이 템플러 소환" },
-    { targetId: "dark_templar", name: "다크 템플러 소환" }
-  ],
-  "robotics_facility": [
-    { targetId: "observer", name: "옵저버 생산" },
-    { targetId: "shuttle", name: "셔틀 생산" },
-    { targetId: "reaver", name: "리버 생산" }
-  ],
-  "stargate": [
-    { targetId: "scout", name: "스카웃 소환" },
-    { targetId: "corsair", name: "커세어 소환" },
-    { targetId: "carrier", name: "캐리어 소환" },
-    { targetId: "arbiter", name: "아비터 소환" }
-  ],
-  "larva": [
-    { targetId: "drone", name: "드론으로 변태" },
-    { targetId: "overlord", name: "오버로드로 변태" },
-    { targetId: "zergling", name: "저글링으로 변태" },
-    { targetId: "hydralisk", name: "히드라리스크로 변태" },
-    { targetId: "mutalisk", name: "뮤탈리스크로 변태" },
-    { targetId: "scourge", name: "스커지로 변태" },
-    { targetId: "queen", name: "퀸으로 변태" },
-    { targetId: "ultralisk", name: "울트라리스크로 변태" },
-    { targetId: "defiler", name: "디파일러로 변태" }
-  ],
-  "sc2_larva": [
-    { targetId: "sc2_drone", name: "일벌레로 변태" },
-    { targetId: "sc2_overlord", name: "대군주로 변태" },
-    { targetId: "sc2_zergling", name: "저글링으로 변태" },
-    { targetId: "sc2_roach", name: "바퀴로 변태" },
-    { targetId: "sc2_hydralisk", name: "히드라리스크로 변태" },
-    { targetId: "sc2_mutalisk", name: "뮤탈리스크로 변태" },
-    { targetId: "sc2_corruptor", name: "타락귀로 변태" },
-    { targetId: "sc2_infestor", name: "감염충으로 변태" },
-    { targetId: "sc2_swarmhost", name: "군단 숙주로 변태" },
-    { targetId: "sc2_viper", name: "살모사로 변태" },
-    { targetId: "sc2_ultralisk", name: "울트라리스크로 변태" }
-  ],
-  "hydralisk": [
-    { targetId: "lurker", name: "럴커로 변태" }
-  ],
-  "mutalisk": [
-    { targetId: "guardian", name: "가디언으로 변태" },
-    { targetId: "devourer", name: "디바우러로 변태" }
-  ],
-  "hatchery": [
-    { targetId: "lair", name: "레어로 변이" }
-  ],
-  "lair": [
-    { targetId: "hive", name: "하이브로 변이" }
-  ],
-  "creep_colony": [
-    { targetId: "sunken_colony", name: "성큰 콜로니로 변이" },
-    { targetId: "spore_colony", name: "스포어 콜로니로 변이" }
-  ],
-  "spire": [
-    { targetId: "greater_spire", name: "그레이터 스파이어로 변이" }
-  ],
-  "infested_cc": [
-    { targetId: "infested_terran", name: "인페스티드 테란 생산" }
-  ],
-  "high_templar": [
-    { targetId: "archon", name: "아칸 합체" }
-  ],
-  "dark_templar": [
-    { targetId: "dark_archon", name: "다크 아칸 합체" }
-  ],
-  "carrier": [
-    { targetId: "interceptor", name: "인터셉터 생산" }
-  ],
-  "science_facility": [
-    { targetId: "covert_ops", name: "코버트 옵스 건설" },
-    { targetId: "physics_lab", name: "피직스 랩 건설" }
-  ],
-  "siege_tank": [
-    { targetId: "siege_tank_siege", name: "시즈 모드" }
-  ],
-  "siege_tank_siege": [
-    { targetId: "siege_tank", name: "탱크 모드" }
-  ]
-};
-BUILDING_PRODUCE_ABILITIES.sc2_stargate = [
-  { targetId: "sc2_phoenix", name: "불사조 소환" },
-  { targetId: "sc2_oracle", name: "예언자 소환" },
-  { targetId: "sc2_void_ray", name: "공허 포격기 소환" },
-  { targetId: "sc2_tempest", name: "폭풍함 소환" },
-  { targetId: "sc2_carrier", name: "우주모함 소환" }
-];
-BUILDING_PRODUCE_ABILITIES.sc2_robotics_facility = [
-  { targetId: "sc2_observer", name: "관측선 소환" },
-  { targetId: "sc2_warp_prism", name: "차원 분광기 소환" },
-  { targetId: "sc2_immortal", name: "불멸자 소환" },
-  { targetId: "sc2_colossus", name: "거신 소환" },
-  { targetId: "sc2_disruptor", name: "분열기 소환" }
-];
-
-function getSplashRange3Steps(u) {
+  function getSplashRange3Steps(u) {
   if (u.id === "firebat") {
     return [
       { lbl: "100%", val: "0.4218 ~ 0.4268" },
@@ -15583,10 +16272,10 @@ function fmtAttackSplashArea(u, wp) {
       if (showSplashCol) colWidths.push("29%");
       var colgroupHtml = "<colgroup>" + colWidths.map(function(w){ return "<col style='width:" + w + "'>"; }).join("") + "</colgroup>";
 
-      var headerHtml = "<thead><tr><th>대상</th><th>공격력</th><th>사거리</th>" +
-        (showCdCol ? "<th>주기</th>" : "") +
+      var headerHtml = "<thead><tr><th>" + t("target") + "</th><th>" + t("attack") + "</th><th>" + t("range") + "</th>" +
+        (showCdCol ? "<th>" + t("attackSpeed") + "</th>" : "") +
         (showDpsCol ? "<th>DPS</th>" : "") +
-        (showSplashCol ? "<th>방사 피해 범위</th>" : "") +
+        (showSplashCol ? "<th>" + t("splashDamageRange") + "</th>" : "") +
         "</tr></thead><tbody>";
 
       var wh = "<table class='sol-table'>" + colgroupHtml + headerHtml;
@@ -15611,7 +16300,7 @@ function fmtAttackSplashArea(u, wp) {
 
         var targetTxt = (u.id === "sc2_thor" && wi === 1) ? "공중 (천벌포)" : wp.type;
         // 모달 공격 대상 표기만 가운데점 형식으로 통일한다. 메인 목록의 배지 표기는 유지.
-        targetTxt = String(targetTxt || "").replace(/지상\s*[\/,]\s*공중/g, "지상·공중");
+        targetTxt = displayAttackTarget(targetTxt);
         var rangeStr = fmtNum(wp.range, 2);
         if (u.id === "marine" && isUpgActive("marine_u238")) {
           rangeStr = "<span class='upg-val-terran'>6</span>";
@@ -15634,9 +16323,9 @@ function fmtAttackSplashArea(u, wp) {
         } else if ((u.id === "sc2_missile_turret" || u.id === "sc2_auto_turret" || u.id === "sc2_planetary_fortress") && isUpgActive("sc2_hisec_autotracking")) {
           rangeStr = "<span class='upg-val-terran'>" + fmtNum(wp.range + 1, 2) + "</span>";
         } else if (u.id === "spider_mine") {
-          rangeStr = fmtNum(wp.range, 2) + "<br><span style='color:var(--text-dim);font-size:.85em'>(발동 3)</span>";
+          rangeStr = fmtNum(wp.range, 2) + "<br><span style='color:var(--text-dim);font-size:.85em'>(" + t("trigger") + " 3)</span>";
         } else if (u.id === "siege_tank_siege" || u.id === "sc2_siege_tank_siege") {
-          rangeStr = fmtNum(wp.range, 2) + "<br><span style='color:var(--text-dim);font-size:.85em'>(최소 2)</span>";
+          rangeStr = fmtNum(wp.range, 2) + "<br><span style='color:var(--text-dim);font-size:.85em'>(" + t("minimum") + " 2)</span>";
         }
         var isNoDpsUnit = isNoDpsUnitPre;
         var cdStr = fmtCdModal(u, wp);
@@ -15651,10 +16340,10 @@ function fmtAttackSplashArea(u, wp) {
         var dmgDisp = (lvl > 0 || reaverExtraDmg > 0) ? "<span class='upg-val-" + rc2 + "'>" + fmtNum(totalDmg, 2) + "</span>" : fmtNum(wp.dmg, 2);
         var hasAtkUpg = hasAtkUpgDropdown(u);
         var upgHtml = (hasAtkUpg && lvl < 3 && upgPerLvl > 0) ? " <span class='upg-" + rc2 + "'>(+" + upgPerLvl + ")</span>" : "";
-        var splashTxt = wp.splash ? " <span style='color:var(--text-dim);font-size:.85em'>(방사)</span>" : "";
+        var splashTxt = (wp.splash && !showSplashCol) ? " <span style='color:var(--text-dim);font-size:.85em'>(" + t("splash") + ")</span>" : "";
         var dmgHtml = (wp.dmg && wp.dmg > 0) ? (dmgDisp + upgHtml) : "";
         var hitsHtml2 = (wp.hits && wp.hits > 1) ? " <span style='color:var(--text-dim);font-size:.82em'>x" + wp.hits + "</span>" : "";
-        var baseDmgCellContent = "<div class='modal-wpn-block'><span class='modal-wpn-lbl'>기본:</span><span class='modal-wpn-val'>" + dmgHtml + hitsHtml2 + splashTxt + "</span></div>";
+        var baseDmgCellContent = "<div class='modal-wpn-block'><span class='modal-wpn-lbl'>" + t("basic") + ":</span><span class='modal-wpn-val'>" + dmgHtml + hitsHtml2 + splashTxt + "</span></div>";
         
         var bonusList = (wp.bonusDmg && wp.bonusDmg.length) ? wp.bonusDmg : [];
         var damageLineHtmls = [baseDmgCellContent];
@@ -15669,8 +16358,8 @@ function fmtAttackSplashArea(u, wp) {
           var bundleDisp = (lvl > 0 || reaverExtraBd > 0 || bundleInfernal > 0 || prismaticExtraBd > 0 || (tempestStructureExtraBd > 0 && bundleBonus.key === "구조물")) ? "<span class='upg-val-" + rc2 + "'>" + fmtNum(bundleTotal, 2) + "</span>" : fmtNum(bundleBonus.base, 2);
           var bundleUpgHtml = (hasAtkUpg && lvl < 3 && bundleUpg > 0) ? " <span class='upg-" + rc2 + "'>(+" + bundleUpg + ")</span>" : "";
           var bundleHitsHtml = (bundleHits && bundleHits > 1) ? " <span style='color:var(--text-dim);font-size:.82em'>x" + bundleHits + "</span>" : "";
-          var bundleSplash = bundleBonus.splash ? " <span style='color:var(--text-dim);font-size:.85em'>(방사)</span>" : "";
-          damageLineHtmls.push("<div class='modal-wpn-block'><span class='modal-wpn-lbl'>" + bundleBonus.key + ":</span><span class='modal-wpn-val'>" + bundleDisp + bundleUpgHtml + bundleHitsHtml + bundleSplash + "</span></div>");
+          var bundleSplash = (bundleBonus.splash && !showSplashCol) ? " <span style='color:var(--text-dim);font-size:.85em'>(" + t("splash") + ")</span>" : "";
+          damageLineHtmls.push("<div class='modal-wpn-block'><span class='modal-wpn-lbl'>" + displayGameTerm(bundleBonus.key) + ":</span><span class='modal-wpn-val'>" + bundleDisp + bundleUpgHtml + bundleHitsHtml + bundleSplash + "</span></div>");
           var bundleDpsHtml = "";
           if (!isNoDpsUnit && activeCd > 0) {
             var bundleDps = (bundleTotal * (bundleHits || 1)) / activeCd;
@@ -15738,141 +16427,7 @@ function fmtAttackSplashArea(u, wp) {
   if (ut) ut.style.display = "none";
   if (uc) uc.style.display = "none";
 
-function getBwAbilityMetaHtml(u, abilityName) {
-  if (!u || !u.race) return "";
 
-  var name = String(abilityName || "").replace(/<[^>]*>/g, "").replace(/\s*\([^)]*\)/g, "").trim();
-  var meta = {
-    "힐": { castRange: "2" },
-    "리스토레이션": { castRange: "6", cooldown: "1.3" },
-    "옵티컬 플레어": { duration: infiniteIcon(true), castRange: "9", cooldown: "1.3" },
-    "스팀팩": { duration: "18.5초", cooldown: "1" },
-    "전투 자극제": { duration: "15초", cooldown: "1" },
-    "충격탄": { duration: "1.5초" },
-    "목표물 고정": {
-      duration: "20초",
-      castRange: "15 (시전 7)",
-      cooldown: "6"
-    },
-    "목표 고정": {
-      duration: "20초",
-      castRange: "15 (시전 7)",
-      cooldown: "6"
-    },
-    "KD8 지뢰": { castRange: "5", cooldown: "20", effectRange: "2" },
-    "부동 조준": { castRange: "10", effectRange: "1.5" },
-    "EMP 탄환": { castRange: "10" },
-    "전술 핵 공격": {
-      castRange: "12",
-      effectRanges: [
-        { label: "100%", value: "4" },
-        { label: "50%", value: "6" },
-        { label: "25%", value: "8" }
-      ]
-    },
-    "락다운": { duration: "33초", castRange: "9" },
-    "디펜시브 매트릭스": { duration: "40초", castRange: "9" },
-    "EMP 쇼크웨이브": { castRange: "10", effectRange: "2.25" },
-    "야마토 건": { castRange: "10" },
-    "이래디에이트": { duration: "35초", castRange: "9", effectRange: "대상 반경 + 1.125", cooldown: "4.4" },
-    "스캐너 스윕": { duration: "12.2775초", castRange: infiniteIcon(true) },
-    "패러사이트": { duration: infiniteIcon(true), castRange: "9" },
-    "브루들링 소환": { castRange: "9" },
-    "애시드 스포어": { duration: "38초", effectRange: "2.25" },
-    "인스네어": { duration: "20초", castRange: "9", effectRange: "2.25" },
-    "인페스트 커맨드 센터": { castRange: "0.5" },
-    "인페스티드 커맨드 센터": { castRange: "0.5" },
-    "다크 스웜": { duration: "28초", castRange: "9", effectRange: "2.8125" },
-    "컨슘": { castRange: "0.5" },
-    "플레이그": { duration: "37.5초", castRange: "9", effectRange: "2.25" },
-    "사이오닉 스톰": { duration: "3.9371초", castRange: "9", effectRange: "1.6875", cooldown: "2.6" },
-    "할루시네이션": { duration: "78.75초", castRange: "7" },
-    "피드백": { castRange: "10.5" },
-    "마인드 컨트롤": { castRange: "9", cooldown: "1.3" },
-    "마엘스트롬": { duration: "11초", castRange: "9", effectRange: "1.6875", cooldown: "0.1" },
-    "디스럽션 웹": { duration: "15초", castRange: "9", effectRange: "1.725", cooldown: "1.3" },
-    "리콜": { castRange: infiniteIcon(true), effectRange: "2.25" },
-    "스테이시스 필드": { duration: "33초", castRange: "9", effectRange: "1.6875" },
-    "클로크 필드": { effectRange: "5" },
-    "보호막 재충전": { castRange: "6" },
-    "뉴클리어 스트라이크": {
-      castRange: "12",
-      effectRanges: [
-        { label: "100%", value: "4" },
-        { label: "50%", value: "6" },
-        { label: "25%", value: "8" }
-      ]
-    }
-  }[name];
-  if (u.id === "sc2_warpgate") {
-    var warpgateAbility = (BUILDING_PRODUCE_ABILITIES.sc2_warpgate || []).find(function(item) { return item.name === name; });
-    var warpgateUnit = warpgateAbility && UNIT_DATA.find(function(item) { return item.id === warpgateAbility.targetId; });
-    var warpgateCooldowns = { "광전사 소환": 28, "사도 소환": 28, "파수기 소환": 32, "추적자 소환": 32, "고위 기사 소환": 45, "암흑 기사 소환": 45 };
-    if (warpgateUnit) meta = { cooldown: warpgateCooldowns[name] || fmtNum(warpgateUnit.buildTime, 2) };
-  }
-  if (u.id === "sc2_medivac" && (name === "힐" || name === "치료")) meta = { castRange: "4" };
-  if (u.id === "sc2_medivac" && name === "재연소 장치 점화") meta = { duration: "8초", cooldown: "20" };
-  if (u.id === "sc2_raven" && name === "자동 포탑 건설") meta = { duration: "11초" };
-  if (u.id === "sc2_raven" && name === "대장갑 미사일") meta = { duration: "30초" };
-  if (u.id === "sc2_raven" && name === "방해 매트릭스") meta = { duration: "15초" };
-  if (u.id === "sc2_overseer" && name === "변신수 생성") meta = { duration: "150초" };
-  if (u.id === "sc2_overseer" && name === "오염") meta = { duration: "30초" };
-  if (u.id === "sc2_queen" && name === "애벌레 생성") meta = { duration: "40초" };
-  if (u.id === "sc2_queen" && name === "수혈") meta = { duration: "10초" };
-  if (u.id === "sc2_hydralisk" && name === "달려들기") meta = { duration: "1초", cooldown: "14" };
-  if (u.id === "sc2_zealot" && name === "돌진") meta = { duration: "3.5초", castRange: "4", cooldown: "10" };
-  if (u.id === "sc2_stalker" && name === "점멸") meta = { castRange: "8", cooldown: "10" };
-  if (u.id === "sc2_dark_templar" && name === "그림자 걸음") meta = { castRange: "8", cooldown: "20" };
-  if (u.id === "sc2_sentry" && name === "역장") meta = { duration: "15초", castRange: "9" };
-  if (u.id === "sc2_sentry" && name === "수호 방패") meta = { duration: "18초", cooldown: "18", effectRange: "4.5" };
-  if (u.id === "sc2_sentry" && name === "환상") meta = { duration: "60초" };
-  if (u.id === "sc2_high_templar" && name === "사이오닉 폭풍") meta = { duration: "7.84초", castRange: "8", cooldown: "2", effectRange: "2" };
-  if (u.id === "sc2_phoenix" && name === "중력자 광선") meta = { duration: "10초", castRange: "4" };
-  if (u.id === "sc2_stasis_ward" && name === "정지장 덫") meta = { duration: "30초", effectRange: "5" };
-  if (u.id === "sc2_void_ray" && name === "분광 정렬") meta = { duration: "20초", cooldown: "60" };
-  if (u.id === "sc2_nexus" && name === "시간 증폭") meta = { duration: "28초", castRange: infiniteIcon(true) };
-  if (u.id === "sc2_nexus" && name === "전략 소환") meta = { castRange: infiniteIcon(true), cooldown: "182" };
-  if (u.id === "sc2_nexus" && name === "에너지 재충전") meta = { castRange: "12", cooldown: "63" };
-  if (u.id === "sc2_mothership" && name === "대규모 소환") meta = { castRange: infiniteIcon(true), cooldown: "125", effectRange: "6.5" };
-  if (u.id === "sc2_mothership" && name === "시간 왜곡") meta = { duration: "10초", castRange: "9", cooldown: "84", effectRange: "3.75" };
-  if (u.id === "sc2_mothership" && name === "은폐장") meta = { duration: "28초", cooldown: "70", effectRange: "6.25" };
-  if (u.id === "sc2_immortal" && name.indexOf("방어막") === 0) meta = { duration: "3초", cooldown: "45" };
-  if (u.id === "sc2_ravager" && name === "부식성 담즙") meta = { castRange: "9", cooldown: "10", effectRange: "0.5" };
-  if (u.id === "sc2_infestor" && name === "세균 장막") meta = { duration: "15초", castRange: "9", effectRange: "3.5" };
-  if (u.id === "sc2_infestor" && name === "진균 번식") meta = { duration: "4초", castRange: "10", effectRange: "2.25" };
-  if (u.id === "sc2_infestor" && name === "신경 기생충") meta = { duration: "15초", castRange: "8" };
-  if (u.id === "sc2_viper" && name === "흡수") meta = { duration: "20초", castRange: "7", cooldown: "1" };
-  if (u.id === "sc2_viper" && name === "납치") meta = { castRange: "9" };
-  if (u.id === "sc2_viper" && name === "흑구름") meta = { duration: "8초", castRange: "10", effectRange: "2" };
-  if (u.id === "sc2_viper" && name === "기생 폭탄") meta = { duration: "12초", castRange: "8", effectRange: "3" };
-  if (u.id === "sc2_battlecruiser" && name === "야마토 포") meta = { cooldown: "100" };
-  if (u.id === "sc2_battlecruiser" && name === "전술 차원 도약") meta = { castRange: infiniteIcon(true), cooldown: "100" };
-  if (u.id === "sc2_sensor_tower" && name === "레이더") meta = { castRange: "22" };
-  if (!meta) return "";
-  if (name === "뉴클리어 스트라이크" && typeof isUpgActive === "function" && isUpgActive("ghost_ocular")) meta.castRange = "14";
-
-  var clockIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='8.5'></circle><path d='M12 7v5l3.5 2'></path></svg>";
-  var cooldownIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><g transform='rotate(90 12 12)'><path d='M20 12a8 8 0 1 1-2.34-5.66'></path><path d='M20 4v5h-5'></path></g><path d='M9.5 8h5M9.5 16h5M10 8c0 2 1 2.7 2 4-1 1.3-2 2-2 4M14 8c0 2-1 2.7-2 4 1 1.3 2 2 2 4'></path></svg>";
-  var castRangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3'></path><path d='m14.2 9.8 5.4-5.4M15 4.4h4.6V9'></path></svg>";
-  var rangeIcon = "<svg viewBox='0 0 24 24' aria-hidden='true'><circle cx='12' cy='12' r='7.5'></circle><circle cx='12' cy='12' r='2.3'></circle><path d='M14.6 9.4 21 3M16.8 3H21v4.2'></path><path d='M9.4 9.4 3 3M7.2 3H3v4.2'></path><path d='M9.4 14.6 3 21M7.2 21H3v-4.2'></path><path d='M14.6 14.6 21 21M16.8 21H21v-4.2'></path></svg>";
-  var durationText = meta.duration;
-  var durationValue = parseFloat(String(meta.duration || "").replace("초", ""));
-  if (isFinite(durationValue)) durationText = fmtGameTime(durationValue, 1);
-  var cooldownText = meta.cooldown;
-  var cooldownValue = parseFloat(String(meta.cooldown || ""));
-  if (isFinite(cooldownValue)) cooldownText = fmtGameTime(cooldownValue);
-  var html = "<div class='modal-ability-stats'>";
-  if (meta.cooldown) html += "<span class='modal-ability-stat' title='재사용 대기시간'><span class='modal-ability-stat-icon modal-ability-cooldown-icon'>" + cooldownIcon + "</span>" + cooldownText + "</span>";
-  if (meta.duration) html += "<span class='modal-ability-stat' title='지속 시간'><span class='modal-ability-stat-icon'>" + clockIcon + "</span>" + durationText + "</span>";
-  if (meta.castRange) html += "<span class='modal-ability-stat' title='시전 사거리'><span class='modal-ability-stat-icon'>" + castRangeIcon + "</span>" + meta.castRange + "</span>";
-  if (meta.effectRanges) {
-    var ranges = meta.effectRanges.map(function(range) { return "<span class='modal-ability-range-step'><b>" + range.label + "</b> " + range.value + "</span>"; }).join("<span class='modal-ability-range-sep'>·</span>");
-    html += "<span class='modal-ability-stat modal-ability-stat-ranges' title='효과 범위'><span class='modal-ability-stat-icon'>" + rangeIcon + "</span>" + ranges + "</span>";
-  } else if (meta.effectRange) {
-    html += "<span class='modal-ability-stat' title='효과 범위'><span class='modal-ability-stat-icon'>" + rangeIcon + "</span>" + meta.effectRange + "</span>";
-  }
-  return html + "</div>";
-}
 
 function getEffectiveAbilities(u) {
   var origList = (u.abilities && u.abilities.length) ? u.abilities.slice() : [];
@@ -15936,7 +16491,7 @@ function getEffectiveAbilities(u) {
 
       var finalDesc = (origItem && origItem.desc)
         ? origItem.desc
-        : (item.desc || (tu ? (tu.desc || tu.description || "") : ""));
+        : (item.desc || (tu ? displayUnitDescription(tu) : ""));
 
       var finalIcon = (origItem && origItem.icon)
         ? origItem.icon
@@ -16189,8 +16744,8 @@ function getEffectiveAbilities(u) {
         abh += "<div class='modal-item-card" + (costBadgeHtml ? " has-cost-badge" : "") + cardExtraCls + "'" + clickAttr + ">";
         abh += "  <div class='modal-item-icon-slot'>" + imgTag + "</div>";
         abh += "  <div class='modal-item-content'>";
-        abh += "    <div class='modal-item-title-row'><div class='modal-item-title'>" + abItem.name + (abItem.cost ? " <span class='modal-item-cost'>[" + abItem.cost + "]</span>" : "") + "</div>" + getBwAbilityMetaHtml(u, abItem.name) + "</div>";
-        if (abItem.desc) abh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(abItem.desc) + "</div>";
+        abh += "    <div class='modal-item-title-row'><div class='modal-item-title'>" + displayGameTerm(abItem.name) + (abItem.cost ? " <span class='modal-item-cost'>[" + abItem.cost + "]</span>" : "") + "</div>" + getBwAbilityMetaHtml(u, abItem.name) + "</div>";
+        if (abItem.desc) abh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(u, abItem)) + "</div>";
         abh += getModalCardRequirementHtml(u, abItem);
         abh += "  </div>";
         if (costBadgeHtml) abh += costBadgeHtml;
@@ -16210,9 +16765,9 @@ function getEffectiveAbilities(u) {
     if (upgTitle) {
       upgTitle.style.display = "";
       if (u.type === "structure" || u.type === "building") {
-        upgTitle.textContent = "연구 가능 업그레이드";
+        upgTitle.textContent = t("researchUpgrades");
       } else {
-        upgTitle.textContent = "적용 가능 업그레이드";
+        upgTitle.textContent = t("applicableUpgrades");
       }
     }
     if (upgContainer) {
@@ -16377,12 +16932,13 @@ function getEffectiveAbilities(u) {
                 "</div>";
             }
 
+            reqChipHtml = displayGameTerm(reqChipHtml);
             uuh += "<div class='modal-item-card upg-group-card'>";
             uuh += "  <div class='upg-group-icons'>" + icons + "</div>";
             uuh += "  <div class='upg-group-body'>";
             uuh += "    <div class='upg-group-left'>";
-            uuh += "      <div class='upg-group-name'>" + baseName + "</div>";
-            if (uupg.desc) uuh += "      <div class='modal-item-desc'>" + formatGameSpeedDescription(uupg.desc) + "</div>";
+            uuh += "      <div class='upg-group-name'>" + displayGameTerm(baseName) + "</div>";
+            if (uupg.desc) uuh += "      <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(u, uupg)) + "</div>";
             if (reqChipHtml) uuh += reqChipHtml;
             uuh += "    </div>";
             uuh += "    <div class='upg-group-levels'>";
@@ -16431,9 +16987,9 @@ function getEffectiveAbilities(u) {
         uuh += "<div class='" + cardClass + "'" + cardExtra + ">";
         uuh += "  <div class='modal-item-icon-slot'>" + imgTag + "</div>";
         uuh += "  <div class='modal-item-content'>";
-        uuh += "    <div class='modal-item-title'>" + uupg.name + (isActive ? " <span class='upg-active-badge'>적용 중</span>" : "") + "</div>";
-        if (uupg.cost) uuh += "    <div class='modal-item-cost' style='margin-left:0;margin-top:2px;'>비용: " + uupg.cost + (uupg.buildTime ? " | " + fmtBuildTime(uupg.buildTime) : "") + "</div>";
-        if (uupg.desc) uuh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(uupg.desc) + "</div>";
+        uuh += "    <div class='modal-item-title'>" + displayGameTerm(uupg.name) + (isActive ? " <span class='upg-active-badge'>" + (selectedLanguage === "en" ? "Active" : "적용 중") + "</span>" : "") + "</div>";
+        if (uupg.cost) uuh += "    <div class='modal-item-cost' style='margin-left:0;margin-top:2px;'>" + t("cost") + ": " + uupg.cost + (uupg.buildTime ? " | " + fmtBuildTime(uupg.buildTime) : "") + "</div>";
+        if (uupg.desc) uuh += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(u, uupg)) + "</div>";
         uuh += getModalCardRequirementHtml(u, uupg);
         uuh += "  </div>";
         if (costBadgeHtml) uuh += costBadgeHtml;
@@ -16455,7 +17011,9 @@ function getEffectiveAbilities(u) {
     else if (u.race.indexOf("protoss") >= 0) mc.classList.add("border-protoss");
   }
 
-  modal.classList.add("active");
+  if (!isRenderingComparePanels) {
+    modal.classList.add("active");
+  }
 }
 
 function closeModal() {
@@ -16470,6 +17028,7 @@ function closeModal() {
 // ─────────────────────────────────────────────────────────────
 function initApp() {
   // 1. 테이블과 테마를 최우선 렌더링! (이벤트 바인딩 오류와 무관하게 화면 표시 보장)
+  try { initLanguageSelector(); } catch(e){}
   try { applyTheme(currentRace); } catch(e){}
   try { renderTable(); } catch(e){}
   try {
@@ -16849,6 +17408,450 @@ function normalizePatchDisplayText(text) {
   });
 }
 
+// 패치 CSV는 관리자가 한국어 원문으로 편집한다. 화면에서는 현재 언어에 맞춰
+// 단위명·스탯명·변경 문구를 변환해, 편집 데이터와 영문 표시를 분리한다.
+// 최신 공식 영문 패치 노트의 용어(Construction Time, Attack Cooldown 등)를 따른다.
+var PATCH_TEXT_EN_EXACT = {
+  "공통": "General",
+  "전체 변경 사항": "General Changes",
+  "버그 수정 및 기타 변경 사항": "Bug Fixes and Other Changes",
+  "폭발형 · 진동형": "Explosive · Concussive",
+  "보호막 재생": "Shield Regeneration",
+  "점막 이동 속도 보너스": "Creep Movement Speed Bonus",
+  "무기 탐색 범위": "Weapon Acquisition Range",
+  "뭉치기 모드 토글 버튼 추가": "Added Formation Mode toggle button",
+  "뭉치기 모드 토글 능력으로 변경": "Formation Mode is now a toggle ability",
+  "이래디에이트는 더 이상 중첩되지 않음": "Irradiate damage no longer stacks",
+  "시즈 모드 연구 필요": "Siege Tech research required",
+  "할루시네이션 개발 필요": "Hallucination research required",
+  "할루시네이션 업그레이드 제거": "Removed Hallucination research",
+  "스캐럽 생산 자동 시전 기능 제거": "Removed Scarab Production autocast",
+  "스타2 여왕이 아군 BW 부화장·번식지·군락에 애벌레 생성을 사용할 수 없도록 수정": "SC2 Queen can no longer use Spawn Larvae on allied BW Hatcheries, Lairs, or Hives",
+  "스타2 수정탑이 아군 BW 넥서스 근처에서 차원로 지속 능력을 활성화하지 않도록 수정": "SC2 Pylons can no longer activate Warp Conduit near allied BW Nexuses",
+  "예언자의 계시 효과가 변태·합체로 생성된 유닛에 이전되지 않도록 수정": "Oracle Revelation no longer transfers to units created by morphing or merging",
+  "뮤탈리스크·레이스의 낮은 분리 반경 이동과 관련된 점수 누적 문제 수정": "Fixed score accumulation caused by Mutalisk and Wraith movement with a low separation radius",
+  "메딕이 다른 유닛에 밀리는 동안 치료할 수 있던 문제 수정": "Fixed Medics being able to Heal while pushed by other units",
+  "스캐럽이 활성 상태일 때 첫 재사용 대기시간이 끝나면 무기가 한 번 더 재사용 대기시간에 들어가던 문제 수정": "Fixed Scarabs entering an additional weapon cooldown after their first cooldown while active",
+  "최대 사거리에서 리버가 발사하지 못하던 문제 수정": "Fixed Reavers being unable to fire at maximum range",
+  "넥서스에서 12타일 이상 떨어진 곳에 건설할 경우 초기 에너지 50으로 시작": "Structures warped in more than 12 tiles from a Nexus start with 50 Energy",
+  "넥서스에서 12칸을 초과한 곳에 소환 시 초기 에너지: 100 → 50": "Warping in more than 12 tiles from a Nexus: Starting Energy 100 → 50",
+  "보호막이 있는 중장갑 유닛에 대한 폭발형 공격력은 변함 없음": "Explosive damage against Armored units with Shields is unchanged",
+  "보호막이 있는 경장갑 유닛에 대한 진동형 공격력은 변함 없음": "Concussive damage against Light units with Shields is unchanged",
+  "진동형 공격이 소 100%, 중 50%, 대 25% 피해를 줌": "Concussive attacks deal 100% to Small, 50% to Medium, and 25% to Large targets",
+  "폭발형 공격이 소 50%, 중 75%, 대 100% 피해를 줌": "Explosive attacks deal 50% to Small, 75% to Medium, and 100% to Large targets",
+  "증가 안함": "No increase",
+  "속성 추가: 거대": "Added Massive attribute",
+  "속성 제거: 거대": "Removed Massive attribute",
+  "이래디에이트 짧은 후딜 추가": "Added a short post-cast delay to Irradiate",
+  "임의로 변경한 스탯들 스1 원본값으로 원복": "Reverted arbitrarily changed stats to original StarCraft values",
+  "여러 무기 및 장갑의 업그레이드 비용을 스타2와 같도록 표준화": "Standardized several weapon and armor upgrade costs to match StarCraft II"
+  ,"할루시네이션은 탐지기에 의해 드러나지 않음": "Hallucinations are no longer revealed by detectors"
+  ,"에너지 소모 능력 효과에 즉시 파괴됨": "Destroyed instantly by energy-consuming ability effects"
+  ,"마인드 컨트롤은 동맹 유닛 대상 지정 불가": "Mind Control can no longer target allied units"
+  ,"패러사이트·브루들링은 광란 유닛 대상 지정 불가": "Parasite and Broodling cannot target Frenzied units"
+  ,"인터셉터 무기: 즉발형으로 변경": "Interceptor weapon changed to hitscan"
+  ,"거대 속성 제거": "Removed Massive attribute"
+  ,"공대지 무기 보유 유닛 자동 추적": "Units with ground-to-air weapons automatically track targets"
+  ,"버로우된 스파이더 마인은 50%·25% 방사 피해를 받지 않음": "Burrowed Spider Mines do not take 50% or 25% splash damage"
+  ,"인스네어는 포탑형 무기·스캐럽·인터셉터에 영향 없음": "Ensnare does not affect turret weapons, Scarabs, or Interceptors"
+  ,"다크 스웜 내부 버로우 유닛은 방사 피해 외곽 영역 피해를 받지 않음": "Burrowed units inside Dark Swarm do not take outer-area splash damage"
+  ,"대상 지정 불가 시 이동 가능": "Can move when no target can be selected"
+  ,"리콜 관련 지형·경직 문제 수정": "Fixed terrain and immobilization issues related to Recall"
+  ,"마인드 컨트롤 대상 유닛은 보급품 소모": "Mind Control targets consume Supply"
+  ,"공격은 근접 유형이 아니도록 변경": "Attack is no longer classified as melee"
+  ,"파수기와 화염차 공격에 언덕 빗나감 확률 적용": "Sentry and Hellion attacks are subject to high-ground miss chance"
+  ,"신경 기생충으로 조종한 일꾼이 건물을 완성한 뒤 생산되는 유닛은 보급품 소모": "Units produced after a worker controlled by Neural Parasite completes a structure consume Supply"
+  ,"거신·파수기·공허 포격기·모선·화염차 공격은 다크 스웜 및 부시 속 유닛에게 빗나감": "Colossus, Sentry, Void Ray, Mothership, and Hellion attacks miss units under Dark Swarm and in brush"
+  ,"순간이동 유닛 추적 범위: 공격 사거리 내 → 플레이어 시야 내": "Teleport Unit Tracking Radius: within Attack Range → within player Vision"
+  ,"인터셉터 보호막 재생: 42 → ∞": "Interceptor Shield Regeneration: 42 → ∞"
+  ,"초기 인터셉터 수: 0 → 4 → 0": "Starting Interceptor Count: 0 → 4 → 0"
+  ,"디스럽션 웹 에너지: 125 → 100": "Disruption Web Energy: 125 → 100"
+  ,"애시드 스포어는 인터셉터 출격 지연 시간을 증가시키지 않음": "Acid Spore does not increase Interceptor Launch Period"
+  ,"인터셉터 무기: 즉발 레이저 → 투사체": "Interceptor Weapon: hitscan laser → projectile"
+  ,"리콜 발동 지연: 1.43 → 0.98": "Recall Trigger Delay: 1.43 → 0.98"
+  ,"이래디에이트 효과 범위: 대상 반경 + 1 → 대상 반경 + 1.125": "Irradiate Effect Radius: Target Radius + 1 → Target Radius + 1.125"
+  ,"(스타2 대비 자원 채취율 6% → 5.5%)": "(Resource Gathering Rate vs. SC2: 6% → 5.5%)"
+  ,"4인용 맵에서 두 플레이어가 한 변에 붙어있을 경우, 미니맵 핑이 50% 확률로 가로 + 세로 형태가 됨.": "On four-player maps, when two players spawn along the same side, the minimap ping displays in a horizontal + vertical shape with 50% chance."
+  ,"실드 방어력 1은 이제 폭발형·진동형 피해를 1이 아닌 0.75만큼 감소시킴.": "Each point of Shield Armor now reduces Explosive and Concussive damage by 0.75 instead of 1."
+  ,"차량 방어력 업그레이드 비용": "Vehicle Armor Upgrade Cost"
+  ,"이제 다른 전투 유닛과 유사하게 적 유닛의 어그로를 끌게 됨.": "Now draws enemy aggro similarly to other combat units."
+  ,"더 이상 마인드 컨트롤로 빼앗은 유닛이 보급품을 소모하지 않습니다.": "Units taken over with Mind Control no longer consume Supply."
+  ,"아드레날린 공격 속도 증가량: 37.5% → 40%": "Adrenal Glands Attack Speed Increase: 37.5% → 40%"
+  ,"반경: 0.875 → 0.75 (1.14.1 버전으로 롤백)": "Radius: 0.875 → 0.75 (reverted to version 1.14.1)"
+  ,"모델 크기: 4.76% 감소 (1.14.1 버전으로 롤백)": "Model Size: decreased by 4.76% (reverted to version 1.14.1)"
+  ,"스캐럽 공격력 증가 보너스 공격력: 25 (보호막 +30) → 25 (보호막 +25)": "Scarab Damage Upgrade Bonus: 25 (Shields +30) → 25 (Shields +25)"
+  ,"쿠션 사거리: 3 → 3.375": "Cushion Range: 3 → 3.375"
+  ,"공격 명령 중 탐색 반경: 5 → 15": "Attack Order Search Radius: 5 → 15"
+  ,"이제 공격할 때 감속이 이루어짐": "Now decelerates while attacking"
+  ,"인페스트 커맨드 센터 시전 시간: 5.71 → 2.68": "Infest Command Center Cast Time: 5.71 → 2.68"
+  ,"이제 퀸이 인페스트 커맨드 센터 시전 중 건물 내부로 진입.": "Queens can now enter structures while casting Infest Command Center."
+  ,"이제 패러사이트가 대상 머리 위에 표시 안됨 (대신 디버프 표기)": "Parasite is no longer displayed above the target's head (shown as a debuff instead)."
+  ,"이제 브루들링 소환 투사체가 대상에 닿기 전에 퀸이 죽을 경우 투사체가 제거됨.": "Spawn Broodling projectiles are now removed if the Queen dies before they reach the target."
+  ,"컨슘 시전 시간: 0.23 → 0.13": "Consume Cast Time: 0.23 → 0.13"
+  ,"틱당 피해량: 0.9375 → 3.95": "Damage per Tick: 0.9375 → 3.95"
+  ,"야마토 건 에너지 비용: 125 → 100": "Yamato Gun Energy Cost: 125 → 100"
+  ,"틱 주기: 0.09 → 0.36": "Tick Period: 0.09 → 0.36"
+  ,"이제 스테이시스 필드가 영웅 유닛을 대상으로 삼을 수 있음.": "Stasis Field can now target Heroic units."
+  ,"이제 컴샛 스테이션이 부착된 커맨드 센터는 직접 스캔 사용 가능": "Command Centers with an attached Comsat Station can now use Scanner Sweep directly"
+  ,"안테나 진화 보너스 시야: +3 → +2": "Antennae Evolution Bonus Vision: +3 → +2"
+  ,"사이오닉 스톰 CP 감소 - 초기 지연 시간: 0.3 → 0.13": "Psionic Storm CP Reduction - Initial Delay: 0.3 → 0.13"
+  ,"이제 벙커나 수송선 내부에서 치료 불가": "Healing can no longer be used inside Bunkers or transport units"
+  ,"이제 마지막 스캐럽을 발사한 후 지상에 공격 명령이 내려졌을 경우, 2.23초 동안 제자리에 머무름.": "After firing the last Scarab, the Reaver remains in place for 2.23 seconds when issued a ground attack command."
+  ,"지상 공격 이동 명령이 다시 내려지면, 해당 위치로 이동하면서 새로운 스캐럽이 생산될 때까지 전진": "When a ground attack-move command is issued again, advances toward that position until a new Scarab is produced."
+  ,"특정 유닛을 대상으로 공격 명령이 내려지면, 거리를 유지한 채 공격 지속": "When issued an attack command on a specific unit, continues attacking while maintaining distance."
+  ,"탐지기 배열 개발 비용: 50/50 → 75/75": "Sensor Array Research Cost: 50/50 → 75/75"
+  ,"탐지기 배열 개발 시간: 64.3 → 35.7": "Sensor Array Research Time: 64.3 → 35.7"
+  ,"에이피얼 탐지기 개발 비용: 50/50 → 75/75": "Apial Sensors Research Cost: 50/50 → 75/75"
+  ,"모델 크기: 12.5% 증가 시켰다가 6.67% 감소": "Model Size: increased by 12.5%, then reduced by 6.67%"
+  ,"캐리어 수용력 개발 비용: 200/200 → 100/100": "Carrier Capacity Research Cost: 200/200 → 100/100"
+  ,"캐리어 수용력 개발 시간: 64.3 → 57.1": "Carrier Capacity Research Time: 64.3 → 57.1"
+  ,"폭발형, 진동형": "Explosive · Concussive"
+  ,"초당 체력 회복량: 16.8 → 12.6": "Health Regeneration per second: 16.8 → 12.6"
+  ,"사이오닉 스톰 시전 시작 시간: 0 → 0.18": "Psionic Storm Cast Start Time: 0 → 0.18"
+  ,"사이오닉 스톰 시전 마무리 시간: 0.36 → 0.22": "Psionic Storm Cast Finish Time: 0.36 → 0.22"
+  ,"이제 마인드 컨트롤이 빼앗은 유닛의 완료된 개발를 플레이어에게 영구 귀속": "Completed research of units taken over by Mind Control is now permanently granted to the player"
+  ,"공격력 및 방어력 업그레이드는 제외": "Excludes Damage and Armor upgrades"
+  ,"이제 동맹 유닛을 대상으로 마인드 컨트롤 시전 가능": "Mind Control can now target allied units"
+  ,"이제 마인드 컨트롤로 빼앗은 유닛의 보급품이 정상적으로 플레이어의 보급품에 가산됨": "Supply from units taken over with Mind Control is now correctly added to the player's Supply"
+  ,"리버에 스캐럽이 없어도 무기 쿨다운이 돌던 문제 수정": "Fixed Reaver weapon cooldown progressing even with no Scarabs"
+  ,"속성: 중장갑 → 무장갑": "Attribute: Armored → Unarmored"
+  ,"컨슘 진화 필요": "Consume Evolution required"
+  ,"비용: 100/100, 57.1초": "Cost: 100/100, 57.1 seconds"
+  ,"이제 마인드 컨트롤 당한 다크 아콘은 그 에너지가 즉시 고갈됨": "Dark Archons affected by Mind Control now have their Energy immediately depleted"
+  ,"이제 마인드 컨트롤 당한 다크 아칸은 그 에너지가 즉시 고갈됨": "Dark Archons affected by Mind Control now have their Energy immediately depleted"
+  ,"디바우러의 산성 포자가 연속적인 빔 무기의 공격 주기를 낮추지 않던 문제 해결 (예언자, 파수기, 공허포격기)": "Fixed Devourer Acid Spores not reducing the attack cooldown of continuous beam weapons (Oracle, Sentry, Void Ray)"
+  ,"공격 간 지연 시간: 0.25 → 0.42": "Delay Between Attacks: 0.25 → 0.42"
+  ,"발키리의 공격은 미사일 8개가 네 쌍으로 묶여 나감. 위 변화는 각 쌍이 발사되기까지의 시간을 조정": "Valkyrie attacks launch eight missiles in four pairs. This change adjusts the delay before each pair fires."
+  ,"모든 BW·스타2 원거리 무기에 빗나감 기능 적용": "Added miss mechanics to all BW and SC2 ranged weapons"
+  ,"낮은 지형에서 높은 지형 공격·수풀 속 대상 공격: 46.875% 확률로 빗나감": "Attacks from low ground to high ground, or against targets in brush: 46.875% miss chance"
+  ,"다크 스웜 안의 대상 공격: 100% 빗나감 / 관통형 무기는 빗나가지 않음": "Attacks against targets under Dark Swarm: 100% miss chance / Piercing weapons do not miss"
+  ,"공격이 빗나가면 방사 피해 지점도 빗나감": "When an attack misses, its splash-damage impact point also misses"
+  ,"다시보기 되감기 충돌 문제 수정": "Fixed replay rewind collision issue"
+  ,"플레이그가 가스 구조물에 적용되지 않던 문제 수정": "Fixed Plague not applying to gas structures"
+  ,"사이클론 락온을 주문으로 분류하고 다크 스웜 안의 대상도 지정 가능하도록 수정": "Classified Cyclone Lock On as a spell and allowed it to target units under Dark Swarm"
+  ,"인스네어·마엘스트롬·스테이시스 필드가 잠복 유닛을 대상으로 지정 가능하도록 수정": "Allowed Ensnare, Maelstrom, and Stasis Field to target burrowed units"
+  ,"프로토스 공통": "Protoss General"
+  ,"보호막 초당 재생량: 0.6125 → 0.9954": "Shield Regeneration per second: 0.6125 → 0.9954"
+  ,"클로킹 연구 필요: 코버트 옵스": "Cloaking research requirement: Covert Ops"
+  ,"클로킹 연구 비용/시간: 100/100·35": "Cloaking research Cost/Time: 100/100 · 35"
+  ,"아군 밀치기 우선순위: 0 → 1": "Allied Push Priority: 0 → 1"
+  ,"공격 사거리를 선택 시 표시": "Display Attack Range when selected"
+  ,"인스네어 연구 필요: 퀸즈 네스트": "Ensnare research requirement: Queen's Nest"
+  ,"인스네어 연구 비용/시간: 100/100·35": "Ensnare research Cost/Time: 100/100 · 35"
+  ,"인페스트 커맨드 센터 시전 시간: 0 → 5.7": "Infest Command Center Cast Time: 0 → 5.7"
+  ,"스테이시스 필드 사거리: 9 → 8": "Stasis Field Range: 9 → 8"
+  ,"인구: 6 → 5 → 6": "Supply: 6 → 5 → 6"
+  ,"리콜이 공유 제어 상태의 동맹 유닛에도 사용 가능": "Recall can also be used on allied units under shared control"
+  ,"지상/공중 사거리: 6 → 7": "Ground/Air Range: 6 → 7"
+  ,"야마토 건 에너지: 125 → 100": "Yamato Gun Energy: 125 → 100"
+  ,"야마토 건 시전/투사체 사거리: 10/20 → 13/26 → 12/24": "Yamato Gun Cast/Projectile Range: 10/20 → 13/26 → 12/24"
+  ,"사이오닉 스톰 선딜: 0.13 → 0.3": "Psionic Storm Wind-up: 0.13 → 0.3"
+  ,"스캐럽 공격력 증가 개발의 보너스 공격력: 25 → 20 (보호막 +35)": "Scarab Damage Upgrade Bonus: 25 → 20 (Shields +35)"
+  ,"탐지기 배열 개발 비용: 100/100 → 50/50": "Sensor Array Research Cost: 100/100 → 50/50"
+  ,"캐리어 수용력 증가 개발 비용: 100/100 → 200/200": "Carrier Capacity Research Cost: 100/100 → 200/200"
+  ,"캐리어 수용력 증가 개발 시간: 57 → 64": "Carrier Capacity Research Time: 57 → 64"
+  ,"공격 투사체 삭제 (즉발 공격)": "Removed attack projectile (hitscan attack)"
+  ,"(스타2 대비 자원 채취율 5% → 6%)": "(Resource Gathering Rate vs. SC2: 5% → 6%)"
+  ,"이제 공격 중에 이동할 수 없음": "Can no longer move while attacking"
+  ,"발키리의 감속이 즉시 이루어지던 문제 수정": "Fixed Valkyrie deceleration being applied instantly"
+  ,"(스타2 대비 자원 채취율 9% → 5%)": "(Resource Gathering Rate vs. SC2: 9% → 5%)"
+  ,"다른 지상 유닛과 함께 있을 때 적 지상 유닛에게 자동으로 타겟팅되지 않음": "Not automatically targeted by enemy ground units when among other ground units"
+  ,"스테이시스 필드가 영웅 속성 유닛을 대상으로 삼지 못함": "Stasis Field cannot target Heroic units"
+  ,"이제 아콘 및 다크 아콘이 합체한 유닛들의 상태 이상을 그대로 이어 받음": "Archons and Dark Archons now inherit status effects from their merged units"
+  ,"이제 아칸 및 다크 아칸이 합체한 유닛들의 상태 이상을 그대로 이어 받음": "Archons and Dark Archons now inherit status effects from their merged units"
+  ,"리버가 스타1때와 더 비슷하게 행동하도록 변경": "Changed Reaver behavior to more closely match StarCraft I"
+  ,"더 이상 리버가 직접 닿을 수 없는 대상을 자동으로 타겟팅하지 않음": "Reavers no longer automatically target units they cannot directly reach"
+  ,"이제 첫 스캐럽이 터지기 전까지 다음 스캐럽이 발사되지 못함": "The next Scarab can no longer fire before the first Scarab detonates"
+  ,"뉴클리어 스트라이크 공격력: 기본450 / 경장300 / 중장600 → 500 또는 전체 체력의 2/3 중 더 큰 값": "Nuclear Strike Damage: Base 450 / Light 300 / Armored 600 → 500 or two-thirds of total Health, whichever is greater"
+  ,"스1 모든 에너지 업그레이드": "All SC1 Energy Upgrades"
+  ,"럴커 에그 반경: 0.5 → 0.625": "Lurker Egg Radius: 0.5 → 0.625"
+  ,"미사일 발사 간격 단축": "Reduced missile launch interval"
+  ,"리버 수용력 증가 개발 비용: 150/150 → 100/100": "Reaver Capacity Research Cost: 150/150 → 100/100"
+  ,"리버 수용력 증가 개발 시간: 93 → 57": "Reaver Capacity Research Time: 93 → 57"
+  ,"공격 주기: 0.98 → 1.07 (스2 일꾼 동일)": "Attack Cooldown: 0.98 → 1.07 (matches SC2 workers)"
+  ,"에너지 재생량: 0.7 → 0.7875 (오류값 수정)": "Energy Regeneration: 0.7 → 0.7875 (corrected)"
+  ,"(스타2 대비 자원 채취율 12% → 9%)": "(Resource Gathering Rate vs. SC2: 12% → 9%)"
+  ,"셔틀에 스캐럽 생산 버튼 추가": "Added Scarab Production button to Shuttle"
+  ,"에이피얼 탐지기 개발 비용: 100/100 → 50/50": "Apial Sensors Research Cost: 100/100 → 50/50"
+  ,"에이피얼 탐지기 개발 시간: 79 → 36": "Apial Sensors Research Time: 79 → 36"
+  ,"부르들링 소환 시전 사거리: 9 → 10": "Spawn Broodlings Cast Range: 9 → 10"
+  ,"부르들링 소환 에너지 소모량: 125 → 150": "Spawn Broodlings Energy Cost: 125 → 150"
+  ,"사이오닉 스톰 쿨타임: 3 → 2": "Psionic Storm Cooldown: 3 → 2"
+  ,"마인드 컨틀롤 개발 시간: 80 → 71": "Mind Control Research Time: 80 → 71"
+  ,"중력 구동기 개발 보너스 가속력: 0.75": "Gravitic Drive Research Bonus Acceleration: 0.75"
+  ,"리버 수용력 증가 개발 시간: 79 → 93": "Reaver Capacity Research Time: 79 → 93"
+  ,"다크스웜 에너지 소모량: 75 → 100": "Dark Swarm Energy Cost: 75 → 100"
+  ,"다크스웜 에너지 소모량: 100 → 75": "Dark Swarm Energy Cost: 100 → 75"
+  ,"회복량: 초당 2.8 → 초당 0.6125": "Restoration per second: 2.8 → 0.6125"
+  ,"마인트 컨트롤 개발 시간: 128 → 71": "Mind Control Research Time: 128 → 71"
+  ,"탐지기 배열 개발 비용: 100/110 → 100/100": "Sensor Array Research Cost: 100/110 → 100/100"
+  ,"초기 인터셉터 수: 2 → 0": "Starting Interceptor Count: 2 → 0"
+};
+
+// 새 패치 항목도 별도 번역표 없이 처리할 수 있는 정형 문장 규칙이다.
+// 서술형 밸런스/버그 수정 문장은 정확한 의미를 위해 PATCH_TEXT_EN_EXACT에 추가한다.
+var PATCH_TEXT_EN_AUTO_RULES = [
+  { pattern: /^(.+?)\s+(개발|연구|진화)\s+필요$/, render: function(match, name, kind) { return patchTranslateFragment(name) + " " + ({ "개발": "Research", "연구": "Research", "진화": "Evolution" }[kind]) + " required"; } },
+  { pattern: /^(.+?)\s+(개발|연구|진화)\s+제거$/, render: function(match, name, kind) { return "Removed " + patchTranslateFragment(name) + " " + ({ "개발": "Research", "연구": "Research", "진화": "Evolution" }[kind]); } },
+  { pattern: /^(.+?)\s+추가$/, render: function(match, name) { return "Added " + patchTranslateFragment(name); } },
+  { pattern: /^(.+?)\s+제거$/, render: function(match, name) { return "Removed " + patchTranslateFragment(name); } },
+  { pattern: /^(.+?)\s+사용 가능$/, render: function(match, name) { return patchTranslateFragment(name) + " is now available"; } }
+];
+
+var PATCH_TEXT_EN_REPLACEMENTS = [
+  ["보호막 대상 피해 계수", "Damage multiplier vs. Shields"],
+  ["폭발형 무기 경장갑 피해 계수", "Explosive damage multiplier vs. Light"],
+  ["진동형 무기 중장갑 피해 계수", "Concussive damage multiplier vs. Armored"],
+  ["보호막/체력", "Shields / Health"],
+  ["공중 공격 주기", "Air Attack Cooldown"],
+  ["지상 공격 주기", "Ground Attack Cooldown"],
+  ["공중 공격 사거리", "Air Attack Range"],
+  ["지상 공격 사거리", "Ground Attack Range"],
+  ["공중 공격력", "Air Damage"],
+  ["지상 공격력", "Ground Damage"],
+  ["공중 방어력", "Air Armor"],
+  ["지상 방어력", "Ground Armor"],
+  ["초기 인터셉터 수", "Starting Interceptors"],
+  ["초기 스캐럽 수", "Starting Scarabs"],
+  ["인터셉터 출격 지연 시간", "Interceptor Launch Period"],
+  ["인터셉터 공격 주기", "Interceptor Attack Cooldown"],
+  ["공격력 업그레이드 수치", "Damage Upgrade Bonus"],
+  ["공격 속도 증가량", "Attack Speed Increase"],
+  ["이동 속도 증가량", "Movement Speed Increase"],
+  ["자원 채취율", "Resource Gathering Rate"],
+  ["일꾼 가속도", "Worker Acceleration"],
+  ["번째 대상에게 입히는 공격 피해량 배율", "Damage multiplier to the next target"],
+  ["스캐럽 내부 반경", "Scarab Inner Radius"],
+  ["내부 반경", "Inner Radius"],
+  ["출격 지연 시간", "Launch Period"],
+  ["피해 중첩", "Damage Stacking"],
+  ["지상 공격 추가 피해", "Ground Attack Bonus Damage"],
+  ["공격 추가 피해", "Attack Bonus Damage"],
+  ["스캐럽 이동 속도", "Scarab Movement Speed"],
+  ["스파이더 마인 발동 사거리", "Spider Mine Trigger Range"],
+  ["스캐럽 생산", "Scarab Production"],
+  ["스캐럽 생산 시간", "Scarab Production Time"],
+  ["무기 탐색 범위", "Weapon Acquisition Range"],
+  ["공격 사거리 편차", "Attack Range Offset"],
+  ["공격 후 딜레이", "Attack Backswing"],
+  ["넥서스에서", "At the Nexus"],
+  ["타일", "tiles"],
+  ["공격", "Attack"],
+  ["이동", "Movement"],
+  ["공격 탐색 범위", "Attack Acquisition Range"],
+  ["공격 대상 우선 순위", "Attack Target Priority"],
+  ["공격 우선 순위값", "Attack Priority"],
+  ["공격 유지 회전 보정 범위", "Attack Turning Arc"],
+  ["공격 원호 편차", "Attack Arc Offset"],
+  ["이동 중 공격 원호 편차", "Moving Attack Arc Offset"],
+  ["공격 중 이동 불가 시간", "Attack Movement Lockout"],
+  ["공격 시 움직임 억제 시간", "Attack Movement Lockout"],
+  ["공격 시작 지연", "Attack Start Delay"],
+  ["발사체 최대 사거리", "Projectile Maximum Range"],
+  ["투사체 초기 속도", "Projectile Initial Speed"],
+  ["투사체 속도", "Projectile Speed"],
+  ["미사일 발사 간격", "Missile Launch Interval"],
+  ["미사일 속도", "Missile Speed"],
+  ["미사일 크기", "Missile Size"],
+  ["정지 회전 속도", "Stationary Turn Rate"],
+  ["회전 속도", "Turn Rate"],
+  ["발동 범위", "Trigger Radius"],
+  ["들이기 시간", "Load Time"],
+  ["들이기 범위", "Load Radius"],
+  ["들이기", "Load"],
+  ["내보내기 속도", "Unload Speed"],
+  ["드랍 스턴", "Drop Stun"],
+  ["생산 자동 시전 기능", "Production Autocast"],
+  ["초기 피해량", "Initial Damage"],
+  ["총 피해량", "Total Damage"],
+  ["추가 피해", "Bonus Damage"],
+  ["대상 지정", "Targeting"],
+  ["대상", "Target"],
+  ["요구 사항", "Requirements"],
+  ["요구사항", "Requirements"],
+  ["변태 시간", "Morph Time"],
+  ["변태", "Morph"],
+  ["유닛 반경", "Unit Radius"],
+  ["모델 크기", "Model Size"],
+  ["일꾼", "Worker"],
+  ["보급품", "Supply"],
+  ["건물", "Structure"],
+  ["동맹", "Allied"],
+  ["적 유닛", "Enemy Unit"],
+  ["유닛", "Unit"],
+  ["속성", "Attribute"],
+  ["효과", "Effect"],
+  ["발동", "Trigger"],
+  ["출구", "Exit"],
+  ["수풀", "Brush"],
+  ["지형", "Terrain"],
+  ["완료", "Complete"],
+  ["추적", "Tracking"],
+  ["순간이동", "Teleport"],
+  ["탐지기", "Detector"],
+  ["감속", "Deceleration"],
+  ["무빙샷 공격 비활성화 딜레이", "Moving Attack Disable Delay"],
+  ["무빙샷 공격 사거리 보정", "Moving Attack Range Offset"],
+  ["무빙샷 공격 각도 보정", "Moving Attack Angle Offset"],
+  ["공격 각도 보정", "Attack Angle Offset"],
+  ["공격 사거리 보정", "Attack Range Offset"],
+  ["공격 후 딜레이", "Post-Attack Delay"],
+  ["선딜레이", "Wind-up"],
+  ["선딜", "Wind-up"],
+  ["후딜레이", "Backswing"],
+  ["선딜 제거", "Removed Wind-up"],
+  ["수용량 증가", "Capacity Increase"],
+  ["수용량", "Capacity"],
+  ["유닛 반경", "Unit Radius"],
+  ["분리 반경", "Separation Radius"],
+  ["이동 중 분리 반경", "Movement Separation Radius"],
+  ["순간이동 유닛 추적 범위", "Teleport Unit Tracking Radius"],
+  ["측면 가속도", "Lateral Acceleration"],
+  ["지상 공격 선딜레이", "Ground Attack Wind-up"],
+  ["공격 중 고정시간", "Attack Lockout"],
+  ["광륜 로켓 발사 간격", "Halo Rocket Launch Interval"],
+  ["동맹 밀어내기 우선순위", "Allied Push Priority"],
+  ["인터셉터 무기", "Interceptor Weapon"],
+  ["인터셉터 보호막 재생", "Interceptor Shield Regeneration"],
+  ["초기 인터셉터 수", "Starting Interceptor Count"],
+  ["패러사이트", "Parasite"],
+  ["브루들링", "Broodling"],
+  ["광란", "Frenzy"],
+  ["버로우 소요 시간", "Burrow Time"],
+  ["언버로우 시간", "Unburrow Time"],
+  ["언버로우 무작위 지연 시간", "Unburrow Random Delay"],
+  ["언버로우 무작위 지연", "Unburrow Random Delay"],
+  ["재충전 대기 시간", "Recharge Delay"],
+  ["보호막 재충전", "Shield Recharge"],
+  ["보호막 회복량", "Shield Restoration"],
+  ["체력 재생량", "Health Regeneration"],
+  ["에너지 소모량", "Energy Cost"],
+  ["에너지 회복량", "Energy Regeneration"],
+  ["시전 사거리", "Cast Range"],
+  ["효과 반경", "Effect Radius"],
+  ["방사 피해 범위", "Splash Radius"],
+  ["공격 사거리", "Attack Range"],
+  ["공격 주기", "Attack Cooldown"],
+  ["공격력", "Damage"],
+  ["이동 속도", "Movement Speed"],
+  ["가속도", "Acceleration"],
+  ["가속력", "Acceleration"],
+  ["감속도", "Deceleration"],
+  ["건설 시간", "Construction Time"],
+  ["생산 시간", "Build Time"],
+  ["빌드 타임", "Build Time"],
+  ["빌드타임", "Build Time"],
+  ["소환 시간", "Warp-In Time"],
+  ["변이 시간", "Morph Time"],
+  ["생성 시간", "Spawn Time"],
+  ["개발 시간", "Research Time"],
+  ["연구 시간", "Research Time"],
+  ["진화 시간", "Evolution Time"],
+  ["초기 인터셉터 수", "Starting Interceptor Count"],
+  ["초기 스캐럽 수", "Starting Scarab Count"],
+  ["무작위 지연", "Random Delay"],
+  ["추가 사거리", "Bonus Range"],
+  ["개발 비용", "Research Cost"],
+  ["연구 비용", "Research Cost"],
+  ["보너스 사거리", "Bonus Range"],
+  ["보너스 이동 속도", "Bonus Movement Speed"],
+  ["이동 직후 공격 불가 시간", "Post-move Attack Delay"],
+  ["이동 중 공격 사거리 편차", "Moving Attack Range Offset"],
+  ["피해 주기", "Damage Period"],
+  ["주기당 피해량", "Damage per Period"],
+  ["최대 피해량", "Maximum Damage"],
+  ["피해 계수", "Damage Multiplier"],
+  ["피해량", "Damage"],
+  ["체력", "Health"],
+  ["보호막", "Shields"],
+  ["방어력", "Armor"],
+  ["시야", "Vision"],
+  ["탐지 범위", "Detection Range"],
+  ["초기 에너지", "Starting Energy"],
+  ["비용", "Cost"],
+  ["반경", "Radius"],
+  ["지속 시간", "Duration"],
+  ["쿨다운", "Cooldown"],
+  ["재사용 대기시간", "Cooldown"],
+  ["초당", "per second"],
+  ["기본", "Base"],
+  ["경장갑", "Light"],
+  ["중장갑", "Armored"],
+  ["거대", "Massive"],
+  ["지상", "Ground"],
+  ["공중", "Air"],
+  ["무기한", "Unlimited"],
+  ["오류값 수정", "corrected"],
+  ["스1", "SC1"],
+  ["스2", "SC2"],
+  ["속업", "speed upgrade"],
+  ["발업", "speed upgrade"],
+  ["자동 시전", "Autocast"],
+  ["수동 시전", "Manual Cast"],
+  ["증가량", "Increase"],
+  ["증가", "Increase"],
+  ["감소", "Decrease"],
+  ["변경", "Changed"],
+  ["수정", "Fixed"],
+  ["문제", "issue"],
+  ["오류", "error"],
+  ["더 이상", "no longer"],
+  ["이제", "Now"],
+  ["않음", "not"],
+  ["추가", "Added"],
+  ["제거", "Removed"]
+];
+
+function patchTranslateFragment(text) {
+  var output = String(text || "");
+  var protectedTerms = [];
+  if (typeof GAME_TERM_EN !== "undefined") {
+    Object.keys(GAME_TERM_EN).sort(function(a, b) { return b.length - a.length; }).forEach(function(term) {
+      if (output.indexOf(term) < 0) return;
+      var token = "@@PATCHTERM" + protectedTerms.length + "@@";
+      output = output.split(term).join(token);
+      protectedTerms.push({ token: token, term: term });
+    });
+  }
+  if (typeof UNIT_DATA !== "undefined" && Array.isArray(UNIT_DATA)) {
+    UNIT_DATA.slice().sort(function(a, b) { return b.name.length - a.name.length; }).forEach(function(unit) {
+      if (unit && unit.name && unit.engName) output = output.split(unit.name).join(unit.engName);
+    });
+  }
+  protectedTerms.forEach(function(item) { output = output.split(item.token).join(item.term); });
+  PATCH_TEXT_EN_REPLACEMENTS.slice().sort(function(a, b) { return b[0].length - a[0].length; }).forEach(function(pair) {
+    output = output.split(pair[0]).join(pair[1]);
+  });
+  return displayGameTerm(output);
+}
+
+function displayPatchText(text) {
+  var output = normalizePatchDisplayText(text);
+  if (selectedLanguage !== "en" || !output) return output || "";
+  output = String(output).trim();
+
+  // 일반 항목이 아닌 서술형 변경은 원문과 같은 의미의 완결된 영문으로 우선 처리한다.
+  var withoutBullet = output.replace(/^\s*[•◦]\s*/, "");
+  if (PATCH_TEXT_EN_EXACT[withoutBullet]) {
+    var bullet = /^\s*[•◦]/.test(output) ? " • " : "";
+    return bullet + PATCH_TEXT_EN_EXACT[withoutBullet];
+  }
+
+  for (var ruleIndex = 0; ruleIndex < PATCH_TEXT_EN_AUTO_RULES.length; ruleIndex++) {
+    var rule = PATCH_TEXT_EN_AUTO_RULES[ruleIndex];
+    var ruleMatch = withoutBullet.match(rule.pattern);
+    if (ruleMatch) {
+      var autoBullet = /^\s*[•◦]/.test(output) ? " • " : "";
+      return autoBullet + rule.render.apply(null, ruleMatch);
+    }
+  }
+
+  // "옵티컬 플레어" 안의 "레어"처럼 능력명 일부가 유닛명과 겹치지 않도록
+  // 먼저 게임 용어를 임시 보호한 뒤 유닛명을 치환한다.
+  // 복합 스탯명은 짧은 일반 용어보다 먼저 치환해 한국어 조각이 남지 않게 한다.
+  return patchTranslateFragment(output);
+}
+
 function renderPatchArrowChangeText(text) {
   var rawText = String(text || "");
   var firstArrow = rawText.indexOf("→");
@@ -16881,20 +17884,21 @@ function renderPatchColumn(sections, contentKey, tagKey) {
   var hideNextAutoDivider = false;
   for (var i = 0; i < sections.length; i++) {
     var sec = sections[i];
-    var text = normalizePatchDisplayText(sec[contentKey] || "");
+    var rawText = normalizePatchDisplayText(sec[contentKey] || "");
+    var text = displayPatchText(rawText);
     var tag = sec[tagKey] || "";
     var noAutoDivider = !!sec[contentKey + "NoAutoDivider"];
-    if (!text && !tag) continue;
+    if (!rawText && !tag) continue;
 
-    if (isPatchDivider(text)) {
+    if (isPatchDivider(rawText)) {
       html += "<div class='ph-manual-divider' aria-hidden='true'></div>";
-    } else if (isUnitHeader(text)) {
+    } else if (isUnitHeader(rawText)) {
       // 유닛·구조물 제목 행에도 하위 버전이 입력될 수 있다.
       // 내용 행과 동일하게 제목 오른쪽에 버전 배지를 출력한다.
       html += "<div class='ph-unit-header" + (noAutoDivider || hideNextAutoDivider ? " ph-unit-header-no-divider" : "") + "'>" + escHtml(text) + (tag ? " " + renderPatchTag(tag) : "") + "</div>";
       hideNextAutoDivider = false;
     } else if (text) {
-      var isSubItem = /^\s*◦/.test(text) || text.indexOf("◦") >= 0;
+      var isSubItem = /^\s*◦/.test(rawText) || rawText.indexOf("◦") >= 0;
       var lineCls = isSubItem ? "ph-line ph-sub-item" : "ph-line";
       var highlightedChange = renderPatchArrowChangeText(text);
       var lineHtml = highlightedChange || escHtml(text);
@@ -17042,7 +18046,7 @@ function renderPatchBlocks(blocks, offsetIndex) {
         var subSourceUrl = getPatchSourceUrl(subInfo.ver, mainInfo.ver);
 
         if (subSourceUrl) {
-          return "<a href='" + escHtml(subSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-sub-chip " + cls + " is-link' title='" + escHtml(subVerStr) + " 패치노트 원문 보기' onclick='event.stopPropagation();'>" +
+          return "<a href='" + escHtml(subSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-sub-chip " + cls + " is-link' title='" + escHtml(subVerStr) + (selectedLanguage === "en" ? " View original patch notes" : " 패치노트 원문 보기") + "' onclick='event.stopPropagation();'>" +
                  "<span class='ph-chip-ver'>" + escHtml(subVerStr) + "</span>" +
                  dateHtml +
                  EXT_LINK_SVG +
@@ -17057,10 +18061,10 @@ function renderPatchBlocks(blocks, offsetIndex) {
     }
 
     var cols = [
-      { label: "공통", key: "common", tagKey: "commonTag", cls: "ph-col-common" },
-      { label: "테란",   key: "terran",  tagKey: "terranTag",  cls: "ph-col-terran" },
-      { label: "프로토스", key: "protoss", tagKey: "protossTag", cls: "ph-col-protoss" },
-      { label: "저그",   key: "zerg",    tagKey: "zergTag",    cls: "ph-col-zerg" }
+      { label: selectedLanguage === "en" ? "General" : "공통", key: "common", tagKey: "commonTag", cls: "ph-col-common" },
+      { label: selectedLanguage === "en" ? "Terran" : "테란", key: "terran", tagKey: "terranTag", cls: "ph-col-terran" },
+      { label: selectedLanguage === "en" ? "Protoss" : "프로토스", key: "protoss", tagKey: "protossTag", cls: "ph-col-protoss" },
+      { label: selectedLanguage === "en" ? "Zerg" : "저그", key: "zerg", tagKey: "zergTag", cls: "ph-col-zerg" }
     ];
 
     var colsHtml = "";
@@ -17080,7 +18084,7 @@ function renderPatchBlocks(blocks, offsetIndex) {
 
     var mainSourceBadge = "";
     if (mainSourceUrl) {
-      mainSourceBadge = "<a href='" + escHtml(mainSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-source-badge' title='" + escHtml(mainVerStr) + " 패치노트 원문 보기' onclick='event.stopPropagation();'>" +
+      mainSourceBadge = "<a href='" + escHtml(mainSourceUrl) + "' target='_blank' rel='noopener noreferrer' class='ph-source-badge' title='" + escHtml(mainVerStr) + (selectedLanguage === "en" ? " View original patch notes" : " 패치노트 원문 보기") + "' onclick='event.stopPropagation();'>" +
                         EXT_LINK_SVG +
                         "</a>";
     }
@@ -17769,7 +18773,7 @@ function renderPatchView(isLoadMore, prevCount) {
       if (remaining > 0) {
         var addCount = Math.min(20, remaining);
         loadMoreWrap.innerHTML = "<button type='button' class='ph-btn-load-more' onclick='loadMorePatchBlocks()'>" +
-                                 "더 보기 (+" + addCount + ")" +
+                                 (selectedLanguage === "en" ? "Load more (+" : "더 보기 (+") + addCount + ")" +
                                  "</button>";
       } else {
         loadMoreWrap.remove();
@@ -17784,7 +18788,7 @@ function renderPatchView(isLoadMore, prevCount) {
       var addCount = Math.min(20, remaining);
       btnHtml = "<div class='ph-load-more-wrap'>" +
                 "<button type='button' class='ph-btn-load-more' onclick='loadMorePatchBlocks()'>" +
-                "더 보기 (+" + addCount + ")" +
+                (selectedLanguage === "en" ? "Load more (+" : "더 보기 (+") + addCount + ")" +
                 "</button>" +
                 "</div>";
     }
@@ -17810,7 +18814,7 @@ function initPatchView() {
     return;
   }
 
-  container.innerHTML = "<div class='ph-loading'>패치 내역을 불러오는 중...</div>";
+  container.innerHTML = "<div class='ph-loading'>" + (selectedLanguage === "en" ? "Loading patch notes..." : "패치 내역을 불러오는 중...") + "</div>";
 
   function renderCsv(text) {
     try {
@@ -17837,7 +18841,7 @@ function initPatchView() {
       _patchVisibleCount = 20;
       renderPatchView(false);
     } catch(e) {
-      container.innerHTML = "<div class='ph-loading'>패치 내역 파싱 중 오류가 발생했습니다.</div>";
+      container.innerHTML = "<div class='ph-loading'>" + (selectedLanguage === "en" ? "Unable to parse patch notes." : "패치 내역 파싱 중 오류가 발생했습니다.") + "</div>";
     }
   }
 
