@@ -18719,6 +18719,7 @@ var _patchAdminVerified = false;
 var _patchEditorKeepAliveId = null;
 var PATCH_EDITOR_KEEPALIVE_MS = 15 * 60 * 1000;
 var VISITOR_ID_KEY = "sc-evo-visitor-id";
+var visitorStatsRefreshTimer = null;
 
 function getVisitorId() {
   try {
@@ -18772,6 +18773,20 @@ function loadVisitorStats() {
   });
 }
 
+function startVisitorStatsRefresh() {
+  if (visitorStatsRefreshTimer || !PATCH_ADMIN_API_URL || !getPatchAdminToken()) return;
+  // 관리자 화면을 열어 둔 동안에도 새 방문자 수를 반영한다.
+  visitorStatsRefreshTimer = window.setInterval(function() {
+    loadVisitorStats().catch(function() {});
+  }, 15000);
+}
+
+function stopVisitorStatsRefresh() {
+  if (!visitorStatsRefreshTimer) return;
+  window.clearInterval(visitorStatsRefreshTimer);
+  visitorStatsRefreshTimer = null;
+}
+
 function recordVisitorVisit() {
   if (!PATCH_ADMIN_API_URL) return;
   var id = getVisitorId();
@@ -18783,8 +18798,10 @@ function recordVisitorVisit() {
    */
   fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/visitors", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ visitorId: id })
+    // 사전 요청 없이 보내고, 탭을 바로 닫아도 작은 집계 요청을 끝까지 전송한다.
+    headers: { "Content-Type": "text/plain;charset=UTF-8" },
+    body: JSON.stringify({ visitorId: id }),
+    keepalive: true
   }).catch(function() {});
 }
 
@@ -19379,12 +19396,14 @@ function initPatchAdmin() {
     if (visitorHistoryBtn) visitorHistoryBtn.hidden = false;
     // 관리자 인증이 끝나는 즉시 영역을 보여, 통계 API가 느려도 화면에서 사라지지 않게 한다.
     showVisitorCounterPending();
+    startVisitorStatsRefresh();
     loadVisitorStats().catch(function() {
       var counter = document.getElementById("visitor-counter");
       if (counter) counter.title = selectedLanguage === "en" ? "Visitor statistics are unavailable" : "접속자 기록을 불러오지 못했습니다.";
     });
   }).catch(function() {
     _patchAdminVerified = false;
+    stopVisitorStatsRefresh();
     stopPatchEditorSessionKeepAlive();
     try { localStorage.removeItem(PATCH_ADMIN_TOKEN_KEY); } catch (e) {}
     status.textContent = "읽기 전용";
