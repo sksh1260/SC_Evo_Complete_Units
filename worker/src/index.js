@@ -26,25 +26,33 @@ export class VisitorCounter extends DurableObject {
     super(ctx, env);
   }
 
+  async cumulativeTotal() {
+    const storage = this.ctx.storage;
+    const savedTotal = await storage.get("cumulative-total");
+    if (savedTotal !== undefined) return Number(savedTotal) || 0;
+
+    // 기존의 고유 방문자 Total을 날짜별 누적 방문 수로 한 번 보정한다.
+    const days = await storage.get("days") || [];
+    let total = 0;
+    for (const savedDay of days) total += Number(await storage.get("day:" + savedDay) || 0);
+    await storage.put("cumulative-total", total);
+    return total;
+  }
+
   async record(visitorId, day) {
     const storage = this.ctx.storage;
-    const visitorKey = "visitor:" + visitorId;
     const dayVisitorKey = "day-visitor:" + day + ":" + visitorId;
-    const totalKey = "total";
     const dayKey = "day:" + day;
-    let total = Number(await storage.get(totalKey) || 0);
+    let total = await this.cumulativeTotal();
     let today = Number(await storage.get(dayKey) || 0);
     const writes = new Map();
 
-    if (!await storage.get(visitorKey)) {
-      total += 1;
-      writes.set(visitorKey, 1);
-      writes.set(totalKey, total);
-    }
     if (!await storage.get(dayVisitorKey)) {
       today += 1;
+      total += 1;
       writes.set(dayVisitorKey, 1);
       writes.set(dayKey, today);
+      writes.set("cumulative-total", total);
       const days = await storage.get("days") || [];
       if (!days.includes(day)) {
         days.push(day);
@@ -60,7 +68,7 @@ export class VisitorCounter extends DurableObject {
   async stats(day) {
     return {
       today: Number(await this.ctx.storage.get("day:" + day) || 0),
-      total: Number(await this.ctx.storage.get("total") || 0)
+      total: await this.cumulativeTotal()
     };
   }
 
@@ -69,7 +77,7 @@ export class VisitorCounter extends DurableObject {
     const days = (await storage.get("days") || []).slice(-Math.max(1, Math.min(limit, 730))).reverse();
     const records = [];
     for (const day of days) records.push({ date: day, visitors: Number(await storage.get("day:" + day) || 0) });
-    return { total: Number(await storage.get("total") || 0), records };
+    return { total: await this.cumulativeTotal(), records };
   }
 }
 
