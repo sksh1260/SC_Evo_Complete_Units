@@ -18523,9 +18523,11 @@ function normalizePatchDisplayText(text) {
   if (!text) return text;
   // BW 저그 건물명(레어·하이브·스파이어 등)은 패치 내역에서 그대로 유지한다.
   // 특히 "레어"는 "플레어" 같은 일반 단어의 일부이기도 하므로 변환하지 않는다.
-  return String(text).replace(/로봇공학 지원소|로봇공학 시설|로보틱스 지원소|로보틱스 시설|다크 아콘|고위 기사|파일론|스컬지|벌처|해처리|관문|무기고|아콘|러커/g, function(name) {
+  var s = String(text).replace(/로봇공학 지원소|로봇공학 시설|로보틱스 지원소|로보틱스 시설|다크 아콘|고위 기사|파일론|스컬지|벌처|해처리|관문|무기고|아콘|러커/g, function(name) {
     return PATCH_UNIT_NAME_ALIASES[name] || name;
   });
+  s = s.replace(/폭발형\s*[,·\/]\s*진동형/g, "폭발형 · 진동형");
+  return s;
 }
 
 // 패치 CSV는 관리자가 한국어 원문으로 편집한다. 화면에서는 현재 언어에 맞춰
@@ -18536,6 +18538,14 @@ var PATCH_TEXT_EN_EXACT = {
   "전체 변경 사항": "General Changes",
   "버그 수정 및 기타 변경 사항": "Bug Fixes and Other Changes",
   "폭발형 · 진동형": "Explosive · Concussive",
+  "폭발형, 진동형": "Explosive · Concussive",
+  "폭발형·진동형": "Explosive · Concussive",
+  "폭발형 / 진동형": "Explosive · Concussive",
+  "폭발형/진동형": "Explosive · Concussive",
+  "폭발형": "Explosive",
+  "진동형": "Concussive",
+  "관통형": "Penetrating",
+  "일반형": "Normal",
   "보호막 재생": "Shield Regeneration",
   "점막 이동 속도 보너스": "Creep Movement Speed Bonus",
   "무기 탐색 범위": "Weapon Acquisition Range",
@@ -18720,8 +18730,28 @@ var PATCH_TEXT_EN_AUTO_RULES = [
 
 var PATCH_TEXT_EN_REPLACEMENTS = [
   ["보호막 대상 피해 계수", "Damage multiplier vs. Shields"],
-  ["폭발형 무기 경장갑 피해 계수", "Explosive damage multiplier vs. Light"],
+  ["보호막 피해 계수", "Damage multiplier vs. Shields"],
+  ["보호막 대상 피해 배율", "Damage multiplier vs. Shields"],
+  ["보호막 피해 배율", "Damage multiplier vs. Shields"],
+  ["폭발형 · 진동형", "Explosive · Concussive"],
+  ["폭발형·진동형", "Explosive · Concussive"],
+  ["폭발형, 진동형", "Explosive · Concussive"],
+  ["폭발형 / 진동형", "Explosive · Concussive"],
+  ["폭발형/진동형", "Explosive · Concussive"],
+  ["진동형 무기의 중장갑 피해 계수", "Concussive damage multiplier vs. Armored"],
+  ["폭발형 무기의 경장갑 피해 계수", "Explosive damage multiplier vs. Light"],
   ["진동형 무기 중장갑 피해 계수", "Concussive damage multiplier vs. Armored"],
+  ["폭발형 무기 경장갑 피해 계수", "Explosive damage multiplier vs. Light"],
+  ["진동형 공격의 비경장갑 보호막 피해 계수", "Concussive damage multiplier vs. non-Light Shields"],
+  ["폭발형 공격의 비중장갑 보호막 피해 계수", "Explosive damage multiplier vs. non-Armored Shields"],
+  ["진동형 무기", "Concussive Weapon"],
+  ["폭발형 무기", "Explosive Weapon"],
+  ["진동형 공격", "Concussive Attack"],
+  ["폭발형 공격", "Explosive Attack"],
+  ["진동형", "Concussive"],
+  ["폭발형", "Explosive"],
+  ["관통형", "Penetrating"],
+  ["일반형", "Normal"],
   ["보호막/체력", "Shields / Health"],
   ["공중 공격 주기", "Air Attack Cooldown"],
   ["지상 공격 주기", "Ground Attack Cooldown"],
