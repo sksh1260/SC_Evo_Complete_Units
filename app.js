@@ -10529,14 +10529,14 @@ var UNIT_DESCRIPTION_EN = {
   sc2_supply_depot: "Provides supply, allowing more units to be trained. Can be lowered underground to let units pass.",
   sc2_barracks: "Infantry production facility.",
   sc2_engineering_bay: "Upgrades Terran infantry and structures.",
-  sc2_bunker: "Defensive structure. Infantry can attack enemies from inside.<br><span style='color:#fff59d'>Additional effect: +1 unit range</span>",
+  sc2_bunker: "Defensive structure. Infantry can attack enemies from inside.<br><span style='color:#fff59d'>Additional effect: increases unit range by 1</span>",
   sc2_missile_turret: "Anti-air defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
   sc2_sensor_tower: "Detects distant enemy unit positions. All players, including enemies, can see the Sensor Tower's detection range.",
   sc2_ghost_academy: "Upgrades <span style='color:#fff59d'>Ghosts</span> and produces their Nuclear Missiles.",
   sc2_factory: "Vehicle production facility.",
   sc2_starport: "Air-unit production facility.",
   sc2_tech_lab: "Unlocks additional units and research. A Tech Lab can attach to any production structure.",
-  sc2_reactor: "Produces two units simultaneously.",
+  sc2_reactor: "Produces 2 units simultaneously.",
   sc2_armory: "Upgrades the weapons and armor of units produced at the <span style='color:#fff59d'>Factory</span> and <span style='color:#fff59d'>Starport</span>.",
   sc2_fusion_core: "Upgrades <span style='color:#fff59d'>Medivacs</span>, <span style='color:#fff59d'>Liberators</span>, and <span style='color:#fff59d'>Battlecruisers</span>.",
 
@@ -10544,11 +10544,11 @@ var UNIT_DESCRIPTION_EN = {
   comsat_station: "Attaches to a Command Center. Provides area detection with Scanner Sweep.",
   nuclear_silo: "Attaches to a Command Center. Stores Nuclear Missiles for Ghosts to launch.",
   refinery: "Harvests Vespene Gas.",
-  supply_depot: "Provides +8 supply.",
+  supply_depot: "Provides supply. Increasing supply allows more units to be trained.",
   barracks: "Produces Marines, Firebats, Medics, and Ghosts.",
   engineering_bay: "Upgrades infantry weapons and armor. Can construct Missile Turrets.",
   academy: "Unlocks Firebats and Medics.",
-  bunker: "Holds 4 infantry units.",
+  bunker: "Defensive structure. Infantry can attack enemies from inside.<br><span style='color:#fff59d'>Additional effect: increases unit range by 1</span>",
   missile_turret: "Anti-air defensive structure.<br><span style='color:#ffd94a'>Detector</span>",
   factory: "Produces vehicle units.",
   machine_shop: "Factory attachment. Enables Siege Tank production.",
@@ -11143,8 +11143,16 @@ var CARD_DESCRIPTION_EN_BY_OWNER = {
   "academy|U-238 탄환 연구": "Increases <span style='color:#fff59d'>Marine</span> attack range by <span style='color:#a0c4ff'>1</span>.",
   "academy|스팀팩 연구": "Allows <span style='color:#fff59d'>Marines</span> and <span style='color:#fff59d'>Firebats</span> to use <span style='color:#fff59d'>Stimpack</span>. Units that use <span style='color:#fff59d'>Stimpack</span> take health damage, but gain increased attack and movement speed for a short duration.",
   "academy|리스토레이션 연구": "Allows <span style='color:#fff59d'>Medics</span> to use <span style='color:#fff59d'>Restoration</span>. <span style='color:#fff59d'>Restoration</span> removes negative status effects from the target unit.",
-  "academy|옵티컬 플레어 연구": "Allows <span style='color:#fff59d'>Medics</span> to use <span style='color:#fff59d'>Optical Flare</span>. <span style='color:#fff59d'>Optical Flare</span> blinds the target, reducing sight range and disabling <span style='color:#ffd94a'>detection</span>.",
   "academy|카두세우스 반응로 연구": "Increases <span style='color:#fff59d'>Medic</span> energy by <span style='color:#a0c4ff'>50</span> and starting energy by <span style='color:#a0c4ff'>25</span>.",
+  "medic|카두세우스 반응로 연구": "Increases <span style='color:#fff59d'>Medic</span> energy by <span style='color:#a0c4ff'>50</span> and starting energy by <span style='color:#a0c4ff'>25</span>.",
+  "medic|리스토레이션 연구": "Allows <span style='color:#fff59d'>Medics</span> to use <span style='color:#fff59d'>Restoration</span>. <span style='color:#fff59d'>Restoration</span> removes negative status effects from the target unit.",
+  "medic|옵티컬 플레어 연구": "Allows <span style='color:#fff59d'>Medics</span> to use <span style='color:#fff59d'>Optical Flare</span>. <span style='color:#fff59d'>Optical Flare</span> blinds the target, reducing sight range and disabling <span style='color:#ffd94a'>detection</span>.",
+  "sc2_zergling|대사 촉진 진화": "Increases <span style='color:#fff59d'>Zergling</span> movement speed by <span style='color:#a0c4ff'>59.12%</span>.",
+  "sc2_hydralisk|근육 보강 진화": "Increases <span style='color:#fff59d'>Hydralisk</span> movement speed by <span style='color:#a0c4ff'>31.11%</span>.",
+  "sc2_ultralisk|합성 동화 작용 진화": "Increases <span style='color:#fff59d'>Ultralisk</span> movement speed off creep by <span style='color:#a0c4ff'>14.29%</span>.",
+  "sc2_overlord|기낭 갑피 진화": "Increases <span style='color:#fff59d'>Overlord</span> movement speed by <span style='color:#a0c4ff'>191.54%</span>.",
+  "sc2_overseer|기낭 갑피 진화": "Increases <span style='color:#fff59d'>Overseer</span> movement speed by <span style='color:#a0c4ff'>80%</span>.",
+  "sc2_overlord_transport|기낭 갑피 진화": "Increases <span style='color:#fff59d'>Transport Overlord</span> movement speed by <span style='color:#a0c4ff'>134.63%</span>.",
   "factory|머신 샵 건설": "Vehicle research facility. <span style='color:#fff59d'>Machine Shop</span> can only be attached to a <span style='color:#fff59d'>Factory</span>.",
   "machine_shop|이온 추진기 연구": "Increases <span style='color:#fff59d'>Vulture</span> movement speed by <span style='color:#a0c4ff'>50%</span>.",
   "machine_shop|스파이더 마인 연구": "Allows <span style='color:#fff59d'>Vultures</span> to use <span style='color:#fff59d'>Spider Mines</span>. <span style='color:#fff59d'>Spider Mines</span> detonate when enemy units enter their trigger range to deal heavy damage.",
@@ -12026,8 +12034,8 @@ function displayCardDescription(owner, item) {
   var key = getCardDisplayName(item);
   var ownerKey = owner && owner.id ? (owner.id + "|" + key) : "";
   if (ownerKey && CARD_DESCRIPTION_EN_BY_OWNER[ownerKey]) return CARD_DESCRIPTION_EN_BY_OWNER[ownerKey];
-  if (CARD_DESCRIPTION_EN[key]) return CARD_DESCRIPTION_EN[key];
   if (typeof CARD_DESCRIPTION_BY_KO !== "undefined" && CARD_DESCRIPTION_BY_KO[korean]) return CARD_DESCRIPTION_BY_KO[korean];
+  if (CARD_DESCRIPTION_EN[key]) return CARD_DESCRIPTION_EN[key];
   if (item && item.targetId && typeof UNIT_DATA !== "undefined") {
     var target = getUnitById(item.targetId);
     if (target) return displayUnitDescription(target);
@@ -12468,8 +12476,8 @@ function formatGameSpeedDescription(html) {
   formatted = formatted.replace(/(초당\s*(?:<span[^>]*>)?)(\d+(?:\.\d+)?)(<\/span>)?/g, function(_, start, value, end) {
     return start + fmtGameRate(value) + (end || "");
   });
-  formatted = formatted.replace(/([+\-]?)(\d+(?:\.\d+)?)\s*((?:health|shields?|life|damage|energy)\s+)?per second/gi, function(_, sign, value, unit) {
-    return sign + fmtGameRate(value) + " " + (unit || "") + "per second";
+  formatted = formatted.replace(/([+\-]?)((?:<span[^>]*>)?\s*)(\d+(?:\.\d+)?)(\s*<\/span>)?\s*((?:health|shields?|life|damage|energy)\s+)?per second/gi, function(_, sign, openSpan, value, closeSpan, unit) {
+    return sign + (openSpan || "") + fmtGameRate(value) + (closeSpan || "") + " " + (unit || "") + "per second";
   });
   return formatted.replace(/([+\-]?)(\d+(?:\.\d+)?)\/s/g, function(_, sign, value) {
     return sign + fmtGameRate(value) + "/s";
@@ -14059,7 +14067,7 @@ function renderUnitApplicableUpgrades(u) {
     html += "  <div class='modal-item-content'>";
     html += "    <div class='modal-item-title'>" + displayGameTerm(upg.name) + (isActive ? " <span class='upg-active-badge'>" + (selectedLanguage === "en" ? "Active" : "적용 중") + "</span>" : "") + "</div>";
     var upgDesc = ref.desc || upg.desc;
-    if (upgDesc) html += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(u, ref.desc ? ref : upg)) + "</div>";
+    if (upgDesc) html += "    <div class='modal-item-desc'>" + formatGameSpeedDescription(displayCardDescription(ref.desc ? u : structure, ref.desc ? ref : upg)) + "</div>";
     html += getModalCardRequirementHtml(u, upg);
     html += "  </div>";
     if (costBadgeHtml) html += costBadgeHtml;
