@@ -19160,6 +19160,12 @@ function getPatchSourceUrl(verStr, fallbackParentVer) {
   var clean = String(verStr).replace(/^v/i, "").trim();
   if (PATCH_SOURCES[clean]) return PATCH_SOURCES[clean];
 
+  // 새 공식 버전은 GitHub Actions가 Patch.csv에 빈 버전 블록을 먼저 추가한다.
+  // 개별 링크 맵을 매번 고치지 않아도 해당 버전의 공식 원문 링크를 표시한다.
+  if (/^\d+(?:\.\d+){1,3}$/.test(clean)) {
+    return "https://scevo.org/posts/evo-update-" + clean.replaceAll(".", "_");
+  }
+
   var tildeMatch = clean.match(/^([0-9.]+)/);
   if (tildeMatch && PATCH_SOURCES[tildeMatch[1]]) return PATCH_SOURCES[tildeMatch[1]];
 

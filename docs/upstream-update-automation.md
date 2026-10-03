@@ -1,16 +1,15 @@
-# SC: Evo update automation
+# SC: Evo update-link automation
 
-The scheduled workflow checks the official SC: Evo post list daily at 12:00 Korea time. If `Patch.csv` does not yet include the next official `* Patch Notes` version, it downloads the English markdown source, asks Codex to update `app.js` and `Patch.csv`, runs a JavaScript syntax check, and opens a review pull request. It does not merge or publish the pull request.
+GitHub Actions checks the official SC: Evo post list daily at 12:00 Korea time. When it finds a `* Patch Notes` release newer than the latest version in `Patch.csv`, it inserts a new version-only row at the top of `Patch.csv` and pushes that CSV change to the branch that triggered the workflow. The row contains no patch details; the version badge links to the official post. GitHub Pages then publishes the change through its normal deployment flow.
+
+No OpenAI API key or GitHub PAT is used. The workflow uses GitHub's built-in Actions token.
 
 ## One-time GitHub setup
 
-1. In the repository, open **Settings → Secrets and variables → Actions → New repository secret**.
-2. Add `OPENAI_API_KEY`. Codex Action requires an OpenAI API key; API usage is billed separately from a ChatGPT subscription. Use an API project with a budget limit.
-3. Open **Settings → Actions → General** and enable **Allow GitHub Actions to create and approve pull requests**.
-4. Ensure GitHub Pages deploys from `main`. Merging a reviewed update PR into `main` will then trigger the usual Pages deployment.
+1. In **Settings → Actions → General → Workflow permissions**, allow read and write permissions so the workflow can push `Patch.csv`.
+2. Ensure GitHub Pages deploys from the `main` branch. The scheduled workflow runs against the default branch; a successful push to `main` is published by Pages.
+3. If `main` has branch protection that blocks GitHub Actions pushes, allow the Actions bot to update the branch or the workflow push will fail.
 
-The workflow can be run manually from **Actions → Prepare SC Evo update PR → Run workflow**. The daily schedule checks for the earliest update newer than the version recorded in the first version row of `Patch.csv`. If a PR for that version is already open, it will not spend API usage or create a duplicate.
+You can also run **Actions → Add SC Evo patch link → Run workflow** manually. After the version-only block appears on the site, add the Korean patch details in the usual patch editor. English display continues to use the app's translation rules; send any new or awkward lines here for translation review.
 
-## Review expectations
-
-The official post is the source of truth. The PR should update only facts represented accurately by the current `UNIT_DATA` model and list unsupported gameplay changes in `automation-reports/`. Review names, values, game-speed conversions, race grouping, structure-before-unit ordering, and all unresolved report entries before merging.
+The workflow does not download or translate the article, edit `app.js` gameplay data, generate patch details, create a PR, or merge unrelated changes. It only adds the official version row to `Patch.csv`.

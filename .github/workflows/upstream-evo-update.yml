@@ -1,4 +1,4 @@
-name: Prepare SC Evo update PR
+name: Add SC Evo patch link
 
 on:
   schedule:
@@ -7,94 +7,42 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: upstream-evo-update
   cancel-in-progress: false
 
 jobs:
-  prepare-update:
+  add-patch-link:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Discover next official update
+      - name: Detect the next official update and add an empty Patch.csv block
         id: discover
-        run: node scripts/discover-upstream-update.mjs Patch.csv .automation/upstream-update.md .github/prompts/apply-upstream-update.md .automation/prompt.md
+        run: node scripts/discover-upstream-update.mjs Patch.csv
 
-      - name: Check for an existing update PR
-        id: existing
+      - name: Commit and push the new version link
         if: steps.discover.outputs.update_found == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.discover.outputs.version }}
         run: |
-          branch="automation/upstream-update-${VERSION}"
-          count="$(gh pr list --state open --head "$branch" --json number --jq 'length')"
-          echo "exists=$([[ "$count" -gt 0 ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
-
-      - name: Check the model API key
-        id: api
-        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true'
-        env:
-          HAS_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
-        run: |
-          if [[ "$HAS_OPENAI_API_KEY" == "true" ]]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "New official update found, but OPENAI_API_KEY is not configured. See docs/upstream-update-automation.md."
-          fi
-
-      - name: Generate reviewed app and patch-history changes
-        id: codex
-        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
-        uses: openai/codex-action@v1
-        with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          permission-profile: ":workspace"
-          safety-strategy: drop-sudo
-          prompt-file: .automation/prompt.md
-
-      - name: Remove downloaded source snapshot
-        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
-        run: rm -f -- .automation/upstream-update.md .automation/prompt.md
-
-      - name: Check JavaScript syntax
-        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
-        run: node --check app.js
-
-      - name: Open review pull request
-        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ github.token }}
-          branch: automation/upstream-update-${{ steps.discover.outputs.version }}
-          delete-branch: true
-          title: "Prepare SC: Evo ${{ steps.discover.outputs.version }} update"
-          commit-message: "Prepare SC: Evo ${{ steps.discover.outputs.version }} update"
-          body: |
-            Automatically prepared from the official update notes:
-            ${{ steps.discover.outputs.source_url }}
-
-            Review the unit data, patch-history ordering, Faster/Normal conversions, and the generated automation report before merging. This PR does not publish itself.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Patch.csv
+          git commit -m "Add SC: Evo $VERSION patch link"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Report status
         if: always()
         env:
           UPDATE_FOUND: ${{ steps.discover.outputs.update_found }}
           VERSION: ${{ steps.discover.outputs.version }}
-          EXISTING_PR: ${{ steps.existing.outputs.exists }}
-          API_AVAILABLE: ${{ steps.api.outputs.available }}
+          SOURCE_URL: ${{ steps.discover.outputs.source_url }}
         run: |
-          if [[ "$UPDATE_FOUND" != "true" ]]; then
-            echo "No newer update was found."
-          elif [[ "$EXISTING_PR" == "true" ]]; then
-            echo "A review PR for $VERSION is already open."
-          elif [[ "$API_AVAILABLE" != "true" ]]; then
-            echo "Update $VERSION was found; add OPENAI_API_KEY to enable PR generation."
+          if [[ "$UPDATE_FOUND" == "true" ]]; then
+            echo "Added an empty Patch.csv block for $VERSION: $SOURCE_URL"
           else
-            echo "Prepared a review PR for $VERSION (if changes were generated)."
+            echo "No newer official update was found."
           fi
