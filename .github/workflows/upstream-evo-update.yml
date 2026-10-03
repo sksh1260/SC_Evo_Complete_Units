@@ -1,0 +1,100 @@
+name: Prepare SC Evo update PR
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-evo-update
+  cancel-in-progress: false
+
+jobs:
+  prepare-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Discover next official update
+        id: discover
+        run: node scripts/discover-upstream-update.mjs Patch.csv .automation/upstream-update.md .github/prompts/apply-upstream-update.md .automation/prompt.md
+
+      - name: Check for an existing update PR
+        id: existing
+        if: steps.discover.outputs.update_found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.discover.outputs.version }}
+        run: |
+          branch="automation/upstream-update-${VERSION}"
+          count="$(gh pr list --state open --head "$branch" --json number --jq 'length')"
+          echo "exists=$([[ "$count" -gt 0 ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Check the model API key
+        id: api
+        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true'
+        env:
+          HAS_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
+        run: |
+          if [[ "$HAS_OPENAI_API_KEY" == "true" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "New official update found, but OPENAI_API_KEY is not configured. See docs/upstream-update-automation.md."
+          fi
+
+      - name: Generate reviewed app and patch-history changes
+        id: codex
+        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":workspace"
+          safety-strategy: drop-sudo
+          prompt-file: .automation/prompt.md
+
+      - name: Remove downloaded source snapshot
+        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
+        run: rm -f -- .automation/upstream-update.md .automation/prompt.md
+
+      - name: Check JavaScript syntax
+        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
+        run: node --check app.js
+
+      - name: Open review pull request
+        if: steps.discover.outputs.update_found == 'true' && steps.existing.outputs.exists != 'true' && steps.api.outputs.available == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          branch: automation/upstream-update-${{ steps.discover.outputs.version }}
+          delete-branch: true
+          title: "Prepare SC: Evo ${{ steps.discover.outputs.version }} update"
+          commit-message: "Prepare SC: Evo ${{ steps.discover.outputs.version }} update"
+          body: |
+            Automatically prepared from the official update notes:
+            ${{ steps.discover.outputs.source_url }}
+
+            Review the unit data, patch-history ordering, Faster/Normal conversions, and the generated automation report before merging. This PR does not publish itself.
+
+      - name: Report status
+        if: always()
+        env:
+          UPDATE_FOUND: ${{ steps.discover.outputs.update_found }}
+          VERSION: ${{ steps.discover.outputs.version }}
+          EXISTING_PR: ${{ steps.existing.outputs.exists }}
+          API_AVAILABLE: ${{ steps.api.outputs.available }}
+        run: |
+          if [[ "$UPDATE_FOUND" != "true" ]]; then
+            echo "No newer update was found."
+          elif [[ "$EXISTING_PR" == "true" ]]; then
+            echo "A review PR for $VERSION is already open."
+          elif [[ "$API_AVAILABLE" != "true" ]]; then
+            echo "Update $VERSION was found; add OPENAI_API_KEY to enable PR generation."
+          else
+            echo "Prepared a review PR for $VERSION (if changes were generated)."
+          fi
