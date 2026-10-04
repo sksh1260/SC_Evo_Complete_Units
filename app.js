@@ -3462,7 +3462,7 @@ var UNIT_DATA = [
           { "type": "health", "icon": "icon-health-terran.png", "value": 10 }
         ],
         "icon": "btn-ability-terran-stimpack-color.png",
-        "desc": "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>75%</span> 향상시키는 강력한 스팀팩을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다."
+        "desc": "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>72%</span> 향상시키는 강력한 스팀팩을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다."
       }
     ]
   },
@@ -11113,7 +11113,7 @@ var CARD_DESCRIPTION_EN_BY_OWNER = {
   "sc2_fusion_core|카두세우스 반응로 연구": "Increases <span style='color:#fff59d'>Medivac</span> energy regeneration rate by <span style='color:#a0c4ff'>100%</span>.",
   "sc2_fusion_core|첨단 탄도 시스템 연구": "Increases <span style='color:#fff59d'>Liberator</span> <span style='color:#fff59d'>Defender Mode</span> range by <span style='color:#a0c4ff'>2</span>.",
   "scv|수리": "Repairs mechanical units and structures at the cost of resources.",
-  "marine|스팀팩": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>75%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
+  "marine|스팀팩": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>72%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
   "firebat|스팀팩": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>100%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
   "medic|힐 <span style='color:var(--text-dim);font-size:0.83em;font-weight:400;'>(자동 시전)</span>": "Heals friendly biological units.<br><span style='color:#c792ea'>Restores 9 health per second</span>",
   "medic|리스토레이션": "Removes negative effects applied to target friendly unit.",
@@ -11566,9 +11566,9 @@ var CARD_DESCRIPTION_BY_KO = {
   "<span style='color:#fff59d'>15초</span> 동안 이동 및 공격 속도를 <span style='color:#a0c4ff'>50%</span> 향상시키는 강력한 자극제를 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>20</span>만큼의 상처를 입습니다.": "Administers a powerful stimulant to the unit, increasing movement and attack speed by <span style='color:#a0c4ff'>50%</span> for <span style='color:#fff59d'>15 seconds</span>. The unit suffers <span style='color:#ff5252'>20</span> damage.",
   "이동 속도 및 공격 속도가 <span style='color:#a0c4ff'>50%</span>만큼 증가합니다. <span style='color:#fff59d'>15초</span> 동안 지속됩니다.<br><span style='color:#ff5252'>체력 10 소모</span>": "Increases movement speed and attack speed by <span style='color:#a0c4ff'>50%</span> for <span style='color:#fff59d'>15 seconds</span>.<br><span style='color:#ff5252'>Consumes 10 health</span>",
   "이동 속도 및 공격 속도가 <span style='color:#a0c4ff'>50%</span>만큼 증가합니다. <span style='color:#fff59d'>15초</span> 동안 지속됩니다.<br><span style='color:#ff5252'>체력 20 소모</span>": "Increases movement speed and attack speed by <span style='color:#a0c4ff'>50%</span> for <span style='color:#fff59d'>15 seconds</span>.<br><span style='color:#ff5252'>Consumes 20 health</span>",
-  "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>75%</span> 향상시키는 강력한 <span style='color:#fff59d'>스팀팩</span>을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다.": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>75%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
+  "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>72%</span> 향상시키는 강력한 <span style='color:#fff59d'>스팀팩</span>을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다.": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>72%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
   "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>100%</span> 향상시키는 강력한 <span style='color:#fff59d'>스팀팩</span>을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다.": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>100%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
-  "이동 속도가 <span style='color:#a0c4ff'>50%</span>, 공격 속도가 <span style='color:#a0c4ff'>75%</span>만큼 증가합니다. <span style='color:#fff59d'>18.5초</span> 동안 지속됩니다.<br><span style='color:#ff5252'>체력 10 소모</span>": "Increases movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>75%</span> for <span style='color:#fff59d'>18.5 seconds</span>.<br><span style='color:#ff5252'>Consumes 10 health</span>",
+  "이동 속도가 <span style='color:#a0c4ff'>50%</span>, 공격 속도가 <span style='color:#a0c4ff'>72%</span>만큼 증가합니다. <span style='color:#fff59d'>18.5초</span> 동안 지속됩니다.<br><span style='color:#ff5252'>체력 10 소모</span>": "Increases movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>72%</span> for <span style='color:#fff59d'>18.5 seconds</span>.<br><span style='color:#ff5252'>Consumes 10 health</span>",
   "이동 속도가 <span style='color:#a0c4ff'>50%</span>, 공격 속도가 <span style='color:#a0c4ff'>100%</span>만큼 증가합니다. <span style='color:#fff59d'>18.5초</span> 동안 지속됩니다.<br><span style='color:#ff5252'>체력 10 소모</span>": "Increases movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>100%</span> for <span style='color:#fff59d'>18.5 seconds</span>.<br><span style='color:#ff5252'>Consumes 10 health</span>",
   "<span style='color:#fff59d'>해병</span>의 체력이 <span style='color:#a0c4ff'>10</span>만큼 증가합니다.": "Increases <span style='color:#fff59d'>Marine</span> health by <span style='color:#a0c4ff'>10</span>.",
   "<span style='color:#fff59d'>해병</span>의 생명력이 <span style='color:#a0c4ff'>10</span>만큼 증가합니다.": "Increases <span style='color:#fff59d'>Marine</span> health by <span style='color:#a0c4ff'>10</span>.",
@@ -12637,7 +12637,7 @@ function sortVal(u, col) {
     case "cooldown":  {
       if (!w) return 0;
       var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-      var stimMult = (u.id === "marine") ? 1.75 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+      var stimMult = (u.id === "marine") ? 1.72 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
       if (isStimActive) return scaleTime(w.cd / stimMult);
       if ((u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"))) return scaleTime(w.cd / 1.4);
       if (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives")) return scaleTime(w.cd / 1.45);
@@ -12652,7 +12652,7 @@ function sortVal(u, col) {
       var isZerglingAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
       var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
       var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-      var stimMult = (u.id === "marine") ? 1.75 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+      var stimMult = (u.id === "marine") ? 1.72 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
 
       var activeCd = scaleTime(isZerglingAdrenal ? (w.cd / 1.4) : (isAdeptResonating ? (w.cd / 1.45) : (isStimActive ? (w.cd / stimMult) : w.cd)));
       return (activeCd && activeCd > 0) ? (totalDmg * (w.hits || 1)) / activeCd : 0;
@@ -13768,7 +13768,7 @@ function fmtCd(u, w) {
   var isAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
   var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
   var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-  var stimMult = (u.id === "marine") ? 1.75 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+  var stimMult = (u.id === "marine") ? 1.72 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
 
   var curCd = scaleTime(isAdrenal ? (w.cd / 1.4) : (isAdeptResonating ? (w.cd / 1.45) : (isStimActive ? (w.cd / stimMult) : w.cd)));
   var rc = raceClr(u.race);
@@ -13816,7 +13816,7 @@ function fmtCdModal(u, w) {
   var isAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
   var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
   var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-  var stimMult = (u.id === "marine") ? 1.75 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+  var stimMult = (u.id === "marine") ? 1.72 : (u.id === "firebat" ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
 
   var curCd = scaleTime(isAdrenal ? (w.cd / 1.4) : (isAdeptResonating ? (w.cd / 1.45) : (isStimActive ? (w.cd / stimMult) : w.cd)));
   var rc = raceClr(u.race);
@@ -14770,7 +14770,7 @@ function renderSingleWeaponDpsHtml(u, wi) {
   var isZerglingAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
   var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
   var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-  var stimMult = (u.id === "marine") ? 1.75 : ((u.id === "firebat") ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+  var stimMult = (u.id === "marine") ? 1.72 : ((u.id === "firebat") ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
   var reaverExtraDmg = (u.id === "reaver" && isUpgActive("reaver_damage")) ? 25 : 0;
   var reaverExtraBd = (u.id === "reaver" && isUpgActive("reaver_damage")) ? 50 : 0;
   var prismaticExtraBd = (u.id === "sc2_void_ray" && isUpgActive("sc2_void_ray_prismatic_alignment")) ? 6 : 0;
@@ -15214,7 +15214,7 @@ function renderRow(u) {
       // 13. 공격주기 (스팀팩/전투 자극제 공격속도 증가율)
       var cdSubHtml = "";
       if (ab.name === "스팀팩" || ab.name === "전투 자극제") {
-        var pctText = (u.id === "marine") ? "+75%" : (u.id === "firebat" ? "+100%" : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? "+50%" : ""));
+        var pctText = (u.id === "marine") ? "+72%" : (u.id === "firebat" ? "+100%" : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? "+50%" : ""));
         if (pctText) {
           cdSubHtml = "<div style='display:flex;align-items:center;justify-content:center;height:100%;'>" +
                         "<span style='color:var(--terran-color);font-weight:700;'>" + pctText + "</span>" +
@@ -15409,7 +15409,7 @@ function compareDpsForWeapon(u, w) {
   if ((u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"))) cooldown = scaleTime(w.cd / 1.4);
   if (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives")) cooldown = scaleTime(w.cd / 1.45);
   var stim = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-  if (stim) cooldown = scaleTime(w.cd / (u.id === "marine" ? 1.75 : (u.id === "firebat" ? 2 : 1.5)));
+  if (stim) cooldown = scaleTime(w.cd / (u.id === "marine" ? 1.72 : (u.id === "firebat" ? 2 : 1.5)));
   return cooldown ? damage * (w.hits || 1) / cooldown : 0;
 }
 
@@ -17425,7 +17425,7 @@ function fmtAttackSplashArea(u, wp) {
         var isZerglingAdrenal = (u.id === "zergling" && isUpgActive("zergling_adrenal")) || (u.id === "sc2_zergling" && isUpgActive("sc2_zergling_adrenal"));
         var isAdeptResonating = (u.id === "sc2_adept" && isUpgActive("sc2_adept_resonating_glaives"));
         var isStimActive = (u.id === "marine" && isUpgActive("marine_stimpack")) || (u.id === "firebat" && isUpgActive("firebat_stimpack")) || (u.id === "sc2_marine" && isUpgActive("sc2_marine_stimpack")) || (u.id === "sc2_marauder" && isUpgActive("sc2_marauder_stimpack"));
-        var stimMult = (u.id === "marine") ? 1.75 : ((u.id === "firebat") ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
+        var stimMult = (u.id === "marine") ? 1.72 : ((u.id === "firebat") ? 2.0 : ((u.id === "sc2_marine" || u.id === "sc2_marauder") ? 1.5 : 1.0));
 
         var activeCd = scaleTime(isZerglingAdrenal ? (wp.cd / 1.4) : (isAdeptResonating ? (wp.cd / 1.45) : (isStimActive ? (wp.cd / stimMult) : wp.cd)));
         var calcDps = (activeCd && activeCd > 0) ? (totalDmg * (wp.hits || 1)) / activeCd : (wp.dps || 0);
