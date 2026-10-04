@@ -18326,6 +18326,13 @@ function initApp() {
       setAppView(h);
     }
   } catch(e){}
+
+  // 8. GitHub/원격에 배포된 units.json 비동기 로드 및 실시간 반영
+  try {
+    if (typeof loadExternalUnitsJson === "function") {
+      loadExternalUnitsJson();
+    }
+  } catch(e){}
 }
 
 // 설명 내 강조 색상 규칙을 데이터 전반에 동일하게 적용한다.
@@ -20689,10 +20696,7 @@ function snapshotOriginalUnitData() {
   }
 }
 
-function applyCustomUnitData() {
-  snapshotOriginalUnitData();
-  loadCustomUnitStore();
-
+function applyCustomUnitDataFromStore() {
   if (typeof UNIT_DATA === "undefined" || !Array.isArray(UNIT_DATA)) return;
 
   var customUnits = _customUnitStore.units || {};
@@ -20735,6 +20739,60 @@ function applyCustomUnitData() {
       }
     }
   }
+}
+
+function applyCustomUnitData() {
+  snapshotOriginalUnitData();
+  loadCustomUnitStore();
+  applyCustomUnitDataFromStore();
+}
+
+var _unitsExternalAttempted = false;
+function loadExternalUnitsJson() {
+  if (_unitsExternalAttempted) return Promise.resolve();
+  _unitsExternalAttempted = true;
+  return fetch("units.json", { cache: "no-store" })
+    .then(function (res) {
+      if (!res.ok) throw new Error("not found");
+      return res.json();
+    })
+    .then(function (data) {
+      var remoteStore = (data && data.customStore) || data;
+      if (remoteStore && typeof remoteStore === "object") {
+        snapshotOriginalUnitData();
+        // 원격 저장소 데이터를 기본값으로 설정
+        var remoteUnits = remoteStore.units || {};
+        var remoteUnitDescEn = remoteStore.unitDescEn || {};
+        var remoteCardDescEn = remoteStore.cardDescEn || {};
+        var remoteCardDescEnByOwner = remoteStore.cardDescEnByOwner || {};
+
+        // 로컬스토리지에 사용자가 아직 커밋하지 않은 미저장 로컬 수정본이 있다면 오버레이
+        var localStore = {};
+        try {
+          var raw = localStorage.getItem(CUSTOM_UNIT_STORAGE_KEY);
+          if (raw) localStore = JSON.parse(raw) || {};
+        } catch (e) {}
+
+        _customUnitStore.units = Object.assign({}, remoteUnits, localStore.units || {});
+        _customUnitStore.unitDescEn = Object.assign({}, remoteUnitDescEn, localStore.unitDescEn || {});
+        _customUnitStore.cardDescEn = Object.assign({}, remoteCardDescEn, localStore.cardDescEn || {});
+        _customUnitStore.cardDescEnByOwner = Object.assign({}, remoteCardDescEnByOwner, localStore.cardDescEnByOwner || {});
+
+        applyCustomUnitDataFromStore();
+
+        try { renderTable(); } catch (e) {}
+        try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
+        try {
+          if (currentAppView === "unit-editor") {
+            renderUnitEditorSidebar();
+            if (_ueCurrentUnitId) loadUnitIntoEditor(_ueCurrentUnitId);
+          }
+        } catch (e) {}
+      }
+    })
+    .catch(function (e) {
+      // units.json이 없거나 로드 실패 시 기존 로컬 스토어 유지
+    });
 }
 
 function initUnitEditorView() {
