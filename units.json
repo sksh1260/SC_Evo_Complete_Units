@@ -1,5 +1,69 @@
 {
   "units": {
+    "sc2_scv": {
+      "id": "sc2_scv",
+      "name": "건설로봇",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 50
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWTerran.png",
+          "value": 1
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 17
+        }
+      ],
+      "engName": "SCV",
+      "race": "sc2_terran",
+      "type": "unit",
+      "cost": {
+        "minerals": 50,
+        "gas": 0,
+        "supply": 1
+      },
+      "buildTime": 17,
+      "requirements": [],
+      "hp": 45,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 8,
+      "detector": false,
+      "speed": 2.8125,
+      "attributes": "경장갑 · 생체 · 기계 · 부양",
+      "description": "기본 일꾼 유닛입니다. 자원을 채취하고, 건물을 건설하며, 건물과 유닛을 <span style='color:#fff59d'>수리</span>할 수 있습니다.",
+      "weapons": [
+        {
+          "type": "지상",
+          "dmgType": "기본",
+          "dmg": 5,
+          "dmgUpg": 0,
+          "range": 0.2,
+          "cd": 1.5,
+          "hits": 1,
+          "dps": 3.33
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "수리",
+          "icon": "btn-ability-terran-repair.png",
+          "desc": "자원을 소모하여 기계 유닛과 구조물의 체력을 복구합니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "기본 일꾼 유닛입니다. 자원을 채취하고, 건물을 건설하며, 건물과 유닛을 <span style='color:#fff59d'>수리</span>할 수 있습니다."
+    },
     "scv": {
       "id": "scv",
       "name": "SCV",
@@ -8,6 +72,11 @@
           "type": "minerals",
           "icon": "icon-mineral-terran.png",
           "value": 50
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWTerran.png",
+          "value": 1
         },
         {
           "type": "time",
@@ -45,7 +114,7 @@
           "range": 0.1,
           "cd": 1.6,
           "hits": 1,
-          "dps": 3.25
+          "dps": 3.13
         }
       ],
       "upgrades": [],
@@ -59,39 +128,37 @@
       ],
       "desc": "기본 일꾼 유닛입니다. 자원을 채취하고, 테란 구조물을 건설하며, 구조물과 유닛을 <span style='color:#fff59d'>수리</span>할 수 있습니다."
     },
-    "hydralisk": {
-      "id": "hydralisk",
-      "name": "히드라리스크",
+    "marine": {
+      "id": "marine",
+      "name": "마린",
       "costItems": [
         {
           "type": "minerals",
           "icon": "icon-mineral-terran.png",
-          "value": 75
+          "value": 50
         },
         {
-          "type": "gas",
-          "icon": "icon-gas-terran.png",
-          "value": 25
+          "type": "supply",
+          "icon": "icon-supply-BWTerran.png",
+          "value": 1
         },
         {
           "type": "time",
           "icon": "icon-time-terran.png",
-          "value": 26.25
+          "value": 25
         }
       ],
-      "engName": "Hydralisk",
-      "race": "bw_zerg",
+      "engName": "Marine",
+      "race": "bw_terran",
       "type": "unit",
       "cost": {
-        "minerals": 75,
-        "gas": 25,
+        "minerals": 50,
+        "gas": 0,
         "supply": 1
       },
-      "buildTime": 26,
-      "requirements": [
-        "히드라리스크 덴"
-      ],
-      "hp": 80,
+      "buildTime": 25,
+      "requirements": [],
+      "hp": 45,
       "shields": 0,
       "energy": 0,
       "maxEnergy": 0,
@@ -100,57 +167,40 @@
       "sight": 9,
       "detector": false,
       "speed": 2.25,
-      "attributes": "생체",
-      "description": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다.",
+      "attributes": "경장갑 · 생체",
+      "description": "다목적 보병입니다.",
       "weapons": [
         {
           "type": "지상/공중",
           "dmgType": "기본",
-          "dmg": 7.5,
-          "dmgUpg": 0.75,
+          "dmg": 6,
+          "dmgUpg": 1,
           "range": 5,
-          "cd": 1,
+          "cd": 0.9375,
           "hits": 1,
-          "dps": 7.44,
-          "bonusDmg": [
-            {
-              "key": "경장갑",
-              "base": 6.25,
-              "upg": 0.625
-            },
-            {
-              "key": "중장갑",
-              "base": 10,
-              "upg": 1
-            },
-            {
-              "key": "보호막",
-              "base": 8.75,
-              "upg": 0.875
-            }
-          ]
+          "dps": 6.4
         }
       ],
       "upgrades": [],
       "abilities": [
         {
-          "name": "버로우",
-          "icon": "btn-ability-zerg-burrow-color.png",
-          "desc": "땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span> 상태에서는 적을 공격하거나 움직일 수 없으며 <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
-          "costItems": []
-        },
-        {
-          "name": "럴커로 변태",
-          "icon": "lurker@scbw.png",
-          "desc": "지상 유닛을 공격하는 매복 유닛입니다. 잠복해야 공격이 가능합니다.",
-          "costItems": []
+          "name": "스팀팩",
+          "icon": "btn-ability-terran-stimpack-color.png",
+          "desc": "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>72%</span> 향상시키는 강력한 <span style='color:#fff59d'>스팀팩</span>을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다.",
+          "costItems": [
+            {
+              "type": "health",
+              "value": 10,
+              "icon": "Main-icon/icon-health-terran.png"
+            }
+          ]
         }
       ],
-      "desc": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다."
+      "desc": "다목적 보병입니다."
     },
-    "lurker": {
-      "id": "lurker",
-      "name": "럴커",
+    "firebat": {
+      "id": "firebat",
+      "name": "파이어뱃",
       "costItems": [
         {
           "type": "minerals",
@@ -160,52 +210,73 @@
         {
           "type": "gas",
           "icon": "icon-gas-terran.png",
-          "value": 100
+          "value": 25
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWTerran.png",
+          "value": 1
         },
         {
           "type": "time",
           "icon": "icon-time-terran.png",
-          "value": 21
+          "value": 25
         }
       ],
-      "engName": "Lurker",
-      "race": "bw_zerg",
+      "engName": "Firebat",
+      "race": "bw_terran",
       "type": "unit",
       "cost": {
         "minerals": 50,
-        "gas": 100,
-        "supply": 2
+        "gas": 25,
+        "supply": 1
       },
-      "buildTime": 21,
+      "buildTime": 25,
       "requirements": [
-        "레어"
+        "아카데미"
       ],
-      "hp": 125,
+      "hp": 50,
       "shields": 0,
       "energy": 0,
       "maxEnergy": 0,
       "armor": 1,
       "armorUpgrade": 1,
-      "sight": 10,
+      "sight": 9,
       "detector": false,
-      "speed": 3.375,
-      "attributes": "생체",
-      "description": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>",
+      "speed": 2.25,
+      "attributes": "경장갑 · 생체",
+      "description": "대보병 전문 공격 유닛입니다.",
       "weapons": [
         {
           "type": "지상",
           "dmgType": "파괴자",
-          "dmg": 20,
-          "dmgUpg": 2,
-          "range": 8,
-          "cd": 2.1875,
-          "hits": 1,
-          "dps": 11.43,
+          "dmg": 4,
+          "dmgUpg": 0.5,
+          "range": 1,
+          "cd": 1.3125,
+          "hits": 3,
+          "dps": 3.05,
           "bonusDmg": [
             {
               "key": "경장갑",
-              "base": 25,
-              "upg": 2
+              "base": 8,
+              "upg": 1,
+              "hits": 3,
+              "splash": true
+            },
+            {
+              "key": "중장갑",
+              "base": 2,
+              "upg": 0.25,
+              "hits": 3,
+              "splash": true
+            },
+            {
+              "key": "보호막",
+              "base": 7,
+              "upg": 0.875,
+              "hits": 3,
+              "splash": true
             }
           ]
         }
@@ -213,17 +284,19 @@
       "upgrades": [],
       "abilities": [
         {
-          "name": "버로우",
-          "icon": "btn-ability-zerg-burrow-color.png",
-          "desc": "<span style='color:#fff59d'>럴커</span>가 땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span>한 <span style='color:#fff59d'>럴커</span>는 움직일 수 없으나 공격할 수 있습니다. <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
-          "costItems": []
+          "name": "스팀팩",
+          "icon": "btn-ability-terran-stimpack-color.png",
+          "desc": "<span style='color:#fff59d'>18.5초</span> 동안 이동 속도 <span style='color:#a0c4ff'>50%</span>, 공격 속도를 <span style='color:#a0c4ff'>100%</span> 향상시키는 강력한 <span style='color:#fff59d'>스팀팩</span>을 유닛에게 투여합니다. 유닛은 체력 <span style='color:#ff5252'>10</span>만큼의 상처를 입습니다.",
+          "costItems": [
+            {
+              "type": "health",
+              "value": 10,
+              "icon": "Main-icon/icon-health-terran.png"
+            }
+          ]
         }
       ],
-      "addCost": {
-        "minerals": 75,
-        "gas": 25
-      },
-      "desc": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>"
+      "desc": "대보병 전문 공격 유닛입니다."
     },
     "mutalisk": {
       "id": "mutalisk",
@@ -231,17 +304,22 @@
       "costItems": [
         {
           "type": "minerals",
-          "icon": "icon-mineral-terran.png",
+          "icon": "icon-mineral-zerg.png",
           "value": 100
         },
         {
           "type": "gas",
-          "icon": "icon-gas-terran.png",
+          "icon": "icon-gas-zerg.png",
           "value": 100
         },
         {
+          "type": "supply",
+          "icon": "icon-supply-BWZerg_nobg.png",
+          "value": 2
+        },
+        {
           "type": "time",
-          "icon": "icon-time-terran.png",
+          "icon": "icon-time-zerg.png",
           "value": 33
         }
       ],
@@ -303,23 +381,204 @@
       ],
       "desc": "여러 대상을 연쇄적으로 가격하는 공중 유닛입니다."
     },
+    "hydralisk": {
+      "id": "hydralisk",
+      "name": "히드라리스크",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-zerg.png",
+          "value": 75
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-zerg.png",
+          "value": 25
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWZerg_nobg.png",
+          "value": 1
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-zerg.png",
+          "value": 26
+        }
+      ],
+      "engName": "Hydralisk",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 75,
+        "gas": 25,
+        "supply": 1
+      },
+      "buildTime": 26,
+      "requirements": [
+        "히드라리스크 덴"
+      ],
+      "hp": 80,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 9,
+      "detector": false,
+      "speed": 2.25,
+      "attributes": "생체",
+      "description": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다.",
+      "weapons": [
+        {
+          "type": "지상/공중",
+          "dmgType": "기본",
+          "dmg": 7.5,
+          "dmgUpg": 0.75,
+          "range": 5,
+          "cd": 1,
+          "hits": 1,
+          "dps": 7.5,
+          "bonusDmg": [
+            {
+              "key": "경장갑",
+              "base": 6.25,
+              "upg": 0.625
+            },
+            {
+              "key": "중장갑",
+              "base": 10,
+              "upg": 1
+            },
+            {
+              "key": "보호막",
+              "base": 8.75,
+              "upg": 0.875
+            }
+          ]
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "버로우",
+          "icon": "btn-ability-zerg-burrow-color.png",
+          "desc": "땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span> 상태에서는 적을 공격하거나 움직일 수 없으며 <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
+          "costItems": []
+        },
+        {
+          "name": "럴커로 변태",
+          "icon": "lurker@scbw.png",
+          "desc": "지상 유닛을 공격하는 매복 유닛입니다. 잠복해야 공격이 가능합니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다."
+    },
+    "lurker": {
+      "id": "lurker",
+      "name": "럴커",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-zerg.png",
+          "value": 50
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-zerg.png",
+          "value": 100
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWZerg_nobg.png",
+          "value": 2
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-zerg.png",
+          "value": 21
+        }
+      ],
+      "engName": "Lurker",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 50,
+        "gas": 100,
+        "supply": 2
+      },
+      "buildTime": 21,
+      "requirements": [
+        "레어"
+      ],
+      "hp": 125,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 1,
+      "armorUpgrade": 1,
+      "sight": 10,
+      "detector": false,
+      "speed": 3.375,
+      "attributes": "생체",
+      "description": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>",
+      "weapons": [
+        {
+          "type": "지상",
+          "dmgType": "파괴자",
+          "dmg": 20,
+          "dmgUpg": 2,
+          "range": 8,
+          "cd": 2.1875,
+          "hits": 1,
+          "dps": 9.14,
+          "bonusDmg": [
+            {
+              "key": "경장갑",
+              "base": 25,
+              "upg": 2
+            }
+          ]
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "버로우",
+          "icon": "btn-ability-zerg-burrow-color.png",
+          "desc": "<span style='color:#fff59d'>럴커</span>가 땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span>한 <span style='color:#fff59d'>럴커</span>는 움직일 수 없으나 공격할 수 있습니다. <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
+          "costItems": []
+        }
+      ],
+      "addCost": {
+        "minerals": 75,
+        "gas": 25
+      },
+      "desc": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>"
+    },
     "queen": {
       "id": "queen",
       "name": "퀸",
       "costItems": [
         {
           "type": "minerals",
-          "icon": "icon-mineral-terran.png",
+          "icon": "icon-mineral-zerg.png",
           "value": 100
         },
         {
           "type": "gas",
-          "icon": "icon-gas-terran.png",
+          "icon": "icon-gas-zerg.png",
           "value": 100
         },
         {
+          "type": "supply",
+          "icon": "icon-supply-BWZerg_nobg.png",
+          "value": 2
+        },
+        {
           "type": "time",
-          "icon": "icon-time-terran.png",
+          "icon": "icon-time-zerg.png",
           "value": 44
         }
       ],
@@ -356,7 +615,8 @@
           "costItems": [
             {
               "type": "energy",
-              "value": 75
+              "value": 75,
+              "icon": "Main-icon/icon-energy-zerg.png"
             }
           ]
         },
@@ -367,7 +627,8 @@
           "costItems": [
             {
               "type": "energy",
-              "value": 150
+              "value": 150,
+              "icon": "Main-icon/icon-energy-zerg.png"
             }
           ]
         },
@@ -378,7 +639,8 @@
           "costItems": [
             {
               "type": "energy",
-              "value": 75
+              "value": 75,
+              "icon": "Main-icon/icon-energy-zerg.png"
             }
           ]
         },
@@ -397,13 +659,13 @@
       "costItems": [
         {
           "type": "minerals",
-          "icon": "icon-mineral-terran.png",
+          "icon": "icon-mineral-zerg.png",
           "value": 200
         },
         {
           "type": "time",
-          "icon": "icon-time-terran.png",
-          "value": 75
+          "icon": "icon-time-zerg.png",
+          "value": 70
         }
       ],
       "engName": "Spawning Pool",
@@ -436,15 +698,18 @@
           "costItems": [
             {
               "type": "minerals",
-              "value": 100
+              "value": 100,
+              "icon": "Main-icon/icon-mineral-zerg.png"
             },
             {
               "type": "gas",
-              "value": 100
+              "value": 100,
+              "icon": "Main-icon/icon-gas-zerg.png"
             },
             {
               "type": "time",
-              "value": 105
+              "value": 105,
+              "icon": "Main-icon/icon-time-zerg.png"
             }
           ]
         },
@@ -455,15 +720,18 @@
           "costItems": [
             {
               "type": "minerals",
-              "value": 200
+              "value": 200,
+              "icon": "Main-icon/icon-mineral-zerg.png"
             },
             {
               "type": "gas",
-              "value": 200
+              "value": 200,
+              "icon": "Main-icon/icon-gas-zerg.png"
             },
             {
               "type": "time",
-              "value": 130
+              "value": 130,
+              "icon": "Main-icon/icon-time-zerg.png"
             }
           ]
         }
@@ -481,18 +749,18 @@
       "costItems": [
         {
           "type": "minerals",
-          "icon": "icon-mineral-terran.png",
+          "icon": "icon-mineral-zerg.png",
           "value": 100
         },
         {
           "type": "gas",
-          "icon": "icon-gas-terran.png",
+          "icon": "icon-gas-zerg.png",
           "value": 50
         },
         {
           "type": "time",
-          "icon": "icon-time-terran.png",
-          "value": 35
+          "icon": "icon-time-zerg.png",
+          "value": 40
         }
       ],
       "engName": "Hydralisk Den",
@@ -527,15 +795,18 @@
           "costItems": [
             {
               "type": "minerals",
-              "value": 100
+              "value": 100,
+              "icon": "Main-icon/icon-mineral-zerg.png"
             },
             {
               "type": "gas",
-              "value": 100
+              "value": 100,
+              "icon": "Main-icon/icon-gas-zerg.png"
             },
             {
               "type": "time",
-              "value": 90
+              "value": 90,
+              "icon": "Main-icon/icon-time-zerg.png"
             }
           ]
         },
@@ -546,15 +817,18 @@
           "costItems": [
             {
               "type": "minerals",
-              "value": 75
+              "value": 75,
+              "icon": "Main-icon/icon-mineral-zerg.png"
             },
             {
               "type": "gas",
-              "value": 75
+              "value": 75,
+              "icon": "Main-icon/icon-gas-zerg.png"
             },
             {
               "type": "time",
-              "value": 90
+              "value": 90,
+              "icon": "Main-icon/icon-time-zerg.png"
             }
           ]
         },
@@ -565,15 +839,18 @@
           "costItems": [
             {
               "type": "minerals",
-              "value": 150
+              "value": 150,
+              "icon": "Main-icon/icon-mineral-zerg.png"
             },
             {
               "type": "gas",
-              "value": 150
+              "value": 150,
+              "icon": "Main-icon/icon-gas-zerg.png"
             },
             {
               "type": "time",
-              "value": 105
+              "value": 105,
+              "icon": "Main-icon/icon-time-zerg.png"
             }
           ]
         }
@@ -591,17 +868,22 @@
       "costItems": [
         {
           "type": "minerals",
-          "icon": "icon-mineral-terran.png",
+          "icon": "icon-mineral-protoss.png",
           "value": 150
         },
         {
           "type": "gas",
-          "icon": "icon-gas-terran.png",
+          "icon": "icon-gas-protoss.png",
           "value": 100
         },
         {
+          "type": "supply",
+          "icon": "icon-supply-protoss.png",
+          "value": 2
+        },
+        {
           "type": "time",
-          "icon": "icon-time-terran.png",
+          "icon": "icon-time-protoss.png",
           "value": 32
         }
       ],
@@ -637,7 +919,7 @@
           "range": 5,
           "cd": 0.4687,
           "hits": 1,
-          "dps": 7.5,
+          "dps": 8,
           "bonusDmg": [
             {
               "key": "경장갑",
@@ -669,7 +951,8 @@
           "costItems": [
             {
               "type": "energy",
-              "value": 125
+              "value": 125,
+              "icon": "Main-icon/icon-energy-protoss.png"
             }
           ]
         }
@@ -692,6 +975,11 @@
           "type": "gas",
           "icon": "icon-gas-zerg.png",
           "value": 200
+        },
+        {
+          "type": "supply",
+          "icon": "icon-supply-BWZerg_nobg.png",
+          "value": 6
         },
         {
           "type": "time",
@@ -744,10 +1032,13 @@
     }
   },
   "unitDescEn": {
+    "sc2_scv": "Basic worker unit. Gathers resources, constructs buildings, and repairs structures and units.",
     "scv": "Basic worker unit. Gathers resources, constructs Terran structures, and repairs structures and units.",
+    "marine": "Versatile infantry unit.",
+    "firebat": "Specialized anti-infantry assault unit.",
+    "mutalisk": "Air unit whose attacks bounce between multiple targets.",
     "hydralisk": "Ranged attacker. Can morph into a <span style='color:#fff59d'>Lurker</span>.",
     "lurker": "Ambush unit that attacks ground units.<br><span style='color:#fff59d'>Must be burrowed to attack</span>",
-    "mutalisk": "Air unit whose attacks bounce between multiple targets.",
     "queen": "Support flying unit. Can use <span style='color:#fff59d'>Parasite</span> and <span style='color:#fff59d'>Infest Command Center</span>; after upgrading, <span style='color:#fff59d'>Spawn Broodlings</span> and <span style='color:#fff59d'>Ensnare</span>.",
     "spawning_pool": "Upgrades <span style='color:#fff59d'>Zerglings</span>.",
     "hydralisk_den": "Upgrades <span style='color:#fff59d'>Hydralisks</span>.",
@@ -756,16 +1047,19 @@
   },
   "cardDescEn": {},
   "cardDescEnByOwner": {
+    "sc2_scv|수리": "Repairs mechanical units and structures at the cost of resources.",
     "scv|수리": "Repairs mechanical units and structures at the cost of resources.",
+    "marine|스팀팩": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>72%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
+    "firebat|스팀팩": "Administers a powerful <span style='color:#fff59d'>Stimpack</span> to the unit, increasing movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>100%</span> for <span style='color:#fff59d'>18.5 seconds</span>. The unit suffers <span style='color:#ff5252'>10</span> damage.",
+    "mutalisk|가디언으로 변태": "Ranged ground assault flyer.",
+    "mutalisk|디바우러로 변태": "Powerful anti-air unit. Can use <span style='color:#fff59d'>Acid Spores</span>.",
     "hydralisk|버로우": "Hides underground. While <span style='color:#fff59d'>burrowed</span>, cannot move or attack, and cannot be detected without <span style='color:#ffd94a'>detection</span>.",
     "hydralisk|럴커로 변태": "Ambush unit that attacks ground units. Must be burrowed to attack.",
     "lurker|버로우": "The <span style='color:#fff59d'>Lurker</span> burrows underground. While <span style='color:#fff59d'>burrowed</span>, the Lurker cannot move but can attack. Its position remains hidden without <span style='color:#ffd94a'>detection</span>.",
-    "mutalisk|가디언으로 변태": "Ranged ground assault flyer.",
-    "mutalisk|디바우러로 변태": "Powerful anti-air unit. Can use <span style='color:#fff59d'>Acid Spores</span>.",
     "queen|패러사이트": "Attaches a <span style='color:#fff59d'>Parasite</span> to the target unit to share its vision. Lasts indefinitely.",
     "queen|브루들링 소환": "Fires a parasitic brood to kill the target ground unit and spawn <span style='color:#fff59d'>2</span> <span style='color:#fff59d'>Broodlings</span>. If the <span style='color:#fff59d'>Queen</span> dies before impact, the brood detonates and fails.<br><span style='color:#fff59d'>Can target biological or non-robotic mechanical units.</span>",
     "queen|인스네어": "Suppresses movement speed and attack speed buffs. Otherwise, reduces movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>25%</span> for <span style='color:#fff59d'>20 seconds</span>.<br><span style='color:#fff59d'>Cloaked and burrowed units are revealed.</span><br><span style='color:#fff59d'>Turret weapons do not receive the attack speed reduction.</span>",
     "corsair|디스럽션 웹": "Prevents all enemy units and structures in the target area from attacking for <span style='color:#fff59d'>15 seconds</span>.",
-    "sc2_ultralisk|광란": "Immune to slows, stuns, mind control, movement impairment, and parasitic effects."
+    "sc2_ultralisk|광란": "Immune to slows, stuns, mind control, movement impairment."
   }
 }
