@@ -20922,6 +20922,9 @@ function renderUnitEditorSidebar() {
 }
 
 function loadUnitIntoEditor(unitId) {
+  if (_ueCurrentUnitId && _ueCurrentUnitId !== unitId) {
+    saveCurrentUnitForm({ silent: true, skipReload: true });
+  }
   _ueCurrentUnitId = unitId;
   var u = getUnitById(unitId);
   if (!u) return;
@@ -21223,7 +21226,8 @@ function deleteUpgradeCard(idx) {
   renderUnitEditorUpgrades(u.upgrades);
 }
 
-function saveCurrentUnitForm() {
+function saveCurrentUnitForm(opts) {
+  opts = opts || {};
   if (!_ueCurrentUnitId) return;
   var u = getUnitById(_ueCurrentUnitId);
   if (!u) return;
@@ -21372,9 +21376,13 @@ function saveCurrentUnitForm() {
   try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
 
   renderUnitEditorSidebar();
-  loadUnitIntoEditor(u.id);
+  if (!opts.skipReload) {
+    loadUnitIntoEditor(u.id);
+  }
 
-  setUeStatus("'" + u.name + "' 유닛 변경사항이 브라우저에 저장되었습니다.");
+  if (!opts.silent) {
+    setUeStatus("'" + u.name + "' 유닛 변경사항이 브라우저에 저장되었습니다.");
+  }
 }
 
 function resetUnitToOriginal(unitId) {
@@ -21436,6 +21444,9 @@ function resetAllUnitsToOriginal() {
 }
 
 function exportUnitEditorJson() {
+  if (_ueCurrentUnitId) {
+    saveCurrentUnitForm({ silent: true, skipReload: true });
+  }
   var dataToExport = {
     version: "1.0",
     exportDate: new Date().toISOString(),
@@ -21487,6 +21498,9 @@ function importUnitEditorJson(input) {
 }
 
 function saveUnitEditorToGithub() {
+  if (_ueCurrentUnitId) {
+    saveCurrentUnitForm({ silent: true, skipReload: true });
+  }
   var count = Object.keys(_customUnitStore.units || {}).length;
   if (count === 0) {
     alert("현재 수정된 유닛 데이터가 없습니다. 먼저 수정한 후 저장하세요.");
