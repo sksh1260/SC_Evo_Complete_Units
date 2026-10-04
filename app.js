@@ -18777,6 +18777,15 @@ var PATCH_TEXT_EN_EXACT = {
   ,"마인트 컨트롤 개발 시간: 128 → 71": "Mind Control Research Time: 128 → 71"
   ,"탐지기 배열 개발 비용: 100/110 → 100/100": "Sensor Array Research Cost: 100/110 → 100/100"
   ,"초기 인터셉터 수: 2 → 0": "Starting Interceptor Count: 2 → 0"
+  ,"목표물에 접근할 때 감속하는 기능 추가": "Added deceleration when approaching targets"
+  ,"이동 중 회전 속도": "Moving Turn Rate"
+  ,"정지 중 회전 속도": "Stationary Turn Rate"
+  ,"마인 매설 위치에 다른 유닛이 있더라도 멈칫하지 않고, 벌쳐 바로 발밑에 마인을 설치하도록 변경": "Spider Mines are now planted directly beneath the Vulture without hesitation, even if another unit is at the placement location"
+  ,"무빙샷 메커니즘 변경": "Changed moving shot mechanics"
+  ,"발키리가 목표 유효성을 재확인하기 전에 먼저 공격을 발사하도록 변경": "Valkyries now fire before re-checking target validity"
+  ,"버로우한 럴커의 충돌 크기 무시 기능 추가 (겹치기 가능)": "Burrowed Lurkers now ignore collision size (can overlap/stack)"
+  ,"이제 패러사이트, 브루들링 소환이 광란 상태 유닛을 대상으로 지정 가능": "Parasite and Spawn Broodling can now target Frenzied units"
+  ,"뭉치기 모드 추가": "Added Formation Mode"
 };
 
 // 새 패치 항목도 별도 번역표 없이 처리할 수 있는 정형 문장 규칙이다.
@@ -18864,8 +18873,13 @@ var PATCH_TEXT_EN_REPLACEMENTS = [
   ["미사일 발사 간격", "Missile Launch Interval"],
   ["미사일 속도", "Missile Speed"],
   ["미사일 크기", "Missile Size"],
+  ["이동 중 회전 속도", "Moving Turn Rate"],
+  ["정지 중 회전 속도", "Stationary Turn Rate"],
   ["정지 회전 속도", "Stationary Turn Rate"],
   ["회전 속도", "Turn Rate"],
+  ["공격 선딜레이", "Attack Wind-up"],
+  ["공격 후딜레이", "Attack Backswing"],
+  ["뭉치기 모드", "Formation Mode"],
   ["발동 범위", "Trigger Radius"],
   ["들이기 시간", "Load Time"],
   ["들이기 범위", "Load Radius"],
