@@ -1,0 +1,771 @@
+{
+  "units": {
+    "scv": {
+      "id": "scv",
+      "name": "SCV",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 50
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 17
+        }
+      ],
+      "engName": "SCV",
+      "race": "bw_terran",
+      "type": "unit",
+      "cost": {
+        "minerals": 50,
+        "gas": 0,
+        "supply": 1
+      },
+      "buildTime": 17,
+      "requirements": [],
+      "hp": 60,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 8,
+      "detector": false,
+      "speed": 2.8125,
+      "attributes": "경장갑 · 생체 · 기계 · 부양",
+      "description": "기본 일꾼 유닛입니다. 자원을 채취하고, 테란 구조물을 건설하며, 구조물과 유닛을 <span style='color:#fff59d'>수리</span>할 수 있습니다.",
+      "weapons": [
+        {
+          "type": "지상",
+          "dmgType": "기본",
+          "dmg": 5,
+          "dmgUpg": 1,
+          "range": 0.1,
+          "cd": 1.6,
+          "hits": 1,
+          "dps": 3.25
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "수리",
+          "icon": "btn-ability-terran-repair.png",
+          "desc": "자원을 소모하여 기계 유닛과 구조물의 체력을 복구합니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "기본 일꾼 유닛입니다. 자원을 채취하고, 테란 구조물을 건설하며, 구조물과 유닛을 <span style='color:#fff59d'>수리</span>할 수 있습니다."
+    },
+    "hydralisk": {
+      "id": "hydralisk",
+      "name": "히드라리스크",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 75
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 25
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 26.25
+        }
+      ],
+      "engName": "Hydralisk",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 75,
+        "gas": 25,
+        "supply": 1
+      },
+      "buildTime": 26,
+      "requirements": [
+        "히드라리스크 덴"
+      ],
+      "hp": 80,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 9,
+      "detector": false,
+      "speed": 2.25,
+      "attributes": "생체",
+      "description": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다.",
+      "weapons": [
+        {
+          "type": "지상/공중",
+          "dmgType": "기본",
+          "dmg": 7.5,
+          "dmgUpg": 0.75,
+          "range": 5,
+          "cd": 1,
+          "hits": 1,
+          "dps": 7.44,
+          "bonusDmg": [
+            {
+              "key": "경장갑",
+              "base": 6.25,
+              "upg": 0.625
+            },
+            {
+              "key": "중장갑",
+              "base": 10,
+              "upg": 1
+            },
+            {
+              "key": "보호막",
+              "base": 8.75,
+              "upg": 0.875
+            }
+          ]
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "버로우",
+          "icon": "btn-ability-zerg-burrow-color.png",
+          "desc": "땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span> 상태에서는 적을 공격하거나 움직일 수 없으며 <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
+          "costItems": []
+        },
+        {
+          "name": "럴커로 변태",
+          "icon": "lurker@scbw.png",
+          "desc": "지상 유닛을 공격하는 매복 유닛입니다. 잠복해야 공격이 가능합니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "원거리 공격수입니다. <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다."
+    },
+    "lurker": {
+      "id": "lurker",
+      "name": "럴커",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 50
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 100
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 21
+        }
+      ],
+      "engName": "Lurker",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 50,
+        "gas": 100,
+        "supply": 2
+      },
+      "buildTime": 21,
+      "requirements": [
+        "레어"
+      ],
+      "hp": 125,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 1,
+      "armorUpgrade": 1,
+      "sight": 10,
+      "detector": false,
+      "speed": 3.375,
+      "attributes": "생체",
+      "description": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>",
+      "weapons": [
+        {
+          "type": "지상",
+          "dmgType": "파괴자",
+          "dmg": 20,
+          "dmgUpg": 2,
+          "range": 8,
+          "cd": 2.1875,
+          "hits": 1,
+          "dps": 11.43,
+          "bonusDmg": [
+            {
+              "key": "경장갑",
+              "base": 25,
+              "upg": 2
+            }
+          ]
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "버로우",
+          "icon": "btn-ability-zerg-burrow-color.png",
+          "desc": "<span style='color:#fff59d'>럴커</span>가 땅속으로 몸을 숨깁니다. <span style='color:#fff59d'>버로우</span>한 <span style='color:#fff59d'>럴커</span>는 움직일 수 없으나 공격할 수 있습니다. <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
+          "costItems": []
+        }
+      ],
+      "addCost": {
+        "minerals": 75,
+        "gas": 25
+      },
+      "desc": "지상 유닛을 공격하는 매복 유닛입니다.<br><span style='color:#fff59d'>잠복해야 공격 가능</span>"
+    },
+    "mutalisk": {
+      "id": "mutalisk",
+      "name": "뮤탈리스크",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 100
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 100
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 33
+        }
+      ],
+      "engName": "Mutalisk",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 100,
+        "gas": 100,
+        "supply": 2
+      },
+      "buildTime": 33,
+      "requirements": [
+        "스파이어"
+      ],
+      "hp": 120,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 11,
+      "detector": false,
+      "speed": 3.75,
+      "attributes": "경장갑 · 생체",
+      "description": "여러 대상을 연쇄적으로 가격하는 공중 유닛입니다.",
+      "weapons": [
+        {
+          "type": "지상/공중",
+          "dmgType": "기본",
+          "dmg": 10,
+          "dmgUpg": 1,
+          "range": 5,
+          "cd": 1.75,
+          "hits": 1,
+          "dps": 5.14
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "쐐기 벌레 <span style='color:var(--text-dim);font-size:0.83em;font-weight:400;'>(지속 능력)</span>",
+          "icon": "btn-ability-zerg-mutalisk-weapon@scbw.png",
+          "desc": "<span style='color:#fff59d'>뮤탈리스크</span>의 공격이 근처 <span style='color:#fff59d'>3</span>기의 적에게 튕깁니다. 각 공격은 이전 공격의 <span style='color:#ff5252'>33%</span>만큼의 피해를 줍니다.",
+          "costItems": []
+        },
+        {
+          "name": "가디언으로 변태",
+          "icon": "guardian@scbw.png",
+          "desc": "원거리 지상 공격 비행체입니다.",
+          "costItems": []
+        },
+        {
+          "name": "디바우러로 변태",
+          "icon": "devourer@scbw.png",
+          "desc": "강력한 대공 유닛입니다. <span style='color:#fff59d'>애시드 스포어</span>를 사용할 수 있습니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "여러 대상을 연쇄적으로 가격하는 공중 유닛입니다."
+    },
+    "queen": {
+      "id": "queen",
+      "name": "퀸",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 100
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 100
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 44
+        }
+      ],
+      "engName": "Queen",
+      "race": "bw_zerg",
+      "type": "unit",
+      "cost": {
+        "minerals": 100,
+        "gas": 100,
+        "supply": 2
+      },
+      "buildTime": 44,
+      "requirements": [
+        "퀸즈 네스트"
+      ],
+      "hp": 120,
+      "shields": 0,
+      "energy": 50,
+      "maxEnergy": 200,
+      "armor": 0,
+      "armorUpgrade": 1,
+      "sight": 11,
+      "detector": false,
+      "speed": 3.75,
+      "attributes": "생체 · 사이오닉",
+      "description": "지원 비행체입니다. <span style='color:#fff59d'>패러사이트</span>와 <span style='color:#fff59d'>인페스티드 커맨드 센터</span>를 사용할 수 있습니다. 업그레이드하여 <span style='color:#fff59d'>브루들링 소환</span>과 <span style='color:#fff59d'>인스네어</span>를 사용할 수 있습니다.",
+      "weapons": [],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "패러사이트",
+          "icon": "btn-ability-zerg-parasite@scbw.png",
+          "desc": "대상 유닛에 <span style='color:#fff59d'>패러사이트</span>를 흡착시켜 해당 유닛의 시야를 공유받습니다. 효과는 무기한으로 지속됩니다.",
+          "costItems": [
+            {
+              "type": "energy",
+              "value": 75
+            }
+          ]
+        },
+        {
+          "name": "브루들링 소환",
+          "icon": "btn-ability-zerg-swarmseeds-color.png",
+          "desc": "기생 주머니를 발사하여 대상이 된 지상 유닛을 처치하고, 그 자리에 <span style='color:#fff59d'>2</span>기의 <span style='color:#fff59d'>브루들링</span>을 생성합니다. 기생 주머니가 대상에 직격하기 전에 <span style='color:#fff59d'>퀸</span>이 사망할경우, 주머니는 자폭하며 기술이 무효화됩니다.<br><span style='color:#fff59d'>생체, 혹은 로봇이 아닌 기계 속성을 대상으로 사용할 수 있습니다.</span>",
+          "costItems": [
+            {
+              "type": "energy",
+              "value": 150
+            }
+          ]
+        },
+        {
+          "name": "인스네어",
+          "icon": "btn-ability-zerg-ensnare@scbw.png",
+          "desc": "이동 속도 및 공격 속도 증가 효과를 억제합니다. 해당 사항이 없을 경우, <span style='color:#fff59d'>20초</span> 동안 이동 속도를 <span style='color:#a0c4ff'>50%</span> 감소시키고 공격 속도를 <span style='color:#a0c4ff'>25%</span> 감소시킵니다.<br><span style='color:#fff59d'>은폐하거나 잠복한 유닛은 모습이 드러납니다.</span><br><span style='color:#fff59d'>포탑형 무기는 공격 속도 감소 효과를 받지 않습니다.</span>",
+          "costItems": [
+            {
+              "type": "energy",
+              "value": 75
+            }
+          ]
+        },
+        {
+          "name": "인페스트 커맨드 센터 <span style='color:var(--text-dim);font-size:0.83em;font-weight:400;'>(자동 시전)</span>",
+          "icon": "infestedcommandcenter@scbw.png",
+          "desc": "<span style='color:#fff59d'>퀸</span>이 심각하게 손상된 <span style='color:#fff59d'>커맨드 센터</span>에 기생충을 심어 그것을 <span style='color:#fff59d'>인페스티드 커맨드 센터</span>로 변화시킵니다. 폭발하는 <span style='color:#fff59d'>인페스티드 테란</span>을 생성할 수 있습니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "지원 비행체입니다. <span style='color:#fff59d'>패러사이트</span>와 <span style='color:#fff59d'>인페스티드 커맨드 센터</span>를 사용할 수 있습니다. 업그레이드하여 <span style='color:#fff59d'>브루들링 소환</span>과 <span style='color:#fff59d'>인스네어</span>를 사용할 수 있습니다."
+    },
+    "spawning_pool": {
+      "id": "spawning_pool",
+      "name": "스포닝 풀",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 200
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 75
+        }
+      ],
+      "engName": "Spawning Pool",
+      "race": "bw_zerg",
+      "type": "structure",
+      "cost": {
+        "minerals": 200,
+        "gas": 0,
+        "supply": 0
+      },
+      "buildTime": 70,
+      "requirements": [],
+      "hp": 1000,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 1,
+      "armorUpgrade": 0,
+      "sight": 9,
+      "detector": false,
+      "speed": 0,
+      "attributes": "중장갑 · 생체 · 구조물",
+      "description": "<span style='color:#fff59d'>저글링</span>을 업그레이드합니다.",
+      "weapons": [],
+      "upgrades": [
+        {
+          "name": "대사 촉진 진화",
+          "icon": "btn-upgrade-zerg-metabolicboost@scbw.png",
+          "desc": "<span style='color:#fff59d'>저글링</span>의 이동 속도가 <span style='color:#a0c4ff'>50%</span>만큼 증가합니다.",
+          "costItems": [
+            {
+              "type": "minerals",
+              "value": 100
+            },
+            {
+              "type": "gas",
+              "value": 100
+            },
+            {
+              "type": "time",
+              "value": 105
+            }
+          ]
+        },
+        {
+          "name": "아드레날린 분비선 진화",
+          "icon": "btn-upgrade-zerg-adrenalglands@scbw.png",
+          "desc": "<span style='color:#fff59d'>저글링</span>의 공격 속도가 <span style='color:#a0c4ff'>40%</span>만큼 증가합니다.",
+          "costItems": [
+            {
+              "type": "minerals",
+              "value": 200
+            },
+            {
+              "type": "gas",
+              "value": 200
+            },
+            {
+              "type": "time",
+              "value": 130
+            }
+          ]
+        }
+      ],
+      "abilities": [],
+      "addCost": {
+        "minerals": 50,
+        "gas": 0
+      },
+      "desc": "<span style='color:#fff59d'>저글링</span>을 업그레이드합니다."
+    },
+    "hydralisk_den": {
+      "id": "hydralisk_den",
+      "name": "히드라리스크 덴",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 100
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 50
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 35
+        }
+      ],
+      "engName": "Hydralisk Den",
+      "race": "bw_zerg",
+      "type": "structure",
+      "cost": {
+        "minerals": 100,
+        "gas": 50,
+        "supply": 0
+      },
+      "buildTime": 40,
+      "requirements": [
+        "스포닝 풀"
+      ],
+      "hp": 850,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 1,
+      "armorUpgrade": 0,
+      "sight": 9,
+      "detector": false,
+      "speed": 0,
+      "attributes": "중장갑 · 생체 · 구조물",
+      "description": "<span style='color:#fff59d'>히드라리스크</span>를 업그레이드합니다.",
+      "weapons": [],
+      "upgrades": [
+        {
+          "name": "근육 보강 진화",
+          "icon": "btn-upgrade-zerg-muscularaugments@scbw.png",
+          "desc": "<span style='color:#fff59d'>히드라리스크</span>의 이동 속도가 <span style='color:#a0c4ff'>37.5%</span>만큼 증가합니다.",
+          "costItems": [
+            {
+              "type": "minerals",
+              "value": 100
+            },
+            {
+              "type": "gas",
+              "value": 100
+            },
+            {
+              "type": "time",
+              "value": 90
+            }
+          ]
+        },
+        {
+          "name": "가시 홈 진화",
+          "icon": "btn-upgrade-zerg-groovedspines@scbw.png",
+          "desc": "<span style='color:#fff59d'>히드라리스크</span>의 사거리가 <span style='color:#a0c4ff'>1</span>만큼 증가합니다.",
+          "costItems": [
+            {
+              "type": "minerals",
+              "value": 75
+            },
+            {
+              "type": "gas",
+              "value": 75
+            },
+            {
+              "type": "time",
+              "value": 90
+            }
+          ]
+        },
+        {
+          "name": "럴커 진화",
+          "icon": "lurker@scbw.png",
+          "desc": "<span style='color:#fff59d'>히드라리스크</span>가 <span style='color:#fff59d'>럴커</span>로 변태할 수 있습니다. <span style='color:#fff59d'>버로우</span>한 <span style='color:#fff59d'>럴커</span>는 움직일 수 없으나 공격할 수 있습니다. <span style='color:#ffd94a'>탐지</span> 기능 없이는 위치가 발각되지 않습니다.",
+          "costItems": [
+            {
+              "type": "minerals",
+              "value": 150
+            },
+            {
+              "type": "gas",
+              "value": 150
+            },
+            {
+              "type": "time",
+              "value": 105
+            }
+          ]
+        }
+      ],
+      "abilities": [],
+      "addCost": {
+        "minerals": 50,
+        "gas": 0
+      },
+      "desc": "<span style='color:#fff59d'>히드라리스크</span>를 업그레이드합니다."
+    },
+    "corsair": {
+      "id": "corsair",
+      "name": "커세어",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-terran.png",
+          "value": 150
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-terran.png",
+          "value": 100
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-terran.png",
+          "value": 32
+        }
+      ],
+      "engName": "Corsair",
+      "race": "bw_protoss",
+      "type": "unit",
+      "cost": {
+        "minerals": 150,
+        "gas": 100,
+        "supply": 2
+      },
+      "buildTime": 32,
+      "requirements": [
+        "스타게이트"
+      ],
+      "hp": 100,
+      "shields": 80,
+      "energy": 50,
+      "maxEnergy": 200,
+      "armor": 1,
+      "armorUpgrade": 1,
+      "sight": 10,
+      "detector": false,
+      "speed": 3.75,
+      "attributes": "기계",
+      "description": "공중 우위 전투함입니다. 업그레이드하여 <span style='color:#fff59d'>디스럽션 웹</span>을 사용할 수 있습니다.",
+      "weapons": [
+        {
+          "type": "공중",
+          "dmgType": "기본",
+          "dmg": 3.75,
+          "dmgUpg": 0.75,
+          "range": 5,
+          "cd": 0.4687,
+          "hits": 1,
+          "dps": 7.5,
+          "bonusDmg": [
+            {
+              "key": "경장갑",
+              "base": 3.125,
+              "upg": 0.625,
+              "splash": true
+            },
+            {
+              "key": "중장갑",
+              "base": 5,
+              "upg": 1,
+              "splash": true
+            },
+            {
+              "key": "보호막",
+              "base": 4.375,
+              "upg": 0.875,
+              "splash": true
+            }
+          ]
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "디스럽션 웹",
+          "icon": "btn-ability-protoss-disruptionweb.png",
+          "desc": "<span style='color:#fff59d'>15초</span> 동안 대상 지역의 모든 적 유닛과 구조물이 공격할 수 없게 됩니다.",
+          "costItems": [
+            {
+              "type": "energy",
+              "value": 125
+            }
+          ]
+        }
+      ],
+      "desc": "공중 우위 전투함입니다. 업그레이드하여 <span style='color:#fff59d'>디스럽션 웹</span>을 사용할 수 있습니다."
+    },
+    "sc2_ultralisk": {
+      "id": "sc2_ultralisk",
+      "name": "울트라리스크",
+      "engName": "Ultralisk",
+      "race": "sc2_zerg",
+      "type": "unit",
+      "costItems": [
+        {
+          "type": "minerals",
+          "icon": "icon-mineral-zerg.png",
+          "value": 275
+        },
+        {
+          "type": "gas",
+          "icon": "icon-gas-zerg.png",
+          "value": 200
+        },
+        {
+          "type": "time",
+          "icon": "icon-time-zerg.png",
+          "value": 55
+        }
+      ],
+      "cost": {
+        "minerals": 275,
+        "gas": 200,
+        "supply": 6
+      },
+      "buildTime": 55,
+      "requirements": [
+        "울트라리스크 동굴"
+      ],
+      "hp": 500,
+      "shields": 0,
+      "energy": 0,
+      "maxEnergy": 0,
+      "armor": 2,
+      "armorUpgrade": 1,
+      "sight": 9,
+      "detector": false,
+      "speed": 2.9531,
+      "attributes": "중장갑 · 생체 · 거대",
+      "description": "범위 공격을 하는 중돌격수입니다.",
+      "weapons": [
+        {
+          "type": "지상",
+          "dmgType": "기본",
+          "dmg": 35,
+          "dmgUpg": 3,
+          "range": 1,
+          "cd": 0.86,
+          "hits": 1,
+          "dps": 40.7
+        }
+      ],
+      "upgrades": [],
+      "abilities": [
+        {
+          "name": "광란",
+          "icon": "btn-ability-zerg-frenzied-color.png",
+          "desc": "감속, 기절, 정신 제어, 이동 방해 효과에 면역입니다.",
+          "costItems": []
+        }
+      ],
+      "desc": "범위 공격을 하는 중돌격수입니다."
+    }
+  },
+  "unitDescEn": {
+    "scv": "Basic worker unit. Gathers resources, constructs Terran structures, and repairs structures and units.",
+    "hydralisk": "Ranged attacker. Can morph into a <span style='color:#fff59d'>Lurker</span>.",
+    "lurker": "Ambush unit that attacks ground units.<br><span style='color:#fff59d'>Must be burrowed to attack</span>",
+    "mutalisk": "Air unit whose attacks bounce between multiple targets.",
+    "queen": "Support flying unit. Can use <span style='color:#fff59d'>Parasite</span> and <span style='color:#fff59d'>Infest Command Center</span>; after upgrading, <span style='color:#fff59d'>Spawn Broodlings</span> and <span style='color:#fff59d'>Ensnare</span>.",
+    "spawning_pool": "Upgrades <span style='color:#fff59d'>Zerglings</span>.",
+    "hydralisk_den": "Upgrades <span style='color:#fff59d'>Hydralisks</span>.",
+    "corsair": "Air-superiority warship. Can use <span style='color:#fff59d'>Disruption Web</span> after upgrading.",
+    "sc2_ultralisk": "Heavy assault unit with area attacks."
+  },
+  "cardDescEn": {},
+  "cardDescEnByOwner": {
+    "scv|수리": "Repairs mechanical units and structures at the cost of resources.",
+    "hydralisk|버로우": "Hides underground. While <span style='color:#fff59d'>burrowed</span>, cannot move or attack, and cannot be detected without <span style='color:#ffd94a'>detection</span>.",
+    "hydralisk|럴커로 변태": "Ambush unit that attacks ground units. Must be burrowed to attack.",
+    "lurker|버로우": "The <span style='color:#fff59d'>Lurker</span> burrows underground. While <span style='color:#fff59d'>burrowed</span>, the Lurker cannot move but can attack. Its position remains hidden without <span style='color:#ffd94a'>detection</span>.",
+    "mutalisk|가디언으로 변태": "Ranged ground assault flyer.",
+    "mutalisk|디바우러로 변태": "Powerful anti-air unit. Can use <span style='color:#fff59d'>Acid Spores</span>.",
+    "queen|패러사이트": "Attaches a <span style='color:#fff59d'>Parasite</span> to the target unit to share its vision. Lasts indefinitely.",
+    "queen|브루들링 소환": "Fires a parasitic brood to kill the target ground unit and spawn <span style='color:#fff59d'>2</span> <span style='color:#fff59d'>Broodlings</span>. If the <span style='color:#fff59d'>Queen</span> dies before impact, the brood detonates and fails.<br><span style='color:#fff59d'>Can target biological or non-robotic mechanical units.</span>",
+    "queen|인스네어": "Suppresses movement speed and attack speed buffs. Otherwise, reduces movement speed by <span style='color:#a0c4ff'>50%</span> and attack speed by <span style='color:#a0c4ff'>25%</span> for <span style='color:#fff59d'>20 seconds</span>.<br><span style='color:#fff59d'>Cloaked and burrowed units are revealed.</span><br><span style='color:#fff59d'>Turret weapons do not receive the attack speed reduction.</span>",
+    "corsair|디스럽션 웹": "Prevents all enemy units and structures in the target area from attacking for <span style='color:#fff59d'>15 seconds</span>.",
+    "sc2_ultralisk|광란": "Immune to slows, stuns, mind control, movement impairment, and parasitic effects."
+  }
+}
