@@ -12740,6 +12740,35 @@ function timeIcon(race) {
   return resolveIcon("icon-time-" + raceClr(race) + ".png");
 }
 
+function getCostItemIcon(item, race) {
+  if (!item) return "";
+  if (item.icon) {
+    var resolved = resolveIcon(item.icon, race);
+    if (resolved) return resolved;
+  }
+  var type = (item.type || "").toLowerCase().trim();
+  var r = (race && typeof race === "string") ? race.toLowerCase() : "";
+  var rIcons = getIcons(r);
+  if (type === "minerals" || type === "mineral") return resolveIcon(rIcons.min, r);
+  if (type === "gas" || type === "vespene") return resolveIcon(rIcons.gas, r);
+  if (type === "supply") return resolveIcon(rIcons.sup, r);
+  if (type === "time") return timeIcon(r);
+  if (type === "energy") {
+    if (r.indexOf("zerg") >= 0) return resolveIcon("icon-energy-zerg.png", r);
+    if (r.indexOf("protoss") >= 0) return resolveIcon("icon-energy-protoss.png", r);
+    return resolveIcon("icon-energy-terran.png", r);
+  }
+  if (type === "health" || type === "hp" || type === "life") {
+    if (r.indexOf("zerg") >= 0) return resolveIcon("icon-health-zerg.png", r);
+    if (r.indexOf("protoss") >= 0) return resolveIcon("icon-health-protoss.png", r);
+    return resolveIcon("icon-health-terran.png", r);
+  }
+  if (type === "shields" || type === "shield") {
+    return resolveIcon("icon-shield-protoss.png", r);
+  }
+  return "";
+}
+
 // 무제한 사거리 아이콘 (SVG 무한대 돋보기 스타일 디자인)
 function infiniteIcon(noColor) {
   var colorStyle = noColor ? "" : "color:var(--text-bright);";
@@ -14039,7 +14068,7 @@ function renderUnitApplicableUpgrades(u) {
     if (upg.costItems && upg.costItems.length) {
       costBadgeHtml = "<div class='modal-item-cost-badge'>";
       upg.costItems.forEach(function(ci) {
-        var cIcon = ci.icon ? (resolveIcon(ci.icon)) : "";
+        var cIcon = getCostItemIcon(ci, u.race);
         var valCls = ci.type ? ("cost-val-" + ci.type) : "cost-val-default";
         costBadgeHtml += "<span class='cost-item-box'>" +
           (cIcon ? "<img src='" + cIcon + "' class='cost-item-icon' alt=''/>" : "") +
@@ -15021,7 +15050,7 @@ function renderRow(u) {
         abCostHtml = "";
       } else if (ab.costItems && ab.costItems.length) {
         abCostHtml = ab.costItems.map(function(ci) {
-          var cIco = ci.icon ? resolveIcon(ci.icon) : "";
+          var cIco = getCostItemIcon(ci, u.race);
           var mainCostVal = ci.hideVal ? "" : formatGameRateText(formatCostValue(ci));
           return "<span class='cost-item-box' style='display:inline-flex;align-items:center;line-height:1;'>" +
             (cIco ? "<img src='" + cIco + "' class='cost-item-icon' style='margin-right:0.25rem;' alt=''/>" : "") +
@@ -17809,7 +17838,7 @@ function getEffectiveAbilities(u) {
           costBadgeHtml = "<div class='modal-item-cost-badge'>";
           for (var ci = 0; ci < abItem.costItems.length; ci++) {
             var cItem = abItem.costItems[ci];
-            var cIcon = cItem.icon ? (resolveIcon(cItem.icon)) : "";
+            var cIcon = getCostItemIcon(cItem, u.race);
             var valCls = cItem.type ? ("cost-val-" + cItem.type) : "cost-val-default";
             var addSpan = (abItem.costAdd && (cItem.type === "energy" || ci === abItem.costItems.length - 1)) ? "<span class='cost-item-val cost-val-energy' style='margin-left:0.15rem;'>" + formatGameRateText(abItem.costAdd) + "</span>" : "";
             var valVal = (cItem.hideVal || (abItem.name === "치료" && abItem.costAdd)) ? "" : formatGameRateText(formatCostValue(cItem));
@@ -17942,7 +17971,7 @@ function getEffectiveAbilities(u) {
             var lvCosts = [uupg, upg2, upg3].map(function(up, lvIdx) {
               if (up.costItems && up.costItems.length) {
                 return up.costItems.map(function(ci) {
-                  var cIcon = ci.icon ? (resolveIcon(ci.icon)) : "";
+                  var cIcon = getCostItemIcon(ci, u.race);
                   var valCls = ci.type ? ("cost-val-" + ci.type) : "cost-val-default";
                   return "<span class='cost-item-box'>" +
                     (cIcon ? "<img src='" + cIcon + "' class='cost-item-icon' alt=''/>" : "") +
@@ -18097,7 +18126,7 @@ function getEffectiveAbilities(u) {
           costBadgeHtml = "<div class='modal-item-cost-badge'>";
           for (var ci = 0; ci < uupg.costItems.length; ci++) {
             var cItem = uupg.costItems[ci];
-            var cIcon = cItem.icon ? (resolveIcon(cItem.icon)) : "";
+            var cIcon = getCostItemIcon(cItem, u.race);
             var valCls = cItem.type ? ("cost-val-" + cItem.type) : "cost-val-default";
             costBadgeHtml += "<span class='cost-item-box'>" +
               (cIcon ? "<img src='" + cIcon + "' class='cost-item-icon' alt='' />" : "") +
@@ -21211,6 +21240,15 @@ function saveCurrentUnitForm() {
   u.cost = { minerals: m, gas: g, supply: sup };
   u.buildTime = btime;
 
+  // 비용 아이템(costItems)도 동기화하여 모달/상세창에서 아이콘과 함께 정상 렌더링되도록 처리
+  var rIcons = getIcons(u.race);
+  var newUnitCostItems = [];
+  if (m > 0) newUnitCostItems.push({ type: "minerals", icon: rIcons.min, value: m });
+  if (g > 0) newUnitCostItems.push({ type: "gas", icon: rIcons.gas, value: g });
+  if (sup > 0) newUnitCostItems.push({ type: "supply", icon: rIcons.sup, value: sup });
+  if (btime > 0) newUnitCostItems.push({ type: "time", icon: "icon-time-" + raceClr(u.race) + ".png", value: btime });
+  u.costItems = newUnitCostItems;
+
   var reqStr = getVal("ue-f-requirements").trim();
   u.requirements = reqStr ? reqStr.split(",").map(function (s) { return s.trim(); }).filter(Boolean) : [];
   u.attributes = getVal("ue-f-attributes").trim();
@@ -21275,7 +21313,12 @@ function saveCurrentUnitForm() {
       costsRaw.split(",").forEach(function (item) {
         var pair = item.split(":");
         if (pair.length === 2) {
-          costItems.push({ type: pair[0].trim(), value: parseFloat(pair[1].trim()) || 0 });
+          var cType = pair[0].trim();
+          var cVal = parseFloat(pair[1].trim()) || 0;
+          var ciObj = { type: cType, value: cVal };
+          var defaultIco = getCostItemIcon({ type: cType }, u.race);
+          if (defaultIco) ciObj.icon = defaultIco;
+          costItems.push(ciObj);
         }
       });
     }
@@ -21306,7 +21349,12 @@ function saveCurrentUnitForm() {
       ucostsRaw.split(",").forEach(function (item) {
         var pair = item.split(":");
         if (pair.length === 2) {
-          costItems.push({ type: pair[0].trim(), value: parseFloat(pair[1].trim()) || 0 });
+          var cType = pair[0].trim();
+          var cVal = parseFloat(pair[1].trim()) || 0;
+          var ciObj = { type: cType, value: cVal };
+          var defaultIco = getCostItemIcon({ type: cType }, u.race);
+          if (defaultIco) ciObj.icon = defaultIco;
+          costItems.push(ciObj);
         }
       });
     }
