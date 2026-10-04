@@ -178,6 +178,38 @@ function gitHubContentsUrl(env) {
   return "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + encodeURIComponent(env.PATCH_FILE || "Patch.csv");
 }
 
+function gitHubFileContentsUrl(filename, env) {
+  const [owner, repo] = String(env.GITHUB_REPO || "").split("/");
+  if (!owner || !repo) throw new Error("GITHUB_REPO 설정이 올바르지 않습니다.");
+  return "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + encodeURIComponent(filename);
+}
+
+async function getFileFromGithub(filename, env) {
+  const url = gitHubFileContentsUrl(filename, env);
+  const res = await fetch(url, { headers: githubHeaders(env.GITHUB_REPO_TOKEN) });
+  if (res.status === 404) return { content: "", sha: null };
+  if (!res.ok) throw new Error("GitHub에서 " + filename + "을(를) 읽지 못했습니다.");
+  const data = await res.json();
+  return { content: decodeUtf8Base64(data.content), sha: data.sha };
+}
+
+async function saveFileToGithub(filename, content, message, env) {
+  const existing = await getFileFromGithub(filename, env);
+  const body = {
+    message: message || ("Update " + filename),
+    content: encodeUtf8Base64(content),
+    branch: "main"
+  };
+  if (existing.sha) body.sha = existing.sha;
+  const res = await fetch(gitHubFileContentsUrl(filename, env), {
+    method: "PUT",
+    headers: { ...githubHeaders(env.GITHUB_REPO_TOKEN), "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error("GitHub 저장에 실패했습니다: " + await res.text());
+  return res.json();
+}
+
 function encodeUtf8Base64(text) {
   const bytes = encoder.encode(text);
   let binary = "";
@@ -296,6 +328,18 @@ export default {
           return json({ error: "Invalid patch data" }, 400, headers);
         }
         const saved = await savePatchToGithub(body.csv, body.message, env);
+        return json({ ok: true, commit: saved.commit?.sha, login: admin.login }, 200, headers);
+      }
+      if (url.pathname === "/api/units" && request.method === "GET") {
+        const file = await getFileFromGithub("units.json", env);
+        return json({ units: file.content ? JSON.parse(file.content) : {} }, 200, headers);
+      }
+      if (url.pathname === "/api/units" && request.method === "PUT") {
+        const admin = await requireAdmin(request, env);
+        if (!admin) return json({ error: "Unauthorized" }, 401, headers);
+        const body = await request.json();
+        const jsonContent = JSON.stringify(body.customStore || body.units || body, null, 2);
+        const saved = await saveFileToGithub("units.json", jsonContent, body.message || "Update custom units data", env);
         return json({ ok: true, commit: saved.commit?.sha, login: admin.login }, 200, headers);
       }
       return json({ error: "Not found" }, 404, headers);

@@ -103,6 +103,7 @@
           <button type="button" class="top-menu-btn active" data-view="database" aria-current="page" data-i18n="unitDb">유닛 DB</button>
           <button type="button" class="top-menu-btn" data-view="compare" data-i18n="unitCompare">유닛 비교</button>
           <button type="button" class="top-menu-btn" data-view="patch" data-i18n="patchNotes">패치 내역</button>
+          <button type="button" class="top-menu-btn" id="menu-btn-unit-editor" data-view="unit-editor" data-i18n="unitEditor" hidden>데이터 편집</button>
         </nav>
       </div>
 
@@ -341,6 +342,215 @@
       <div id="patch-content" class="patch-content"></div>
     </section>
 
+    <!-- 유닛 & 기술 데이터 편집기 뷰 -->
+    <section id="unit-editor-view" class="unit-editor-view" aria-label="데이터 편집" hidden>
+      <div class="ue-container">
+        <!-- 왼쪽 사이드바: 유닛 목록 및 검색/필터 -->
+        <aside class="ue-sidebar">
+          <div class="ue-sidebar-search">
+            <input type="text" id="ue-search-input" class="ue-search-box" placeholder="유닛 검색..." data-i18n-placeholder="searchUnit">
+          </div>
+          <div class="ue-race-filter-bar">
+            <button type="button" class="ue-filter-btn active" data-race="all">ALL</button>
+            <button type="button" class="ue-filter-btn" data-race="bw_terran">BW T</button>
+            <button type="button" class="ue-filter-btn" data-race="bw_protoss">BW P</button>
+            <button type="button" class="ue-filter-btn" data-race="bw_zerg">BW Z</button>
+            <button type="button" class="ue-filter-btn" data-race="sc2_terran">SC2 T</button>
+            <button type="button" class="ue-filter-btn" data-race="sc2_protoss">SC2 P</button>
+            <button type="button" class="ue-filter-btn" data-race="sc2_zerg">SC2 Z</button>
+          </div>
+          <div class="ue-unit-list" id="ue-unit-list" role="listbox" aria-label="유닛 목록"></div>
+        </aside>
+
+        <!-- 오른쪽 메인 폼: 선택된 유닛의 스탯, 설명, 무기, 기술 편집 -->
+        <div class="ue-main-form" id="ue-main-form">
+          <div class="ue-header-panel">
+            <div class="ue-header-portrait" id="ue-header-portrait"></div>
+            <div class="ue-header-info">
+              <div class="ue-header-title-row">
+                <h2 id="ue-unit-title">유닛을 선택하세요</h2>
+                <span id="ue-unit-badge" class="ue-race-badge"></span>
+                <span id="ue-edited-badge" class="ue-edited-indicator" hidden>수정됨</span>
+              </div>
+              <p id="ue-unit-subid" class="ue-unit-subid"></p>
+            </div>
+            <div class="ue-header-actions">
+              <button type="button" class="ue-btn ue-btn-preview" id="ue-btn-preview-modal">상세 모달 미리보기</button>
+              <button type="button" class="ue-btn ue-btn-reset-unit" id="ue-btn-reset-unit" title="현재 유닛을 기본값으로 복원">유닛 복원</button>
+            </div>
+          </div>
+
+          <!-- 서브 탭: 기본/스탯, 설명, 무기 스펙, 기술/능력, 업그레이드 -->
+          <div class="ue-tabs">
+            <button type="button" class="ue-tab-btn active" data-tab="basic">기본 정보 & 비용</button>
+            <button type="button" class="ue-tab-btn" data-tab="stats">생존 & 기동 스탯</button>
+            <button type="button" class="ue-tab-btn" data-tab="desc">유닛 설명 (한/영)</button>
+            <button type="button" class="ue-tab-btn" data-tab="weapons">무기 스펙</button>
+            <button type="button" class="ue-tab-btn" data-tab="abilities">기술 / 능력</button>
+            <button type="button" class="ue-tab-btn" data-tab="upgrades">연구 업그레이드</button>
+          </div>
+
+          <form id="ue-form" class="ue-form-body" onsubmit="return false;">
+            <!-- 탭 1: 기본 정보 & 비용 -->
+            <div class="ue-tab-pane active" id="ue-pane-basic">
+              <div class="ue-form-grid">
+                <div class="ue-field-group">
+                  <label for="ue-f-name">유닛 이름 (한국어)</label>
+                  <input type="text" id="ue-f-name" class="ue-input" required>
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-engName">유닛 이름 (English)</label>
+                  <input type="text" id="ue-f-engName" class="ue-input">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-type">구분 (Type)</label>
+                  <select id="ue-f-type" class="ue-input">
+                    <option value="unit">유닛 (unit)</option>
+                    <option value="structure">구조물 (structure)</option>
+                  </select>
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-race">종족 (Race)</label>
+                  <select id="ue-f-race" class="ue-input">
+                    <option value="bw_terran">BW Terran</option>
+                    <option value="bw_protoss">BW Protoss</option>
+                    <option value="bw_zerg">BW Zerg</option>
+                    <option value="sc2_terran">SC2 Terran</option>
+                    <option value="sc2_protoss">SC2 Protoss</option>
+                    <option value="sc2_zerg">SC2 Zerg</option>
+                  </select>
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-minerals">광물 (Minerals)</label>
+                  <input type="number" id="ue-f-minerals" class="ue-input" min="0" step="25">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-gas">가스 (Vespene Gas)</label>
+                  <input type="number" id="ue-f-gas" class="ue-input" min="0" step="25">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-supply">인구수 (Supply)</label>
+                  <input type="number" id="ue-f-supply" class="ue-input" step="0.5">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-buildTime">생산 시간 (초)</label>
+                  <input type="number" id="ue-f-buildTime" class="ue-input" min="0" step="1">
+                </div>
+                <div class="ue-field-group ue-grid-full">
+                  <label for="ue-f-requirements">요구 조건 (쉼표로 구분)</label>
+                  <input type="text" id="ue-f-requirements" class="ue-input" placeholder="예: 병영, 기술실">
+                </div>
+                <div class="ue-field-group ue-grid-full">
+                  <label for="ue-f-attributes">특성 (Attributes)</label>
+                  <input type="text" id="ue-f-attributes" class="ue-input" placeholder="예: 경장갑 · 생체">
+                </div>
+              </div>
+            </div>
+
+            <!-- 탭 2: 생존 & 기동 스탯 -->
+            <div class="ue-tab-pane" id="ue-pane-stats">
+              <div class="ue-form-grid">
+                <div class="ue-field-group">
+                  <label for="ue-f-hp">체력 (HP)</label>
+                  <input type="number" id="ue-f-hp" class="ue-input" min="0" step="1">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-shields">보호막 (Shields)</label>
+                  <input type="number" id="ue-f-shields" class="ue-input" min="0" step="1">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-armor">기본 방어력 (Armor)</label>
+                  <input type="number" id="ue-f-armor" class="ue-input" step="1">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-armorUpgrade">방어력 업그레이드당 증가량</label>
+                  <input type="number" id="ue-f-armorUpgrade" class="ue-input" min="0" step="1">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-energy">시작 에너지</label>
+                  <input type="number" id="ue-f-energy" class="ue-input" min="0" step="25">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-maxEnergy">최대 에너지</label>
+                  <input type="number" id="ue-f-maxEnergy" class="ue-input" min="0" step="25">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-speed">이동 속도 (Speed)</label>
+                  <input type="number" id="ue-f-speed" class="ue-input" min="0" step="0.01">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-sight">시야 (Sight)</label>
+                  <input type="number" id="ue-f-sight" class="ue-input" min="0" step="1">
+                </div>
+                <div class="ue-field-group">
+                  <label for="ue-f-detector">탐지기 (Detector)</label>
+                  <select id="ue-f-detector" class="ue-input">
+                    <option value="false">아니오</option>
+                    <option value="true">예 (탐지기 기능 보유)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 탭 3: 유닛 설명 (한/영) -->
+            <div class="ue-tab-pane" id="ue-pane-desc">
+              <div class="ue-field-group ue-mb-1">
+                <label for="ue-f-desc-ko">한국어 설명</label>
+                <textarea id="ue-f-desc-ko" class="ue-textarea" rows="4" placeholder="유닛에 대한 한국어 설명을 입력하세요."></textarea>
+              </div>
+              <div class="ue-field-group">
+                <label for="ue-f-desc-en">영어 설명 (English Description)</label>
+                <textarea id="ue-f-desc-en" class="ue-textarea" rows="4" placeholder="Enter English description for this unit."></textarea>
+              </div>
+            </div>
+
+            <!-- 탭 4: 무기 스펙 -->
+            <div class="ue-tab-pane" id="ue-pane-weapons">
+              <div class="ue-subpane-header">
+                <span>무기 목록 (각 무기의 사거리, 공격력, 공격 주기 등을 편집할 수 있습니다)</span>
+                <button type="button" class="ue-btn-sm" id="ue-btn-add-weapon">+ 무기 추가</button>
+              </div>
+              <div id="ue-weapon-list" class="ue-dynamic-list"></div>
+            </div>
+
+            <!-- 탭 5: 기술 / 능력 -->
+            <div class="ue-tab-pane" id="ue-pane-abilities">
+              <div class="ue-subpane-header">
+                <span>기술 / 능력 목록 (이름, 소모값, 설명(한/영)을 편집할 수 있습니다)</span>
+                <button type="button" class="ue-btn-sm" id="ue-btn-add-ability">+ 기술 추가</button>
+              </div>
+              <div id="ue-ability-list" class="ue-dynamic-list"></div>
+            </div>
+
+            <!-- 탭 6: 연구 업그레이드 -->
+            <div class="ue-tab-pane" id="ue-pane-upgrades">
+              <div class="ue-subpane-header">
+                <span>연구 가능 업그레이드 목록</span>
+                <button type="button" class="ue-btn-sm" id="ue-btn-add-upgrade">+ 업그레이드 추가</button>
+              </div>
+              <div id="ue-upgrade-list" class="ue-dynamic-list"></div>
+            </div>
+          </form>
+
+          <!-- 하단 전역 툴바: 저장, 초기화, 가져오기/내보내기, GitHub 커밋 -->
+          <footer class="ue-bottom-bar">
+            <div class="ue-bottom-left">
+              <span id="ue-status-text" class="ue-status-text">준비됨</span>
+            </div>
+            <div class="ue-bottom-right">
+              <button type="button" class="ue-btn ue-btn-save" id="ue-btn-save">적용 (브라우저 저장)</button>
+              <button type="button" class="ue-btn ue-btn-export" id="ue-btn-export-json">JSON 내보내기</button>
+              <label class="ue-btn ue-btn-import" for="ue-file-import-json">JSON 가져오기
+                <input type="file" id="ue-file-import-json" accept=".json,application/json" style="display:none;" onchange="importUnitEditorJson(this)">
+              </label>
+              <button type="button" class="ue-btn ue-btn-github" id="ue-btn-github-push">GitHub 저장</button>
+              <button type="button" class="ue-btn ue-btn-reset-all" id="ue-btn-reset-all">전체 초기화</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- 상세 정보 모달 -->
@@ -453,6 +663,6 @@
   </div>
 
   <!-- 배포 직후에도 이전 스크립트 캐시가 남지 않도록 릴리스 식별자를 붙인다. -->
-  <script src="app.js?v=20260822-visitor-counter-2"></script>
+  <script src="app.js?v=20261004-unit-editor-1"></script>
 </body>
 </html>

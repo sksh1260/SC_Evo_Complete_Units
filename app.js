@@ -12054,8 +12054,8 @@ var hideAbilities = false;
 var gameSpeedMultiplier = 1.4;
 var selectedLanguage = "ko";
 var UI_TEXT = {
-  ko: { unitDb:"유닛 DB", unitCompare:"유닛 비교", patchNotes:"패치 내역", all:"전체", units:"유닛", structures:"구조물", abilities:"능력", modalAbilities:"능력", fullUpgrades:"풀업", upgrades:"업그레이드", unit:"유닛", cost:"비용", supply:"인구", buildTime:"생산 시간", requirements:"요구 조건", modalRequirements:"요구 조건", requirement:"요구 조건: ", health:"체력", shields:"보호막", energy:"에너지", energyInitialMax:"에너지 (초기/최대)", armor:"방어력", shieldArmor:"보호막 방어력", sight:"시야", visionDetection:"시야 (탐지)", moveSpeed:"이동 속도", attack:"공격력", range:"사거리", attackSpeed:"공격 주기", attributes:"특성", weaponStats:"무기 스펙", applicableUpgrades:"적용 가능 업그레이드", researchUpgrades:"연구 가능 업그레이드", searchUnit:"유닛 검색", searchAll:"유닛명, 요구 건물, 특성 등으로 검색...", transportCapacity:"수송 한도", passengerCapacity:"탑승 정원", slots:"칸", cooldown:"재사용 대기시간", duration:"지속 시간", castRange:"시전 사거리", cast:"시전", effectRange:"효과 범위", target:"대상", period:"주기", splashDamageRange:"방사 피해 범위", splash:"방사", melee:"근접", trigger:"발동", minimum:"최소", basic:"기본" },
-  en: { unitDb:"Unit DB", unitCompare:"Unit Compare", patchNotes:"Patch Notes", all:"All", units:"Units", structures:"Structures", abilities:"ABIL.", modalAbilities:"Abilities", fullUpgrades:"UPG.", upgrades:"Upgrades", unit:"Unit", cost:"Cost", supply:"SUP.", buildTime:"TIME", requirements:"REQUIRE.", modalRequirements:"Requirements", requirement:"Requirement: ", health:"Health", shields:"Shields", energy:"Energy", energyInitialMax:"Energy (Start/Max)", armor:"Armor", shieldArmor:"Shield Armor", sight:"Vision", visionDetection:"Vision (Detect)", moveSpeed:"SPD", attack:"Attack", range:"Range", attackSpeed:"ATK SPD", attributes:"Attributes", weaponStats:"Weapon Stats", applicableUpgrades:"Applicable Upgrades", researchUpgrades:"Research Upgrades", searchUnit:"Search units", searchAll:"Search units, requirements, attributes...", transportCapacity:"Transport Capacity", passengerCapacity:"Passenger Capacity", slots:"slots", cooldown:"Cooldown", duration:"Duration", castRange:"Cast Range", cast:"Cast", effectRange:"Effect Radius", target:"Target", period:"Period", splashDamageRange:"Splash Radius", splash:"Splash", melee:"Melee", trigger:"Trigger", minimum:"Min.", basic:"Base" }
+  ko: { unitDb:"유닛 DB", unitCompare:"유닛 비교", patchNotes:"패치 내역", unitEditor:"데이터 편집", all:"전체", units:"유닛", structures:"구조물", abilities:"능력", modalAbilities:"능력", fullUpgrades:"풀업", upgrades:"업그레이드", unit:"유닛", cost:"비용", supply:"인구", buildTime:"생산 시간", requirements:"요구 조건", modalRequirements:"요구 조건", requirement:"요구 조건: ", health:"체력", shields:"보호막", energy:"에너지", energyInitialMax:"에너지 (초기/최대)", armor:"방어력", shieldArmor:"보호막 방어력", sight:"시야", visionDetection:"시야 (탐지)", moveSpeed:"이동 속도", attack:"공격력", range:"사거리", attackSpeed:"공격 주기", attributes:"특성", weaponStats:"무기 스펙", applicableUpgrades:"적용 가능 업그레이드", researchUpgrades:"연구 가능 업그레이드", searchUnit:"유닛 검색", searchAll:"유닛명, 요구 건물, 특성 등으로 검색...", transportCapacity:"수송 한도", passengerCapacity:"탑승 정원", slots:"칸", cooldown:"재사용 대기시간", duration:"지속 시간", castRange:"시전 사거리", cast:"시전", effectRange:"효과 범위", target:"대상", period:"주기", splashDamageRange:"방사 피해 범위", splash:"방사", melee:"근접", trigger:"발동", minimum:"최소", basic:"기본" },
+  en: { unitDb:"Unit DB", unitCompare:"Unit Compare", patchNotes:"Patch Notes", unitEditor:"Data Editor", all:"All", units:"Units", structures:"Structures", abilities:"ABIL.", modalAbilities:"Abilities", fullUpgrades:"UPG.", upgrades:"Upgrades", unit:"Unit", cost:"Cost", supply:"SUP.", buildTime:"TIME", requirements:"REQUIRE.", modalRequirements:"Requirements", requirement:"Requirement: ", health:"Health", shields:"Shields", energy:"Energy", energyInitialMax:"Energy (Start/Max)", armor:"Armor", shieldArmor:"Shield Armor", sight:"Vision", visionDetection:"Vision (Detect)", moveSpeed:"SPD", attack:"Attack", range:"Range", attackSpeed:"ATK SPD", attributes:"Attributes", weaponStats:"Weapon Stats", applicableUpgrades:"Applicable Upgrades", researchUpgrades:"Research Upgrades", searchUnit:"Search units", searchAll:"Search units, requirements, attributes...", transportCapacity:"Transport Capacity", passengerCapacity:"Passenger Capacity", slots:"slots", cooldown:"Cooldown", duration:"Duration", castRange:"Cast Range", cast:"Cast", effectRange:"Effect Radius", target:"Target", period:"Period", splashDamageRange:"Splash Radius", splash:"Splash", melee:"Melee", trigger:"Trigger", minimum:"Min.", basic:"Base" }
 };
 
 var GAME_TERM_EN = {
@@ -15736,28 +15736,35 @@ function initCompareView() {
 }
 
 function setAppView(view) {
-  currentAppView = (view === "compare") ? "compare" : (view === "patch") ? "patch" : "database";
+  if (view === "unit-editor" && (!isPatchAdmin || !isPatchAdmin())) {
+    alert("데이터 편집 기능은 관리자 로그인 후에 사용할 수 있습니다.");
+    view = "database";
+  }
+  currentAppView = (view === "compare") ? "compare" : (view === "patch") ? "patch" : (view === "unit-editor") ? "unit-editor" : "database";
   
   // 1. 헤더 및 바디 모드 클래스를 가장 먼저 즉시 적용하여 상단 검색창 및 레이아웃 딜레이 방지
   var header = document.querySelector("header");
   if (header) {
     header.classList.toggle("compare-mode", currentAppView === "compare");
-    header.classList.toggle("patch-mode", currentAppView === "patch");
+    header.classList.toggle("patch-mode", currentAppView === "patch" || currentAppView === "unit-editor");
   }
   document.body.classList.toggle("compare-view-active", currentAppView === "compare");
   document.body.classList.toggle("patch-view-active", currentAppView === "patch");
+  document.body.classList.toggle("unit-editor-view-active", currentAppView === "unit-editor");
 
   var table = document.getElementById("table-view");
   var compare = document.getElementById("compare-view");
   var patch = document.getElementById("patch-view");
+  var editor = document.getElementById("unit-editor-view");
   var layout = document.querySelector(".main-layout");
   var dbSidebar = document.querySelector(".left-filter-sidebar");
 
   if (table) table.hidden = currentAppView !== "database";
   if (compare) compare.hidden = currentAppView !== "compare";
   if (patch) patch.hidden = currentAppView !== "patch";
+  if (editor) editor.hidden = currentAppView !== "unit-editor";
   if (layout) layout.classList.toggle("compare-active", currentAppView === "compare");
-  if (layout) layout.classList.toggle("patch-active", currentAppView === "patch");
+  if (layout) layout.classList.toggle("patch-active", currentAppView === "patch" || currentAppView === "unit-editor");
   if (dbSidebar) dbSidebar.style.display = (currentAppView === "database") ? "" : "none";
 
   var menu = document.querySelectorAll(".top-menu-btn[data-view]");
@@ -15769,6 +15776,7 @@ function setAppView(view) {
 
   if (currentAppView === "compare") { initCompareView(); updateCompareUpgradeUI(); renderCompareView(); }
   if (currentAppView === "patch") { initPatchView(); }
+  if (currentAppView === "unit-editor") { initUnitEditorView(); }
 }
 
 function bindTableEvents() {
@@ -18281,6 +18289,14 @@ function initApp() {
     if (ov) ov.addEventListener("click", function(e){ if(e.target === ov) closeModal(); });
     document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeModal(); });
   } catch(e){}
+
+  // 7. URL 해시 라우팅 지원 (#compare, #patch, #unit-editor)
+  try {
+    var h = (window.location.hash || "").replace("#", "");
+    if (h === "unit-editor" || h === "patch" || h === "compare") {
+      setAppView(h);
+    }
+  } catch(e){}
 }
 
 // 설명 내 강조 색상 규칙을 데이터 전반에 동일하게 적용한다.
@@ -18335,6 +18351,7 @@ function applyDescriptionColorRules() {
 
 
 // 설명 데이터만 먼저 정리하고 화면 렌더링은 initApp에서 한 번 수행한다.
+try { applyCustomUnitData(); } catch(e){}
 applyDescriptionColorRules();
 
 if (document.readyState === "loading") {
@@ -20543,12 +20560,14 @@ function initPatchAdmin() {
   if (!loginBtn || !editorBtn || !status) return;
   var tokenValue = getPatchAdminToken();
   if (!tokenValue || !PATCH_ADMIN_API_URL) return;
+  var ueMenuBtn = document.getElementById("menu-btn-unit-editor");
   status.textContent = "관리자 권한 확인 중…";
   refreshPatchAdminSession().then(function(data) {
     status.textContent = data.login + " · 관리자";
     status.classList.add("is-admin");
     loginBtn.hidden = true;
     editorBtn.hidden = false;
+    if (ueMenuBtn) ueMenuBtn.hidden = false;
     if (visitorHistoryBtn) visitorHistoryBtn.hidden = false;
     // 관리자 인증이 끝나는 즉시 영역을 보여, 통계 API가 느려도 화면에서 사라지지 않게 한다.
     showVisitorCounterPending();
@@ -20565,8 +20584,10 @@ function initPatchAdmin() {
     status.textContent = "읽기 전용";
     loginBtn.hidden = false;
     editorBtn.hidden = true;
+    if (ueMenuBtn) ueMenuBtn.hidden = true;
     if (visitorHistoryBtn) visitorHistoryBtn.hidden = true;
     hideVisitorCounter();
+    if (currentAppView === "unit-editor") setAppView("database");
   });
 }
 
@@ -20575,3 +20596,896 @@ if (document.readyState === "loading") {
 } else {
   initPatchAdmin();
 }
+
+// ─────────────────────────────────────────────────────────────
+// 유닛 & 기술 데이터 편집기 (Unit & Ability Editor) 모듈
+// ─────────────────────────────────────────────────────────────
+var CUSTOM_UNIT_STORAGE_KEY = "sc_evo_custom_unit_data";
+var _customUnitStore = {
+  units: {},
+  unitDescEn: {},
+  cardDescEn: {},
+  cardDescEnByOwner: {}
+};
+var _originalUnitDataMap = {};
+var _originalUnitDescEnMap = {};
+var _originalCardDescEnMap = {};
+var _originalCardDescEnByOwnerMap = {};
+var _ueCurrentUnitId = null;
+var _ueFilterRace = "all";
+var _ueSearchQuery = "";
+var _ueActiveTab = "basic";
+
+function loadCustomUnitStore() {
+  try {
+    var raw = localStorage.getItem(CUSTOM_UNIT_STORAGE_KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        _customUnitStore.units = parsed.units || {};
+        _customUnitStore.unitDescEn = parsed.unitDescEn || {};
+        _customUnitStore.cardDescEn = parsed.cardDescEn || {};
+        _customUnitStore.cardDescEnByOwner = parsed.cardDescEnByOwner || {};
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to load custom unit store from localStorage:", e);
+  }
+}
+
+function saveCustomUnitStore() {
+  try {
+    localStorage.setItem(CUSTOM_UNIT_STORAGE_KEY, JSON.stringify(_customUnitStore));
+  } catch (e) {
+    console.error("Failed to save custom unit store to localStorage:", e);
+  }
+}
+
+function snapshotOriginalUnitData() {
+  if (Object.keys(_originalUnitDataMap).length > 0) return;
+  if (typeof UNIT_DATA === "undefined" || !Array.isArray(UNIT_DATA)) return;
+  UNIT_DATA.forEach(function (u) {
+    if (u && u.id) {
+      _originalUnitDataMap[u.id] = JSON.parse(JSON.stringify(u));
+    }
+  });
+  if (typeof UNIT_DESCRIPTION_EN !== "undefined") {
+    _originalUnitDescEnMap = JSON.parse(JSON.stringify(UNIT_DESCRIPTION_EN));
+  }
+  if (typeof CARD_DESCRIPTION_EN !== "undefined") {
+    _originalCardDescEnMap = JSON.parse(JSON.stringify(CARD_DESCRIPTION_EN));
+  }
+  if (typeof CARD_DESCRIPTION_EN_BY_OWNER !== "undefined") {
+    _originalCardDescEnMapByOwnerMap = JSON.parse(JSON.stringify(CARD_DESCRIPTION_EN_BY_OWNER));
+  }
+}
+
+function applyCustomUnitData() {
+  snapshotOriginalUnitData();
+  loadCustomUnitStore();
+
+  if (typeof UNIT_DATA === "undefined" || !Array.isArray(UNIT_DATA)) return;
+
+  var customUnits = _customUnitStore.units || {};
+  UNIT_DATA.forEach(function (u) {
+    if (!u || !u.id) return;
+    var custom = customUnits[u.id];
+    if (custom) {
+      for (var k in custom) {
+        if (Object.prototype.hasOwnProperty.call(custom, k)) {
+          if (typeof custom[k] === "object" && custom[k] !== null) {
+            u[k] = JSON.parse(JSON.stringify(custom[k]));
+          } else {
+            u[k] = custom[k];
+          }
+        }
+      }
+    }
+  });
+
+  if (typeof UNIT_DESCRIPTION_EN !== "undefined" && _customUnitStore.unitDescEn) {
+    for (var uid in _customUnitStore.unitDescEn) {
+      if (Object.prototype.hasOwnProperty.call(_customUnitStore.unitDescEn, uid)) {
+        UNIT_DESCRIPTION_EN[uid] = _customUnitStore.unitDescEn[uid];
+      }
+    }
+  }
+
+  if (typeof CARD_DESCRIPTION_EN !== "undefined" && _customUnitStore.cardDescEn) {
+    for (var ckey in _customUnitStore.cardDescEn) {
+      if (Object.prototype.hasOwnProperty.call(_customUnitStore.cardDescEn, ckey)) {
+        CARD_DESCRIPTION_EN[ckey] = _customUnitStore.cardDescEn[ckey];
+      }
+    }
+  }
+
+  if (typeof CARD_DESCRIPTION_EN_BY_OWNER !== "undefined" && _customUnitStore.cardDescEnByOwner) {
+    for (var okey in _customUnitStore.cardDescEnByOwner) {
+      if (Object.prototype.hasOwnProperty.call(_customUnitStore.cardDescEnByOwner, okey)) {
+        CARD_DESCRIPTION_EN_BY_OWNER[okey] = _customUnitStore.cardDescEnByOwner[okey];
+      }
+    }
+  }
+}
+
+function initUnitEditorView() {
+  snapshotOriginalUnitData();
+  bindUnitEditorEvents();
+  renderUnitEditorSidebar();
+  if (!_ueCurrentUnitId && UNIT_DATA && UNIT_DATA.length > 0) {
+    loadUnitIntoEditor(UNIT_DATA[0].id);
+  } else if (_ueCurrentUnitId) {
+    loadUnitIntoEditor(_ueCurrentUnitId);
+  }
+}
+
+var _ueEventsBound = false;
+function bindUnitEditorEvents() {
+  if (_ueEventsBound) return;
+  _ueEventsBound = true;
+
+  var searchInput = document.getElementById("ue-search-input");
+  if (searchInput) {
+    var timer = null;
+    searchInput.addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        _ueSearchQuery = searchInput.value.trim().toLowerCase();
+        renderUnitEditorSidebar();
+      }, 40);
+    });
+  }
+
+  var filterBtns = document.querySelectorAll(".ue-filter-btn");
+  for (var i = 0; i < filterBtns.length; i++) {
+    filterBtns[i].addEventListener("click", function () {
+      for (var j = 0; j < filterBtns.length; j++) filterBtns[j].classList.remove("active");
+      this.classList.add("active");
+      _ueFilterRace = this.getAttribute("data-race") || "all";
+      renderUnitEditorSidebar();
+    });
+  }
+
+  var tabBtns = document.querySelectorAll(".ue-tab-btn");
+  for (var t = 0; t < tabBtns.length; t++) {
+    tabBtns[t].addEventListener("click", function () {
+      var tab = this.getAttribute("data-tab");
+      switchUnitEditorTab(tab);
+    });
+  }
+
+  var btnPreview = document.getElementById("ue-btn-preview-modal");
+  if (btnPreview) {
+    btnPreview.addEventListener("click", function () {
+      if (_ueCurrentUnitId) openModalById(_ueCurrentUnitId);
+    });
+  }
+
+  var btnResetUnit = document.getElementById("ue-btn-reset-unit");
+  if (btnResetUnit) {
+    btnResetUnit.addEventListener("click", function () {
+      if (!_ueCurrentUnitId) return;
+      if (!confirm("현재 유닛을 초기 기본 데이터로 복원하시겠습니까?")) return;
+      resetUnitToOriginal(_ueCurrentUnitId);
+    });
+  }
+
+  var btnSave = document.getElementById("ue-btn-save");
+  if (btnSave) {
+    btnSave.addEventListener("click", function () {
+      saveCurrentUnitForm();
+    });
+  }
+
+  var btnExport = document.getElementById("ue-btn-export-json");
+  if (btnExport) {
+    btnExport.addEventListener("click", function () {
+      exportUnitEditorJson();
+    });
+  }
+
+  var btnResetAll = document.getElementById("ue-btn-reset-all");
+  if (btnResetAll) {
+    btnResetAll.addEventListener("click", function () {
+      if (!confirm("모든 유닛의 수정 내역을 초기화하고 원래 기본값으로 되돌리시겠습니까?")) return;
+      resetAllUnitsToOriginal();
+    });
+  }
+
+  var btnGithub = document.getElementById("ue-btn-github-push");
+  if (btnGithub) {
+    btnGithub.addEventListener("click", function () {
+      saveUnitEditorToGithub();
+    });
+  }
+
+  var btnAddWeapon = document.getElementById("ue-btn-add-weapon");
+  if (btnAddWeapon) {
+    btnAddWeapon.addEventListener("click", function () {
+      appendNewWeaponCard();
+    });
+  }
+
+  var btnAddAbility = document.getElementById("ue-btn-add-ability");
+  if (btnAddAbility) {
+    btnAddAbility.addEventListener("click", function () {
+      appendNewAbilityCard();
+    });
+  }
+
+  var btnAddUpgrade = document.getElementById("ue-btn-add-upgrade");
+  if (btnAddUpgrade) {
+    btnAddUpgrade.addEventListener("click", function () {
+      appendNewUpgradeCard();
+    });
+  }
+}
+
+function switchUnitEditorTab(tab) {
+  _ueActiveTab = tab;
+  var tabBtns = document.querySelectorAll(".ue-tab-btn");
+  for (var i = 0; i < tabBtns.length; i++) {
+    tabBtns[i].classList.toggle("active", tabBtns[i].getAttribute("data-tab") === tab);
+  }
+  var panes = document.querySelectorAll(".ue-tab-pane");
+  for (var p = 0; p < panes.length; p++) {
+    panes[p].classList.toggle("active", panes[p].id === "ue-pane-" + tab);
+  }
+}
+
+function renderUnitEditorSidebar() {
+  var listEl = document.getElementById("ue-unit-list");
+  if (!listEl) return;
+  listEl.innerHTML = "";
+
+  if (typeof UNIT_DATA === "undefined" || !Array.isArray(UNIT_DATA)) return;
+
+  var customUnits = _customUnitStore.units || {};
+  var filtered = UNIT_DATA.filter(function (u) {
+    if (!u) return false;
+    if (_ueFilterRace !== "all") {
+      if (u.race !== _ueFilterRace) return false;
+    }
+    if (_ueSearchQuery) {
+      var matchName = (u.name || "").toLowerCase().indexOf(_ueSearchQuery) >= 0;
+      var matchEng = (u.engName || "").toLowerCase().indexOf(_ueSearchQuery) >= 0;
+      var matchId = (u.id || "").toLowerCase().indexOf(_ueSearchQuery) >= 0;
+      var matchReq = (u.requirements || []).join(" ").toLowerCase().indexOf(_ueSearchQuery) >= 0;
+      var matchAttr = (u.attributes || "").toLowerCase().indexOf(_ueSearchQuery) >= 0;
+      if (!matchName && !matchEng && !matchId && !matchReq && !matchAttr) return false;
+    }
+    return true;
+  });
+
+  filtered.forEach(function (u) {
+    var itemBtn = document.createElement("button");
+    itemBtn.type = "button";
+    itemBtn.className = "ue-unit-item" + (u.id === _ueCurrentUnitId ? " active" : "");
+    itemBtn.setAttribute("data-unit-id", u.id);
+
+    var iconSrc = getImg(u.id);
+    var isModified = !!customUnits[u.id];
+
+    itemBtn.innerHTML =
+      '<img class="ue-item-icon" src="' + iconSrc + '" alt="' + escapeHtml(u.name) + '">' +
+      '<div class="ue-item-text">' +
+        '<span class="ue-item-name">' + escapeHtml(u.name) + ' (' + escapeHtml(u.engName || "") + ')</span>' +
+        '<span class="ue-item-sub">' + escapeHtml(u.id) + '</span>' +
+      '</div>' +
+      (isModified ? '<span class="ue-item-tag modified">수정됨</span>' : '<span class="ue-item-tag">' + (u.type === "structure" ? "건물" : "유닛") + '</span>');
+
+    itemBtn.addEventListener("click", function () {
+      loadUnitIntoEditor(u.id);
+    });
+
+    listEl.appendChild(itemBtn);
+  });
+  if (!listEl._hasDelegatedClick) {
+    listEl._hasDelegatedClick = true;
+    listEl.addEventListener("click", function (e) {
+      var itemBtn = e.target.closest(".ue-unit-item");
+      if (itemBtn) {
+        var unitId = itemBtn.getAttribute("data-unit-id");
+        if (unitId) loadUnitIntoEditor(unitId);
+      }
+    });
+  }
+}
+
+function loadUnitIntoEditor(unitId) {
+  _ueCurrentUnitId = unitId;
+  var u = getUnitById(unitId);
+  if (!u) return;
+
+  var activeItems = document.querySelectorAll(".ue-unit-item");
+  for (var i = 0; i < activeItems.length; i++) {
+    activeItems[i].classList.toggle("active", activeItems[i].getAttribute("data-unit-id") === unitId);
+  }
+
+  var titleEl = document.getElementById("ue-unit-title");
+  if (titleEl) titleEl.textContent = (u.name || "") + (u.engName ? " (" + u.engName + ")" : "");
+
+  var subidEl = document.getElementById("ue-unit-subid");
+  if (subidEl) subidEl.textContent = "ID: " + u.id + " · Type: " + u.type + " · Race: " + u.race;
+
+  var portraitEl = document.getElementById("ue-header-portrait");
+  if (portraitEl) {
+    portraitEl.innerHTML = '<img src="' + getImg(u.id) + '" alt="' + escapeHtml(u.name) + '">';
+  }
+
+  var badgeEl = document.getElementById("ue-unit-badge");
+  if (badgeEl) badgeEl.textContent = compareRaceLabel(u.race);
+
+  var editedBadge = document.getElementById("ue-edited-badge");
+  var isModified = !!(_customUnitStore.units && _customUnitStore.units[u.id]);
+  if (editedBadge) editedBadge.hidden = !isModified;
+
+  // 1. 기본 정보 폼 값 채우기
+  setVal("ue-f-name", u.name || "");
+  setVal("ue-f-engName", u.engName || "");
+  setVal("ue-f-type", u.type || "unit");
+  setVal("ue-f-race", u.race || "bw_terran");
+  setVal("ue-f-minerals", (u.cost && u.cost.minerals !== undefined) ? u.cost.minerals : 0);
+  setVal("ue-f-gas", (u.cost && u.cost.gas !== undefined) ? u.cost.gas : 0);
+  setVal("ue-f-supply", (u.cost && u.cost.supply !== undefined) ? u.cost.supply : 0);
+  setVal("ue-f-buildTime", u.buildTime !== undefined ? u.buildTime : 0);
+  setVal("ue-f-requirements", (u.requirements || []).join(", "));
+  setVal("ue-f-attributes", u.attributes || "");
+
+  // 2. 생존 & 기동 스탯 채우기
+  setVal("ue-f-hp", u.hp !== undefined ? u.hp : 0);
+  setVal("ue-f-shields", u.shields !== undefined ? u.shields : 0);
+  setVal("ue-f-armor", u.armor !== undefined ? u.armor : 0);
+  setVal("ue-f-armorUpgrade", u.armorUpgrade !== undefined ? u.armorUpgrade : 1);
+  setVal("ue-f-energy", u.energy !== undefined ? u.energy : 0);
+  setVal("ue-f-maxEnergy", u.maxEnergy !== undefined ? u.maxEnergy : (u.energy ? 200 : 0));
+  setVal("ue-f-speed", u.speed !== undefined ? u.speed : 0);
+  setVal("ue-f-sight", u.sight !== undefined ? u.sight : 0);
+  setVal("ue-f-detector", u.detector ? "true" : "false");
+
+  // 3. 유닛 설명 채우기 (한국어 & 영어)
+  var koDesc = u.desc || u.description || "";
+  var enDesc = (typeof UNIT_DESCRIPTION_EN !== "undefined" && UNIT_DESCRIPTION_EN[u.id]) || "";
+  setVal("ue-f-desc-ko", koDesc);
+  setVal("ue-f-desc-en", enDesc);
+
+  // 4. 무기 목록 렌더링
+  renderUnitEditorWeapons(u.weapons || []);
+
+  // 5. 기술/능력 목록 렌더링
+  renderUnitEditorAbilities(u);
+
+  // 6. 연구 업그레이드 목록 렌더링
+  renderUnitEditorUpgrades(u.upgrades || []);
+
+  // 활성 탭 동기화 보장
+  switchUnitEditorTab(_ueActiveTab || "basic");
+
+  setUeStatus("유닛 '" + u.name + "' 데이터를 불러왔습니다.");
+}
+
+function setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.value = val;
+}
+
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : "";
+}
+
+function renderUnitEditorWeapons(weapons) {
+  var container = document.getElementById("ue-weapon-list");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!weapons || weapons.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-dim);padding:0.75rem;background:rgba(0,0,0,0.2);border-radius:4px;">등록된 무기가 없습니다. 상단의 [+ 무기 추가] 버튼을 눌러 추가할 수 있습니다.</div>';
+    return;
+  }
+
+  weapons.forEach(function (w, index) {
+    var card = document.createElement("div");
+    card.className = "ue-card-item";
+    card.setAttribute("data-weapon-index", index);
+
+    var dpsVal = (w.dmg && w.cd) ? (Math.round((w.dmg / w.cd) * 100) / 100) : (w.dps || 0);
+
+    card.innerHTML =
+      '<div class="ue-card-header">' +
+        '<span class="ue-card-title">무기 #' + (index + 1) + ' (' + escapeHtml(w.type || "지상") + ')</span>' +
+        '<button type="button" class="ue-btn-card-del" onclick="deleteWeaponCard(' + index + ')">삭제</button>' +
+      '</div>' +
+      '<div class="ue-card-grid">' +
+        '<div class="ue-field-group">' +
+          '<label>공격 대상 (Type)</label>' +
+          '<input type="text" class="ue-input ue-w-type" value="' + escapeHtml(w.type || "") + '" placeholder="지상, 공중, 지상/공중">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>피해 유형 (dmgType)</label>' +
+          '<input type="text" class="ue-input ue-w-dmgType" value="' + escapeHtml(w.dmgType || "기본") + '" placeholder="기본, 폭발형, 진동형">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>기본 공격력 (Damage)</label>' +
+          '<input type="number" class="ue-input ue-w-dmg" value="' + (w.dmg !== undefined ? w.dmg : 0) + '" step="0.5">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>업그레이드당 증가량</label>' +
+          '<input type="number" class="ue-input ue-w-dmgUpg" value="' + (w.dmgUpg !== undefined ? w.dmgUpg : 0) + '" step="0.5">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>사거리 (Range)</label>' +
+          '<input type="number" class="ue-input ue-w-range" value="' + (w.range !== undefined ? w.range : 0) + '" step="0.1">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>공격 주기 (Cooldown / 초)</label>' +
+          '<input type="number" class="ue-input ue-w-cd" value="' + (w.cd !== undefined ? w.cd : 0) + '" step="0.01">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>타수 (Hits)</label>' +
+          '<input type="number" class="ue-input ue-w-hits" value="' + (w.hits || 1) + '" min="1" step="1">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>추가 피해 (Bonus Dmg / 옵션)</label>' +
+          '<input type="text" class="ue-input ue-w-bonusDmg" value="' + escapeHtml(w.bonusDmg ? JSON.stringify(w.bonusDmg) : "") + '" placeholder=\'예: {"type":"중장갑","dmg":5}\'>' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>DPS (초당 피해)</label>' +
+          '<input type="number" class="ue-input ue-w-dps" value="' + dpsVal + '" step="0.01">' +
+        '</div>' +
+      '</div>';
+
+    container.appendChild(card);
+  });
+}
+
+function appendNewWeaponCard() {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u) return;
+  if (!u.weapons) u.weapons = [];
+  u.weapons.push({ type: "지상", dmgType: "기본", dmg: 10, dmgUpg: 1, range: 5, cd: 1.0, hits: 1, dps: 10 });
+  renderUnitEditorWeapons(u.weapons);
+}
+
+function deleteWeaponCard(idx) {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u || !u.weapons) return;
+  u.weapons.splice(idx, 1);
+  renderUnitEditorWeapons(u.weapons);
+}
+
+function renderUnitEditorAbilities(u) {
+  var container = document.getElementById("ue-ability-list");
+  if (!container) return;
+  container.innerHTML = "";
+
+  var abilities = u.abilities || [];
+  if (abilities.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-dim);padding:0.75rem;background:rgba(0,0,0,0.2);border-radius:4px;">등록된 기술/능력이 없습니다. 상단의 [+ 기술 추가] 버튼을 눌러 추가할 수 있습니다.</div>';
+    return;
+  }
+
+  abilities.forEach(function (a, index) {
+    var card = document.createElement("div");
+    card.className = "ue-card-item";
+    card.setAttribute("data-ability-index", index);
+
+    var cleanName = (a.name || "").replace(/<[^>]+>/g, "").trim();
+    var ownerKey = u.id + "|" + cleanName;
+    var enDesc = "";
+    if (typeof CARD_DESCRIPTION_EN_BY_OWNER !== "undefined" && CARD_DESCRIPTION_EN_BY_OWNER[ownerKey]) {
+      enDesc = CARD_DESCRIPTION_EN_BY_OWNER[ownerKey];
+    } else if (typeof CARD_DESCRIPTION_EN !== "undefined" && CARD_DESCRIPTION_EN[cleanName]) {
+      enDesc = CARD_DESCRIPTION_EN[cleanName];
+    }
+
+    var costText = "";
+    if (a.costItems && a.costItems.length > 0) {
+      costText = a.costItems.map(function (ci) { return ci.type + ":" + ci.value; }).join(", ");
+    }
+
+    card.innerHTML =
+      '<div class="ue-card-header">' +
+        '<span class="ue-card-title">기술 #' + (index + 1) + ' (' + escapeHtml(cleanName) + ')</span>' +
+        '<button type="button" class="ue-btn-card-del" onclick="deleteAbilityCard(' + index + ')">삭제</button>' +
+      '</div>' +
+      '<div class="ue-form-grid">' +
+        '<div class="ue-field-group">' +
+          '<label>기술 이름 (HTML 태그 포함 가능)</label>' +
+          '<input type="text" class="ue-input ue-a-name" value="' + escapeHtml(a.name || "") + '">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>아이콘 파일명 (icon)</label>' +
+          '<input type="text" class="ue-input ue-a-icon" value="' + escapeHtml(a.icon || "") + '" placeholder="btn-ability-terran-stimpack-color.png">' +
+        '</div>' +
+        '<div class="ue-field-group ue-grid-full">' +
+          '<label>소모 비용 (형식: energy:50, minerals:100, health:10)</label>' +
+          '<input type="text" class="ue-input ue-a-costs" value="' + escapeHtml(costText) + '" placeholder="energy:50">' +
+        '</div>' +
+        '<div class="ue-field-group ue-grid-full">' +
+          '<label>기술 한국어 설명</label>' +
+          '<textarea class="ue-textarea ue-a-desc-ko" rows="3">' + escapeHtml(a.desc || "") + '</textarea>' +
+        '</div>' +
+        '<div class="ue-field-group ue-grid-full">' +
+          '<label>기술 영어 설명 (English Description)</label>' +
+          '<textarea class="ue-textarea ue-a-desc-en" rows="3">' + escapeHtml(enDesc) + '</textarea>' +
+        '</div>' +
+      '</div>';
+
+    container.appendChild(card);
+  });
+}
+
+function appendNewAbilityCard() {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u) return;
+  if (!u.abilities) u.abilities = [];
+  u.abilities.push({ name: "새 기술", icon: "", desc: "새 기술에 대한 설명입니다.", costItems: [] });
+  renderUnitEditorAbilities(u);
+}
+
+function deleteAbilityCard(idx) {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u || !u.abilities) return;
+  u.abilities.splice(idx, 1);
+  renderUnitEditorAbilities(u);
+}
+
+function renderUnitEditorUpgrades(upgrades) {
+  var container = document.getElementById("ue-upgrade-list");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!upgrades || upgrades.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-dim);padding:0.75rem;background:rgba(0,0,0,0.2);border-radius:4px;">등록된 연구 업그레이드가 없습니다. 상단의 [+ 업그레이드 추가] 버튼을 눌러 추가할 수 있습니다.</div>';
+    return;
+  }
+
+  upgrades.forEach(function (upg, index) {
+    var card = document.createElement("div");
+    card.className = "ue-card-item";
+    card.setAttribute("data-upgrade-index", index);
+
+    var costText = "";
+    if (upg.costItems && upg.costItems.length > 0) {
+      costText = upg.costItems.map(function (ci) { return ci.type + ":" + ci.value; }).join(", ");
+    }
+
+    card.innerHTML =
+      '<div class="ue-card-header">' +
+        '<span class="ue-card-title">업그레이드 #' + (index + 1) + ' (' + escapeHtml(upg.name || "") + ')</span>' +
+        '<button type="button" class="ue-btn-card-del" onclick="deleteUpgradeCard(' + index + ')">삭제</button>' +
+      '</div>' +
+      '<div class="ue-form-grid">' +
+        '<div class="ue-field-group">' +
+          '<label>업그레이드 이름</label>' +
+          '<input type="text" class="ue-input ue-u-name" value="' + escapeHtml(upg.name || "") + '">' +
+        '</div>' +
+        '<div class="ue-field-group">' +
+          '<label>아이콘 파일명 (icon)</label>' +
+          '<input type="text" class="ue-input ue-u-icon" value="' + escapeHtml(upg.icon || "") + '">' +
+        '</div>' +
+        '<div class="ue-field-group ue-grid-full">' +
+          '<label>소모 비용 (형식: minerals:100, gas:100, time:120)</label>' +
+          '<input type="text" class="ue-input ue-u-costs" value="' + escapeHtml(costText) + '">' +
+        '</div>' +
+        '<div class="ue-field-group ue-grid-full">' +
+          '<label>업그레이드 설명</label>' +
+          '<textarea class="ue-textarea ue-u-desc" rows="3">' + escapeHtml(upg.desc || "") + '</textarea>' +
+        '</div>' +
+      '</div>';
+
+    container.appendChild(card);
+  });
+}
+
+function appendNewUpgradeCard() {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u) return;
+  if (!u.upgrades) u.upgrades = [];
+  u.upgrades.push({ name: "새 업그레이드", icon: "", desc: "업그레이드 설명입니다.", costItems: [] });
+  renderUnitEditorUpgrades(u.upgrades);
+}
+
+function deleteUpgradeCard(idx) {
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u || !u.upgrades) return;
+  u.upgrades.splice(idx, 1);
+  renderUnitEditorUpgrades(u.upgrades);
+}
+
+function saveCurrentUnitForm() {
+  if (!_ueCurrentUnitId) return;
+  var u = getUnitById(_ueCurrentUnitId);
+  if (!u) return;
+
+  // 1. 기본 정보 반영
+  u.name = getVal("ue-f-name").trim() || u.name;
+  u.engName = getVal("ue-f-engName").trim() || u.engName;
+  u.type = getVal("ue-f-type") || "unit";
+  u.race = getVal("ue-f-race") || u.race;
+  var m = parseInt(getVal("ue-f-minerals"), 10) || 0;
+  var g = parseInt(getVal("ue-f-gas"), 10) || 0;
+  var sup = parseFloat(getVal("ue-f-supply")) || 0;
+  var btime = parseInt(getVal("ue-f-buildTime"), 10) || 0;
+  u.cost = { minerals: m, gas: g, supply: sup };
+  u.buildTime = btime;
+
+  var reqStr = getVal("ue-f-requirements").trim();
+  u.requirements = reqStr ? reqStr.split(",").map(function (s) { return s.trim(); }).filter(Boolean) : [];
+  u.attributes = getVal("ue-f-attributes").trim();
+
+  // 2. 생존 & 기동 스탯 반영
+  u.hp = parseInt(getVal("ue-f-hp"), 10) || 0;
+  u.shields = parseInt(getVal("ue-f-shields"), 10) || 0;
+  u.armor = parseInt(getVal("ue-f-armor"), 10) || 0;
+  u.armorUpgrade = parseInt(getVal("ue-f-armorUpgrade"), 10) || 0;
+  u.energy = parseInt(getVal("ue-f-energy"), 10) || 0;
+  u.maxEnergy = parseInt(getVal("ue-f-maxEnergy"), 10) || 0;
+  u.speed = parseFloat(getVal("ue-f-speed")) || 0;
+  u.sight = parseInt(getVal("ue-f-sight"), 10) || 0;
+  u.detector = getVal("ue-f-detector") === "true";
+
+  // 3. 설명 반영
+  var descKo = getVal("ue-f-desc-ko").trim();
+  var descEn = getVal("ue-f-desc-en").trim();
+  u.desc = descKo;
+  u.description = descKo;
+
+  if (descEn) {
+    _customUnitStore.unitDescEn[u.id] = descEn;
+    if (typeof UNIT_DESCRIPTION_EN !== "undefined") UNIT_DESCRIPTION_EN[u.id] = descEn;
+  }
+
+  // 4. 무기 목록 폼에서 수집
+  var weaponCards = document.querySelectorAll("#ue-weapon-list .ue-card-item");
+  var newWeapons = [];
+  weaponCards.forEach(function (card) {
+    var type = card.querySelector(".ue-w-type").value.trim();
+    var dmgType = card.querySelector(".ue-w-dmgType").value.trim() || "기본";
+    var dmg = parseFloat(card.querySelector(".ue-w-dmg").value) || 0;
+    var dmgUpg = parseFloat(card.querySelector(".ue-w-dmgUpg").value) || 0;
+    var range = parseFloat(card.querySelector(".ue-w-range").value) || 0;
+    var cd = parseFloat(card.querySelector(".ue-w-cd").value) || 0;
+    var hits = parseInt(card.querySelector(".ue-w-hits").value, 10) || 1;
+    var dps = parseFloat(card.querySelector(".ue-w-dps").value) || (cd ? Math.round((dmg * hits / cd) * 100) / 100 : 0);
+    var bonusDmgRaw = card.querySelector(".ue-w-bonusDmg").value.trim();
+    var bonusDmg = null;
+    if (bonusDmgRaw) {
+      try { bonusDmg = JSON.parse(bonusDmgRaw); } catch (e) {}
+    }
+    var wObj = { type: type, dmgType: dmgType, dmg: dmg, dmgUpg: dmgUpg, range: range, cd: cd, hits: hits, dps: dps };
+    if (bonusDmg) wObj.bonusDmg = bonusDmg;
+    newWeapons.push(wObj);
+  });
+  u.weapons = newWeapons;
+
+  // 5. 기술 목록 폼에서 수집
+  var abilityCards = document.querySelectorAll("#ue-ability-list .ue-card-item");
+  var newAbilities = [];
+  abilityCards.forEach(function (card) {
+    var name = card.querySelector(".ue-a-name").value.trim();
+    var icon = card.querySelector(".ue-a-icon").value.trim();
+    var costsRaw = card.querySelector(".ue-a-costs").value.trim();
+    var descKoA = card.querySelector(".ue-a-desc-ko").value.trim();
+    var descEnA = card.querySelector(".ue-a-desc-en").value.trim();
+
+    var costItems = [];
+    if (costsRaw) {
+      costsRaw.split(",").forEach(function (item) {
+        var pair = item.split(":");
+        if (pair.length === 2) {
+          costItems.push({ type: pair[0].trim(), value: parseFloat(pair[1].trim()) || 0 });
+        }
+      });
+    }
+
+    var aObj = { name: name, icon: icon, desc: descKoA, costItems: costItems };
+    newAbilities.push(aObj);
+
+    var cleanName = name.replace(/<[^>]+>/g, "").trim();
+    if (descEnA && cleanName) {
+      var ownerKey = u.id + "|" + cleanName;
+      _customUnitStore.cardDescEnByOwner[ownerKey] = descEnA;
+      if (typeof CARD_DESCRIPTION_EN_BY_OWNER !== "undefined") CARD_DESCRIPTION_EN_BY_OWNER[ownerKey] = descEnA;
+    }
+  });
+  u.abilities = newAbilities;
+
+  // 6. 업그레이드 목록 수집
+  var upgradeCards = document.querySelectorAll("#ue-upgrade-list .ue-card-item");
+  var newUpgrades = [];
+  upgradeCards.forEach(function (card) {
+    var uname = card.querySelector(".ue-u-name").value.trim();
+    var uicon = card.querySelector(".ue-u-icon").value.trim();
+    var ucostsRaw = card.querySelector(".ue-u-costs").value.trim();
+    var udesc = card.querySelector(".ue-u-desc").value.trim();
+
+    var costItems = [];
+    if (ucostsRaw) {
+      ucostsRaw.split(",").forEach(function (item) {
+        var pair = item.split(":");
+        if (pair.length === 2) {
+          costItems.push({ type: pair[0].trim(), value: parseFloat(pair[1].trim()) || 0 });
+        }
+      });
+    }
+
+    newUpgrades.push({ name: uname, icon: uicon, desc: udesc, costItems: costItems });
+  });
+  u.upgrades = newUpgrades;
+
+  // 7. _customUnitStore에 저장 & 브라우저 localStorage 동기화
+  _customUnitStore.units[u.id] = JSON.parse(JSON.stringify(u));
+  saveCustomUnitStore();
+
+  // 8. 메인 테이블, 비교 뷰 실시간 재렌더링
+  try { renderTable(); } catch (e) {}
+  try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
+
+  renderUnitEditorSidebar();
+  loadUnitIntoEditor(u.id);
+
+  setUeStatus("'" + u.name + "' 유닛 변경사항이 브라우저에 저장되었습니다.");
+}
+
+function resetUnitToOriginal(unitId) {
+  var orig = _originalUnitDataMap[unitId];
+  if (!orig) return;
+  var u = getUnitById(unitId);
+  if (u) {
+    for (var k in orig) {
+      if (Object.prototype.hasOwnProperty.call(orig, k)) {
+        u[k] = JSON.parse(JSON.stringify(orig[k]));
+      }
+    }
+  }
+
+  if (_customUnitStore.units) delete _customUnitStore.units[unitId];
+  if (_customUnitStore.unitDescEn) delete _customUnitStore.unitDescEn[unitId];
+  if (typeof UNIT_DESCRIPTION_EN !== "undefined" && _originalUnitDescEnMap[unitId]) {
+    UNIT_DESCRIPTION_EN[unitId] = _originalUnitDescEnMap[unitId];
+  }
+
+  saveCustomUnitStore();
+  try { renderTable(); } catch (e) {}
+  try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
+
+  renderUnitEditorSidebar();
+  loadUnitIntoEditor(unitId);
+  setUeStatus("'" + (u ? u.name : unitId) + "' 유닛이 원래 기본값으로 복원되었습니다.");
+}
+
+function resetAllUnitsToOriginal() {
+  if (typeof UNIT_DATA === "undefined" || !Array.isArray(UNIT_DATA)) return;
+
+  UNIT_DATA.forEach(function (u) {
+    var orig = _originalUnitDataMap[u.id];
+    if (orig) {
+      for (var k in orig) {
+        if (Object.prototype.hasOwnProperty.call(orig, k)) {
+          u[k] = JSON.parse(JSON.stringify(orig[k]));
+        }
+      }
+    }
+  });
+
+  _customUnitStore = { units: {}, unitDescEn: {}, cardDescEn: {}, cardDescEnByOwner: {} };
+  saveCustomUnitStore();
+
+  if (typeof UNIT_DESCRIPTION_EN !== "undefined") {
+    for (var k in _originalUnitDescEnMap) {
+      UNIT_DESCRIPTION_EN[k] = _originalUnitDescEnMap[k];
+    }
+  }
+
+  try { renderTable(); } catch (e) {}
+  try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
+
+  renderUnitEditorSidebar();
+  if (_ueCurrentUnitId) loadUnitIntoEditor(_ueCurrentUnitId);
+  setUeStatus("모든 유닛 데이터가 기본값으로 초기화되었습니다.");
+}
+
+function exportUnitEditorJson() {
+  var dataToExport = {
+    version: "1.0",
+    exportDate: new Date().toISOString(),
+    customStore: _customUnitStore
+  };
+  var blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: "application/json;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "sc_evo_custom_units_" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setUeStatus("커스텀 유닛 데이터 JSON 파일이 다운로드되었습니다.");
+}
+
+function importUnitEditorJson(input) {
+  var file = input && input.files && input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    try {
+      var parsed = JSON.parse(String(reader.result || "{}"));
+      var store = parsed.customStore || parsed;
+      if (store && typeof store === "object") {
+        _customUnitStore = {
+          units: store.units || {},
+          unitDescEn: store.unitDescEn || {},
+          cardDescEn: store.cardDescEn || {},
+          cardDescEnByOwner: store.cardDescEnByOwner || {}
+        };
+        saveCustomUnitStore();
+        applyCustomUnitData();
+        try { renderTable(); } catch (e) {}
+        try { if (currentAppView === "compare") renderCompareView(); } catch (e) {}
+        renderUnitEditorSidebar();
+        if (_ueCurrentUnitId) loadUnitIntoEditor(_ueCurrentUnitId);
+        alert("JSON 데이터를 성공적으로 가져와 적용했습니다!");
+      } else {
+        alert("유효하지 않은 데이터 포맷입니다.");
+      }
+    } catch (err) {
+      alert("JSON 파싱 오류: " + err.message);
+    }
+    input.value = "";
+  };
+  reader.readAsText(file, "utf-8");
+}
+
+function saveUnitEditorToGithub() {
+  var count = Object.keys(_customUnitStore.units || {}).length;
+  if (count === 0) {
+    alert("현재 수정된 유닛 데이터가 없습니다. 먼저 수정한 후 저장하세요.");
+    return;
+  }
+
+  // 1. Worker API가 구성되어 있고 관리자 로그인 상태인 경우 Worker API로 GitHub 커밋 요청
+  if (PATCH_ADMIN_API_URL && isPatchAdmin && isPatchAdmin()) {
+    refreshPatchAdminSession().then(function () {
+      return fetch(PATCH_ADMIN_API_URL.replace(/\/$/, "") + "/api/units", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + getPatchAdminToken() },
+        body: JSON.stringify({ customStore: _customUnitStore, message: "Update custom unit & ability data" })
+      });
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok) throw new Error(data.error || "GitHub 저장에 실패했습니다.");
+        return data;
+      });
+    }).then(function () {
+      alert("GitHub에 커스텀 유닛 데이터가 성공적으로 저장되었습니다!");
+      setUeStatus("GitHub 커밋 완료.");
+    }).catch(function (err) {
+      alert("GitHub API 저장 실패: " + err.message + "\n로컬 git push 또는 JSON 내보내기를 이용해 주세요.");
+    });
+    return;
+  }
+
+  // 2. 관리자 토큰이 없는 브라우저 환경 안내 및 JSON 백업 제공
+  var doExport = confirm("로컬 브라우저에 저장된 수정 항목: " + count + "건.\n\nGitHub 원격 저장소에 반영하려면 JSON을 내보내거나 커밋할 수 있습니다. 지금 JSON 파일을 다운로드하시겠습니까?");
+  if (doExport) {
+    exportUnitEditorJson();
+  }
+}
+
+function setUeStatus(msg) {
+  var statusEl = document.getElementById("ue-status-text");
+  if (statusEl) statusEl.textContent = msg;
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
